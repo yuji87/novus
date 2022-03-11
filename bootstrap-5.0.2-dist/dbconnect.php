@@ -17,9 +17,10 @@ function dbConnect(){
     ];
 
     $dsn = "mysql:host=$host;dbname=$db;charset=utf-8";
-
+    
     try {
         $pdo = new PDO ($dsn, $user, $pass, $options);
+        
     } catch(PDOException $e) {
         echo 'error'. $e->getMessage();
     }
