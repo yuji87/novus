@@ -6,29 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- BootstrapのCSS読み込み -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="2.css" />
     <title>CSS learning</title>
 </head>
 <body>
 	<!-- ヘッダ -->
 	<header>
-      <blockquote class="text-left">
-          <p class="h1">Q&A SITE</p>
-      </blockquote>
+      <div class="row">>
+          <p class="h1 col-md-4">Q&A SITE</p>
+          <a href="login.php" class= "col-md-2">ログイン</a>
+          <a href="http://localhost/qandasite/bootstrap-5.0.2-dist/entry.php" class= "col-md-2">会員登録</a>
+      </div>
   </header>
 
 	<ul class="nav justify-content-center">
     <li class="nav-item">
-      <a class="nav-link active" href="#">Active</a>
+      <a class="nav-link active" href="#">質問投稿</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">記事サイト</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">求人検索</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link disabled" href="#">Disabled</a>
+      <a class="nav-link disabled" href="#"></a>
     </li>
   </ul>
 
