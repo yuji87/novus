@@ -48,7 +48,7 @@
 </head>
 
 <body>
-    <div class="container bg-secondary p-4">
+    <div class="container bg-secondary p-5">
         <div class="row align-items-start">
         <form action="" method="POST" class="col g-3 bg-white p-2  p-md-5 shadow-sm">
             <input type="hidden" name="check" value="checked">
