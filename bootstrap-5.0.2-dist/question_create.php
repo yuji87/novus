@@ -11,7 +11,7 @@
 <body>
     
 <div>質問したい内容を入力してください</div>
-a
+
 <form method="POST" action="">
     <div class=""style="text-align: center">
         <div>題名</div>
