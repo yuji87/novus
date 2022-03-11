@@ -1,8 +1,0 @@
-PAY.JP APIへのリクエストでは、GET、POST、DELETEの3種類のHTTPメソッドを利用できます。
-
-引数は、GETの場合はクエリーパラメータで、POSTではContent-Type: application/x-www-form-urlencodedのボディで送信ください。
-
-
-レスポンス
-APIからのレスポンスデータは正常・異常とも全てUTF-8のJSON形式(Content-Type: application/json; charset=utf-8)で返されます。
-
