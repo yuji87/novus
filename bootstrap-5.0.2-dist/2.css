@@ -111,7 +111,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw);
-  margin-left: 20px;
   margin-top: 20px;
 }
 @media (min-width: 1200px) {
@@ -1160,11 +1159,15 @@ progress {
   .col-md-2 {
     flex: 0 0 auto;
     width: 16.66666667%;
+    margin-top: 20px;
+    text-align: right;
   }
 
   .col-md-3 {
     flex: 0 0 auto;
     width: 25%;
+    margin-top: 20px;
+    text-align: right;
   }
 
   .col-md-4 {
@@ -2206,6 +2209,7 @@ progress {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
