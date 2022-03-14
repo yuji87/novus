@@ -26,7 +26,7 @@
         ));
     
         unset($_SESSION['join']);   // セッションを破棄
-        header('Location: http://localhost/qandasite/bootstrap-5.0.2-dist/entry_done.php');   // thank.phpへ移動
+        header('Location: http://localhost/qandasite/core/entry_done.php');   // thank.phpへ移動
         exit();
     }
 ?>
