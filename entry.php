@@ -1,7 +1,7 @@
-<?php
+<?php  //
 
     //DBファイルを読み込む
-    require("./dbconnect.php");
+    require_once(dirname(__FILE__)."/core/DBconnect.php");
 
     //変数の初期化
     $error_message = array();
@@ -43,13 +43,14 @@
             /* エラーがなければ次のページへ遷移 */
             if (!isset($error)) {
                 $_SESSION['join'] = $_POST;   // フォームの内容をセッションで保存
-                header('location: http://localhost/qandasite/core/check.php');   // check.phpへ移動
+                header('location: http://localhost/qandasite/check.php');   // check.phpへ移動
                 exit();
             }
         }
 }
 ?>
 
+<!--ログインフォーム-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +62,7 @@
 </head>
 
 <body class="bg-secondary p-4 p-md-5">
-    <form class="row g-3 bg-white p-2  p-md-5 shadow-sm" action="" method="post">
+    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="" method="post">
         <h1 class="my-3">アカウント作成</h1>
             <p class="my-2">当サービスを利用するために、次のフォームに必要事項をご記入ください。</p>
 

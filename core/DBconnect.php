@@ -11,13 +11,13 @@
  *
  */
 
-require_once( dirname(__FILE__)."/../../util/PDOWrapper.php" );
+require_once( dirname(__FILE__)."/PDOWrapper.php" );
 
 /**
  * Class DBConnector
  */
 
-class DBConnector
+class DBconnect
 {
 
     static protected $pdow;
