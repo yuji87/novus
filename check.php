@@ -1,35 +1,39 @@
 <?php
     
     //DBファイルを読み込む
-    require("./dbconnect.php");
+    require_once(dirname(__FILE__)."/core/DBconnect.php");
     
     session_start();
     
     /* 会員登録の手続き以外のアクセスを飛ばす
     if (!isset($_SESSION['join'])) {
-        header('Location: http://localhost/qandasite/bootstrap-5.0.2-dist/entry.php');
+        header('Location: http://localhost/qandasite/entry.php');
         exit();
     }  */
     
-    
-    if (!empty($_POST['check'])) {
-        // パスワードを暗号化
-        $hash = password_hash($_SESSION['join']['password'], PASSWORD_BCRYPT);
-    
+    if (!empty($_POST)) {
+
+        try {
+            require_once( "core/table/UsersTable.php" );
         // 入力情報をデータベースに登録
-        $statement = $db->prepare("INSERT INTO users SET name=?, tel=?, email=?, password=?");
-        $statement->execute(array(
-            $_SESSION['join']['name'],
-            $_SESSION['join']['tel'],
-            $_SESSION['join']['email'],
-            $hash
+        $id = UsersTable::createUser(array(
+            KEY_NAME => getPOST(KEY_NAME),
+            KEY_TEL => getPOST(KEY_TEL),
+            KEY_EMAIL => getPOST(KEY_EMAIL),
+            KEY_PASSWORD => getPOST(KEY_PASSWORD)
         ));
-    
-        unset($_SESSION['join']);   // セッションを破棄
-        header('Location: http://localhost/qandasite/core/entry_done.php');   // thank.phpへ移動
-        exit();
+
+            unset($_SESSION['join']);   // セッションを破棄
+            header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
+
+        } catch (Exception $exception) {
+            dlog('signup.phpにてエラー:', $exception);
+        }
+
     }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,12 +41,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- BootstrapのCSS読み込み -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- BootstrapのJS読み込み -->
-    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="2.css" />
     <title>会員登録確認画面</title>
 </head>

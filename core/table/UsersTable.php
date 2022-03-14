@@ -1,11 +1,12 @@
 <?php
 
-//require_once ("core/db/record/User.php");
-require_once(dirname(__FILE__)."/../dbconnect.php");
+
+require_once(dirname(__FILE__)."/../DBconnect.php");
 
 class UsersTable {
 
-    public static function createUser($argary): int {
+    public static function createUser($argary): int 
+    {
         $ary = array(
             'name' => $argary[KEY_NAME],
             'tel' => $argary[KEY_TEL],
@@ -19,7 +20,7 @@ class UsersTable {
             'comment' => $argary[KEY_COMMENT],
         );
 
-        $pdow = DBConnector::getPdow();
+        $pdow = DBconnect::getPdow();
         $id = $pdow->insert('users',$ary);
         return $id;
         //dlog('$createdUserAry: ',$createdUserAry);
@@ -27,14 +28,14 @@ class UsersTable {
     
     static public function updateUser($argary,$id) {
         $ary = $argary;
-        $pdow = DBConnector::getPdow();
+        $pdow = DBconnect::getPdow();
         $pdow->update('users',$ary,$id);
     }
 
     static private function exist($rowName,$val):bool {
         $sql = 'SELECT count(*) FROM users WHERE '.$rowName.'=:r AND q-disp-flg = 0';
         $data = ['r' => $val];
-        $pdow = DBConnector::getPdow();
+        $pdow = DBconnect::getPdow();
         $stmt = $pdow->queryPost($sql,$data);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return array_shift($result) != 0;
@@ -48,7 +49,7 @@ class UsersTable {
     static public function getUser($id, $col='*') {
         $sql = 'SELECT '.$col.' FROM users WHERE id=:id AND q-disp_flg = 0';
         $data = ['id' => $id];
-        $pdow = DBConnector::getPdow();
+        $pdow = DBconnect::getPdow();
         $stmt = $pdow->queryPost($sql,$data);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
@@ -96,9 +97,9 @@ class UsersTable {
         return $path;
     }
 
-    public static function getAllUserList($limit=1000,$cols='*') {
+    public static function getAllUserList($limit=1000, $cols='*') {
         $sql = 'SELECT '.$cols.' FROM users WHERE q-disp-flg = 0 LIMIT '.$limit;
-        $pdow = DBConnector::getPdow();
+        $pdow = DBconnect::getPdow();
 
         try {
 
