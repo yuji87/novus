@@ -11,7 +11,7 @@
  *
  */
 
-require_once( dirname(__FILE__)."/PDOWrapper.php" );
+// require_once( dirname(__FILE__)."/PDOWrapper.php" );
 
 /**
  * Class DBConnector

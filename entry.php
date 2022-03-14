@@ -69,7 +69,7 @@
             <div class="row my-4">
                 <label for="InputName" class="form-label">*Name</label>
                 <div class="md-3">
-                    <input type="text" class="form-control col-6" name="name">
+                    <input type="text" class="form-control col-6" name="name" required>
                     <?php if (!empty($error["name"]) && $error['name'] === 'blank'): ?>
                         <p class="error text-danger">＊名前を入力してください</p>
                     <?php endif ?>
@@ -79,7 +79,7 @@
             <div class="row my-4">
                 <label for="InputPhone" class="form-label">*Phone</label>
                 <div class="md-3">
-                    <input type="text" class="form-control col-6" name="tel">
+                    <input type="text" class="form-control col-6" name="tel" required>
                     <?php if (!empty($error["tel"]) && $error['tel'] === 'blank'): ?>
                         <p class="error text-danger">＊電話番号を入力してください</p>
                     <?php elseif (!empty($error["tel"]) && $error['tel'] === 'duplicate'): ?>
@@ -91,21 +91,20 @@
             <div class="row my-4">
                 <label for="InputEmail" class="form-label">Email</label>
                 <div class="md-3">
-                    <input type="email" class="form-control col-6" name="email">
+                    <input type="email" class="form-control col-6" name="email" required>
                 </div>
             </div>
             
             <div class="row my-4">
                 <div class="md-3">
                    <p>*Password</p>
-                   <input type="password" class="form-control col-4" id="inputPassword8" name="password">
+                   <input type="password" class="form-control col-4" id="inputPassword8" name="password" required>
                 </div>
         </div>
 
         <div class="col-12 my-4">
             <button type="submit" class="btn btn-primary">Sign up</button>
         </div>
- 
     </form>
 </body>
 </html>

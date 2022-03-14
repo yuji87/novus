@@ -1,7 +1,15 @@
 <?php
     
     //DBファイルを読み込む
-    require_once(dirname(__FILE__)."/core/DBconnect.php");
+    // require_once(dirname(__FILE__)."/core/DBconnect.php");
+
+    //変数の初期化
+    $error_message = array();
+    $pdo = null;
+    $option = null;
+    $stmt = null;
+    $res = null;
+    
     
     session_start();
     
@@ -11,26 +19,77 @@
         exit();
     }  */
     
-    if (!empty($_POST)) {
+    try {
+    	// $option = array(
+            // PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            // PDO::MYSQL_ATTR_MULTI_STATEMENTS => false);
+        $pdo = new PDO('mysql:charset=UTF8; dbname=qandasite; host=localhost:3306', 'root', '');
 
-        try {
-            require_once( "core/table/UsersTable.php" );
-        // 入力情報をデータベースに登録
-        $id = UsersTable::createUser(array(
-            KEY_NAME => getPOST(KEY_NAME),
-            KEY_TEL => getPOST(KEY_TEL),
-            KEY_EMAIL => getPOST(KEY_EMAIL),
-            KEY_PASSWORD => getPOST(KEY_PASSWORD)
-        ));
-
-            unset($_SESSION['join']);   // セッションを破棄
-            header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
-
-        } catch (Exception $exception) {
-            dlog('signup.phpにてエラー:', $exception);
-        }
-
+        
+    } catch(PDOException $e) {
+        echo 'だめ';
+        // 接続エラーのときエラー内容を取得する
+        $error_message[] = $e->getMessage();
     }
+    
+    $pdo->beginTransaction();   
+    
+
+    if (!empty($_POST)) {
+        
+        try {
+            
+            // 入力情報をデータベースに登録
+            $stmt = $pdo->prepare('INSERT INTO users (name, tel, email) VALUES (:name, :tel, :email)');
+
+            // 値をセット
+            $stmt->bindValue( ':name', 'あ');
+            $stmt->bindValue( ':tel', '08012345678');
+            $stmt->bindValue( ':email', 'abc@gmail.com');
+            
+            // SQLクエリの実行
+            $stmt->execute();
+
+         
+    } catch(PDOException $e) {
+        // エラーが発生した時はロールバック
+        echo "だめ";
+        $pdo->rollBack();
+    }
+
+
+    // $stmt->execute(array(
+        // $_SESSION['join']['name'],
+        // $_SESSION['join']['tel'],
+        // $_SESSION['join']['email'],
+        // $hash
+    // ));
+ 
+    $stmt=null;
+    header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
+    
+    $pdo = null;
+    
+    }
+        // try {
+            // require_once( "core/table/UsersTable.php" );
+        // 入力情報をデータベースに登録
+        // $id = UsersTable::createUser(array(
+            // KEY_NAME => getPOST(KEY_NAME),
+            // KEY_TEL => getPOST(KEY_TEL),
+            // KEY_EMAIL => getPOST(KEY_EMAIL),
+            // KEY_PASSWORD => getPOST(KEY_PASSWORD)
+        // ));
+
+            // unset($_SESSION['join']);   // セッションを破棄
+            // header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
+
+        // } catch (Exception $exception) {
+            // dlog('signup.phpにてエラー:', $exception);
+        // }
+
+    // }
+        
 
 ?>
 
