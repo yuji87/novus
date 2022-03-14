@@ -35,6 +35,8 @@
         <div>本文</div>
         <textarea required name="message"></textarea>
         <br>
+        <div>添付ファイル</div>
+        
         <input type="submit" name="create_question">
     </div>
 </form>
