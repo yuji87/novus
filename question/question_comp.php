@@ -9,22 +9,35 @@
 <body>
 
 <?php
-// hiwihhihi引用部分
-  //   function insert($tableName, $valueAry){
-  //     $rowName = implode(',',array_keys($valueAry));
-  //     $pps = ':'.implode(',:',array_keys($valueAry));; //prepared-statements
+// hiwihi引用部分1
 
-  //     $sql = 'INSERT INTO '.$tableName.'('.$rowName.') VALUES('.$pps.')';
-  //     $data = array_combine(explode(',',$pps),array_values($valueAry));
-  //     $this->queryPost($sql,$data);
-  //     return $this->pdo->lastInsertId();
-  // }
+require_once(dirname(__FILE__)."/../DBConnector.php");
+class QuestionTable
+{
+    public static function create($userID,$title,$message,$category,$questionImage) :int
+    {
+        $dataAry = [
+          'user_id' => $userID,
+          'title' => $title,
+          'message' => $message,
+          'post_date' => date('Y-m-d H:i:s'),
+          'upd_date' => date('Y-m-d H:i:s')
+          'cate_id' => $category,
+          'question_image' => $questionImage
+        ];
+        $pdow = DBConnector::getPdow();
+        $id = $pdow->insert('question_posts',$dataAry);
+        return $id;
+    }
 
+// hiwihi引用部分2
+    function insert($tableName, $valueAry){
 $valueAry = array('user_id', 'title', 'message', 'post_date', 'cate_id', 'question_image');
 $rowName = implode(',',array_keys($valueAry));
 $pps = ':'.implode(',:',array_keys($valueAry));; //prepared-statements
 
 $sql = 'INSERT INTO '.$tableName.'('.$rowName.') VALUES('.$pps.')';
+  //ここで変数の定義をしている？ 
 $data = array_combine(explode(',',$pps),array_values($valueAry));
 $this->queryPost($sql,$data);
 return $this->pdo->lastInsertId();

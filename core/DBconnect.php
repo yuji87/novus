@@ -13,6 +13,7 @@
 
 // require_once( dirname(__FILE__)."/PDOWrapper.php" );
 
+
 /**
  * Class DBConnector
  */
@@ -38,11 +39,17 @@ class DBconnect
 
     public static function setPdow($pdow=null) {
         if($pdow == null) {
-            
             $dsn = DB_TYPE.':dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8';
             $user = DB_USERNAME;
             $password = DB_PASSWORD;
-            $pdow = new PDOWrapper($dsn,$user,$password);
+            echo "db1・";
+            // var_dump($dsn);
+            // var_dump($user);
+            // var_dump($password);
+
+            echo "db2・";
+            $pdow = new PDOa($dsn,$user,$password);
+            echo "db3・";
         }
 
         self::$pdow = $pdow;
