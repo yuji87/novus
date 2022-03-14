@@ -43,7 +43,7 @@
             /* エラーがなければ次のページへ遷移 */
             if (!isset($error)) {
                 $_SESSION['join'] = $_POST;   // フォームの内容をセッションで保存
-                header('location: http://localhost/qandasite/bootstrap-5.0.2-dist/check.php');   // check.phpへ移動
+                header('location: http://localhost/qandasite/core/check.php');   // check.phpへ移動
                 exit();
             }
         }
