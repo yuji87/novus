@@ -53,8 +53,8 @@
     // let lifeBar.value = exExp;
     // lifeBar.value = 30;
     
-    let currentLevel = 7;
-    let exExp = 60;
+    let currentLevel = 5;
+    let exExp = 20;
     
     // レベルアップ時のエフェクトを消去
     if(lifeBar.value == 95){
@@ -82,6 +82,8 @@
 
       //規定レベルに達したらループ終了
       if(level.innerHTML >= currentLevel){
+    // gameTimer = setTimeout(update, 7);
+
         lifeBar.value = 0;
         if(lifeBar.value = exExp){
           clearTimeout(gameTimer);
