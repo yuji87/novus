@@ -4,81 +4,103 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="site.css" />
+    <link rel="stylesheet" type="text/css" href="2.css" />
     <title>CSS learning</title>
-    <!-- BootstrapのCSS読み込み -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- BootstrapのJS読み込み -->
-    <script src="js/bootstrap.min.js"></script>
 </head>
-<body>
-<div id="pagebody">
 
+
+<body class="bg-white p-4 p-md-5">
 	<!-- ヘッダ -->
-	<div id="header"><h1><a href="index.html">Q&A SITE</a></h1></div>
-	
-	<!-- メインメニュー -->
-	<ul id="menu">
-		<li id="menu01"><a href="xxx.html">Home</a></li>
-		<li id="menu02"><a href="xxx.html">Overview</a></li>
-		<li id="menu03"><a href="xxx.html">Property</a></li>
-		<li id="menu04"><a href="xxx.html">Tips</a></li>
-		<li id="menu05"><a href="xxx.html">Contact</a></li>
-	</ul>
+	<header>
+<<<<<<< Updated upstream
+	  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="avbar-brand font-weight-bold h3" href="#">Q&A SITE</a>
+			<span class="navbar-text">
+				<a href="login.php" class= "col-md-2 small">LogIn</a>
+				<a href="http://localhost/qandasite/entry.php" class= "col-md-2 small">SignIn</a>
+			</span>
+		</div>
+	</header>
+=======
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+            <a class="avbar-brand font-weight-bold h3" href="#">Q&A SITE</a>
+			<span class="navbar-text">
+				<a href="login.php" class= "small text-muted">ログイン</a>
+				<a href="http://localhost/qandasite/entry.php" small class= "small text-muted">会員登録</a>
+			</span>
+		</div>
+	</header>
 
-	
+	    <ul class="nav">
+            <li class="nav-item">
+				<a class="nav-link active small" href="#">質問投稿</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">記事</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">本検索</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">マイページ</a>
+			</li>
+		</ul>
 
-	<!-- コンテンツ（中央カラム） -->
-	<div id="content">
-		<div id="search-area">
-			<h2>質問を検索する</h2>
-             <!--キーワードを入力-->
-			<input type="text" name="filter_free" size="40" placeholder="例）キーワード">
-			<form method="get" action="">
-				<!--言語を選択-->
-				<select id="blood" name="">
-				    <option value="">言語
-				    <option value="C言語">C言語
-				    <option value="C++">C++
-				    <option value="Java">Java
-				    <option value="C#">C#
-				    <option value="JavaScript">JavaScript
-				    <option value="PHP">PHP
-				    <option value="Ruby">Ruby
-				    <option value="TypeScript">TypeScript
-				    <option value="Python">Python
-				    <option value="C言語">C
-				    <option value="C言語">C
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				    <option value="C言語">C言語
-				</select>
-				<input type="button" value="絞り込む" id="button"> <input type="button" value="すべて表示" id="button2">
+>>>>>>> Stashed changes
+
+		<ul class="nav">
+			<li class="nav-item">
+				<a class="nav-link active small" href="#">質問Page</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">記事Page</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">本Page</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="#">MyPage</a>
+			</li>
+		</ul>
+<!-- コンテンツ（中央カラム） -->
+	<div id="content" class="text-center">
+		<div class="text-center">
+      <br><br>
+			<h5>質問を検索する</h5>
+              <form>
+                <div class="form-row text-center">
+                  <div id="keyword" class="form-group col-row">
+                    <label for="inputEmail4">キーワード</label>
+                    <div>
+                      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-group col-row">
+                    <label for="inputPassword4">言語</label>
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <option selected>Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+                <br>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <hr>
+
 			</form>
         </div>
 
 		<!-- ニュース（中央カラム） -->
-		<div id="news">
-			<h2>新着の質問</h2>
-			<h3>質問投稿のタイトルが入るよ</h3>
+    <br>
+		<div id="news" class="text-center">
+			<h4>新着の質問</h4>
+			<h5>質問投稿のタイトルが入るよ</h5>
 			<p>
 			ここに質問投稿が入るよ
 			</p>
@@ -88,20 +110,9 @@
 
 	</div>
 
-		<!-- サブメニュー（左カラム） -->
-	    <div id="submenu">
-	    	<div id="submenu_header">目的で探す</div>
-	    	<ul id="submenu_body">
-	    		<li><a href="xxx.html">求人サイト</a></li>
-	    		<li><a href="xxx.html">質問投稿</a></li>
-	    		<li><a href="xxx.html">記事投稿</a></li>
-	    		<li><a href="xxx.html">記事検索</a></li>
-	    	</ul>
-	    </div>
 	
-
 	<!-- フッタ -->
-	<div id="footer"><address>Copyright (c) HTMQ All Rights Reserved.</address></div>
+	<p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p></div>
 
 </div>
 </body>

@@ -111,7 +111,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw);
-  margin-left: 20px;
   margin-top: 20px;
 }
 @media (min-width: 1200px) {
@@ -238,8 +237,12 @@ sup {
 }
 
 a {
+<<<<<<< Updated upstream
   color: #ffc800;
-  text-decoration: underline;
+=======
+  color: #ffae00;
+>>>>>>> Stashed changes
+  text-decoration: none;
 }
 a:hover {
   color: #cca000;
@@ -637,6 +640,7 @@ progress {
 .container-md,
 .container-sm {
   width: 100%;
+  height: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
@@ -673,7 +677,7 @@ progress {
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-top: calc(2 * var(--bs-gutter-y));
   margin-right: calc(-0.5 * var(--bs-gutter-x));
   margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
@@ -1165,6 +1169,8 @@ progress {
   .col-md-3 {
     flex: 0 0 auto;
     width: 25%;
+    margin-top: 20px;
+    text-align: center;
   }
 
   .col-md-4 {
@@ -2206,6 +2212,7 @@ progress {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
@@ -3956,7 +3963,7 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #cca000;
+  color: #fda809;
 }
 .nav-link.disabled {
   color: #6c757d;
@@ -4003,7 +4010,7 @@ textarea.form-control-lg {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #ffc800;
+  background-color: #fda809;
 }
 
 .nav-fill > .nav-link,
@@ -11291,7 +11298,7 @@ textarea.form-control-lg {
   }
 }
 html {
-  scroll-padding-top: 4.5rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
