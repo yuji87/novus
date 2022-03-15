@@ -12,7 +12,7 @@
       <div id="level">1</div>
     </div>
     <!-- <div id="level"><?php echo $user_data('pre_level') ?></div> -->
-    <div id="ohome_word">a</div>
+    <div id="ohome_word"></div>
   </div>
 </body>
 
@@ -55,7 +55,7 @@
       
       //規定レベルに達したらループ終了
       if(level.innerHTML >= currentLevel){
-        document.getElementById("level").classList.add("");
+        // document.getElementById("level").classList.add("");
         lifeBar.value = 0;
         if(lifeBar.value = exExp){
           clearTimeout(gameTimer);
