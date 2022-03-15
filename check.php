@@ -1,8 +1,10 @@
-<?php
-    
-    //DBファイルを読み込む
-    // require_once(dirname(__FILE__)."/core/DBconnect.php");
+<?php //DB接続で値をinsert
 
+<<<<<<< Updated upstream
+    //ファイルの読み込み
+    require_once('core/DBconnect.php');
+    require_once('core/AppController.php');
+=======
     //変数の初期化
     $error_message = array();
     $pdo = null;
@@ -20,76 +22,50 @@
     }  */
     
     try {
-    	// $option = array(
-            // PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            // PDO::MYSQL_ATTR_MULTI_STATEMENTS => false);
-        $pdo = new PDO('mysql:charset=UTF8; dbname=qandasite; host=localhost:3306', 'root', '');
+    	$option = array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_MULTI_STATEMENTS => false);
+        $pdo = new PDO('mysql:charset=UTF8; dbname=qandasite; host=localhost:3306', 'root', '', $option);
+>>>>>>> Stashed changes
 
-        
-    } catch(PDOException $e) {
-        echo 'だめ';
-        // 接続エラーのときエラー内容を取得する
-        $error_message[] = $e->getMessage();
-    }
-    
-    $pdo->beginTransaction();   
-    
+    //POSTで受信した情報をデータベースに登録
+    if(!empty($_POST['check'])){
+        try{
+            $sql = '
+                    INSERT INTO users{
+                        name,
+                        tel,
+                        email
+                    )
+                    VALUES(
+                        :name,
+                        :tel,
+                        :email
+                    )
+                    ';
 
-    if (!empty($_POST)) {
-        
-        try {
-            
-            // 入力情報をデータベースに登録
-            $stmt = $pdo->prepare('INSERT INTO users (name, tel, email) VALUES (:name, :tel, :email)');
+        //追加
+        $obj = new AppController();
+        $obj->insert_users($sql,  $_POST['name'], $_POST['tel'], $_POST['email']);
 
+<<<<<<< Updated upstream
+        print "<p>ログイン成功</p>";
+=======
             // 値をセット
-            $stmt->bindValue( ':name', 'あ');
-            $stmt->bindValue( ':tel', '08012345678');
-            $stmt->bindValue( ':email', 'abc@gmail.com');
+            $stmt->bindValue( ':name', $name, PDO::PARAM_STR);
+            $stmt->bindValue( ':tel', $tel, PDO::PARAM_INT);
+            $stmt->bindValue( ':email', $email, PDO::PARAM_STR);
             
             // SQLクエリの実行
             $stmt->execute();
+>>>>>>> Stashed changes
 
-         
-    } catch(PDOException $e) {
-        // エラーが発生した時はロールバック
-        echo "だめ";
-        $pdo->rollBack();
+        header('location: enrty_done.php' .$_SERVER["HTTP_REFERER"]);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
     }
-
-
-    // $stmt->execute(array(
-        // $_SESSION['join']['name'],
-        // $_SESSION['join']['tel'],
-        // $_SESSION['join']['email'],
-        // $hash
-    // ));
- 
-    $stmt=null;
-    header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
     
-    $pdo = null;
-    
-    }
-        // try {
-            // require_once( "core/table/UsersTable.php" );
-        // 入力情報をデータベースに登録
-        // $id = UsersTable::createUser(array(
-            // KEY_NAME => getPOST(KEY_NAME),
-            // KEY_TEL => getPOST(KEY_TEL),
-            // KEY_EMAIL => getPOST(KEY_EMAIL),
-            // KEY_PASSWORD => getPOST(KEY_PASSWORD)
-        // ));
-
-            // unset($_SESSION['join']);   // セッションを破棄
-            // header('Location: http://localhost/qandasite/entry_done.php');   // thank.phpへ移動
-
-        // } catch (Exception $exception) {
-            // dlog('signup.phpにてエラー:', $exception);
-        // }
-
-    // }
-        
 
 ?>
 
@@ -104,41 +80,39 @@
     <title>会員登録確認画面</title>
 </head>
 
-<body>
-    <div class="container bg-secondary p-5">
-        <div class="row align-items-start">
-        <form action="" method="POST" class="col g-3 bg-white p-2  p-md-5 shadow-sm">
-            <input type="hidden" name="check" value="checked">
-            <h1 class="my-3 h1">入力情報の確認</h1>
-            <p class="my-2">ご入力情報に変更が必要な場合、下のボタンを押し、変更を行ってください。</p>
-            <p class="my-1">登録情報は後から変更することもできます。</p>
-            <?php if (!empty($error) && $error === "error"): ?>
-                <p class="error">＊会員登録に失敗しました。</p>
-            <?php endif ?>
-            <hr>
-        
-        <div class="align-items-center">
-            <div class="control">
-                <p>Name</p>
-                <p><span class="fas fa-angle-double-right"></span> <span class="check-info"><?php echo htmlspecialchars($_SESSION['join']['name'], ENT_QUOTES); ?></span></p>
-            </div>
-            <div class="control">
-                <p>Phone</p>
-                <p><span class="fas fa-angle-double-right"></span> <span class="check-info"><?php echo htmlspecialchars($_SESSION['join']['tel'], ENT_QUOTES); ?></span></p>
-            </div>
-            <div class="control">
-                <p>Email</p>
-                <p><span class="fas fa-angle-double-right"></span> <span class="check-info"><?php echo htmlspecialchars($_SESSION['join']['email'], ENT_QUOTES); ?></span></p>
-            </div>
-            
-            <br>
-            <div class="col-4 bg-secondary">
-                <a href="entry.php" class="back-btn text-white">変更する</a>
-            </div>
-            <button type="submit" class="my-2 btn next-btn bg-warning text-black">登録する</button>
-            <div class="clear"></div>
+<body class="h-100 bg-secondary p-4 p-md-5">
+    <form action="" method="POST" class="row g-3 bg-white p-2 p-md-5 shadow-sm">
+        <input type="hidden" name="check" value="checked">
+        <h1 class="my-3 h1">入力情報の確認</h1>
+        <p class="my-2">ご入力情報に変更が必要な場合、下のボタンを押し、変更を行ってください。</p>
+        <p class="my-1">登録情報は後から変更することもできます。</p>
+        <?php if (!empty($error) && $error === "error"): ?>
+            <p class="error">＊会員登録に失敗しました。</p>
+        <?php endif ?>
+        <hr>
+    
+    <div class="align-items-center">
+        <div class="control">
+            <p>Name</p>
+            <p><span class="fas fa-angle-double-right"></span> <span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['join']['name'], ENT_QUOTES); ?></span></p>
         </div>
-        </form>
+        <div class="control">
+            <p>Phone</p>
+            <p><span class="fas fa-angle-double-right"></span> <span name="tel" class="check-info"><?php echo htmlspecialchars($_SESSION['join']['tel'], ENT_QUOTES); ?></span></p>
+        </div>
+        <div class="control">
+            <p>Email</p>
+            <p><span class="fas fa-angle-double-right"></span> <span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['join']['email'], ENT_QUOTES); ?></span></p>
+        </div>
+        
+        <br>
+        <div class="col-4 bg-secondary">
+            <a href="entry.php" class="back-btn text-white">変更する</a>
+        </div>
+        <button type="submit" class="my-2 btn next-btn bg-warning text-black">登録する</button>
+        <div class="clear"></div>
+    </div>
+    </form>
         </div>
     </div>
 </body>
