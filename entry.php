@@ -80,7 +80,7 @@
             </div>
 
         <div class="col-12 my-4">
-            <a href="entry_done.php" class="btn btn-primary" value="Sign up">Sign up</a>
+            <<input type="submit" class="btn btn-primary" value="Sign up">
         </div>
     </form>
 </body>
