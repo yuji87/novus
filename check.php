@@ -1,8 +1,32 @@
 <?php //DB接続で値をinsert
 
+<<<<<<< Updated upstream
     //ファイルの読み込み
     require_once('core/DBconnect.php');
     require_once('core/AppController.php');
+=======
+    //変数の初期化
+    $error_message = array();
+    $pdo = null;
+    $option = null;
+    $stmt = null;
+    $res = null;
+    
+    
+    session_start();
+    
+    /* 会員登録の手続き以外のアクセスを飛ばす
+    if (!isset($_SESSION['join'])) {
+        header('Location: http://localhost/qandasite/entry.php');
+        exit();
+    }  */
+    
+    try {
+    	$option = array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_MULTI_STATEMENTS => false);
+        $pdo = new PDO('mysql:charset=UTF8; dbname=qandasite; host=localhost:3306', 'root', '', $option);
+>>>>>>> Stashed changes
 
     //POSTで受信した情報をデータベースに登録
     if(!empty($_POST['check'])){
@@ -24,7 +48,17 @@
         $obj = new AppController();
         $obj->insert_users($sql,  $_POST['name'], $_POST['tel'], $_POST['email']);
 
+<<<<<<< Updated upstream
         print "<p>ログイン成功</p>";
+=======
+            // 値をセット
+            $stmt->bindValue( ':name', $name, PDO::PARAM_STR);
+            $stmt->bindValue( ':tel', $tel, PDO::PARAM_INT);
+            $stmt->bindValue( ':email', $email, PDO::PARAM_STR);
+            
+            // SQLクエリの実行
+            $stmt->execute();
+>>>>>>> Stashed changes
 
         header('location: enrty_done.php' .$_SERVER["HTTP_REFERER"]);
         }catch(PDOException $e){

@@ -49,6 +49,7 @@
 
 <body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5">
+<<<<<<< Updated upstream
         <?php if (count($err) > 0) :?>
             <?php foreach($err as $e) :?>
                 <p><?php echo $e ?></p>
@@ -61,5 +62,14 @@
                 <a href="login_top.html"><button class="">トップページへ移動</button></a>
             </div>
         </div>
+=======
+    <div class="row align-items-start">
+        <h1 class="my-3 h1">会員登録が完了しました</h1>
+        <p class="my-2">下のボタンよりログインページに移動して下さい。</p>
+        <br><br>
+        <a href="login_top.html"><button class="">ログインページへ移動</button></a>
+    </div>
+</div>
+>>>>>>> Stashed changes
 </body>
 </html>

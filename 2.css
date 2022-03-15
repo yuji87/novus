@@ -237,7 +237,11 @@ sup {
 }
 
 a {
+<<<<<<< Updated upstream
   color: #ffc800;
+=======
+  color: #ffae00;
+>>>>>>> Stashed changes
   text-decoration: none;
 }
 a:hover {
@@ -3959,7 +3963,7 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #cca000;
+  color: #fda809;
 }
 .nav-link.disabled {
   color: #6c757d;
@@ -4006,7 +4010,7 @@ textarea.form-control-lg {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #ffc800;
+  background-color: #fda809;
 }
 
 .nav-fill > .nav-link,
