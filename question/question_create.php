@@ -12,9 +12,19 @@
     
 <?php
 
+// DB接続情報の記載
+$dsn = "mysql:host=localhost; dbname=01; charset=utf8;";
+$username = "root";
+$password = "";
+try {
+    $dbh = new PDO($dsn, $username, $password);
+} catch (PDOException $e) {
+    $msg = $e->getMessage();
+}
 
-require_once("../core/DBConnect.php");
-require_once("../core/table/UsersTable.php");
+// require_once("../core/DBConnect.php");
+// require_once("../core/table/UsersTable.php");
+
 
 if (!empty($_POST)) {
 
@@ -25,35 +35,44 @@ if (!empty($_POST)) {
                 $title = $_POST['title'];
                 $message = $_POST['message'];
                 $category = $_POST['category'];
-                $dataAry = [
-                    'user_id' => $userID,
-                    'title' => $title,
-                    'message' => $message,
-                    'post_date' => date('Y-m-d H:i:s'),
-                    'upd_date' => date('Y-m-d H:i:s'),
-                    'cate_id' => $category,
-                ];
-                echo "3・";
-                // $pdow = DBConnect::getPdow();
-                // $dsn = DB_TYPE.':dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8';
-                $dsn = 'mysql:dbname=qanda;host=localhost;charset=utf8';
-            $user = 'root';
-            $password = "";
-                        var_dump($dsn);
-            var_dump($user);
-            var_dump($password);
 
-                echo "4・";
-            // }
-            $sql = 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+                $post_date = date('Y-m-d H:i:s');
+                $upd_date = date('Y-m-d H:i:s');
+                var_dump($_POST['title']);
+                var_dump($_POST['message']);
+                var_dump($_POST['category']);
+                // $dataAry = [
+                //     'user_id' => $userID,
+                //     'title' => $title,
+                //     'message' => $message,
+                //     'post_date' => date('Y-m-d H:i:s'),
+                //     'upd_date' => date('Y-m-d H:i:s'),
+                //     'cate_id' => $category,
+                // ];
+                echo "3・";
+
+                $sql = 'INSERT INTO question_posts(user_id, title, message, post_date, upd_date, cate_id) VALUES(:uid, :title, :message, :post_date, :upd_date, :cate_id)';
+        $stmt = $dbh->prepare($sql);
+        // bindValueで投稿内容の準備
+        $stmt->bindValue(':uid', 1);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':message', $message);
+        $stmt->bindValue(':post_date', $post_date);
+        $stmt->bindValue(':upd_date', $upd_date);
+        $stmt->bindValue(':cate_id', 1);
+
+        // }
+        // $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        echo "4・";
+            $post = $stmt->fetch();
 
             //ログインしてタイムラインページ表示
-            Session::setLoginUserID($id);
+            // Session::setLoginUserID($id);
             header('Location:http://localhost/qandasite/question/question_comp.php');
         } catch (Exception $exception) {
-            // dlog('question_create.phpにてエラー:', $exception);
+            dlog('question_create.phpにてエラー:', $exception);
+
             echo "5・";
         }
 
@@ -74,7 +93,9 @@ if (!empty($_POST)) {
         <div>カテゴリ</div>
         <select name="category" required >
             <option></option>
-            <option>項目1</option>
+
+            <option value="1">項目1</option>
+
             <?php foreach($categories as $value){
                 echo "<option value=".$value['cate_id'] .">" .$value['categpry_name'] ."</option>";
             } ?>
