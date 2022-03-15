@@ -1,8 +1,8 @@
 <?php
 
 require_once 'Config.php';
-
 function connect()
+
 {
     $host = DB_HOST;
     $db   = DB_NAME;
@@ -22,7 +22,5 @@ function connect()
         echo '接続失敗です！'. $e->getMessage();
         exit();
     }
-
-
 }
 connect();
