@@ -1,13 +1,16 @@
 <?php
     session_start();
 
+
     // ファイルの読み込み
+
     require_once 'classes/UserLogic.php';
 
     $name = filter_input(INPUT_POST, 'name');
     $tel = filter_input(INPUT_POST, 'tel');
     $email = filter_input(INPUT_POST, 'email');
     $password = filter_input(INPUT_POST, 'password');
+
 
     // エラーメッセージ
     $err = [];
@@ -27,11 +30,14 @@
     }
 
     if (count($err)>0){
+
         // エラーがあったらフォーム画面に戻す
+
         $_SESSION = $err;
         header('location: login_form.php');
         return;
     }
+
 
     // ログインに成功した時の処理
     $result = UserLogic::login($name, $tel, $email, $password);
