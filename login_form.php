@@ -1,13 +1,13 @@
 <?php
     session_start();
 
-    /*require_once 'classes/UserLogic.php';
+    require_once 'classes/UserLogic.php';
 
     $result = UserLogic::checkLogin();
     if ($result){
         header('location: login_top.html');
         return;
-    }*/
+    }
 
     //エラーメッセージ表示
     $err = $_SESSION;
@@ -36,34 +36,34 @@
         <p class="my-2">下記項目を記入して下さい。</p>
         <!--名前を記入-->
         <div class="row my-4">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label font-weight-bold">Name</label>
             <div class="md-3">
                 <input type="text" class="form-control col-10" name="name">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
                 <?php if (isset($err['name'])) : ?>
-                    <p><?php echo $err['name']; ?></p>
+                    <p class="text-danger"><?php echo $err['name']; ?></p>
                 <?php endif; ?>
             </div>
         </div>
         <!--電話番号を記入-->
         <div class="row my-4">
-            <label for="tel" class="form-label">Phone</label>
+            <label for="tel" class="form-label font-weight-bold">Phone</label>
             <div class="md-3">
                 <input type="tel" class="form-control col-10" name="tel">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
                 <?php if (isset($err['tel'])) : ?>
-                    <p><?php echo $err['tel']; ?></p>
+                    <p class="text-danger"><?php echo $err['tel']; ?></p>
                 <?php endif; ?>
             </div>
         </div>
         <!--パスワードを記入-->
         <div class="row my-4">
-            <label for="password" class="form-label">*Password</label>
+            <label for="password" class="form-label font-weight-bold">*Password</label>
             <div class="md-3">
                <input type="password" class="form-control col-6" id="inputPassword8" name="password">
                <!--欄の下に未記入時のエラーメッセージ表示-->
                <?php if (isset($err['password'])) : ?>
-                    <p><?php echo $err['password']; ?></p>
+                    <p class="text-danger"><?php echo $err['password']; ?></p>
                 <?php endif; ?>
             </div>
         </div>
