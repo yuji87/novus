@@ -237,13 +237,10 @@ sup {
 }
 
 a {
-<<<<<<< Updated upstream
-  color: #ffc800;
-=======
   color: #ffae00;
->>>>>>> Stashed changes
   text-decoration: none;
 }
+
 a:hover {
   color: #cca000;
 }
