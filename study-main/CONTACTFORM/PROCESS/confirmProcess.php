@@ -37,5 +37,3 @@
     $statement->bindValue("message", $message, PDO::PARAM_STR);
     $statement->execute();
   }
-
-?>
