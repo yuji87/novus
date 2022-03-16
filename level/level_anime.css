@@ -1,6 +1,33 @@
+@font-face {
+  font-family: 'PixelMplus12';
+  src: url('fonts/PixelMplus12-Bold.ttf') format('truetype');
+  }
+
+
+
 body{
-  background-color: aqua;
+  /* background-color: aqua; */
   font-family:"Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体";
+}
+
+.inline{
+  display: inline-block;
+}
+
+#lv, #ohome_word{
+  font-family: 'PixelMplus12';
+}
+
+.js-animation {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(40px);
+  transition: all 1s;
+}
+.js-animation.is-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
 }
 
 #lifeBar {
