@@ -24,6 +24,7 @@ class UserLogic
 
         try{
             $stmt = connect()->prepare($sql);
+            // SQL実行
             $result = $stmt-> execute($arr);
             return $result;
         }catch(\Exception $e){
@@ -35,9 +36,10 @@ class UserLogic
         }
     }
 
-    /**
+   /**
     * ログイン処理
-    * @param string $email
+    * @param string $name
+    * @param string $tel
     * @param string $password
     * @return bool $result
     */
@@ -46,46 +48,36 @@ class UserLogic
     {
     // 結果
     $result = false;
-    // ユーザをemailから検索して取得
+    // ユーザをtelから検索して取得
     $user = self::getUserByTel($tel);
-
+    
     if (!$user){
       $_SESSION['msg'] = '電話番号が一致しません。';
       return $result;
     }
-    
-    //　名前の照会
-    if (password_verify($name, $user['name'])){
-      //ログイン成功
-      session_regenerate_id(true);
-      $_SESSION['login_user'] = $user;
-      $result = true;
-      return $result;
-    }
-
-    $_SESSION['msg'] = '名前が一致しません。';
-    return $result;
 
     //　パスワードの照会
     if (password_verify($password, $user['password'])){
       //ログイン成功
+      //ハイジャック対策
       session_regenerate_id(true);
       $_SESSION['login_user'] = $user;
       $result = true;
       return $result;
     }
-
     $_SESSION['msg'] = 'パスワードが一致しません。';
     return $result;
     }
+    
 
     /**
-    * telからユーザを取得
-    * @param int $tel
-    * @return array|bool $user|false
+     * ログイン
+     * telからユーザを取得
+     * @param string $tel
+     * @return array|bool $user|false
     */
 
-    public static function getUserBytel($email)
+    public static function getUserBytel($tel)
     {
     // SQLの準備
     // SQLの実行
@@ -98,6 +90,7 @@ class UserLogic
 
     try {
       $stmt = connect()->prepare($sql);
+      // SQL実行
       $stmt->execute($arr);
       // SQLの結果を返す
       $user = $stmt->fetch();
@@ -106,6 +99,7 @@ class UserLogic
       return false;
     }
   }
+
 
   /**
    * ログインチェック
@@ -122,15 +116,16 @@ class UserLogic
       return $result = true;
     }
     return $result;
-  }
+  } 
 
     /**
     * ログアウト処理
     */
+    /*
     public static function logout()
     {
     $_SESSION = array();
     session_destroy();
-  }
+  } */
 
 }
