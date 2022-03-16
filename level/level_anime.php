@@ -9,52 +9,43 @@
 </head>
 <body>
   <div class="cherry-blossom-container">
-    <!-- レベルによる表示画像変更もできるように -->
+    <!-- レベルによる表示画像変更 -->
     <img id="hero" style="width: 30%;" src="img/22338667.png" alt="ないよ">
     <progress id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
     <div id="lv">Lv.
       <div id="level">1</div>
-      <!-- <div id="level"><?php echo $user_data('pre_level') ?></div> -->
+      <!-- <div id="level"><?php// echo $user_data('pre_level') ?></div> -->
       <div id="bg"></div>
     </div>
     <div id="ohome_word"></div>
   </div>
-
-
   
-</body>
-
-<script>
-
-  // 前回からレベルが上がった分だけ処理を繰り返したい
-  // 且つ、経験値も現在の値までアニメーションさせたい
-  // 「前回のレベル」はテーブル設計を微修正の必要アリ
-
-  // 課題：
-  // 経験値の定義がうまくいかない
-
-  function update() {
-    gameTimer = setTimeout(update, 3);
-    let heroImg = document.getElementById('hero');
-    let lifeBar = document.getElementById('lifeBar');
-    let level = document.getElementById('level'); 
+  
+  <script type="text/javascript">
+    // 前回マイページ参照時からレベルが上がった分だけ処理を繰り返し
+    
+    // let previousLevel = <?php //echo $user_data('pre_level') ?>;
+    // let currentLevel = <?php //echo $user_data('level') ?>;
+    // let previousExp = <?php //echo $user_data('pre_exp') ?>;
+    // let currentExp = <?php //echo $user_data('exp') ?>;
+    
+    // let lifeBar.value = previousExp
+    // let exExp = currentExp % 100;
+    
+    let currentLevel = 5;
+    lifeBar.value = 50;
+    let exExp = 20;
+    
+    function update() {
+      gameTimer = setTimeout(update, 4);
+      let heroImg = document.getElementById('hero');
+      let lifeBar = document.getElementById('lifeBar');
+      let level = document.getElementById('level'); 
     let bg = document.getElementById('bg'); 
     let ohome = document.getElementById('ohome_word'); 
     lifeBar.value++;
-
-      // PHPを使ったSQL処理からユーザーレベルと経験値を持ってくる処理
-      
-    // let previousLevel = <?php echo $user_data('pre_level') ?>;
-    // let currentLevel = <?php echo $user_data('level') ?>;
-    // let previousExp = <?php echo $user_data('pre_exp') ?>;
-    // let currentExp = <?php echo $user_data('exp') ?>;
-
-    // let exExp = currentExp % 100;
-    // let lifeBar.value = exExp;
-    // lifeBar.value = 30;
     
-    let currentLevel = 5;
-    let exExp = 20;
+    console.log(exExp);
     
     // レベルアップ時のエフェクトを消去
     if(lifeBar.value == 95){
@@ -68,6 +59,7 @@
       level.innerHTML++;
       // document.getElementById("level").classList.add("s-fs-l");
       
+      
       // 一定レベルを超えたら表示画像が変更される
       if(level.innerHTML >= 5){
         document.getElementById("hero").src='img/22503431.png';
@@ -79,15 +71,11 @@
       if (level.innerHTML >= 20){
         document.getElementById("hero").src='img/22493175.png';
       }
-
+    }
       //規定レベルに達したらループ終了
-      if(level.innerHTML >= currentLevel){
-    // gameTimer = setTimeout(update, 7);
-
-        lifeBar.value = 0;
-        if(lifeBar.value = exExp){
-          clearTimeout(gameTimer);
-
+      if(level.innerHTML >= currentLevel && lifeBar.value >= exExp){
+        clearTimeout(gameTimer);        
+        console.log(currentLevel);
           // コンテナを指定
           const section = document.querySelector('.cherry-blossom-container');
           // 花びらを生成する関数
@@ -107,17 +95,16 @@
               petalEl.remove();
             }, 10000);
           }
-      // 花びらを生成する間隔をミリ秒で指定
+        // 花びらを生成する間隔をミリ秒で指定
         setInterval(createPetal, 300);
-        }
       }
     }    
-  }
-    
-  update();
+
+    window.onload = update();
 
 
 </script>
+</body>
 
 
 
