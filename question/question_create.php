@@ -1,3 +1,18 @@
+<?php
+    session_start();
+    
+    require_once '../classes/UserLogic.php';
+
+    $result = UserLogic::checkLogin();
+    if($result) {
+    header('Location: login_top.html');
+    return;
+    }
+    
+    $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
+    unset($_SESSION['login_err']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
