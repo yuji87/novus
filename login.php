@@ -51,7 +51,7 @@
 <body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5">
         <div class="row align-items-start">
-            <h1 class="my-3 h1">ログインが完了しました</h1>
+            <h2 class="my-3 h1">ログインが完了しました</h2>
             <br><br>
             <a href="mypage.html"><button class="">トップページへ移動</button></a>
         </div>

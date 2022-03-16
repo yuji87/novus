@@ -14,13 +14,14 @@ class UserLogic
     {
         $result = false;
 
-        $sql = 'INSERT INTO users (name, tel, email, password) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO users (name, tel, email, password, icon) VALUES (?, ?, ?, ?, ?)';
         // ユーザーデータを配列に入れる
         $arr = [];
         $arr[] = $userData['name'];                                      // name
         $arr[] = $userData['tel'];                                       // tel
         $arr[] = $userData['email'];                                     // email
         $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT); // password
+        $arr[] = $userData['icon'];                                      // icon
 
         try{
             $stmt = connect()->prepare($sql);
