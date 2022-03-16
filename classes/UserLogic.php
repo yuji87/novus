@@ -15,21 +15,21 @@ class UserLogic
         $result = false;
 
         $sql = 'INSERT INTO users (name, tel, email, password) VALUES (?, ?, ?, ?)';
-        //ユーザーデータを配列に入れる
+        // ユーザーデータを配列に入れる
         $arr = [];
-        $arr[] = $userData['name'];     //name
-        $arr[] = $userData['tel'];      //tel
-        $arr[] = $userData['email'];    //email
-        $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT); //password
+        $arr[] = $userData['name'];                                      // name
+        $arr[] = $userData['tel'];                                       // tel
+        $arr[] = $userData['email'];                                     // email
+        $arr[] = password_hash($userData['password'], PASSWORD_DEFAULT); // password
 
         try{
             $stmt = connect()->prepare($sql);
             $result = $stmt-> execute($arr);
             return $result;
         }catch(\Exception $e){
-            //エラーの出力
+            // エラーの出力
             echo $e;
-            //ログの出力
+            // ログの出力
             error_log($e, 3, '../error.log');
             return $result;
         }
@@ -42,20 +42,32 @@ class UserLogic
     * @return bool $result
     */
 
-    public static function login($tel, $password)
+    public static function login($name, $tel, $password)
     {
     // 結果
     $result = false;
     // ユーザをemailから検索して取得
     $user = self::getUserByTel($tel);
 
-    if (!$user) {
+    if (!$user){
       $_SESSION['msg'] = '電話番号が一致しません。';
       return $result;
     }
+    
+    //　名前の照会
+    if (password_verify($name, $user['name'])){
+      //ログイン成功
+      session_regenerate_id(true);
+      $_SESSION['login_user'] = $user;
+      $result = true;
+      return $result;
+    }
+
+    $_SESSION['msg'] = '名前が一致しません。';
+    return $result;
 
     //　パスワードの照会
-    if (password_verify($password, $user['password'])) {
+    if (password_verify($password, $user['password'])){
       //ログイン成功
       session_regenerate_id(true);
       $_SESSION['login_user'] = $user;
@@ -68,8 +80,8 @@ class UserLogic
     }
 
     /**
-    * emailからユーザを取得
-    * @param string $email
+    * telからユーザを取得
+    * @param int $tel
     * @return array|bool $user|false
     */
 
@@ -80,7 +92,7 @@ class UserLogic
     // SQLの結果を返す
     $sql = 'SELECT * FROM users WHERE tel = ?';
 
-    // emailを配列に入れる
+    // telを配列に入れる
     $arr = [];
     $arr[] = $tel;
 
@@ -106,12 +118,10 @@ class UserLogic
     $result = false;
     
     // セッションにログインユーザが入っていなかったらfalse
-    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['id'] > 0) {
+    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['id'] > 0){
       return $result = true;
     }
-
     return $result;
-
   }
 
     /**
