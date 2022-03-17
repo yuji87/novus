@@ -51,33 +51,33 @@ class Todo
     if($title === ""){
       return;
     }
-    $statement = $this->pdo->prepare("INSERT INTO todo(title) VALUES(:title)");
+    $statement = $this->pdo->prepare("INSERT INTO todo(user_id, title) VALUES(1, :title)");
     $statement->bindValue("title", $title, \PDO::PARAM_STR);
     $statement->execute();
   }
 
   private function toggle(){
-    $id = trim(filter_input(INPUT_POST, "id"));
-    if(empty($id)){
+    $todo_id = trim(filter_input(INPUT_POST, "todo_id"));
+    if(empty($todo_id)){
       return;
     }
-    $statement = $this->pdo->prepare("UPDATE todo SET is_done = NOT is_done WHERE id=:id");
-    $statement->bindValue("id", $id, \PDO::PARAM_INT);
+    $statement = $this->pdo->prepare("UPDATE todo SET is_done = NOT is_done WHERE todo_id=:todo_id");
+    $statement->bindValue("todo_id", $todo_id, \PDO::PARAM_INT);
     $statement->execute();
   }
 
   private function delete(){
-    $id = trim(filter_input(INPUT_POST, "id"));
-    if(empty($id)){
+    $todo_id = trim(filter_input(INPUT_POST, "todo_id"));
+    if(empty($todo_id)){
       return;
     }
-    $statement = $this->pdo->prepare("DELETE FROM todo WHERE todo_id=:id");
-    $statement->bindValue("id", $id, \PDO::PARAM_INT);
+    $statement = $this->pdo->prepare("DELETE FROM todo WHERE todo_id=:todo_id");
+    $statement->bindValue("todo_id", $todo_id, \PDO::PARAM_INT);
     $statement->execute();
   }
 
   private function purge(){
-    $this->pdo->query("DELETE FROM todo WHERE is_done = 1"); //is_doneがtrueのものを削除
+    $this->pdo->query("DELETE FROM todo WHERE user_id = 1 and is_done = 1"); //is_doneがtrueのものを削除
   }
 
   public function getAll(){

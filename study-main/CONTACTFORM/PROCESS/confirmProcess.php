@@ -1,26 +1,27 @@
 <?php
-
 // 確認画面
-  if (!$name) {
-    $errmessage["name"] = "blank";
+  if ($name === "") {
+    $error["name"] = "blank";
   } else if (mb_strlen($name) > 50) {
-    $errmessage["name"] = "exceed";
+    $error["name"] = "exceed";
   }
   $_SESSION['name']  = htmlspecialchars($name, ENT_QUOTES);
 
-  if (!$email) {
-    $errmessage["email"] = "blank";
+  if ($email === "") {
+    $error["email"] = "blank";
   } else if (mb_strlen($email) > 100) {
-    $errmessage["email"] = "exceed";
+    $error["email"] = "exceed";
   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errmessage["email"] = "Illegal";
+    $error["email"] = "Illegal";
   }
   $_SESSION['email']    = htmlspecialchars($email, ENT_QUOTES);
 
-  if (!$message && isset($errmessage["message"])) {
-    $errmessage["message"] = "blank";
+$array = array(' ', '　', "\r\n", "\r", "\n", "\t");
+$space = str_replace($array, '', $message);
+  if ($message === "" || $space === "") {
+    $error["message"] = "blank";
   } else if (mb_strlen($message) > 1000) {
-    $errmessage["message"] = "exceed";
+    $error["message"] = "exceed";
   }
   $_SESSION['message'] = htmlspecialchars($message, ENT_QUOTES);
 
@@ -37,5 +38,3 @@
     $statement->bindValue("message", $message, PDO::PARAM_STR);
     $statement->execute();
   }
-
-?>
