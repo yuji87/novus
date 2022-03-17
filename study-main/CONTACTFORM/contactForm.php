@@ -15,22 +15,23 @@ $message = filter_input(INPUT_POST, "message");
 $send    = filter_input(INPUT_POST, "send");
 $token   = filter_input(INPUT_POST, "token");
 
-  if (isset($back) && $back) { //戻るボタンが押されたとき
-    // 何もしない
-  } else if (isset($confirm) && $confirm) { //confirmで送られてきた時
-    require_once("PROCESS/confirmProcess.php");
-  } else if (isset($send) && $send) { //sendで送られてきた時
-    require_once("PROCESS/sendProcess.php");
-  } else {
-    $_SESSION['name']     = "";
-    $_SESSION['email']    = "";
-    $_SESSION['message']  = "";
-  }
+if (isset($back) && $back) { //戻るボタンが押されたとき
+  // 何もしない
+} else if (isset($confirm) && $confirm) { //confirmで送られてきた時
+  require_once("PROCESS/confirmProcess.php");
+} else if (isset($send) && $send) { //sendで送られてきた時
+  require_once("PROCESS/sendProcess.php");
+} else {
+  $_SESSION['name']     = "";
+  $_SESSION['email']    = "";
+  $_SESSION['message']  = "";
+}
 ?>
 
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -42,64 +43,58 @@ $token   = filter_input(INPUT_POST, "token");
 </head>
 
 <body>
-  <main class="text-center">
-    <?php if ($mode === 'input') :?>
+  <main class="">
+    <!-- $modeがinputを持つ時は下記を表示 -->
+    <?php if ($mode === 'input') : ?>
       <?php
-      // 入力画面 
       if ($errmessage) {
-        echo '<div class="" role="alert">';
+        echo '<div class="text-center" role="alert">';
         echo implode('<br>', $errmessage);
         echo '</div>';
       }
       ?>
-    
-      <h1 class="formTitle mt-5">
+
+      <h1 class="text-center mt-5">
         お問い合わせ
       </h1>
-      <form action="./contactForm.php" method="post" id="form" class="mt-3" enctype="multipart/form-data">
+      <form action="./contactForm.php" method="post" id="form" class="mt-3 text-center" enctype="multipart/form-data">
         <input type="text" name="name" value="<?php echo $_SESSION['name'] ?>" class="mt-2" placeholder="name"><br>
-          <?php require_once("ERRMESSAGE/nameErr.php") ?>
+        <?php require_once("ERRMESSAGE/nameErr.php") ?>
 
         <input type="email" name="email" value="<?php echo $_SESSION['email'] ?>" class="mt-2" placeholder="E-MAIL"><br>
-          <?php require_once("ERRMESSAGE/emailErr.php") ?>
+        <?php require_once("ERRMESSAGE/emailErr.php") ?>
 
-        <textarea type="text" name="message" class="mt-2" placeholder="MESSAGE" cols="70" rows="10" maxlength="1000"><?php echo $_SESSION['message'] ?></textarea><br>
-          <?php require_once("ERRMESSAGE/messageErr.php") ?>
+        <textarea type="text" name="message" class="mt-2" placeholder="MESSAGE" cols="50" rows="10" maxlength="1000"><?php echo $_SESSION['message'] ?></textarea><br>
+        <?php require_once("ERRMESSAGE/messageErr.php") ?>
 
-        <input type="submit" name="confirm" value="送信内容を確認" class="" >
+        <input type="submit" name="confirm" value="送信内容を確認" class="mt-1">
       </form>
 
-    <?php elseif ($mode === 'confirm'): ?>
+      <!-- $modeがconfirmを持つ時は下記を表示 -->
+    <?php elseif ($mode === 'confirm') : ?>
 
       <!-- 確認画面 -->
-      <h1 class="formTitle mt-5">
+      <h1 class="text-center mt-5">
         内容の確認
       </h1>
-      <form action="./contactForm.php" method="post" class="mt-3">
+      <form action="./contactForm.php" method="post" class="mt-3" style="font-size:1.5em; font-weight:bold">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-        <div class="">
+        <div class="col-sm-4 offset-sm-2 col-md-3 offset-md-3 col-lg-4 offset-lg-5">
           <div class="mt-2">NAME：<?php echo $_SESSION['name'] ?></div>
           <div class="mt-2">email：<?php echo $_SESSION['email'] ?></div>
           <div class="mt-2">content：<?php echo nl2br($_SESSION['message']) ?></div>
         </div>
-        <div class="mt-3">
-          <input id="submit" type="submit" name="back" class="" value="戻る">
-          <input id="submit" type="submit" name="send" class="" value="送信">
+        <div class="mt-3 text-center">
+          <input id="submit" type="submit" name="back" class="mr-1" value="戻る">
+          <input id="submit" type="submit" name="send" class="ml-1" value="送信">
         </div>
       </form>
 
-    <?php else :?>
+      <!-- $modeがsendを持つ時は下記を表示 -->
+    <?php else : ?>
 
-      <!-- 完了画面 -->
-      <h2 class="formFinish">
-        送信しました。
-          <a href='contactForm.php'>
-            トップへ戻る
-          </a><br>
-        お問い合わせありがとうございました。<br>
-        ※設定頂いたメールアドレスに自動応答メッセージが届いているかご確認ください。<br>
-        届いていない場合は、サポートチームからのメールが受信できない場合があります。<br>
-      </h2>
+      <!-- 送信完了 or 失敗 -->
+
     <?php endif ?>
 
 
