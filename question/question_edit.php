@@ -46,9 +46,16 @@
     <select name="category" value="<?php echo $question['cate_id'] ?>" required>
       <option></option>
       <option value="1">項目1</option>
-      <?php foreach($categories as $value){
-          echo "<option value=".$value['cate_id'] .">" .$value['categpry_name'] ."</option>";
-      } ?>
+      <?php foreach($categories as $value){ ?>
+        <option 
+          value="<?php echo $value['cate_id'] ?>" 
+          <?php if($value['cate_id'] == $question['cate_id']): ?>
+            selected
+          <?php endif ?>
+        > 
+          <?php echo $value['categpry_name'] ?>
+        </option>
+      <?php } ?>
     </select>
     <?php echo $question['category_name'] ?></div>
   <div>本文：<?php echo $question['message'] ?></div>
