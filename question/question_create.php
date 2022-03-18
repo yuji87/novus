@@ -43,9 +43,10 @@
                 <option></option>
                 <option value="1">項目1</option>
                 <?php foreach($categories as $value){ ?>
-                    <option value="<?php $value['cate_id'] ?>"> 
-                        <?php $value['categpry_name'] ?>
-                    </option>
+
+                    <option value="<?php echo $value['cate_id'] ?>"> 
+                        <?php echo $value['category_name'] ?>
+                    </option>";
                 <?php } ?>
             </select>
         <br>

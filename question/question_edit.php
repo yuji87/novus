@@ -59,6 +59,7 @@
                         <?php $value['category_name'] ?>
                     </option>
                 <?php } ?>
+
     </select>
     <?php echo $question['category_name'] ?></div>
   <div>本文：<?php echo $question['message'] ?></div>
