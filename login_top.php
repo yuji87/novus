@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+//ファイル読み込み
+require_once 'classes/UserLogic.php';
+require_once 'functions.php';
+
+//ログインしているか判定して、していなかったら新規登録画面へ移す
+$result = UserLogic::checkLogin();
+if (!$result) {
+    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+    header('Location: entry_form.php');
+    return;
+}
+$login_user = $_SESSION['login_user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,59 +50,51 @@
 				<a class="nav-link small" href="#">本Page</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small" href="#">MyPage</a>
+				<a class="nav-link small" href="mypage.php">MyPage</a>
 			</li>
 		</ul>
-<!-- コンテンツ（中央カラム） -->
+
+    <!-- コンテンツ（中央カラム） -->
 	<div id="content" class="text-center">
 		<div class="text-center">
-      <br><br>
+            <br><br>
 			<h5>質問を検索する</h5>
-              <form>
+            <form>
                 <div class="form-row text-center">
-                  <div id="keyword" class="form-group col-row">
-                    <label for="inputEmail4">キーワード</label>
-                    <div>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    <div id="keyword" class="form-group col-row">
+                        <label for="inputEmail4">キーワード</label>
+                        <div>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
                     </div>
-                  </div>
-                  <br>
-                  <div class="form-group col-row">
-                    <label for="inputPassword4">言語</label>
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                      <option selected>Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
+                    <br>
+                    <div class="form-group col-row">
+                        <label for="inputPassword4">言語</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                 </div>
-              </form>
                 <br>
                 <button type="submit" class="btn btn-primary">Search</button>
                 <hr>
-
 			</form>
         </div>
-
-		<!-- ニュース（中央カラム） -->
-    <br>
+        <!-- ニュース（中央カラム） -->
+        <br>
 		<div id="news" class="text-center">
 			<h4>新着の質問</h4>
 			<h5>質問投稿のタイトルが入るよ</h5>
-			<p>
-			ここに質問投稿が入るよ
-			</p>
+			<p>ここに質問投稿が入るよ</p>
 			<p>投稿日時とか入れる</p>
 			<hr />
 		</div>
-
 	</div>
 
-	
 	<!-- フッタ -->
-	<p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p></div>
-
-</div>
+	<p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
 </body>
 </html>
