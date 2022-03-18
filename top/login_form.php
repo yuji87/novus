@@ -1,11 +1,11 @@
 <?php
     session_start();
 
-    require_once 'classes/UserLogic.php';
+    require_once '../classes/UserLogic.php';
 
     $result = UserLogic::checkLogin();
     if ($result){
-        header('location: login_top.php');
+        header('location: ../login_top.php');
         return;
     }
 
@@ -26,7 +26,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>ログインフォーム</title>
 </head>
 
