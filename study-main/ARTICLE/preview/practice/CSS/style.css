@@ -7,6 +7,9 @@
     overflow-wrap: break-word;
     overflow: scroll;
 }
+#preview-field-wrapper{
+  margin-top: 7.5vh;
+}
 
 body{
   min-height: 100%;
