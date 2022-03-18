@@ -82,7 +82,7 @@
                 <?php endif; ?>
             </div>
         </div>
-
+ssss
         <!--確認パスワードを記入-->
         <div class="row my-3">
             <label for="password_conf" class="form-label small font-weight-bold">確認：passwordを再入力してください</label>
