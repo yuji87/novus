@@ -3,6 +3,7 @@
 
     //ファイルの読み込み
     require_once '../classes/QuestionLogic.php';
+    require_once '../classes/CategoryLogic.php';
     require_once '../classes/UserLogic.php';
 
     $result = UserLogic::checkLogin();
@@ -10,6 +11,8 @@
     header('Location: login_top.html');
     return;
     }
+
+    $categories = CategoryLogic::getCategory();
 
     //error
     $err = [];
@@ -47,15 +50,16 @@
       <option></option>
       <option value="1">項目1</option>
       <?php foreach($categories as $value){ ?>
-        <option 
-          value="<?php echo $value['cate_id'] ?>" 
-          <?php if($value['cate_id'] == $question['cate_id']): ?>
-            selected
-          <?php endif ?>
-        > 
-          <?php echo $value['categpry_name'] ?>
-        </option>
-      <?php } ?>
+                    <option 
+                      value="<?php $value['cate_id'] ?>"
+                      <?php if($value['cate_id'] == $question['cate_id']) : ?>
+                        selected
+                      <?php endif; ?>
+                    > 
+                        <?php $value['category_name'] ?>
+                    </option>
+                <?php } ?>
+
     </select>
     <?php echo $question['category_name'] ?></div>
   <div>本文：<?php echo $question['message'] ?></div>

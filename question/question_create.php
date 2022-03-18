@@ -1,15 +1,20 @@
 <?php
     session_start();
     
+    //ファイルの読み込み
     require_once '../classes/UserLogic.php';
     require_once '../classes/QuestionLogic.php';
+    require_once '../classes/CategoryLogic.php';
+
 
     $result = UserLogic::checkLogin();
     if($result) {
     header('Location: login_top.html');
     return;
     }
-    
+
+    $categories = CategoryLogic::getCategory();
+
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);
 ?>
@@ -38,8 +43,9 @@
                 <option></option>
                 <option value="1">項目1</option>
                 <?php foreach($categories as $value){ ?>
+
                     <option value="<?php echo $value['cate_id'] ?>"> 
-                        <?php echo $value['categpry_name'] ?>
+                        <?php echo $value['category_name'] ?>
                     </option>";
                 <?php } ?>
             </select>

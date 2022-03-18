@@ -82,7 +82,7 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'SELECT question_id, title, message, post_date, upd_date, users.user_id, name, icon, cate_id, category_name
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, users.user_id, name, icon, categories.cate_id, category_name
               FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id
               INNER JOIN categories ON question_posts.cate_id = categories.cate_id
