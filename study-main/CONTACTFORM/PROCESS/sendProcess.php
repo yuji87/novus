@@ -28,7 +28,7 @@ if (isset($_SESSION['token']) && (!$token || !$_SESSION['token'] || !$_SESSION['
     $mailer->IsSMTP();
     $mailer->SMTPAuth = true;
     /// SMTPサーバー
-    $mailer->Host = 'smtp.gmail.com';
+    $mailer->Host = 'smtp.gmail.com ';
     /// 送信元のユーザー名
     $mailer->Username = 'qqandaa3@gmail.com';
     /// 送信元のパスワード
@@ -37,7 +37,7 @@ if (isset($_SESSION['token']) && (!$token || !$_SESSION['token'] || !$_SESSION['
     $mailer->Port = 587;
 
     /// 送信元メルアド
-    $mailer->From = 'qqandaa3@gmail.com';
+    $mailer->From = 'sssm6387@gmail.com';
     /// 送信者名
     $mailer->FromName = 'QandAsupport';
 
@@ -75,13 +75,12 @@ if (isset($_SESSION['token']) && (!$token || !$_SESSION['token'] || !$_SESSION['
       echo
       "<h2 class='text-center mt-5'>
         送信に失敗しました。<br>
-        セキュリティにひっかかってる？
         <a href='contactForm.php'>
           トップへ戻る
         </a><br>
       </h2>";
-      // / エラー内容全出力
-      var_export($mailer->ErrorInfo);
+      /// エラー内容全出力
+      // var_export($mailer->ErrorInfo);
     }
   } else {
     echo 

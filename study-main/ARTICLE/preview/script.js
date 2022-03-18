@@ -11,3 +11,8 @@ new Vue ({
       }
   }
 })
+
+function addTF(str)
+{
+document.faceForm.inputfield.value += str;
+}

@@ -35,8 +35,7 @@ class Todo
           exit;
       }
 
-      // header('Location: ' . SITE_URL);
-      header("Location: index.php");
+      header('Location: ' . SITE_URL);
       exit;
     }
   }

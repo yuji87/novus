@@ -1,7 +1,7 @@
 #input-field-wrapper, #preview-field-wrapper {
     height: 50vh;
 }
-#input-field-wrapper #input-field,
+#input-field-wrapper #inputfield,
 #preview-field-wrapper #preview-field {
     height: calc(100% - 1rem);
     overflow-wrap: break-word;
@@ -19,6 +19,11 @@ body{
 .manual{
   position: relative;
   z-index: 1;
+  background-color: rgba(142, 180, 167, 0.377);
+}
+
+.commandTitle{
+  font-size:1.4rem;
 }
 
 .title{
