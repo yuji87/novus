@@ -22,7 +22,8 @@ class QuestionLogic
         // SQL実行
         $result = $stmt-> execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        return $data;
+        // return $result;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
