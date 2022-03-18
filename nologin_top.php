@@ -17,8 +17,8 @@
 		<div class="container-fluid">
 			<a class="avbar-brand font-weight-bold h3" href="#">Q&A SITE</a>
 			<span class="navbar-text">
-				<a href="top/login_form.php" class= "col-md-2 small">Login</a>
-				<a href="top/entry_form.php" class= "col-md-2 small">Signup</a>
+				<a href="login/login_form.php" class= "col-md-2 small">Login</a>
+				<a href="signup/entry_form.php" class= "col-md-2 small">Signup</a>
 			</span>
 		</div>
 

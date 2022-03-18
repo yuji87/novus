@@ -2,17 +2,16 @@
 
 session_start();
 //ファイル読み込み
-require_once '../classes/UserLogic.php';
-require_once '../functions.php';
+require_once 'classes/UserLogic.php';
+require_once 'functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: top/entry_form.php');
+    header('Location: entry_form.php');
     return;
 }
-
 $login_user = $_SESSION['login_user'];
 ?>
 
@@ -22,7 +21,7 @@ $login_user = $_SESSION['login_user'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="css/top.css" />
     <title>CSS learning</title>
 </head>
 
@@ -32,17 +31,17 @@ $login_user = $_SESSION['login_user'];
 	<header>
 	  <nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="avbar-brand font-weight-bold h3" href="login_top.php">Q&A SITE</a>
+			<a class="avbar-brand font-weight-bold h3" href="#">Q&A SITE</a>
 			<span class="navbar-text">
 				<a href="login.php" class= "col-md-2 small">LogIn</a>
-				<a href="entry_form.php" class= "col-md-2 small">SignIn</a>
+				<a href="http://localhost/qandasite/entry_form.php" class= "col-md-2 small">SignIn</a>
 			</span>
 		</div>
 	</header>
 
 		<ul class="nav">
 			<li class="nav-item">
-				<a class="nav-link active small" href="question/question_create.php">質問Page</a>
+				<a class="nav-link active small" href="#">質問Page</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link small" href="#">記事Page</a>
@@ -70,7 +69,7 @@ $login_user = $_SESSION['login_user'];
                     </div>
                     <br>
                     <div class="form-group col-row">
-                        <label for="inputPassword4">カテゴリー</label>
+                        <label for="inputPassword4">言語</label>
                         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                             <option selected>Choose...</option>
                             <option value="1">One</option>
@@ -80,14 +79,14 @@ $login_user = $_SESSION['login_user'];
                     </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary">検索</button>
+                <button type="submit" class="btn btn-primary">Search</button>
                 <hr>
 			</form>
         </div>
-        <!-- 質問の検索結果（中央カラム） -->
+        <!-- ニュース（中央カラム） -->
         <br>
 		<div id="news" class="text-center">
-			<h4>新着の</h4>
+			<h4>新着の質問</h4>
 			<h5>質問投稿のタイトルが入るよ</h5>
 			<p>ここに質問投稿が入るよ</p>
 			<p>投稿日時とか入れる</p>

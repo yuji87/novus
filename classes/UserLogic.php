@@ -131,43 +131,4 @@ class UserLogic
     $_SESSION = array();
     session_destroy();
     } 
-
-    
-    /**
-     * ユーザー情報編集
-     * @param string $name
-     * @param string $tel
-     * @param string $email
-     * @param string $password
-     * @param string $icon
-     * @param string $tw-user
-     * @param string $comment
-     * @return bool $result
-     */
-    
-    public static function editUser($userData)
-    {
-    $result = false;
-    // SQLの準備
-    // SQLの実行
-    // SQLの結果を返す
-    $sql = 'UPDATE users SET name=?, tel=?, email=?, password=?, icon=?) WHERE user_id=?';
-    // ユーザーデータを配列に入れる
-    $arr = [];
-    $arr[] = $name;                                      // name
-    $arr[] = $tel;                                       // tel
-    $arr[] = $email;                                     // email
-    $arr[] = password_hash($password, PASSWORD_DEFAULT); // password
-    $arr[] = $icon;                                      // icon
-    $arr[] = $userData['comment'];                       //comment
-    try{
-        $stmt = connect()->prepare($sql);
-        // SQL実行
-        $result = $stmt-> execute($arr);
-        return $result;
-    } catch(\Exception $e) {
-        // エラーの出力
-        echo $e;
-    }
-    }
 }

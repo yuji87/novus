@@ -20,12 +20,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="css/top.css" />
     <title>新規会員登録</title>
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5">
-    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" enctype="multipart/form-data" action="entry_done.php" method="POST">
+    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="entry_done.php" method="POST">
         <h1 class="my-3">アカウント作成</h1>
             <?php if (isset($login_err)) : ?>
                 <p><?php echo $login_err; ?></p>
@@ -98,13 +98,14 @@
         <!--アイコン用の画像を選択-->
         <div class="row my-3">
             <label for="icon" class="form-label font-weight-bold">Icon</label>
-                <!-- <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576"> -->
+            <form action="entry_done.php" enctype="multipart/form-data" method="POST">
+                <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
                     <input type="file" class="form-control-file" accept="image/*" id="input" name="icon">
                     <!--欄の下に未記入時のエラーメッセージ表示-->
                     <?php if (isset($err['icon'])) : ?>
                         <p class="text-danger"><?php echo $err['icon']; ?></p>
                     <?php endif; ?>
-                <!-- </div> -->
+                </div>
         </div>
 
         
@@ -112,9 +113,9 @@
         <div class="col-12 my-4 text-center">
             <p><input type="submit" class="btn btn-primary" value="Sign up"></p>
             <!--entry_form.phpへ-->
-            <a href = "login_form.php">ログインはこちら</a>
+            <a href = "login/login_form.php">ログインはこちら</a>
         </div>
-
+        </form>
     </form>
 </body>
 </html>

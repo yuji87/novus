@@ -221,19 +221,3 @@ footer {
     font-size: 13px;
     margin-bottom: 0;
 }
-
-/*編集画面*/
-button,
-.btn-confirm,
-a.btn-confirm {
-  color: #fff;
-  background-color: #0dbdd4;
-  min-width: 200px;
-  max-width: 600px;
-  padding: 10px;
-}
-.btn-confirm:hover,
-a.btn-confirm:hover {
-  color: #fff;
-  background: #0dbdd4;
-}
