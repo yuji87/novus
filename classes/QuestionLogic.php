@@ -74,6 +74,41 @@ class QuestionLogic
     }
 
     /**
+     * 質問の詳細を表示する
+     * @param array $questionData
+     * @return bool $result
+     */
+    public static function displayQuestion($questionData)
+    {
+      $result = false;
+
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, users.user_id, name, icon, cate_id, category_name
+              FROM question_posts
+              INNER JOIN users ON users.user_id = question_posts.user_id
+              INNER JOIN categories ON question_posts.cate_id = categories.cate_id
+              WHERE question_id = ?';
+
+      // question_idを配列に入れる
+      $arr = [];
+      $arr[] = $questionData['question_id'];                                     // question_id
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data;
+        // return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
      * 質問を登録する
      * @param array $questionData
      * @return bool $result
@@ -82,6 +117,7 @@ class QuestionLogic
     {
       $result = false;
 
+      // imageがないときに上手く動かなかったため、避難中
       // $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
       $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
       // 質問データを配列に入れる
@@ -177,6 +213,41 @@ class QuestionLogic
     }
 
 
+
+    /**
+     * 返答を表示する
+     * @param array $answerData
+     * @return bool $result
+     */
+    public static function displayAnswer($answerData)
+    {
+      $result = false;
+
+      $sql = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, upd_date
+              FROM question_answers
+              INNER JOIN users ON users.user_id = question_answers.user_id 
+              WHERE question_answers.question_id = ? ORDER BY question_answers.answer_id DESC';
+
+      // question_idを配列に入れる
+      $arr = [];
+      $arr[] = $answerData['question_id'];                                     // question_id
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+        // return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
     /**
      * 返答を登録する
      * @param array $answerData
@@ -207,7 +278,6 @@ class QuestionLogic
         return $result;
       }
     }
-
 
     /**
      * 返答の編集
@@ -242,19 +312,45 @@ class QuestionLogic
       }
     }
 
-
     /**
-     * 返答の削除
-     * @param int $answer_id
+     * 質問に紐づく返答の一斉削除
+     * @param int $question_id
      * @return bool $result
     */
 
-    public static function deleteAnswer($answerData)
+    public static function deleteManyAnswer($answerData)
     {
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql = 'DELETE users WHERE question_id = ?';
+      $sql = 'DELETE FROM question_answers WHERE question_id = ?';
+
+      // answer_idを配列に入れる
+      $arr = [];
+      $arr[] = $answerData['question_id'];                                  // question_id
+
+      try {
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $stmt->execute($arr);
+        return $result;
+      } catch(\Exception $e) {
+        return false;
+      }
+    }
+
+    /**
+     * 返答の個別削除
+     * @param int $answer_id
+     * @return bool $result
+    */
+
+    public static function deleteOneAnswer($answerData)
+    {
+      // SQLの準備
+      // SQLの実行
+      // SQLの結果を返す
+      $sql = 'DELETE FROM question_answers WHERE answer_id = ?';
 
       // answer_idを配列に入れる
       $arr = [];
@@ -264,12 +360,130 @@ class QuestionLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $stmt->execute($arr);
-        // SQLの結果を返す
-        $answer = $stmt->fetch();
         return $result;
       } catch(\Exception $e) {
         return false;
       }
     }
 
+
+
+    /**
+     * 返答に紐づくいいね数を表示する
+     * @param array $answerData
+     * @return bool $result
+     */
+    public static function displayLike($likeData)
+    {
+      $result = false;
+
+      $sql = 'SELECT q_like_id
+              FROM question_likes
+              WHERE answer_id = ?';
+
+      // answer_idを配列に入れる
+      $arr = [];
+      $arr[] = $likeData;                                     // answer_id
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+        // return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
+     * いいねを登録する
+     * @param array $likeData
+     * @return bool $result
+     */
+    public static function createLike($likeData)
+    {
+      $result = false;
+
+      $sql = 'INSERT INTO question_likes (user_id, answer_id)VALUES (?, ?)';
+      // id情報を配列に入れる
+      $arr = [];
+      $arr[] = $likeData['user_id'];                                     // user_id
+      $arr[] = $likeData['answer_id'];                                   // answer_id
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetch();
+        return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
+     * いいねのON/OFFをする
+     * @param array $likeData
+     * @return bool $result
+     */
+    public static function sqitchLike($likeData)
+    {
+      $result = false;
+
+      $sql = 'UPDATE question_likes SET like_flg=? WHERE like_id = ?';
+      // フラグの値(0,1)をデータを配列に入れる
+      $arr = [];
+      $arr[] = $likeData['like_flg'];                                  // like_flg
+      $arr[] = $likeData['like_id'];                                   // like_id
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
+     * 返答に紐づくいいねの削除
+     * @param int $like_id
+     * @return bool $result
+    */
+
+    public static function deleteLike($likeData)
+    {
+      // SQLの準備
+      // SQLの実行
+      // SQLの結果を返す
+      $sql = 'DELETE question_likes WHERE answer_id = ?';
+
+      // answer_idを配列に入れる
+      $arr = [];
+      $arr[] = $likeData['answer_id'];                                  // answer_id
+
+      try {
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $stmt->execute($arr);
+        return $result;
+      } catch(\Exception $e) {
+        return false;
+      }
+    }
 }

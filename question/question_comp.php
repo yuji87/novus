@@ -13,7 +13,7 @@
     $message = filter_input(INPUT_POST, 'message');
     $question_image = filter_input(INPUT_POST, 'question_image');
     if(!isset($question_image)){
-      $question_image = "a";
+      $question_image = NULL;
     }
 
     if(!$title = filter_input(INPUT_POST, 'title')) {
@@ -33,9 +33,6 @@
         if(!$hasCreated){
             $err[] = '登録に失敗しました';
         }
-    }
-
-    if (count($err) === 0){
         //最新の質問を取得する処理
         $hasCreated = QuestionLogic::newQuestion();
 
@@ -65,7 +62,7 @@
 
   <?php var_dump($hasCreated[0]['question_id']); ?>
 
-  <form method="post" name="form1" action="../question_disp.php">
+  <form method="GET" name="form1" action="question_disp.php">
     <input type="hidden" name="question_id" value="<?php echo $hasCreated[0]['question_id']; ?>">
     <a href="javascript:form1.submit()">詳細画面へ</a>
   </form>
