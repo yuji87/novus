@@ -48,13 +48,12 @@
     <title>ログイン完了画面</title>
 </head>
 
-<body class="h-100 bg-secondary p-4 p-md-5 text-center">
+<body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5">
         <div class="row align-items-start">
-            <h2 class="my-3 h1">ログインが<br>完了しました</h2>
-            <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="login_top.php" role="button">TOPページ</a>
-            </div>
+            <h2 class="my-3 h1">ログインが完了しました</h2>
+            <br><br>
+            <a href="mypage.html"><button class="">トップページへ移動</button></a>
         </div>
     </div>
 </body>
