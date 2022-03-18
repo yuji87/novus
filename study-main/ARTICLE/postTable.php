@@ -18,7 +18,6 @@ class postTable
     if(isset($replyto)){
         $dataAry['reply_to'] = $replyto;
     }
-
       $pdow = DBConnector::getPdow();
       $id = $pdow->insert('tweet',$dataAry);
       return $id;
