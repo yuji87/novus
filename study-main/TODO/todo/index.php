@@ -8,6 +8,7 @@ use TodoApp\Todo;
 use TodoApp\Utils;
 
 $pdo = db::getInstance();
+
 $todo = new Todo($pdo); //todoクラスのインスタンスを作成
 $todo->processPost(); // POSTで送信されたデータを処理するメソッド
 $todos = $todo->getAll(); //todoを表示するために配列を取得するメソッド
@@ -44,7 +45,7 @@ $todos = $todo->getAll(); //todoを表示するために配列を取得するメ
           <form method="POST" action="?action=toggle">
             <!-- 条件演算子 is_doneが true→checked, false→空文字列 -->
             <input type="checkbox" <?= $todo->is_done ? 'checked':' ';  ?>>
-            <input type="hidden" name="todo_id" value="<?= Utils::h($todo->todo_id) ?>">
+            <input type="hidden" name="id" value="<?= Utils::h($todo->id) ?>">
             <input type="hidden" name="token" value="<?= Utils::h($_SESSION["token"])?>">
           </form>
 
@@ -54,7 +55,7 @@ $todos = $todo->getAll(); //todoを表示するために配列を取得するメ
 
           <form method="POST" action="?action=delete" class="delete-form">
             <span class="delete"> x </span>
-            <input type="hidden" name="todo_id" value="<?= Utils::h($todo->todo_id) ?>">
+            <input type="hidden" name="id" value="<?= Utils::h($todo->id) ?>">
             <input type="hidden" name="token" value="<?= Utils::h($_SESSION["token"])?>">
           </form>
         </li>

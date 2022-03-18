@@ -54,7 +54,7 @@ if (isset($back) && $back) { //戻るボタンが押されたとき
       }
       ?>
 
-      <h1 class="text-center mt-5">
+      <h1 class="formTitle mt-5">
         お問い合わせ
       </h1>
       <form action="./contactForm.php" method="post" id="form" class="mt-3 text-center" enctype="multipart/form-data">
@@ -64,7 +64,7 @@ if (isset($back) && $back) { //戻るボタンが押されたとき
         <input type="email" name="email" value="<?php echo $_SESSION['email'] ?>" class="mt-2" placeholder="E-MAIL"><br>
         <?php require_once("ERRMESSAGE/emailErr.php") ?>
 
-        <textarea type="text" name="message" class="mt-2" placeholder="MESSAGE" cols="50" rows="10" maxlength="1000"><?php echo $_SESSION['message'] ?></textarea><br>
+        <textarea type="text" name="message" class="mt-2" placeholder="MESSAGE" cols="70" rows="10" maxlength="1000"><?php echo $_SESSION['message'] ?></textarea><br>
         <?php require_once("ERRMESSAGE/messageErr.php") ?>
 
         <input type="submit" name="confirm" value="送信内容を確認" class="mt-1">
@@ -74,17 +74,17 @@ if (isset($back) && $back) { //戻るボタンが押されたとき
     <?php elseif ($mode === 'confirm') : ?>
 
       <!-- 確認画面 -->
-      <h1 class="text-center mt-5">
+      <h1 class="formTitle mt-5">
         内容の確認
       </h1>
       <form action="./contactForm.php" method="post" class="mt-3" style="font-size:1.5em; font-weight:bold">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-        <div class="col-sm-4 offset-sm-2 col-md-3 offset-md-3 col-lg-4 offset-lg-5">
+        <div class="">
           <div class="mt-2">NAME：<?php echo $_SESSION['name'] ?></div>
           <div class="mt-2">email：<?php echo $_SESSION['email'] ?></div>
           <div class="mt-2">content：<?php echo nl2br($_SESSION['message']) ?></div>
         </div>
-        <div class="mt-3 text-center">
+        <div class="mt-3">
           <input id="submit" type="submit" name="back" class="mr-1" value="戻る">
           <input id="submit" type="submit" name="send" class="ml-1" value="送信">
         </div>
