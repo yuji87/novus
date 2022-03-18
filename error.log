@@ -167,4 +167,16 @@ Stack trace:
 Stack trace:
 #0 C:\xampp\htdocs\qandasite\classes\QuestionLogic.php(236): PDOStatement->execute(Array)
 #1 C:\xampp\htdocs\qandasite\question\question_disp.php(19): QuestionLogic::displayAnswer(Array)
+#2 {main}PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'qandasite.catgories' doesn't exist in C:\xampp\htdocs\qandasite\classes\CategoryLogic.php:21
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\CategoryLogic.php(21): PDOStatement->execute()
+#1 C:\xampp\htdocs\qandasite\question\question_edit.php(15): categoryLogic::getCategory()
+#2 {main}PDOException: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'cate_id' in field list is ambiguous in C:\xampp\htdocs\qandasite\classes\QuestionLogic.php:98
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\QuestionLogic.php(98): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\question\question_disp.php(18): QuestionLogic::displayQuestion(Array)
+#2 {main}PDOException: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'cate_id' in field list is ambiguous in C:\xampp\htdocs\qandasite\classes\QuestionLogic.php:98
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\QuestionLogic.php(98): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\question\question_disp.php(18): QuestionLogic::displayQuestion(Array)
 #2 {main}
