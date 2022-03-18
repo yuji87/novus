@@ -1,13 +1,7 @@
 <?php
     session_start();
     
-    require_once 'classes/UserLogic.php';
-
-    $result = UserLogic::checkLogin();
-    if($result) {
-    header('Location: login_top.html');
-    return;
-    }
+    require_once '../classes/UserLogic.php';
 
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);
@@ -54,20 +48,9 @@
             <label for="tel" class="form-label font-weight-bold">*Phone</label>
             <p class="small text-muted">（ハイフンなし・半角数字）</p>
             <div class="md-3">
-                <input type="tel" class="form-control col-6" onInput="checkForm(this)" name="tel">
-                <!--JavaScriptで数字以外をはじく-->
-                <script type="text/javascript">
-                    function checkForm($this)
-                        {
-                            let str=$this.value;
-                            while(str.match(/[^A-Z^a-z\d\-]/))
-                            {
-                                str=str.replace(/[^A-Z^a-z\d\-]/,"");
-                            }
-                            $this.value=str;
-                        }
-                        console.log;
-                </script>
+                <input type="tel" oninput="value = value.replace(/[０-９]/g,s => 
+                    String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
+                    class="form-control col-6" name="tel">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
                 <?php if (isset($err['tel'])) : ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
@@ -115,18 +98,24 @@
         <!--アイコン用の画像を選択-->
         <div class="row my-3">
             <label for="icon" class="form-label font-weight-bold">Icon</label>
-                <input type="file" class="form-control-file" id="input" name="icon">
-                <!--欄の下に未記入時のエラーメッセージ表示-->
-                <?php if (isset($err['icon'])) : ?>
-                    <p class="text-danger"><?php echo $err['icon']; ?></p>
-                <?php endif; ?>
-            </div>
+            <form action="entry_done.php" enctype="multipart/form-data" method="POST">
+                <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
+                    <input type="file" class="form-control-file" accept="image/*" id="input" name="icon">
+                    <!--欄の下に未記入時のエラーメッセージ表示-->
+                    <?php if (isset($err['icon'])) : ?>
+                        <p class="text-danger"><?php echo $err['icon']; ?></p>
+                    <?php endif; ?>
+                </div>
         </div>
+
         
         <!--送信ボタン-->
         <div class="col-12 my-4 text-center">
-            <input type="submit" class="btn btn-primary" value="Sign up">
+            <p><input type="submit" class="btn btn-primary" value="Sign up"></p>
+            <!--entry_form.phpへ-->
+            <a href = "login/login_form.php">ログインはこちら</a>
         </div>
+        </form>
     </form>
 </body>
 </html>

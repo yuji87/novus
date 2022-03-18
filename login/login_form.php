@@ -5,9 +5,12 @@
 
     $result = UserLogic::checkLogin();
     if ($result){
-        header('location: login_top.html');
+        header('location: login_top.php');
         return;
     }
+
+    $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
+    unset($_SESSION['login_err']);
 
     //エラーメッセージ表示
     $err = $_SESSION;
@@ -49,7 +52,7 @@
         <div class="row my-4">
             <label for="tel" class="form-label font-weight-bold">Phone</label>
             <div class="md-3">
-                <input type="tel" class="form-control col-10" name="tel">
+                <input type="tel" oninput="value = value.replace(/[０-９]/g,s => String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" class="form-control col-10" name="tel">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
                 <?php if (isset($err['tel'])) : ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
