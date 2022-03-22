@@ -18,7 +18,8 @@ class QuestionLogic
 
       $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 
-              ORDER BY question_posts.question_id DESC WHERE users.user_id = ?';
+              WHERE users.user_id = ?
+              ORDER BY question_posts.question_id DESC';
 
       try{
         $stmt = connect()->prepare($sql);
