@@ -241,17 +241,89 @@ class QuestionLogic
 
     public static function deleteQuestion($questionData)
     {
-      // SQLの準備
-      // SQLの実行
-      // SQLの結果を返す
-      $sql = 'DELETE users WHERE question_id = ?';
+      // 質問に対して返答がついているかを検索
+      $sql_search_ans = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, upd_date
+                        FROM question_answers
+                        INNER JOIN users ON users.user_id = question_answers.user_id 
+                        WHERE question_answers.question_id = ? ORDER BY question_answers.answer_id DESC';
 
       // question_idを配列に入れる
       $arr = [];
       $arr[] = $questionData['question_id'];                                  // question_id
+      
+      try {
+        $stmt = connect()->prepare($sql_search_ans);
+        // SQL実行
+        $stmt->execute($arr);
+        // SQLの結果を返す
+        $search_ans = $stmt->fetch();
+      } catch(\Exception $e) {
+        return false;
+      }
+
+      // 返答がついている場合
+      if(!empty($search_ans)){
+        // それぞれの返答に対していいねがついているかを検索
+        $sql_search_like = 'SELECT q_like_id
+                            FROM question_likes
+                            WHERE answer_id = ?';
+
+        foreach($search_ans as $value){
+          // answer_idを配列に入れる
+          $arr = [];
+          $arr[] = $value['answer_id'];                                     // answer_id
+          
+          try{
+            $stmt = connect()->prepare($sql_search_like);
+            // SQL実行
+            $result = $stmt-> execute($arr);
+            $search_like = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          }catch(\Exception $e){
+            // エラーの出力
+            echo $e;
+            // ログの出力
+            error_log($e, 3, '../error.log');
+            return $result;
+          }
+          // いいねがついている場合
+          if(!empty($search_like)){
+            // それぞれの返答に対するいいねを削除
+            $sql_dlt_like = 'DELETE question_likes WHERE answer_id = ?';
+            try{
+              $stmt = connect()->prepare($sql_dlt_like);
+              // SQL実行
+              $result = $stmt-> execute($arr);
+            }catch(\Exception $e){
+              // エラーの出力
+              echo $e;
+              // ログの出力
+              error_log($e, 3, '../error.log');
+              return $result;
+            }
+          }
+        }
+
+        $sql_dlt_ans = 'DELETE FROM question_answers WHERE question_id = ?';
+        // question_idを配列に入れる
+        $arr = [];
+        $arr[] = $questionData['question_id'];                                  // question_id
+
+        try {
+          $stmt = connect()->prepare($sql_dlt_ans);
+          // SQL実行
+          $stmt->execute($arr);
+        } catch(\Exception $e) {
+          return false;
+        }
+      }
+
+      // SQLの準備
+      // SQLの実行
+      // SQLの結果を返す
+      $sql_dlt = 'DELETE users WHERE question_id = ?';
 
       try {
-        $stmt = connect()->prepare($sql);
+        $stmt = connect()->prepare($sql_dlt);
         // SQL実行
         $stmt->execute($arr);
         // SQLの結果を返す
@@ -261,6 +333,8 @@ class QuestionLogic
         return false;
       }
     }
+
+
 
 
 
