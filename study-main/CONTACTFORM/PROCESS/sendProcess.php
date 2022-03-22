@@ -28,7 +28,7 @@ if (isset($_SESSION['token']) && (!$token || !$_SESSION['token'] || !$_SESSION['
     $mailer->IsSMTP();
     $mailer->SMTPAuth = true;
     /// SMTPサーバー
-    $mailer->Host = 'smtp.gmail.com ';
+    $mailer->Host = 'smtp.gmail.com';
     /// 送信元のユーザー名
     $mailer->Username = 'qqandaa3@gmail.com';
     /// 送信元のパスワード
