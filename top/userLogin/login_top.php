@@ -2,14 +2,14 @@
 
 session_start();
 //ファイル読み込み
-require_once '../classes/UserLogic.php';
-require_once '../functions.php';
+require_once '../../classes/UserLogic.php';
+require_once '../../functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: top/entry_form.php');
+    header('Location: ../userCreate/signup_form.php');
     return;
 }
 
@@ -22,7 +22,7 @@ $login_user = $_SESSION['login_user'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <title>CSS learning</title>
 </head>
 
@@ -34,8 +34,8 @@ $login_user = $_SESSION['login_user'];
 		<div class="container-fluid">
 			<a class="avbar-brand font-weight-bold h3" href="login_top.php">Q&A SITE</a>
 			<span class="navbar-text">
-				<a href="login.php" class= "col-md-2 small">LogIn</a>
-				<a href="entry_form.php" class= "col-md-2 small">SignIn</a>
+				<a href="userLogin/login.php" class= "col-md-2 small">LogIn</a>
+				<a href="userCreate/signup_form.php" class= "col-md-2 small">SignIn</a>
 			</span>
 		</div>
 	</header>

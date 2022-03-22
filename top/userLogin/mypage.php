@@ -2,8 +2,8 @@
 
 session_start();
 //ファイル読み込み
-require_once '../classes/UserLogic.php';
-require_once '../functions.php';
+require_once '../../classes/UserLogic.php';
+require_once '../../functions.php';
 
 $name = filter_input(INPUT_POST, 'name');
 $icon = filter_input(INPUT_GET, 'icon');
@@ -12,10 +12,11 @@ $icon = filter_input(INPUT_GET, 'icon');
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: entry_form.php');
+    header('Location: userCreate/signup_form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@ $login_user = $_SESSION['login_user'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <title>My Page</title>
 </head>
 
@@ -38,7 +39,7 @@ $login_user = $_SESSION['login_user'];
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="login_top.php">TOPページ</a></li>
-            <li><a href="edit_user.php">会員情報 編集</a></li>
+            <li><a href="../userEdit/edit_user.php">会員情報 編集</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>

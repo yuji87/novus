@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../classes/UserLogic.php';
+require_once '../../classes/UserLogic.php';
 
 if (!$logout = filter_input(INPUT_POST, 'logout')) {
     exit ('不正なリクエストです');
@@ -23,7 +23,7 @@ UserLogic::logout();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <title>ログアウト画面</title>
 </head>
 
@@ -33,7 +33,7 @@ UserLogic::logout();
             <h2 class="my-3 h1">ログアウト完了</h2>
             <p>ログアウトが完了しました</p>
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../nologin_top.php" role="button">TOPページ</a>
+                <br><br><a class="btn btn-secondary" href="../../top.html" role="button">TOPページ</a>
             </div>
         </div>
     </div>

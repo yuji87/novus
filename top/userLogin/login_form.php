@@ -1,11 +1,12 @@
 <?php
     session_start();
 
-    require_once '../classes/UserLogic.php';
+    require_once '../../classes/UserLogic.php';
+    require_once '../../core/DBconnect.php';
 
     $result = UserLogic::checkLogin();
     if ($result){
-        header('location: ../login_top.php');
+        header('location: ../userLogin/login_top.php');
         return;
     }
 
@@ -26,7 +27,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <title>ログインフォーム</title>
 </head>
 
@@ -37,17 +38,6 @@
                 <p><?php echo $err['msg']; ?></p>
             <?php endif; ?>
         <p class="my-2">下記項目を記入して下さい。</p>
-        <!--名前を記入-->
-        <div class="row my-4">
-            <label for="name" class="form-label font-weight-bold">Name</label>
-            <div class="md-3">
-                <input type="text" class="form-control col-10" name="name">
-                <!--欄の下に未記入時のエラーメッセージ表示-->
-                <?php if (isset($err['name'])) : ?>
-                    <p class="text-danger"><?php echo $err['name']; ?></p>
-                <?php endif; ?>
-            </div>
-        </div>
         <!--電話番号を記入-->
         <div class="row my-4">
             <label for="tel" class="form-label font-weight-bold">Phone</label>
@@ -73,8 +63,8 @@
         <!--送信ボタン-->
         <div class="col-12 my-4 text-center">
             <p><input type="submit" class="btn btn-primary" value="Log in"></p>
-            <!--entry_form.phpへ-->
-            <a href = "entry_form.php">新規登録はこちら</a>
+            <!--signup_form.phpへ-->
+            <a href = "../userCreate/signup_form.php">新規登録はこちら</a>
         </div>
     </form>
 </body>
