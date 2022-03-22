@@ -15,24 +15,32 @@
     //error
     $err = [];
 
-    if (count($err) === 0 && 
-      (isset($_SESSION['q_data']['title']) &&
+    if (isset($_SESSION['q_data']['title']) &&
       isset($_SESSION['q_data']['category']) &&
       isset($_SESSION['q_data']['message']) &&
-      isset($_SESSION['q_data']['question_id']))
+      isset($_SESSION['q_data']['question_id'])
       ){
-        $title = $_SESSION['q_data']['title'];
-        $category = $_SESSION['q_data']['category'];
-        $message = $_SESSION['q_data']['message'];
-        $question_id = $_SESSION['q_data']['question_id'];
-
+        
         //質問を登録する処理
         $question = QuestionLogic::editQuestion();
-
+        
         if(!$question){
-            $err[] = '変更の保存に失敗しました';
+          $err[] = '変更の保存に失敗しました';
         }
       }
+        
+        // 質問IDから質問内容を取り込む処理
+        $data = QuestionLogic::displayQuestion($_SESSION['q_data']);
+
+        if(!$data){
+          $err[] = '変更の保存に失敗しました';
+        }
+
+        $title = $data['title'];
+        $category = $data['cate_id'];
+        $message = $data['message'];
+        $question_id = $_SESSION['q_data']['question_id'];
+      
 
 ?>
 
