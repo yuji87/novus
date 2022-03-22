@@ -49,8 +49,6 @@
   <div>カテゴリ：<?php echo $category ?></div>
   <div>本文：<?php echo $message ?></div>
 
-  <?php var_dump($hasCreated[0]['question_id']); ?>
-
   <form method="GET" name="form1" action="question_disp.php">
     <input type="hidden" name="question_id" value="<?php echo $hasCreated[0]['question_id']; ?>">
     <a href="javascript:form1.submit()">詳細画面へ</a>

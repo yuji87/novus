@@ -6,6 +6,37 @@ require_once '../core/DBconnect.php';
 class QuestionLogic
 {
     /**
+     * 特定ユーザーの質問を表示する
+     * @param int $user_id
+     * @return bool $result
+     */
+    public static function userQuestion()
+    {
+      $result = false;
+      $arr = [];
+      $arr[] = $_SESSION['user_login']['user_id'];                                     // user_id
+
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
+              INNER JOIN users ON users.user_id = question_posts.user_id 
+              ORDER BY question_posts.question_id DESC WHERE users.user_id = ?';
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+        // return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
      * 最新の質問を10件表示する
      * @return bool $result
      */
@@ -163,8 +194,9 @@ class QuestionLogic
 
     public static function editQuestion()
     {
+      $result = false;
 
-      $_SESSION['q_data']['upd_date'] = date("Y/m/d H:i:s");
+      $upd_date = date("Y/m/d H:i:s");
 
       // SQLの準備
       // SQLの実行
@@ -175,7 +207,7 @@ class QuestionLogic
       $arr = [];
       $arr[] = $_SESSION['q_data']['title'];                                  // title
       $arr[] = $_SESSION['q_data']['message'];                                // message
-      $arr[] = $_SESSION['q_data']['upd_date'];                               // upd_date
+      $arr[] = $upd_date;                                                     // upd_date
       $arr[] = $_SESSION['q_data']['category'];                               // cate_id
       $arr[] = $_SESSION['q_data']['question_image'];                         // question_image
       $arr[] = $_SESSION['q_data']['question_id'];                            // question_id
@@ -183,17 +215,15 @@ class QuestionLogic
       try {
         $stmt = connect()->prepare($sql);
         // SQL実行
-        var_dump($arr);
         $stmt->execute($arr);
         // SQLの結果を返す
         $question = $stmt->fetch();
 
+        //SQL実行後、question_id以外の$_SESSIONの内容を消去
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
-        $_SESSION['q_data']['upd_date'] = null;
         $_SESSION['q_data']['category'] = null;
         $_SESSION['q_data']['questin_image'] = null;
-        $_SESSION['q_data']['question_id'] = null;
 
         return $result;
       } catch(\Exception $e) {
