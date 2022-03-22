@@ -1,7 +1,7 @@
 <?php
 //名前空間
 namespace contactsApp;
-
+aaaa
 class Utils
 {
 //クラスから直接呼び出せるようにしておく
