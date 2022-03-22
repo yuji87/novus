@@ -8,7 +8,7 @@ define("DB_PASS", "root");
 
 // require_once("Utils.php");
 // require_once("Token.php");
-// require_once("db.php");
+// require_once("db.php");aaa
 // require_once("contact.php");
 
 // 自動でクラスを読み取る
