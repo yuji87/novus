@@ -6,6 +6,38 @@ require_once '../core/DBconnect.php';
 class QuestionLogic
 {
     /**
+     * 特定ユーザーの質問を表示する
+     * @param int $user_id
+     * @return bool $result
+     */
+    public static function userQuestion()
+    {
+      $result = false;
+      $arr = [];
+      $arr[] = $_SESSION['user_login']['user_id'];                                     // user_id
+
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
+              INNER JOIN users ON users.user_id = question_posts.user_id 
+              WHERE users.user_id = ?
+              ORDER BY question_posts.question_id DESC';
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+        // return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+    /**
      * 最新の質問を10件表示する
      * @return bool $result
      */
@@ -113,26 +145,33 @@ class QuestionLogic
      * @param array $questionData
      * @return bool $result
      */
-    public static function createQuestion($questionData)
+    public static function createQuestion()
     {
       $result = false;
 
       // imageがないときに上手く動かなかったため、避難中
-      // $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
-      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
+      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
+      // $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
       // 質問データを配列に入れる
       $arr = [];
-      $arr[] = $questionData['user_id'];                                     // user_id
-      $arr[] = $questionData['title'];                                       // title
-      $arr[] = $questionData['message'];                                     // message
-      $arr[] = $questionData['category'];                                     // cate_id
-      // $arr[] = $questionData['question_image'];                              // question_image
+      $arr[] = $_SESSION['q_data']['user_id'];                                     // user_id
+      $arr[] = $_SESSION['q_data']['title'];                                       // title
+      $arr[] = $_SESSION['q_data']['message'];                                     // message
+      $arr[] = $_SESSION['q_data']['category'];                                    // category
+      $arr[] = $_SESSION['q_data']['question_image'];                              // question_image
 
       try{
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
         $question = $stmt->fetch();
+
+        $_SESSION['q_data']['user_id'] = null;
+        $_SESSION['q_data']['title'] = null;
+        $_SESSION['q_data']['message'] = null;
+        $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
+
         return $result;
       }catch(\Exception $e){
         // エラーの出力
@@ -154,28 +193,39 @@ class QuestionLogic
      * @return bool $result
     */
 
-    public static function editQuestion($questionData)
+    public static function editQuestion()
     {
+      $result = false;
+
+      $upd_date = date("Y/m/d H:i:s");
+
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql = 'UPDATE users SET title=?,message=?,upd_time=?,cate_id=?,question_image=? WHERE question_id = ?';
+      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=?,question_image=? WHERE question_id = ?';
 
       // 編集データを配列に入れる
       $arr = [];
-      $arr[] = $questionData['title'];                                        // title
-      $arr[] = $questionData['message'];                                      // message
-      $arr[] = $questionData['upd_time'];                                     // upd_time
-      $arr[] = $questionData['cate_id'];                                      // cate_id
-      $arr[] = $questionData['question_image'];                               // question_image
-      $arr[] = $questionData['question_id'];                                  // question_id
-
+      $arr[] = $_SESSION['q_data']['title'];                                  // title
+      $arr[] = $_SESSION['q_data']['message'];                                // message
+      $arr[] = $upd_date;                                                     // upd_date
+      $arr[] = $_SESSION['q_data']['category'];                               // cate_id
+      $arr[] = $_SESSION['q_data']['question_image'];                         // question_image
+      $arr[] = $_SESSION['q_data']['question_id'];                            // question_id
+      
       try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $stmt->execute($arr);
         // SQLの結果を返す
         $question = $stmt->fetch();
+
+        //SQL実行後、question_id以外の$_SESSIONの内容を消去
+        $_SESSION['q_data']['title'] = null;
+        $_SESSION['q_data']['message'] = null;
+        $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
+
         return $result;
       } catch(\Exception $e) {
         return false;
@@ -191,17 +241,89 @@ class QuestionLogic
 
     public static function deleteQuestion($questionData)
     {
-      // SQLの準備
-      // SQLの実行
-      // SQLの結果を返す
-      $sql = 'DELETE users WHERE question_id = ?';
+      // 質問に対して返答がついているかを検索
+      $sql_search_ans = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, upd_date
+                        FROM question_answers
+                        INNER JOIN users ON users.user_id = question_answers.user_id 
+                        WHERE question_answers.question_id = ? ORDER BY question_answers.answer_id DESC';
 
       // question_idを配列に入れる
       $arr = [];
       $arr[] = $questionData['question_id'];                                  // question_id
+      
+      try {
+        $stmt = connect()->prepare($sql_search_ans);
+        // SQL実行
+        $stmt->execute($arr);
+        // SQLの結果を返す
+        $search_ans = $stmt->fetch();
+      } catch(\Exception $e) {
+        return false;
+      }
+
+      // 返答がついている場合
+      if(!empty($search_ans)){
+        // それぞれの返答に対していいねがついているかを検索
+        $sql_search_like = 'SELECT q_like_id
+                            FROM question_likes
+                            WHERE answer_id = ?';
+
+        foreach($search_ans as $value){
+          // answer_idを配列に入れる
+          $arr = [];
+          $arr[] = $value['answer_id'];                                     // answer_id
+          
+          try{
+            $stmt = connect()->prepare($sql_search_like);
+            // SQL実行
+            $result = $stmt-> execute($arr);
+            $search_like = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          }catch(\Exception $e){
+            // エラーの出力
+            echo $e;
+            // ログの出力
+            error_log($e, 3, '../error.log');
+            return $result;
+          }
+          // いいねがついている場合
+          if(!empty($search_like)){
+            // それぞれの返答に対するいいねを削除
+            $sql_dlt_like = 'DELETE question_likes WHERE answer_id = ?';
+            try{
+              $stmt = connect()->prepare($sql_dlt_like);
+              // SQL実行
+              $result = $stmt-> execute($arr);
+            }catch(\Exception $e){
+              // エラーの出力
+              echo $e;
+              // ログの出力
+              error_log($e, 3, '../error.log');
+              return $result;
+            }
+          }
+        }
+
+        $sql_dlt_ans = 'DELETE FROM question_answers WHERE question_id = ?';
+        // question_idを配列に入れる
+        $arr = [];
+        $arr[] = $questionData['question_id'];                                  // question_id
+
+        try {
+          $stmt = connect()->prepare($sql_dlt_ans);
+          // SQL実行
+          $stmt->execute($arr);
+        } catch(\Exception $e) {
+          return false;
+        }
+      }
+
+      // SQLの準備
+      // SQLの実行
+      // SQLの結果を返す
+      $sql_dlt = 'DELETE users WHERE question_id = ?';
 
       try {
-        $stmt = connect()->prepare($sql);
+        $stmt = connect()->prepare($sql_dlt);
         // SQL実行
         $stmt->execute($arr);
         // SQLの結果を返す
@@ -211,6 +333,8 @@ class QuestionLogic
         return false;
       }
     }
+
+
 
 
 
