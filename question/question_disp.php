@@ -58,13 +58,16 @@
       <?php endif; ?>
     </div>
 
-    <?php if($_SESSION['id'] == $question['user_id']): ?>
-      <form method="POST">
-        <input type="hidden" name="question_id" value="<?php echo $question_id ?>">
-        <a href="question_edit.php" onclick="document.a_form.submit();">編集</a>
-        <a href="question_delete.php" onclick="document.a_form.submit();">削除</a>
+    <?php //if($_SESSION['id'] == $question['user_id']): ?>
+      <form method="POST" name="question" action="question_edit.php">
+        <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+        <input type="submit" value="編集">
       </form>
-      <?php endif; ?>
+      <form method="POST" name="question" action="question_edit.php">
+        <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+        <input type="submit" value="削除">
+      </form>
+      <?php //endif; ?>
       
       <?php if(isset($answer)): ?>
       <?php foreach($answer as $value){ ?>
@@ -78,17 +81,17 @@
             <?php endif; ?>
           </div>
         <div>本文：<?php echo $value['message'] ?></div>
-        <div>日付：
+        <div>
           <?php if (!isset($value['upd_date'])): ?>
-            <?php echo $value['answer_date']  ?>
+            投稿：<?php echo $value['answer_date']  ?>
           <?php else: ?>
-            <?php echo $value['upd_date'] ?>
+            更新：<?php echo $value['upd_date'] ?>
           <?php endif; ?>
         </div>
         <div>いいね数：<?php echo count($likes) ?></div>
         <?php if($_SESSION['id'] == $value['user_id']): ?>
           <form method="POST">
-            <input type="hidden" name="question_id" value="<?php $question['question_id'] ?>">
+            <input type="hidden" name="answer" value="<?php $question['question_id'] ?>">
             <a href="../answer_edit.php" onclick="document.a_form.submit();">編集</a>
             <a href="../answer_delete.php" onclick="document.a_form.submit();">削除</a>
           </form>

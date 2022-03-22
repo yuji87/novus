@@ -1,0 +1,51 @@
+<?php
+
+    session_start();
+
+    //ファイルの読み込み
+    require_once '../classes/QuestionLogic.php';
+    require_once '../classes/UserLogic.php';
+
+    $result = UserLogic::checkLogin();
+    if($result) {
+    header('Location: login_top.html');
+    return;
+    }
+
+    //error
+    $err = [];
+
+    if (count($err) === 0 && 
+      (isset($_SESSION['q_data']['title']) &&
+      isset($_SESSION['q_data']['category']) &&
+      isset($_SESSION['q_data']['message']) &&
+      isset($_SESSION['q_data']['question_id']))
+      ){
+        $title = $_SESSION['q_data']['title'];
+        $category = $_SESSION['q_data']['category'];
+        $message = $_SESSION['q_data']['message'];
+        $question_id = $_SESSION['q_data']['question_id'];
+
+        //質問を登録する処理
+        $question = QuestionLogic::editQuestion();
+
+        if(!$question){
+            $err[] = '変更の保存に失敗しました';
+        }
+      }
+
+?>
+
+
+<div>以下の内容で保存しました</div>
+<div>題名：<?php echo $title ?></div>
+<div>カテゴリー：<?php echo $category ?></div>
+<div>本文：<?php echo $message ?></div>
+
+<form method="GET" action="question_disp.php">
+  <input type="hidden" name= "question_id" value="<?php echo $question_id ?>">
+  <input type="submit" value="質問へ">
+</form>
+<button type="button" onclick="">TOP</button>
+
+

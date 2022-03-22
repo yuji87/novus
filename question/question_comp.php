@@ -7,28 +7,17 @@
     //error
     $err = [];
 
-    $user_id = filter_input(INPUT_POST, 'user_id');
-    $title = filter_input(INPUT_POST, 'tilte');
-    $category = filter_input(INPUT_POST, 'category');
-    $message = filter_input(INPUT_POST, 'message');
-    $question_image = filter_input(INPUT_POST, 'question_image');
-    if(!isset($question_image)){
-      $question_image = NULL;
-    }
+    if (isset($_SESSION['q_data']['user_id']) &&
+      isset($_SESSION['q_data']['title']) &&
+      isset($_SESSION['q_data']['category']) &&
+      isset($_SESSION['q_data']['message'])
+      ){
+        $title = $_SESSION['q_data']['title'];
+        $category = $_SESSION['q_data']['category'];
+        $message = $_SESSION['q_data']['message'];
 
-    if(!$title = filter_input(INPUT_POST, 'title')) {
-        $err[] = '質問タイトルを入力してください';
-    }
-    if(!$category = filter_input(INPUT_POST, 'category')) {
-        $err[] = 'カテゴリを選択してください';
-    }
-    if(!$message = filter_input(INPUT_POST, 'message')) {
-        $err[] = '本文を入力してください';
-    }
-
-    if (count($err) === 0){
         //質問を登録する処理
-        $hasCreated = QuestionLogic::createQuestion($_POST);
+        $hasCreated = QuestionLogic::createQuestion();
 
         if(!$hasCreated){
             $err[] = '登録に失敗しました';

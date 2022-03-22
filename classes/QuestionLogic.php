@@ -113,26 +113,33 @@ class QuestionLogic
      * @param array $questionData
      * @return bool $result
      */
-    public static function createQuestion($questionData)
+    public static function createQuestion()
     {
       $result = false;
 
       // imageがないときに上手く動かなかったため、避難中
-      // $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
-      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
+      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
+      // $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
       // 質問データを配列に入れる
       $arr = [];
-      $arr[] = $questionData['user_id'];                                     // user_id
-      $arr[] = $questionData['title'];                                       // title
-      $arr[] = $questionData['message'];                                     // message
-      $arr[] = $questionData['category'];                                     // cate_id
-      // $arr[] = $questionData['question_image'];                              // question_image
+      $arr[] = $_SESSION['q_data']['user_id'];                                     // user_id
+      $arr[] = $_SESSION['q_data']['title'];                                       // title
+      $arr[] = $_SESSION['q_data']['message'];                                     // message
+      $arr[] = $_SESSION['q_data']['category'];                                    // category
+      $arr[] = $_SESSION['q_data']['question_image'];                              // question_image
 
       try{
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
         $question = $stmt->fetch();
+
+        $_SESSION['q_data']['user_id'] = null;
+        $_SESSION['q_data']['title'] = null;
+        $_SESSION['q_data']['message'] = null;
+        $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
+
         return $result;
       }catch(\Exception $e){
         // エラーの出力
@@ -154,28 +161,40 @@ class QuestionLogic
      * @return bool $result
     */
 
-    public static function editQuestion($questionData)
+    public static function editQuestion()
     {
+
+      $_SESSION['q_data']['upd_date'] = date("Y/m/d H:i:s");
+
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql = 'UPDATE users SET title=?,message=?,upd_time=?,cate_id=?,question_image=? WHERE question_id = ?';
+      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=?,question_image=? WHERE question_id = ?';
 
       // 編集データを配列に入れる
       $arr = [];
-      $arr[] = $questionData['title'];                                        // title
-      $arr[] = $questionData['message'];                                      // message
-      $arr[] = $questionData['upd_time'];                                     // upd_time
-      $arr[] = $questionData['cate_id'];                                      // cate_id
-      $arr[] = $questionData['question_image'];                               // question_image
-      $arr[] = $questionData['question_id'];                                  // question_id
-
+      $arr[] = $_SESSION['q_data']['title'];                                  // title
+      $arr[] = $_SESSION['q_data']['message'];                                // message
+      $arr[] = $_SESSION['q_data']['upd_date'];                               // upd_date
+      $arr[] = $_SESSION['q_data']['category'];                               // cate_id
+      $arr[] = $_SESSION['q_data']['question_image'];                         // question_image
+      $arr[] = $_SESSION['q_data']['question_id'];                            // question_id
+      
       try {
         $stmt = connect()->prepare($sql);
         // SQL実行
+        var_dump($arr);
         $stmt->execute($arr);
         // SQLの結果を返す
         $question = $stmt->fetch();
+
+        $_SESSION['q_data']['title'] = null;
+        $_SESSION['q_data']['message'] = null;
+        $_SESSION['q_data']['upd_date'] = null;
+        $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
+        $_SESSION['q_data']['question_id'] = null;
+
         return $result;
       } catch(\Exception $e) {
         return false;
