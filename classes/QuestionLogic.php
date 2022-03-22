@@ -128,6 +128,7 @@ class QuestionLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
         // return $result;
@@ -241,6 +242,7 @@ class QuestionLogic
 
     public static function deleteQuestion($questionData)
     {
+      $result = false;
       // 質問に対して返答がついているかを検索
       $sql_search_ans = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, upd_date
                         FROM question_answers
@@ -252,6 +254,7 @@ class QuestionLogic
       $arr[] = $questionData['question_id'];                                  // question_id
       
       try {
+        var_dump(1);
         $stmt = connect()->prepare($sql_search_ans);
         // SQL実行
         $stmt->execute($arr);
@@ -260,9 +263,11 @@ class QuestionLogic
       } catch(\Exception $e) {
         return false;
       }
-
+      var_dump($search_ans);
+      
       // 返答がついている場合
       if(!empty($search_ans)){
+      $result = false;
         // それぞれの返答に対していいねがついているかを検索
         $sql_search_like = 'SELECT q_like_id
                             FROM question_likes
@@ -287,6 +292,7 @@ class QuestionLogic
           }
           // いいねがついている場合
           if(!empty($search_like)){
+            $result = false;
             // それぞれの返答に対するいいねを削除
             $sql_dlt_like = 'DELETE question_likes WHERE answer_id = ?';
             try{
@@ -316,18 +322,25 @@ class QuestionLogic
           return false;
         }
       }
+      var_dump(2);
+
 
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql_dlt = 'DELETE users WHERE question_id = ?';
-
+      $sql_dlt = 'DELETE FROM question_posts WHERE question_id = ?';
+      
       try {
         $stmt = connect()->prepare($sql_dlt);
+        $arr = [];
+        $arr[] = $questionData['question_id']; 
         // SQL実行
+        var_dump($questionData['question_id']);
         $stmt->execute($arr);
+        var_dump(4);
         // SQLの結果を返す
         $question = $stmt->fetch();
+
         return $result;
       } catch(\Exception $e) {
         return false;

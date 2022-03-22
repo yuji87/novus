@@ -51,7 +51,7 @@
   <div>本文：<?php echo $message ?></div>
 
   <form method="GET" name="form1" action="question_disp.php">
-    <input type="hidden" name="question_id" value="<?php echo $hasCreated[0]['question_id']; ?>">
+    <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
     <a href="javascript:form1.submit()">詳細画面へ</a>
   </form>
 <a href="../login_top.php">TOP</a>
