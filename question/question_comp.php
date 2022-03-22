@@ -8,26 +8,27 @@
     $err = [];
 
     if (isset($_SESSION['q_data']['user_id']) &&
-      isset($_SESSION['q_data']['title']) &&
-      isset($_SESSION['q_data']['category']) &&
-      isset($_SESSION['q_data']['message'])
+        isset($_SESSION['q_data']['title']) &&
+        isset($_SESSION['q_data']['category']) &&
+        isset($_SESSION['q_data']['message'])
       ){
-        $title = $_SESSION['q_data']['title'];
-        $category = $_SESSION['q_data']['category'];
-        $message = $_SESSION['q_data']['message'];
+      $title = $_SESSION['q_data']['title'];
+      $category = $_SESSION['q_data']['category'];
+      $message = $_SESSION['q_data']['message'];
 
-        //質問を登録する処理
-        $hasCreated = QuestionLogic::createQuestion();
+      //質問を登録する処理
+      $hasCreated = QuestionLogic::createQuestion();
 
-        if(!$hasCreated){
-            $err[] = '登録に失敗しました';
-        }
-        //最新の質問を取得する処理
-        $hasCreated = QuestionLogic::newQuestion();
+      if(!$hasCreated){
+        $err[] = '登録に失敗しました';
+      }
+      
+      //最新の質問を取得する処理
+      $hasTaken = QuestionLogic::newQuestion();
 
-        if(!$hasCreated){
-            $err[] = '登録に失敗しました';
-        }
+      if(!$hasTaken){
+        $err[] = '質問の取り込みに失敗しました';
+      }
     }
 
 ?>
