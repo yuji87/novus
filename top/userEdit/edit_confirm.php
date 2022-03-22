@@ -8,7 +8,7 @@ require_once '../classes/UserLogic.php';
 $result = UserLogic::checkLogin();
 // if (!$result) {
     // $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    // header('Location: entry_form.php');
+    // header('Location: userCreate/signup_form.php');
     // return;
 // }
 
@@ -52,7 +52,7 @@ $comment = $_SESSION['edit']['comment'];
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="../login/logout.php" method="POST">
+                <form action="../logout.php" method="POST">
                     <input type="submit" name="logout" value="ログアウト">
                 </form>
             </li>

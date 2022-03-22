@@ -2,24 +2,27 @@
     session_start();
 
     // ファイルの読み込み
-    require_once '../classes/UserLogic.php';
+    require_once '../../classes/UserLogic.php';
 
     // エラーメッセージ
     $err = [];
 
-    $name = filter_input(INPUT_POST, 'name');
     $tel = filter_input(INPUT_POST, 'tel');
     $password = filter_input(INPUT_POST, 'password');
-    
-    // バリデーション
-    if(!$name = filter_input(INPUT_POST, 'name')) {
-        $err['name'] = '名前を入力してください';
-    }
+    //未入力チェック
     if(!$tel = filter_input(INPUT_POST, 'tel')) {
         $err['tel'] = '電話番号を入力してください';
     }
+    // 文字数チェック
+    if (strlen($tel) > 255) {
+        $err_msg['tel'] = '255文字で入力してください';
+    }
     if(!$password = filter_input(INPUT_POST, 'password')) {
         $err['password'] = 'パスワードを入力してください';
+    }
+    //正規表現
+    if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)){
+        $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
     }
 
     // エラーがあったらフォーム画面に戻す
@@ -30,7 +33,7 @@
     }
 
     // ログインに成功した時の処理
-    $result = UserLogic::login($name, $tel, $password);
+    $result = UserLogic::login($tel, $password);
     // ログインに失敗した時の処理
     if (!$result){
         header('Location: login_form.php');
@@ -44,7 +47,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <title>ログイン完了画面</title>
 </head>
 

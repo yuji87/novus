@@ -1,0 +1,61 @@
+PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:177
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(177): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:174
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(174): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\classes\UserLogic.php:175
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\classes\UserLogic.php(175): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\top\editConfirm\nameConfirm.php(37): UserLogic::editUserName(Array)
+#2 {main}

@@ -1,35 +1,17 @@
 <?php
-    session_start();
+    // session_start();
 
     //ファイルの読み込み
-    require_once '../classes/UserLogic.php';
+    // require_once '../classes/UserLogic.php';
 
     //エラーメッセージ
     $err = [];
+    // if (isset($name) || isset($tel) || isset($email) || isset($password)) {
 
-    $name = filter_input(INPUT_POST, 'name');
-    $tel = filter_input(INPUT_POST, 'tel');
-    $email = filter_input(INPUT_POST, 'email');
-    $password = filter_input(INPUT_POST, 'password');
-    $password_conf = filter_input(INPUT_POST, 'password_conf');
-    $icon = filter_input(INPUT_POST, 'icon');
-
-    //バリデーション
-    if(!$name){
-        $err['name'] = '名前を入力してください';
-    }
-    if(!$tel){
-        $err['tel'] = '電話番号を入力してください';
-    }
-    //正規表現
-    if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)){
-        $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
-    }
-    if ($password !== $password_conf){
-        $err['password_conf'] = '確認用パスワードと異なっています';
-    }
-
-    if(isset($_FILES['icon'])) {
+    
+        // $_SESSION['signUp'] = array($_POST['name'], $_POST['tel'], $_POST['email'], $_POST['password']);
+    
+    /*if(isset($_FILES['icon'])) {
         // ファイル関連の取得
         $icon = $_FILES['icon'];
         $filename = basename($icon['name']);
@@ -50,22 +32,21 @@
         //move_uploaded_fileで、一時ファイルを保存先ディレクトリに移動させる
         move_uploaded_file($_FILES['icon']['tmp_name'], $save);
         }
-    }
-    
-    
-    
-    
+    } */
+
     //エラーがなかった場合の処処理
-    if (count($err) === 0) {
+    // if (count($err) === 0 && (!empty($_POST['check']))) {
         //ユーザーを登録する
-        $hasCreated = UserLogic::createUser($_POST, $_FILES);
-        
-        // header('Location: login_form.php');
+        // $hasCreated = UserLogic::createUser($_POST);
+        // header('Location: signup_done.php');
         //既に存在しているアカウントの場合
-        if(!$hasCreated){
-        $err[] = '登録に失敗しました';
-        }
-    }
+        // if(!$hasCreated){
+        // $err[] = '登録に失敗しました';
+        // }
+    // }
+    // }
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +55,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <title>会員登録完了画面</title>
 </head>
 
@@ -86,14 +67,14 @@
                 <p><?php echo $e ?></p>
                 <?php endforeach ?>
                 <div class="text-center">
-                    <br><br><a class="btn btn-secondary" href="entry_form.php" role="button">登録画面に戻る</a>
+                    <br><br><a class="btn btn-secondary" href="signup_form.php" role="button">登録画面に戻る</a>
                 </div>
         <?php else :?>
         <div class="row align-items-start">
             <h1 class="my-3 h1">会員登録が<br>完了しました</h1>
             <!--TOPページへ-->
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="login_form.php" role="button">ログインする</a>
+                <br><br><a class="btn btn-secondary" href="../userLogin/login_form.php" role="button">ログインする</a>
             </div>
         <?php endif ?>
         </div>

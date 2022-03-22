@@ -1,9 +1,0 @@
-PDOException: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in C:\xampp\htdocs\qandasite\classes\QuestionLogic.php:98
-Stack trace:
-#0 C:\xampp\htdocs\qandasite\classes\QuestionLogic.php(98): PDOStatement->execute(Array)
-#1 C:\xampp\htdocs\qandasite\question\question_disp.php(18): QuestionLogic::displayQuestion(Array)
-#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in C:\xampp\htdocs\qandasite\classes\QuestionLogic.php:98
-Stack trace:
-#0 C:\xampp\htdocs\qandasite\classes\QuestionLogic.php(98): PDOStatement->execute(Array)
-#1 C:\xampp\htdocs\qandasite\question\question_disp.php(18): QuestionLogic::displayQuestion(Array)
-#2 {main}
