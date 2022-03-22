@@ -17,8 +17,8 @@
     //error
     $err = [];
 
-    $question_id = filter_input(INPUT_GET, 'question_id');
-    if(!$question_id = filter_input(INPUT_GET, 'question_id')) {
+    $question_id = filter_input(INPUT_POST, 'question_id');
+    if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
       $err[] = '質問を選択し直してください';
   }
 
@@ -29,6 +29,35 @@
         $err[] = '質問の読み込みに失敗しました';
     }
   }
+
+  if(isset($_POST['q_edit_conf'])){
+    $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title');
+    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category');
+    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message');
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+    if(isset($_POST['question_image'])){
+        $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image');
+    }else{
+        $_SESSION['q_data']['question_image'] = null;
+    }
+
+    if(!$_SESSION['q_data']['title']) {
+        $err[] = '質問タイトルを入力してください';
+    }
+    if(!$_SESSION['q_data']['category']) {
+        $err[] = 'カテゴリを選択してください';
+    }
+    if(!$_SESSION['q_data']['message']) {
+        $err[] = '本文を入力してください';
+    }
+    if(!$_SESSION['q_data']['question_id']) {
+        $err[] = '質問IDが選択されていません';
+    }
+
+    if (count($err) === 0){
+        header('Location: question_edit_comp.php');
+    }
+}
 
 ?>
 
@@ -44,45 +73,36 @@
 
 <div>質問内容</div>
 <form method="POST" action="">
-  <div>題名：<input type="text" name="title" value="<?php echo $question['title'] ?>" required></div>
+  <div>題名：
+    <input type="text"
+            name="title"
+            value="<?php echo $question['title'] ?>"
+            required>
+  </div>
   <div>カテゴリ： 
-    <select name="category" value="<?php echo $question['cate_id'] ?>" required>
+    <select name="category"  required>
       <option></option>
       <option value="1">項目1</option>
       <?php foreach($categories as $value){ ?>
                     <option 
-                      value="<?php $value['cate_id'] ?>"
+                      value="<?php echo $value['cate_id'] ?>"
                       <?php if($value['cate_id'] == $question['cate_id']) : ?>
                         selected
                       <?php endif; ?>
                     > 
-                        <?php $value['category_name'] ?>
+                        <?php echo $value['category_name'] ?>
                     </option>
                 <?php } ?>
 
     </select>
-    <?php echo $question['category_name'] ?></div>
-  <div>本文：<?php echo $question['message'] ?></div>
-  <div>日付：
-    <?php if (!isset($question['upd_date'])): ?>
-        <?php echo $question['post_date']  ?>
-      <?php else: ?>
-        <?php echo $question['upd_date'] ?>
-      <?php endif; ?>
-    </div>
-    <div>名前：<?php echo $question['name'] ?></div>
-    <div>アイコン：
-      <?php if(!isset($question['icon'])): ?>
-        <?php echo $question['post_date']  ?>
-      <?php else: ?>
-        <?php echo $question['icon'] ?>
-      <?php endif; ?>
-    </div>
-
-  
-    
-      <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
-      <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
-      <textarea placeholder="ここに返信を入力してください" name="a_message"></textarea>
-      <input type="submit">
-    </form>
+  </div>
+  <div>本文：
+    <textarea name="message"><?php echo $question['message'] ?></textarea>
+  </div>
+  <div>添付</div>
+        <div>※jpgもしくはpng形式にてお願いいたします。</div>
+            <input type="file" name="question_image" accept="image/png, image/jpeg">
+  <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
+  <input type="submit" name="q_edit_conf">
+</form>
+<button type="button" onclick="history.back()">戻る</button>
