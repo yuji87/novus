@@ -64,6 +64,7 @@
   --bs-body-bg: #fff;
 }
 
+
 *,
 *::before,
 *::after {
@@ -486,9 +487,6 @@ progress {
   vertical-align: baseline;
 }
 
-[hidden] {
-  display: none !important;
-}
 
 .lead {
   font-size: 1.25rem;
@@ -6705,9 +6703,10 @@ textarea.form-control-lg {
   overflow: auto !important;
 }
 
-.overflow-hidden {
-  overflow: hidden !important;
-}
+
+/* .overflow-hidden { */
+  /* overflow: hidden !important; */
+/* } */
 
 .overflow-visible {
   overflow: visible !important;

@@ -7,39 +7,27 @@
     //error
     $err = [];
 
-    $user_id = filter_input(INPUT_POST, 'user_id');
-    $title = filter_input(INPUT_POST, 'tilte');
-    $category = filter_input(INPUT_POST, 'category');
-    $message = filter_input(INPUT_POST, 'message');
-    $question_image = filter_input(INPUT_POST, 'question_image');
-    if(!isset($question_image)){
-      $question_image = NULL;
-    }
 
-    if(!$title = filter_input(INPUT_POST, 'title')) {
-        $err[] = '質問タイトルを入力してください';
-    }
-    if(!$category = filter_input(INPUT_POST, 'category')) {
-        $err[] = 'カテゴリを選択してください';
-    }
-    if(!$message = filter_input(INPUT_POST, 'message')) {
-        $err[] = '本文を入力してください';
-    }
+    if (isset($_SESSION['q_data']['user_id']) &&
+        isset($_SESSION['q_data']['title']) &&
+        isset($_SESSION['q_data']['category']) &&
+        isset($_SESSION['q_data']['message'])
+      ){
 
-    if (count($err) === 0){
         //質問を登録する処理
-        $hasCreated = QuestionLogic::createQuestion($_POST);
+        $hasCreated = QuestionLogic::createQuestion();
 
         if(!$hasCreated){
-            $err[] = '登録に失敗しました';
+          $err[] = '登録に失敗しました';
         }
-        //最新の質問を取得する処理
-        $hasCreated = QuestionLogic::newQuestion();
+      }
+      
+      //最新の質問を取得する処理
+      $hasTaken = QuestionLogic::newQuestion();
 
-        if(!$hasCreated){
-            $err[] = '登録に失敗しました';
-        }
-    }
+      if(!$hasTaken){
+        $err[] = '質問の取り込みに失敗しました';
+      }
 
 ?>
 
@@ -56,14 +44,13 @@
 
 <div>投稿完了</div>
 <div>以下の内容で投稿が完了しました</div>
-  <div>題名：<?php echo $title ?></div>
-  <div>カテゴリ：<?php echo $category ?></div>
-  <div>本文：<?php echo $message ?></div>
 
-  <?php var_dump($hasCreated[0]['question_id']); ?>
+  <div>題名：<?php echo $hasTaken[0]['title'] ?></div>
+  <div>カテゴリ：<?php echo $hasTaken[0]['category_name'] ?></div>
+  <div>本文：<?php echo $hasTaken[0]['message'] ?></div>
 
   <form method="GET" name="form1" action="question_disp.php">
-    <input type="hidden" name="question_id" value="<?php echo $hasCreated[0]['question_id']; ?>">
+    <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
     <a href="javascript:form1.submit()">詳細画面へ</a>
   </form>
 <a href="../login_top.php">TOP</a>
