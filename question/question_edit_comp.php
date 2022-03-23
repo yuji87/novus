@@ -37,7 +37,7 @@
   }
 
   $title = $data['title'];
-  $category = $data['cate_id'];
+  $category = $data['category_name'];
   $message = $data['message'];
   $question_id = $_SESSION['q_data']['question_id'];
 

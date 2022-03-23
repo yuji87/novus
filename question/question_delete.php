@@ -38,7 +38,7 @@
     $dlt = QuestionLogic::deleteQuestion($_POST);
 
     if (count($err) === 0){
-        // header('Location: question_delete_comp.php');
+        header('Location: question_delete_comp.php');
     }
 }
 
