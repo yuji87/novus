@@ -64,6 +64,8 @@
   --bs-body-bg: #fff;
 }
 
+
+
 *,
 *::before,
 *::after {
@@ -484,10 +486,6 @@ summary {
 
 progress {
   vertical-align: baseline;
-}
-
-[hidden] {
-  display: none !important;
 }
 
 .lead {
@@ -6705,9 +6703,9 @@ textarea.form-control-lg {
   overflow: auto !important;
 }
 
-.overflow-hidden {
-  overflow: hidden !important;
-}
+/* .overflow-hidden { */
+  /* overflow: hidden !important; */
+/* } */
 
 .overflow-visible {
   overflow: visible !important;

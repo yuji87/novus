@@ -97,10 +97,10 @@ $_SESSION['edit'] = $_POST;
                             <input id="comment" type="text" name="comment" value="<?php 
                                 if(isset($login_user['comment'])) {echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8');
                                 } else { echo '&emsp;Introduce Yourself!'; }?>">
-                                <a class="edit" href="userEdit/commentEdit.php" role="button">&ensp;編集</a>
+                                <a class="edit" href="commentEdit.php" role="button">&ensp;編集</a>
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">確認する</button>
+                        <a class="edit" href="commentEdit.php" role="button">ユーザー削除</a>
                     </div>
                 </form>
             </div>

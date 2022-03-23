@@ -14,7 +14,7 @@ class QuestionLogic
     {
       $result = false;
       $arr = [];
-      $arr[] = $_SESSION['user_login']['user_id'];                                     // user_id
+      $arr[] = $_SESSION['login_user']['user_id'];                                     // user_id
 
       $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 

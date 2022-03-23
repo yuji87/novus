@@ -25,10 +25,10 @@
                 </div>
         <?php else :?>
         <div class="row align-items-start">
-            <h1 class="my-3 h1">会員登録が<br>完了しました</h1>
+            <h1 class="my-3 h1">今までのご利用<br>誠にありがとうございました</h1>
             <!--TOPページへ-->
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../userLogin/login_form.php" role="button">ログインする</a>
+                <br><br><a class="btn btn-secondary" href="../../top.html" role="button">TOPに戻る</a>
             </div>
         <?php endif ?>
         </div>

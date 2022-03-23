@@ -19,7 +19,6 @@ $login_user = $_SESSION['login_user'];
 if (isset($_SESSION['telEdit'])) {
     //セッションから情報を取得
     $name = $_SESSION['telEdit'];
-    $user_id = $_SESSION['user_id'];
 } else {
     //セッションがなかった場合
     $name = array();
@@ -38,7 +37,7 @@ $err = $_SESSION;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" type="text/css" href="../../css/mypage.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <title>My Page</title>
 </head>
 
@@ -77,7 +76,7 @@ $err = $_SESSION;
                             <input id="tel" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <input type="submit" value="変更">
                     </div>
                 </form>
             </div>

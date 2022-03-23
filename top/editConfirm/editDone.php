@@ -1,6 +1,8 @@
 <?php 
+session_start();
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
+require_once '../../functions.php';
 
 $err = []; 
 
@@ -30,11 +32,14 @@ $err = [];
         <div class="row align-items-start">
             <h1 class="my-3 h1">情報更新が<br>完了しました</h1>
             <!--TOPページへ-->
-            <div class="text-center">
-                <form action="../userLogin/logout.php" method="POST">
-                    <br><br><input type="submit" name="logout" value="再ログインする">
-                </form>
-            </div>
+            <form action="../userLogin/mypage.php" method="POST" name="editDone">
+                <div class="text-center">
+                    <!--トークン-->
+			    	<input type="hidden" name="csrf_token" value="<?php echo h(setToken()); ?>">
+                    <br><br>
+                    <input type="submit" value="MyPageに戻る">
+                </div>
+            </form>
         <?php endif ?>
         </div>
     </div>

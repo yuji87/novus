@@ -18,16 +18,17 @@ if (!$result) {
 }
 $login_user = $_SESSION['login_user'];
 
-if (!empty($_POST['formcheck'])) {
+if (isset($_POST['formcheck'])) {
     
     $_SESSION['nameEdit'] = $_POST['name'];
-
     $name = filter_input(INPUT_POST, 'name');
+    
 
-    //バリデーション
-    if(!$_SESSION['nameEdit']){
-        $err['name'] = '名前を入力してください';
-    }
+//バリデーション
+if(empty($_SESSION['nameEdit'])) {
+    
+    $err['name'] = '名前を入力してください';
+}
 }
 
 //エラーがなかった場合の処処理
@@ -41,12 +42,6 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     $err[] = '更新に失敗しました';
     }
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -88,18 +83,34 @@ $err = $_SESSION;
                 <form action="" method="POST">
                 <input type="hidden" name="check" value="checked">
                 <h1 class="my-3 h1" style="text-align:center;">入力情報の確認</h1>
-        <p class="my-2" style="text-align:center;">ご入力内容に変更が必要な場合は、下記の<br>ボタンを押して、変更を行ってください。</p>
-        <?php if (!empty($err) && $err === "err"): ?>
-            <p class="err">＊会員情報更新に失敗しました。</p>
-        <?php endif ?>
+                <p class="my-2" style="text-align:center;">ご入力内容に変更が必要な場合は、下記の<br>ボタンを押して、変更を行ってください。</p>
+                <?php if (!empty($err) && $err === "err"): ?>
+                    <p class="err">＊会員情報更新に失敗しました。</p>
+                <?php endif ?>
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
                             <label for="name" style="float:left; padding-left:30px; padding-bottom:10px;">Name :</label>
                             <span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['nameEdit'], ENT_QUOTES, 'UTF-8'); ?></span>
+                            <!--未記入時のエラーメッセージ表示-->
+                        <?php if (isset($err['name'])) : ?>
+                            <p class="text-danger"><?php echo $err['name']; ?></p>
+                        <?php endif; ?>
                         </div>
-                        <br><br>
+                        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+                        <?php if (count($err) > 0) :?>
+                        <div class="col-4 bg-secondary">
+                            <a href="../userEdit/nameEdit.php" class="back-btn text-white">再入力する</a>
+                        </div>
+                        <?php else :?>
+                        <div class="col-4 bg-secondary">
                         <button type="submit" class="btn-edit-check">変更</button>
+                            <a href="../userEdit/nameEdit.php" class="back-btn text-white">変更する</a>
+                        </div>
+                        <?php endif ?>
+
+                        <br><br>
+                        
                     </div>
                 </form>
             </div>

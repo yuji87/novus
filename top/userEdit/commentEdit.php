@@ -16,9 +16,9 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['emailEdit'])) {
+if (isset($_SESSION['commentEdit'])) {
     //セッションから情報を取得
-    $name = $_SESSION['emailEdit'];
+    $name = $_SESSION['commentEdit'];
 } else {
     //セッションがなかった場合
     $name = array();
@@ -26,9 +26,7 @@ if (isset($_SESSION['emailEdit'])) {
 
 //エラーメッセージ表示
 $err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +48,7 @@ $err = $_SESSION;
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOPページ</a></li>
+            <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
             <li><a href="mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
@@ -67,13 +65,13 @@ $err = $_SESSION;
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/emailConfirm.php" method="POST">
+                <form action="../editConfirm/commentConfirm.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="email" style="float:left; padding-left:30px; padding-bottom:10px;">Email :</label>
-                            <input id="email" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="comment" style="float:left; padding-left:30px; padding-bottom:10px;">Comment :</label>
+                            <input id="comment" type="text" name="comment" value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <br><br>
                         <input type="submit" value="変更">

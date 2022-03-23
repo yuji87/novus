@@ -25,7 +25,7 @@ if (!empty($_POST['formcheck'])) {
     $name = filter_input(INPUT_POST, 'tel');
 
     //バリデーション
-    if(!$_SESSION['nameEdit']){
+    if(!$_SESSION['telEdit']){
         $err['tel'] = '名前を入力してください';
     }
 }
@@ -44,9 +44,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
 
 //エラーメッセージ表示
 $err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
+
 ?>
 
 <!DOCTYPE html>
