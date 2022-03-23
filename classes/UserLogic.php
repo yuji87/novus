@@ -1,6 +1,7 @@
 <?php
 
 //ファイル読み込み
+
 require_once '../../core/DBconnect.php';
 
 class UserLogic
@@ -10,6 +11,7 @@ class UserLogic
      * @param array $userData
      * @return bool $result
      */
+
     public static function createUser()
     {
     $result = false;
@@ -67,10 +69,12 @@ class UserLogic
 
     /**
     * ログイン処理
+
     * @param string $tel
     * @param string $password
     * @return bool $result
     */
+
 
     public static function login($tel, $password)
     {
@@ -126,6 +130,7 @@ class UserLogic
     }
     
     /**
+
      * ログインチェック
      * @param void
      * @return bool $result
@@ -152,6 +157,7 @@ class UserLogic
 
     
     /**
+
      * ユーザー情報[name]編集
      * @param string $name
      * @return bool $result
@@ -360,6 +366,7 @@ class UserLogic
     // SQLの準備
     // SQLの実行
     // SQLの結果を返す
+
     $sql = 'UPDATE users SET comment=? WHERE user_id=?';
     //nameを配列に入れる
     $arr = [];

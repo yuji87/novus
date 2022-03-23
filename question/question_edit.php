@@ -1,4 +1,5 @@
 <?php
+
   session_start();
 
   //ファイルの読み込み
@@ -29,6 +30,7 @@
         $err[] = '質問の読み込みに失敗しました';
     }
   }
+
 
   if(isset($_POST['q_edit_conf'])){
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title');
@@ -76,6 +78,7 @@
 
 <div>質問内容</div>
 <form method="POST" action="">
+
 <div>
   <?php if(isset($err['q_id'])): ?>
   <?php echo $err['q_id'] ?>

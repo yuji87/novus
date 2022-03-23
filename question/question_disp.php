@@ -1,4 +1,5 @@
 <?php
+
   session_start();
 
   //ファイルの読み込み
@@ -17,6 +18,7 @@
     //質問を引っ張る処理
     $question = QuestionLogic::displayQuestion($_GET);
     $answer = QuestionLogic::displayAnswer($_GET);
+
     
     if(!$question){
       $err['question'] = '質問の読み込みに失敗しました';
@@ -38,6 +40,7 @@
 </head>
 <body>
 
+
 <?php if(isset($err['question'])):  ?>
   <?php echo $err['question'] ?>
 <?php endif; ?>
@@ -47,6 +50,7 @@
   <div>本文：<?php echo $question['message'] ?></div>
   <div>日付：
     <?php if (!isset($question['upd_date'])): ?>
+
       <?php echo $question['post_date']  ?>
     <?php else: ?>
       <?php echo $question['upd_date'] ?>
