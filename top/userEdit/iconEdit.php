@@ -17,10 +17,9 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['iconEdit']) || ($login_user['user_id'])) {
+if (isset($_SESSION['iconEdit'])) {
     //セッションから情報を取得
     $icon = $_SESSION['iconEdit'];
-    $user_id = $login_user['user_id'];
 } else {
     //セッションがなかった場合
     $name = array();

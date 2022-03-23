@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
 require_once '../../functions.php';
@@ -33,67 +33,74 @@ $login_user = $_SESSION['login_user'];
 	  <nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="avbar-brand font-weight-bold h3" href="login_top.php">Q&A SITE</a>
-			<span class="navbar-text">
-				<a href="userLogin/login.php" class= "col-md-2 small">LogIn</a>
-				<a href="userCreate/signup_form.php" class= "col-md-2 small">SignIn</a>
+		    <span class="navbar-text">
+				<a href="logout.php" class= "col-md-2 small">Logout</a>
 			</span>
 		</div>
 	</header>
 
 		<ul class="nav">
 			<li class="nav-item">
-				<a class="nav-link active small" href="question/question_create.php">質問Page</a>
+				<form action="#question" method="POST" name="question">
+				    <input type="submit" class="nav-link border-0 active small" value="質問" style="width:90px; text-align:center; background:none;">
+                </form>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small" href="#">記事Page</a>
+			    <form action="#" method="POST" name="article">
+				    <input type="submit" class="nav-link border-0 active small" value="記事" style="width:75px; background:none;">
+                </form>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small" href="#">本Page</a>
+				<form action="#" method="POST" name="article">
+				    <input type="submit" class="nav-link border-0 active small" value="本Page" style="width:75px; background:none;">
+                </form>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small" href="mypage.php">MyPage</a>
+			    <form action="mypage.php" method="POST" name="login">
+				    <input type="submit" class="nav-link border-0 active small" value="MyPage" style="width:90px; background:none;">
+                </form>
 			</li>
 		</ul>
 
     <!-- コンテンツ（中央カラム） -->
-	<div id="content" class="text-center">
-		<div class="text-center">
-            <br><br>
-			<h5>質問を検索する</h5>
-            <form>
-                <div class="form-row text-center">
-                    <div id="keyword" class="form-group col-row">
-                        <label for="inputEmail4">キーワード</label>
-                        <div>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+	    <div id="content" class="text-center">
+	    	<div class="text-center">
+                <br><br>
+	    		<h5>質問を検索する</h5>
+                <form>
+                    <div class="form-row text-center">
+                        <div id="keyword" class="form-group col-row">
+                            <label for="inputEmail4">キーワード</label>
+                            <div>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group col-row">
+                            <label for="inputPassword4">カテゴリー</label>
+                            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                <option selected>Choose...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
                         </div>
                     </div>
                     <br>
-                    <div class="form-group col-row">
-                        <label for="inputPassword4">カテゴリー</label>
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">検索</button>
-                <hr>
-			</form>
-        </div>
-        <!-- 質問の検索結果（中央カラム） -->
-        <br>
-		<div id="news" class="text-center">
-			<h4>新着の</h4>
-			<h5>質問投稿のタイトルが入るよ</h5>
-			<p>ここに質問投稿が入るよ</p>
-			<p>投稿日時とか入れる</p>
-			<hr />
-		</div>
-	</div>
+                    <button type="submit" class="btn btn-primary">検索</button>
+                    <hr>
+	    		</form>
+            </div>
+            <!-- 質問の検索結果（中央カラム） -->
+            <br>
+	    	<div id="news" class="text-center">
+	    		<h4>新着の</h4>
+	    		<h5>質問投稿のタイトルが入るよ</h5>
+	    		<p>ここに質問投稿が入るよ</p>
+	    		<p>投稿日時とか入れる</p>
+	    		<hr />
+	    	</div>
+	    </div>
 
 	<!-- フッタ -->
 	<p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>

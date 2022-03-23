@@ -13,23 +13,17 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
+
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
 if (isset($_SESSION['nameEdit'])) {
     //セッションから情報を取得
     $name = $_SESSION['nameEdit'];
-    $user_id = $_SESSION['user_id'];
 } else {
     //セッションがなかった場合
     $name = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-$_SESSION = array();
-session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +32,7 @@ session_destroy();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" type="text/css" href="../../css/mypage.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <title>My Page</title>
 </head>
 
@@ -52,7 +46,7 @@ session_destroy();
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="login_top.php">TOPページ</a></li>
-            <li><a href="mypage.php">MyPageに戻る</a></li>
+            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
@@ -68,16 +62,16 @@ session_destroy();
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/nameConfirm.php" method="POST">
+                <form action="../editConfirm/nameConfirm.php" method="POST" name="confirm">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="name" style="float:left; padding-left:30px; padding-bottom:10px;">Name :</label>
+                            <label for="name" style="float:left; padding-left:50px; padding-bottom:10px;">Name :</label>
                             <input id="name" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <input type="submit" value="変更">
                     </div>
                 </form>
             </div>

@@ -2,12 +2,22 @@
     session_start();
     
     require_once '../../classes/UserLogic.php';
+    require_once '../../functions.php';
 
     //エラーメッセージ
     $err = [];
+    
+    //CSRF対策
+    if (isset($_POST['create'])) {
+    $token = filter_input(INPUT_POST, 'csrf_token');
+    //トークンがない、もしくは一致しない場合、処理を中止
+    if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+    exit('不正なリクエスト');
+    }
 
+    unset($_SESSION['csrf_token']);
+    }
 
-    // if (isset($name) || isset($tel) || isset($email) || isset($password)) {
     if (!empty($_POST['formcheck'])) {
     $_SESSION['signUp'] = array($_POST['name'], $_POST['tel'], $_POST['email'], $_POST['password']);
     
@@ -26,13 +36,23 @@
     if(!$_SESSION['signUp']['1']){
         $err['tel'] = '電話番号を入力してください';
     }
-    //正規表現
+    //電話で重複チェック
+    $checkDuplicate = UserLogic::checkDuplicateByTel($_SESSION['signUp']['1']);
+    if ($checkDuplicate['cnt'] > 0){
+        $err['tel'] = 'この電話番号は既に登録されています';
+    }
+
+    //パスワード正規表現
+    if(!$_SESSION['signUp']['3']){
+        $err['password'] = 'パスワードを入力してください';
+    }
     if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)){
         $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
     }
     if ($_SESSION['signUp']['3'] !== $password_conf){
-        $err['password_conf'] = '確認用パスワードと異なっています';
+        $err['password'] = '確認用パスワードと異なっています';
     }
+     
 }
     
     //エラーがなかった場合の処処理
@@ -46,7 +66,7 @@
         $err[] = '登録に失敗しました';
         }
     }
-// }
+
 ?>
 
 
@@ -72,6 +92,7 @@
         <hr>
     
     <div class="align-items-center">
+        <!--名前の確認表示-->
         <div class="control">
             <p style="font-weight:bold;">[Name]</p>
             <p><span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['0'], ENT_QUOTES); ?></span></p>
@@ -80,6 +101,7 @@
                 <p class="text-danger"><?php echo $err['name']; ?></p>
             <?php endif; ?>
         </div>
+        <!--電話の確認表示-->
         <div class="control">
             <p style="font-weight:bold;">[Phone]</p>
             <p><span class="fas fa-angle-double-right"></span><span name="tel" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['1'], ENT_QUOTES); ?></span></p>
@@ -88,20 +110,33 @@
                 <p class="text-danger"><?php echo $err['tel']; ?></p>
             <?php endif; ?>
         </div>
+        <!--メールの確認表示-->
         <div class="control">
             <p style="font-weight:bold;">[Email]</p>
             <p><span class="fas fa-angle-double-right"></span><span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['2'], ENT_QUOTES); ?></span></p>
         </div>
+        <!--パスワードの確認表示-->
         <div class="control">
             <p style="font-weight:bold;">[Password]</p>
             <p><span class="fas fa-angle-double-right"></span><span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['3'], ENT_QUOTES); ?></span></p>
+            <!--エラーメッセージ表示-->
+            <?php if (isset($err['password'])) : ?>
+                <p class="text-danger"><?php echo $err['password']; ?></p>
+            <?php endif; ?>
         </div>
         <br>
+        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+        <?php if (count($err) > 0) :?>
         <div class="col-4 bg-secondary">
+            <a href="signup_form.php" class="back-btn text-white">再入力する</a>
+        </div>
+        <?php else :?>
+            <div class="col-4 bg-secondary">
             <a href="signup_form.php" class="back-btn text-white">変更する</a>
         </div>
-        <button type="submit" class="my-2 btn next-btn bg-warning text-black">登録する</button>
+        <p><input type="submit" class="btn btn-primary" value="登録"></p>
         <div class="clear"></div>
+        <?php endif ?>
     </div>
     </form>
         </div>

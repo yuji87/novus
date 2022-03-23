@@ -2,12 +2,13 @@
     session_start();
     
     require_once '../../classes/UserLogic.php';
+    require_once '../../functions.php';
 
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);
     
     //セッションに保存データがあるかを確認
-    if (isset($_SESSION['signUp'])) {
+    if (isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
         //セッションから情報を取得
         $name = $_SESSION['signUp']['name'];
         $tel = $_SESSION['signUp']['tel'];
@@ -21,6 +22,7 @@
         $password = '';
         $icon = '';
     }
+
 ?>
 
 <!--ログインフォーム-->
@@ -35,7 +37,8 @@
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5">
-    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" enctype="multipart/form-data" action="signup_check.php" method="POST">
+    <div class="row g-3 bg-white p-2 p-md-5 shadow-sm">
+    <form enctype="multipart/form-data" action="signup_check.php" method="POST" name="create">
     <input type="hidden" name="formcheck" value="checked">
     <h1 class="my-3" style="text-align:center;">アカウント作成</h1>
             <?php if (isset($login_err)) : ?>
@@ -57,7 +60,7 @@
             <div class="md-3">
                 <input type="tel" oninput="value = value.replace(/[０-９]/g,s => 
                     String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
-                    class="form-control col-6" name="tel" value="<?php $tel ?>">
+                    class="form-control col-6" name="tel" value="<?php if (!empty($tel)) {echo htmlspecialchars($tel, ENT_QUOTES, 'UTF-8');}?>">
             </div>
         </div>
 
@@ -74,7 +77,7 @@
             <label for="password" class="form-label font-weight-bold">*Password</label>
             <p class="small text-muted">（半角英数字・4文字以上20文字以下）</p>
             <div class="md-3">
-                <input type="password" class="form-control col-4" id="inputPassword8" name="password" value="<?php $password ?>">
+                <input type="password" class="form-control col-4" id="inputPassword8" name="password" value="<?php if (isset($password)) {echo htmlspecialchars($password, ENT_QUOTES, 'UTF-8');} ?>">
             </div>
         </div>
         
@@ -85,16 +88,17 @@
                 <input type="password" class="form-control col-4" id="inputPassword4" name="password_conf">
             </div>
         </div>
-
-
-        
+        <!--トークン-->
+        <input type="hidden" name="csrf_token" value="<?php echo h(setToken()); ?>">
         <!--送信ボタン-->
         <div class="col-12 my-4 text-center">
             <p><input type="submit" class="btn btn-primary" value="登録"></p>
-            <!--login_form.phpへ-->
-            <a href = "../userLogin/login_form.php">ログインはこちら</a>
         </div>
-
     </form>
+    <!--ログイン画面へ遷移-->
+    <div class="col-12 my-4 text-center">
+    <a class="text-align:center;" href = "../userLogin/login_form.php">ログインはこちら</a>
+    </div>
+    </div>
 </body>
 </html>

@@ -3,6 +3,7 @@
 
     require_once '../../classes/UserLogic.php';
     require_once '../../core/DBconnect.php';
+    require_once '../../functions.php';
 
     $result = UserLogic::checkLogin();
     if ($result){
@@ -16,8 +17,8 @@
     //エラーメッセージ表示
     $err = $_SESSION;
     //セッションを消す
-    $_SESSION = array();
-    session_destroy(); 
+    // $_SESSION = array();
+    // session_destroy(); 
 ?>
 
 <!--ログインフォーム-->
@@ -32,7 +33,7 @@
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5">
-    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="login.php" method="POST">
+    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="login.php" method="POST" name="login">
         <h1 class="my-3">ログインフォーム</h1>
             <?php if (isset($err['msg'])) : ?>
                 <p><?php echo $err['msg']; ?></p>

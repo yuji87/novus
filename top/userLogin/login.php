@@ -52,13 +52,15 @@
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5 text-center">
-    <div class = "container bg-white p-5">
-        <div class="row align-items-start">
-            <h2 class="my-3 h1">ログインが<br>完了しました</h2>
-            <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="login_top.php" role="button">TOPページ</a>
+    <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" enctype="multipart/form-data" action="signup_check.php" method="POST" name="login">
+        <div class = "container bg-white p-5">
+            <div class="row align-items-start">
+                <h2 class="my-3 h1">ログインが<br>完了しました</h2>
+                <div class="text-center">
+                    <br><br><a class="btn btn-secondary" href="login_top.php" role="button">TOPページ</a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>

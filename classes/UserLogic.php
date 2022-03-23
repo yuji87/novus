@@ -17,13 +17,20 @@ class UserLogic
         // ユーザーデータを配列に入れる
         $arr = [];
         $arr[] = $_SESSION['signUp']['0'];                                      // name
-        $arr[] = $_SESSION['signUp']['1'];                                       // tel
-        $arr[] = $_SESSION['signUp']['2'];                                     // email
-        $arr[] = password_hash($_SESSION['signUp']['3'], PASSWORD_DEFAULT); // password
+        $arr[] = $_SESSION['signUp']['1'];                                      // tel
+        $arr[] = $_SESSION['signUp']['2'];                                      // email
+        $arr[] = password_hash($_SESSION['signUp']['3'], PASSWORD_DEFAULT);     // password
         try{
             $stmt = connect()->prepare($sql);
             // SQL実行
             $result = $stmt-> execute($arr);
+            $user = $stmt->fetch();
+            //実行後、$_SESSIONの内容を消去
+            $_SESSION['signUp']['0'] = null;                                    
+            $_SESSION['signUp']['1'] = null;                                     
+            $_SESSION['signUp']['2'] = null;                                      
+            $_SESSION['signUp']['3'] = null;    
+
             return $result;
         } catch(\Exception $e) {
             // エラーの出力
@@ -32,6 +39,30 @@ class UserLogic
             error_log($e, 3, '../error.log');
             return $result;
         }
+    }
+
+    /**
+     * 電話番号の重複チェック
+     * @param array $tel
+     * @return array|bool $user|false
+     */
+    public static function checkDuplicateByTel($tel)
+    {
+    $sql = 'SELECT COUNT(*) as cnt FROM users WHERE tel = ?';
+    // telを配列に入れる
+    $arr = [];
+    $arr[] = $tel;
+
+    try {
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $stmt->execute($arr);
+        // SQLの結果を返す
+        $user = $stmt->fetch();
+        return $user;
+    } catch(\Exception $e) {
+        return false;
+    }
     }
 
     /**
@@ -142,6 +173,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['name'] = $_SESSION['nameEdit'];
+        $user = $stmt->fetch();
+
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['nameEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null; 
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -174,6 +212,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['tel'] = $_SESSION['telEdit'];
+        $user = $stmt->fetch();
+
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['telEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null;
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -207,6 +252,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['email'] = $_SESSION['emailEdit']; 
+        $user = $stmt->fetch();
+
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['emailEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null;
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -217,8 +269,6 @@ class UserLogic
     }
     }
 
-
-     
     /**
      * ユーザー情報[password]編集
      * @param string $password
@@ -241,6 +291,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['password'] = $_SESSION['passwordEdit'];
+        $user = $stmt->fetch();
+
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['passwordEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null;
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -251,8 +308,6 @@ class UserLogic
     }
     }
 
-
-     
     /**
      * ユーザー情報[icon]編集
      * @param string $icon
@@ -275,6 +330,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['icon'] = $_SESSION['iconEdit']['name'];
+        $user = $stmt->fetch();
+
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['iconEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null;
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -308,7 +370,13 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        $_SESSION['login_user']['user_id'] = $_SESSION['commentEdit']; 
+        $_SESSION['login_user']['comment'] = $_SESSION['commentEdit']; 
+
+        $user = $stmt->fetch();
+        //SQL実行後、$_SESSIONの内容を消去
+        $_SESSION['commentEdit'] = null; 
+        $_SESSION['login_user']['user_id'] = null;
+
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -319,6 +387,67 @@ class UserLogic
     }
     }
 
+     /**
+     * アイコン表示
+     * @param string $icon
+     * @return bool $result
+     */
+    
+    public static function showIcon()
+    {
+    $result = false;
+    // SQLの準備
+    // SQLの実行
+    // SQLの結果を返す
+    $sql = 'SELECT icon FROM users WHERE user_id=?';
+    //nameを配列に入れる
+    $arr = [];
+    $arr[] = $_SESSION['login_user']['user_id']; 
+
+    try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        return $result;
+    } catch(\Exception $e) {
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+    }
+    }
+
+    /**
+     * ユーザー情報の削除
+     * @param string $user_id
+     * @return bool $result
+     */
+    
+    public static function deleteUser()
+    {
+    $result = false;
+    // SQLの準備
+    // SQLの実行
+    // SQLの結果を返す
+    $sql = 'DELETE FROM users WHERE user_id= ?';
+    //nameを配列に入れる
+    $arr = [];
+    $arr[] = $_SESSION['login_user']['user_id']; 
+
+    try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        return $result;
+    } catch(\Exception $e) {
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+    }
+    }
     
 
 }
