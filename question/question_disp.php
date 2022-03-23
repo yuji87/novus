@@ -17,12 +17,12 @@
     //質問を引っ張る処理
     $question = QuestionLogic::displayQuestion($_GET);
     $answer = QuestionLogic::displayAnswer($_GET);
-
+    
     if(!$question){
-        $err[] = '質問の読み込みに失敗しました';
+      $err['question'] = '質問の読み込みに失敗しました';
     }
     if(!$answer){
-        $err[] = '返信の読み込みに失敗しました';
+      $err['answer'] = '返信の読み込みに失敗しました';
     }
   }
 
@@ -38,6 +38,9 @@
 </head>
 <body>
 
+<?php if(isset($err['question'])):  ?>
+  <?php echo $err['question'] ?>
+<?php endif; ?>
 <div>質問内容</div>
   <div>題名：<?php echo $question['title'] ?></div>
   <div>カテゴリ：<?php echo $question['category_name'] ?></div>
@@ -63,13 +66,15 @@
       <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
       <input type="submit" value="編集">
     </form>
-    <form method="POST" name="question" action="question_edit.php">
+    <form method="POST" name="question" action="question_delete.php">
       <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
       <input type="submit" value="削除">
     </form>
   <?php //endif; ?>
-    
-  <?php if(isset($answer)): ?>
+  <?php if(!empty($answer)): ?>
+    <?php if(isset($err['answer'])):  ?>
+      <?php echo $err['answer'] ?>
+    <?php endif; ?>
     <?php foreach($answer as $value){ ?>
       <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
       <div>名前：<?php echo $value['name'] ?></div>
@@ -89,18 +94,21 @@
         <?php endif; ?>
       </div>
       <div>いいね数：<?php echo count($likes) ?></div>
-      <?php if($_SESSION['id'] == $value['user_id']): ?>
-        <form method="POST">
-          <input type="hidden" name="answer" value="<?php $question['question_id'] ?>">
-          <a href="../answer_edit.php" onclick="document.a_form.submit();">編集</a>
-          <a href="../answer_delete.php" onclick="document.a_form.submit();">削除</a>
+      <?php //if($_SESSION['id'] == $value['user_id']): ?>
+        <form method="POST" action="answer_edit.php">
+          <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
+          <input type="submit" name="a_edit" value="編集">
         </form>
-      <?php endif; ?>
+        <form method="POST" action="answer_delete.php">
+          <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
+          <input type="submit" name="a_edit" value="削除">
+        </form>
+      <?php //endif; ?>
       <div>----------------</div>
     <?php }; ?>
   <?php endif; ?>
 
-<form method="POST" action="answer_create.php">
+<form method="POST" action="answer_create_conf.php">
   <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
   <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
   <textarea placeholder="ここに返信を入力してください" name="a_message"></textarea>
