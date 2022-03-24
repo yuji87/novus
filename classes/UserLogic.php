@@ -485,7 +485,13 @@ class UserLogic
     }
 }
 
-public static function plusEXP($user_id, $plus_exp)
+    /**
+     * 経験値取得処理
+     * @param int $user_id
+     * @param int $plus_exp
+     * @return bool $result
+     */
+    public static function plusEXP($user_id, $plus_exp)
     {
     $result = false;
     // SQLの準備
@@ -512,36 +518,33 @@ public static function plusEXP($user_id, $plus_exp)
     // 経験値を付与
     $new_exp = $exp + $plus_exp;
     // 経験値を付与した上でのレベルの計算
-      // 経験値を100で割り（小数点切捨）、レベルの初期値である１を足す
+    // 経験値を100で割り（小数点切捨）、レベルの初期値である１を足す
     $new_level = floor($new_exp / 100) + 1;
 
     // 取得したレベルと新しいレベルの比較
     if($level < $new_level){ // 新しいレベルが取得レベルより高い場合
-      // 経験値とレベルを更新するSQLの定義
-      $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
-      $arr = [];
-      $arr[] = $new_exp;                                   //new_exp
-      $arr[] = $new_level;                                 //new_level
-      $arr[] = $userData['user_id'];                       //user_id
+        // 経験値とレベルを更新するSQLの定義
+        $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
+        $arr = [];
+        $arr[] = $new_exp;                                   //new_exp
+        $arr[] = $new_level;                                 //new_level
+        $arr[] = $userData['user_id'];                       //user_id
     }else{// 新しいレベルが取得レベルと同じ場合
-      // 経験値だけを更新するSQLの定義
-      $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
-      $arr = [];
-      $arr[] = $new_exp;                                   //new_exp
-      $arr[] = $userData['user_id'];                       //user_id
+    // 経験値だけを更新するSQLの定義
+        $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
+        $arr = [];
+        $arr[] = $new_exp;                                   //new_exp
+        $arr[] = $userData['user_id'];                       //user_id
 
-    try{
-      $stmt = connect()->prepare($sql_upd);
-      // SQL実行
-      $data = $stmt-> execute($arr);
-      return $result;
-    } catch(\Exception $e) {
-      // エラーの出力
-      echo $e;
+        try{
+            $stmt = connect()->prepare($sql_upd);
+            // SQL実行
+            $data = $stmt-> execute($arr);
+            return $result;
+        } catch(\Exception $e) {
+            // エラーの出力
+            echo $e;
+        }
     }
-
-
     }
-  }
 }
-
