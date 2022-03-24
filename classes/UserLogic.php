@@ -171,3 +171,62 @@ class UserLogic
     }
     }
 }
+
+public static function plusEXP($user_id, $plus_exp)
+    {
+    $result = false;
+    // SQLの準備
+    // SQLの実行
+    // SQLの結果を返す
+    $sql_sel = 'SELECT level, exp FROM users WHERE user_id=?';
+    // ユーザーIDを配列に入れる
+    $arr = [];
+    $arr[] = $user_id;                       //user_id
+    try{
+        $stmt = connect()->prepare($sql_sel);
+        // SQL実行
+        $data = $stmt-> execute($arr);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(\Exception $e) {
+        // エラーの出力
+        echo $e;
+    }
+
+    // SELECT文で取得した経験値とレベルを定義
+    $exp = $data['exp'];
+    $level = $data['level'];
+
+    // 経験値を付与
+    $new_exp = $exp + $plus_exp;
+    // 経験値を付与した上でのレベルの計算
+      // 経験値を100で割り（小数点切捨）、レベルの初期値である１を足す
+    $new_level = floor($new_exp / 100) + 1;
+
+    // 取得したレベルと新しいレベルの比較
+    if($level < $new_level){ // 新しいレベルが取得レベルより高い場合
+      // 経験値とレベルを更新するSQLの定義
+      $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
+      $arr = [];
+      $arr[] = $new_exp;                                   //new_exp
+      $arr[] = $new_level;                                 //new_level
+      $arr[] = $userData['user_id'];                       //user_id
+    }else{// 新しいレベルが取得レベルと同じ場合
+      // 経験値だけを更新するSQLの定義
+      $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
+      $arr = [];
+      $arr[] = $new_exp;                                   //new_exp
+      $arr[] = $userData['user_id'];                       //user_id
+
+    try{
+      $stmt = connect()->prepare($sql_upd);
+      // SQL実行
+      $data = $stmt-> execute($arr);
+      return $result;
+    } catch(\Exception $e) {
+      // エラーの出力
+      echo $e;
+    }
+
+
+    }
+  }

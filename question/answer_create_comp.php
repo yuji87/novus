@@ -15,8 +15,16 @@
     //返答を登録する処理
     $hasCreated = QuestionLogic::createAnswer();
 
+    // 経験値を加算する処理
+    $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
+
+
+
     if(!$hasCreated){
       $err['answer'] = '返信の読み込みに失敗しました';
+    }
+    if(!$plusEXP){
+      $err['plusEXP'] = '経験値加算処理に失敗しました';
     }
   }
 ?>

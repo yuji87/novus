@@ -75,28 +75,36 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
-              INNER JOIN users ON users.user_id = question_posts.user_id
-              INNER JOIN categories ON question_posts.cate_id = categories.cate_id
-              WHERE title LIKE ?
-              OR message LIKE ?
-              OR category LIKE ?
-              ORDER BY question_posts.question_id DESC';
-
-      // keywordを配列に入れる
-      $keyword = filter_input(INPUT_POST, 'keyword');
-      $keyword = '%'.$keyword.'%';
-      $arr = [];
-      $arr[] = $keyword;                                     // keyword
-      $arr[] = $keyword;                                     // keyword
-      $arr[] = $keyword;                                     // keyword
+      $where = [];
+      // categoryが選択されている場合、検索条件に追加する
+      if(!empty($questionData['category'])){
+        $where[] = "question_posts.cate_id = ".$questionData['category'];
+      }
+      // keywordが入力されている場合、検索条件に追加する
+      if(!empty($questionData['keyword'])){
+        $where[] = "(title LIKE '%{$questionData['keyword']}%'
+                    OR message LIKE '%{$questionData['keyword']}%'
+                    OR category_name LIKE '%{$questionData['keyword']}%')";
+      }
+      if($where){
+        $whereSql = implode(' AND ', $where);
+        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
+                INNER JOIN users ON users.user_id = question_posts.user_id
+                INNER JOIN categories ON question_posts.cate_id = categories.cate_id
+                WHERE ' . $whereSql ;
+      }else{
+        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
+                INNER JOIN users ON users.user_id = question_posts.user_id
+                INNER JOIN categories ON question_posts.cate_id = categories.cate_id
+                ORDER BY question_posts.question_id DESC';
+      }
 
       try{
         $stmt = connect()->prepare($sql);
         // SQL実行
-        $result = $stmt-> execute($arr);
+        $result = $stmt-> execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        return $data;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
