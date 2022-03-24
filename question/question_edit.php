@@ -1,4 +1,5 @@
 <?php
+
   session_start();
 
   //ファイルの読み込み
@@ -30,6 +31,7 @@
     }
   }
 
+
   if(isset($_POST['q_edit_conf'])){
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title');
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category');
@@ -41,19 +43,19 @@
         $_SESSION['q_data']['question_image'] = null;
     }
 
-    if(!$_SESSION['q_data']['title']) {
+    if(empty($_SESSION['q_data']['title'])) {
         $err['title'] = '質問タイトルを入力してください';
     }
 
-    if(!$_SESSION['q_data']['category']) {
+    if(empty($_SESSION['q_data']['category'])) {
         $err['category'] = 'カテゴリを選択してください';
     }
     
-    if(!$_SESSION['q_data']['message']) {
+    if(empty($_SESSION['q_data']['message'])) {
         $err['message'] = '本文を入力してください';
     }
     
-    if(!$_SESSION['q_data']['question_id']) {
+    if(empty($_SESSION['q_data']['question_id'])) {
         $err['q_id'] = '質問IDが選択されていません';
     }
 
@@ -76,6 +78,7 @@
 
 <div>質問内容</div>
 <form method="POST" action="">
+
 <div>
   <?php if(isset($err['q_id'])): ?>
   <?php echo $err['q_id'] ?>

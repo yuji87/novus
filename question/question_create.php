@@ -13,6 +13,7 @@
     return;
     }
 
+
     //error
     $err = [];
 
@@ -62,6 +63,7 @@
 <body>
 
 <div>質問したい内容を入力してください</div>
+
 <form method="POST" action="" name="q_data">
     <input type="hidden" name="user_id" value="<?php echo "999"; ?>">
     <div class=""style="text-align: center">
@@ -80,9 +82,7 @@
     <div>カテゴリ</div>
     <select name="category">
         <option></option>
-        <option value="1">項目1</option>
         <?php foreach($categories as $value){ ?>
-            
             <option value="<?php echo $value['cate_id'] ?>"> 
                 <?php echo $value['category_name'] ?>
             </option>";
