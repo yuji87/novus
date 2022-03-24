@@ -1,3 +1,7 @@
+<?php
+    $user_data = UserLogic::levelModal();
+?>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +16,8 @@
 <body>
   <div class="cherry-blossom-container">
     <!-- レベルによる表示画像変更 -->
-    <img id="hero" class="col-4 d-block mx-auto" style="width: 100px; height: auto" src="img/22338667.png" alt="ないよ">
-    <div id="lv" class="col-4 d-block mx-auto">Lv.<span id="level">1</span>
+    <img id="hero" class="col-4 d-block mx-auto" style="width: 100px; padding-left:27px; height: auto" src="../../level/img/22338667.png" alt="ないよ">
+    <div id="lv" class="col-4 d-block mx-auto">Lv.<span id="level"><?php echo $login_user['level']; ?></span>
       <!-- <span id="level"><?php// echo $user_data('pre_level') ?></span> -->
     </div>
       <progress class=" d-block mx-auto" id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
@@ -26,17 +30,17 @@
     // 前回マイページ参照時からレベルが上がった分だけ処理を繰り返し
     
     // let previousLevel = <?php //echo $user_data('pre_level') ?>;
-    // let currentLevel = <?php //echo $user_data('level') ?>;
+    let currentLevel = <?php echo $login_user['level'] ?>;
     // let previousExp = <?php //echo $user_data('pre_exp') ?>;
-    // let currentExp = <?php //echo $user_data('exp') ?>;
+    let currentExp = <?php echo $login_user['exp'] ?>;
     
     // let lifeBar.value = previousExp
     // let exExp = currentExp % 100;
     
     let previousLevel = 1;
-    let currentLevel = 3;
-    lifeBar.value = 20;
-    let exExp = 70;
+    // let currentLevel = 3;
+    // lifeBar.value = 0;
+    // let exExp = 70;
     
     function update() {
       gameTimer = setTimeout(update, 4);
@@ -61,14 +65,14 @@
         
         // 一定レベルを超えたら表示画像が変更される
         if(level.innerHTML >= 5){
-          document.getElementById("hero").src='img/22503431.png';
+          document.getElementById("hero").src='../../level/img/22503431.png';
           // document.getElementById("hero").classList.add("cbutton--effect-stana");
         } 
         if(level.innerHTML >= 10){
-          document.getElementById("hero").src='img/22350820.png';
+          document.getElementById("hero").src='../../level/img/22350820.png';
         }
         if (level.innerHTML >= 20){
-          document.getElementById("hero").src='img/22493175.png';
+          document.getElementById("hero").src='../../level/img/22493175.png';
         }
       }
         //規定レベルに達したらループ終了

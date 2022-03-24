@@ -50,7 +50,7 @@ background: #ccc;
 .cherry-blossom-container {
   position: relative;
   height: 20vh; /* コンテナの高さ */
-  width: 30%; /* コンテナの横幅 */
+  width: 50vw; /* コンテナの横幅 */
   overflow: hidden; /* コンテナからはみ出した要素を隠す */
 }
 

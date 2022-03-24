@@ -56,7 +56,7 @@ $err = $_SESSION;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" type="text/css" href="../../css/mypage.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <title>My Page</title>
 </head>
 
@@ -69,8 +69,8 @@ $err = $_SESSION;
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOPページ</a></li>
-            <li><a href="mypage.php">MyPageに戻る</a></li>
+            <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
+            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
@@ -96,11 +96,25 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="password" style="float:left; padding-left:30px; padding-bottom:10px;">Password :</label>
+                        <label for="name" style="float:center; padding-left:120px; padding-bottom:10px;">[Password]</label>
                             <span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['passwordEdit'], ENT_QUOTES, 'UTF-8'); ?></span>
                         </div>
                         <br><br>
+                        <!--未記入時のエラーメッセージ表示-->
+                        <?php if (isset($err['password'])) : ?>
+                            <p class="text-danger"><?php echo $err['password']; ?></p>
+                        <?php endif; ?>
+                        </div>
+                        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+                        <?php if (count($err) > 0) :?>
+                        <div class="col-4 bg-secondary">
+                            <a href="../userEdit/passwordEdit.php" class="back-btn text-white">再入力する</a>
+                        </div>
+                        <?php else :?>
+                        <div class="col-4 bg-secondary">
                         <button type="submit" class="btn-edit-check">変更</button>
+                        </div>
+                        <?php endif ?>
                     </div>
                 </form>
             </div>

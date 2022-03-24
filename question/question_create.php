@@ -9,7 +9,7 @@
 
     $result = UserLogic::checkLogin();
     if($result) {
-    header('Location: login_top.html');
+    header('Location: login_top.php');
     return;
     }
 
