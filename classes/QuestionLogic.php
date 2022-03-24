@@ -6,6 +6,7 @@ require_once '../core/DBconnect.php';
 class QuestionLogic
 {
     /**
+
      * 特定ユーザーの質問を表示する
      * @param int $user_id
      * @return bool $result
@@ -14,7 +15,7 @@ class QuestionLogic
     {
       $result = false;
       $arr = [];
-      $arr[] = $_SESSION['user_login']['user_id'];                                     // user_id
+      $arr[] = $_SESSION['login_user']['user_id'];                                     // user_id
 
       $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 
@@ -137,6 +138,7 @@ class QuestionLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+
         
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
@@ -155,6 +157,7 @@ class QuestionLogic
      * @param array $questionData
      * @return bool $result
      */
+
     public static function createQuestion()
     {
       $result = false;
@@ -173,6 +176,7 @@ class QuestionLogic
         // SQL実行
         $result = $stmt-> execute($arr);
         $question = $stmt->fetch();
+
 
         $_SESSION['q_data']['user_id'] = null;
         $_SESSION['q_data']['title'] = null;
@@ -201,6 +205,7 @@ class QuestionLogic
      * @return bool $result
     */
 
+
     public static function editQuestion()
     {
       $result = false;
@@ -228,6 +233,7 @@ class QuestionLogic
         // SQLの結果を返す
         $question = $stmt->fetch();
 
+
         //SQL実行後、question_id以外の$_SESSIONの内容を消去
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
@@ -246,6 +252,7 @@ class QuestionLogic
      * @param int $question_id
      * @return bool $result
     */
+
     // 本メソッドの論理構成
     // 質問に返答、返答にいいねがあると、外部キー制約で消去不可能
     // １：質問に対して返答の有無を検索（無い場合、５へ）
@@ -358,6 +365,7 @@ class QuestionLogic
 
 
 
+
     /**
      * 返答を個別表示する
      * @param array $answerData
@@ -429,6 +437,7 @@ class QuestionLogic
      * @param array $answerData
      * @return bool $result
      */
+
     public static function createAnswer()
     {
       $result = false;
@@ -446,6 +455,7 @@ class QuestionLogic
         // SQL実行
         $result = $stmt-> execute($arr);
         $data = $stmt->fetch();
+
 
         $_SESSION['a_data']['message'] = null;
         $_SESSION['a_data']['user_id'] = null;
@@ -469,6 +479,7 @@ class QuestionLogic
      * @return bool $result
     */
 
+
     public static function editAnswer()
     {
       $result = false;
@@ -491,6 +502,7 @@ class QuestionLogic
         $stmt->execute($arr);
         // SQLの結果を返す
         $answer = $stmt->fetch();
+
 
         $_SESSION['a_data']['message'] = null;
         // $_SESSION['a_data']['answer_id'] = null;
@@ -536,6 +548,7 @@ class QuestionLogic
 
     public static function deleteOneAnswer($answerData)
     {
+
       $result = false;
 
       // 返答に対していいねがついているかを検索

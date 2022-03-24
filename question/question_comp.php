@@ -7,6 +7,7 @@
     //error
     $err = [];
 
+
     if (isset($_SESSION['q_data']['user_id']) &&
         isset($_SESSION['q_data']['title']) &&
         isset($_SESSION['q_data']['category']) &&
@@ -43,6 +44,7 @@
 
 <div>投稿完了</div>
 <div>以下の内容で投稿が完了しました</div>
+
   <div>題名：<?php echo $hasTaken[0]['title'] ?></div>
   <div>カテゴリ：<?php echo $hasTaken[0]['category_name'] ?></div>
   <div>本文：<?php echo $hasTaken[0]['message'] ?></div>
