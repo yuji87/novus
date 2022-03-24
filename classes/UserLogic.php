@@ -455,6 +455,33 @@ class UserLogic
         return $result;
     }
     }
-    
 
+    /**
+     * モーダルレベルの表示
+     * @param string $level
+     * @return bool $result
+     */
+    public static function levelModal()
+    {
+    $result = false;
+        
+        //SQLの準備・実行・結果を返す
+        $sql = 'SELECT level, exp FROM users WHERE user_id=?';
+        //nameを配列に入れる
+        $arr = [];
+        $arr[] = $_SESSION['login_user']['user_id']; 
+
+        try{
+            $stmt = connect()->prepare($sql);
+            // SQL実行
+            $result = $stmt-> execute($arr);
+            return $result??='default value';
+        } catch(\Exception $e) {
+            // エラーの出力
+            echo $e;
+            // ログの出力
+            error_log($e, 3, '../error.log');
+            return $result;
+    }
+}
 }

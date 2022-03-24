@@ -89,7 +89,7 @@ $_SESSION['edit'] = $_POST;
                             <input id="icon" type="text" name="icon" value="<?php 
                                 if(isset($login_user['icon'])) {echo $login_user['icon'];
                                 } else { echo ''; }?>">
-                            <a class="edit" href="iconEdit.php" role="button">編集</a>
+                            <a class="edit" href="iconEdit.php" role="button">&ensp;編集</a>
                         </div>
                         <!--コメント入力--> 
                         <div class="text">
@@ -100,7 +100,7 @@ $_SESSION['edit'] = $_POST;
                                 <a class="edit" href="commentEdit.php" role="button">&ensp;編集</a>
                         </div>
                         <br><br>
-                        <a class="edit" href="commentEdit.php" role="button">ユーザー削除</a>
+                        <a class="edit" href="../userDelete/userDelete.php" role="button">ユーザー削除</a>
                     </div>
                 </form>
             </div>

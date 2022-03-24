@@ -38,7 +38,7 @@ $err = $_SESSION;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" type="text/css" href="../../css/mypage.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <title>My Page</title>
 </head>
 
@@ -51,8 +51,8 @@ $err = $_SESSION;
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOPページ</a></li>
-            <li><a href="mypage.php">MyPageに戻る</a></li>
+            <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
+            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>

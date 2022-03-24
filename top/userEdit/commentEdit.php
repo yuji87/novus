@@ -49,7 +49,7 @@ $err = $_SESSION;
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
-            <li><a href="mypage.php">MyPageに戻る</a></li>
+            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>

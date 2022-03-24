@@ -45,7 +45,7 @@ if (isset($_SESSION['nameEdit'])) {
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOPページ</a></li>
+            <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
             <li><a href="#projects">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>

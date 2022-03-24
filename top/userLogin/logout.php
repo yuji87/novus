@@ -33,7 +33,7 @@ UserLogic::logout();
             <h2 class="my-3 h1">ログアウト完了</h2>
             <p>ログアウトが完了しました</p>
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../../top.html" role="button">TOPページ</a>
+                <br><br><a class="btn btn-secondary" href="../../top.php" role="button">TOPページ</a>
             </div>
         </div>
     </div>

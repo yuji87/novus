@@ -17,10 +17,18 @@ if (!$result) {
 }
 $login_user = $_SESSION['login_user'];
 
+if (isset($_POST['mypage'])) {
+//モーダル表示の呼び込み
+$user_data = UserLogic::levelModal();
+var_dump($user_data);
+if (!$user_data) {
+  $err[] = 'レベル表示に失敗しました';
+  return;
+}
+}
+
 //画像が入っていたら表示
 $showicon = UserLogic::showIcon();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +38,7 @@ $showicon = UserLogic::showIcon();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
+    <link rel="stylesheet" href="../../level/level_anime.css">
     <title>My Page</title>
 </head>
 
@@ -54,8 +63,21 @@ $showicon = UserLogic::showIcon();
             </li>
         </ul>
     </header>
-
-
+    
+    <!--モーダル-->
+    <div id="modal-content">
+	    <p style="text-align:canter;"><?php require_once '../../level/level_anime.php'; ?></p>
+	    <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
+    </div>
+    <!-- 2番目に表示されるモーダル（オーバーウエィ)半透明な膜 -->
+    <div id="modal-overlay" ></div>
+    <!-- JavaScript -->
+    <script type="text/javascript">
+    function modal_onclick_close(){
+    document.getElementById("modal-content").style.display = "none";
+    document.getElementById("modal-overlay").style.display = "none";
+    }
+    </script>
 
     <section class="wrapper">
         <div class="container">

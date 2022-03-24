@@ -3037,8 +3037,9 @@ textarea.form-control-lg {
 
 .btn-primary {
   color: #fff;
-  background-color: #ffc800;
-  border-color: #ffc800;
+  background-color: #ee9c03;
+  border-color: #e99210;
+
 }
 .btn-primary:hover {
   color: #fff;
@@ -3431,7 +3432,7 @@ textarea.form-control-lg {
 }
 .btn-outline-light:hover {
   color: #000;
-  background-color: #f8f9fa;
+  background-color: rgba(55, 55, 55, 0.98);
   border-color: #f8f9fa;
 }
 .btn-check:focus + .btn-outline-light, .btn-outline-light:focus {
@@ -5089,7 +5090,7 @@ textarea.form-control-lg {
   z-index: 1;
   color: #495057;
   text-decoration: none;
-  background-color: #f8f9fa;
+  background-color: rgba(55, 55, 55, 0.98);
 }
 .list-group-item-action:active {
   color: #212529;

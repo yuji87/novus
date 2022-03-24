@@ -1,9 +1,9 @@
 <?php
     session_start();
-    
+    //ファイルの読み込み
     require_once '../../classes/UserLogic.php';
     require_once '../../functions.php';
-
+    //ログインチェック
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);
     
@@ -22,7 +22,6 @@
         $password = '';
         $icon = '';
     }
-
 ?>
 
 <!--ログインフォーム-->
@@ -91,13 +90,13 @@
         <!--トークン-->
         <input type="hidden" name="csrf_token" value="<?php echo h(setToken()); ?>">
         <!--送信ボタン-->
-        <div class="col-12 my-4 text-center">
-            <p><input type="submit" class="btn btn-primary" value="登録"></p>
+        <div class="text-center pt-4">
+            <p><input type="submit" class="btn btn-primary" value="登録へ進む"></p>
         </div>
     </form>
     <!--ログイン画面へ遷移-->
-    <div class="col-12 my-4 text-center">
-    <a class="text-align:center;" href = "../userLogin/login_form.php">ログインはこちら</a>
+    <div class="text-center mb-4">
+    <a href = "../userLogin/login_form.php">ログインはこちら</a>
     </div>
     </div>
 </body>

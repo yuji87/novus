@@ -127,15 +127,14 @@
         <br>
         <!--エラーが発生した場合、メッセージと戻る画面を作成-->
         <?php if (count($err) > 0) :?>
-        <div class="col-4 bg-secondary">
-            <a href="signup_form.php" class="back-btn text-white">再入力する</a>
+        <div class="text-center mb-5">
+            <a href="signup_form.php" class="btn btn-secondary" role="button">再入力する</a>
         </div>
         <?php else :?>
             <div class="col-4 bg-secondary">
-            <a href="signup_form.php" class="back-btn text-white">変更する</a>
-        </div>
-        <p><input type="submit" class="btn btn-primary" value="登録"></p>
-        <div class="clear"></div>
+                <a href="signup_form.php" class="btn btn-secondary" role="button">変更する</a>
+                <p><input type="submit" class="btn btn-primary" value="登録"></p>
+            </div>
         <?php endif ?>
     </div>
     </form>
