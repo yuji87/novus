@@ -15,9 +15,10 @@ class QuestionLogic
     {
       $result = false;
       $arr = [];
-      $arr[] = $_SESSION['login_user']['user_id'];                                     // user_id
+      $arr[] = $_SESSION['login_user']['user_id'];
 
-      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon FROM question_posts
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon
+              FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 
               WHERE users.user_id = ?
               ORDER BY question_posts.question_id DESC';
@@ -132,7 +133,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $questionData['question_id'];                                     // question_id
+      $arr[] = $questionData['question_id'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -165,11 +166,11 @@ class QuestionLogic
       $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
       // 質問データを配列に入れる
       $arr = [];
-      $arr[] = $_SESSION['q_data']['user_id'];                                     // user_id
-      $arr[] = $_SESSION['q_data']['title'];                                       // title
-      $arr[] = $_SESSION['q_data']['message'];                                     // message
-      $arr[] = $_SESSION['q_data']['category'];                                    // category
-      $arr[] = $_SESSION['q_data']['question_image'];                              // question_image
+      $arr[] = $_SESSION['q_data']['user_id'];
+      $arr[] = $_SESSION['q_data']['title'];
+      $arr[] = $_SESSION['q_data']['message'];
+      $arr[] = $_SESSION['q_data']['category'];
+      $arr[] = $_SESSION['q_data']['question_image'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -177,7 +178,7 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $question = $stmt->fetch();
 
-
+        // セッション情報を消去し、セキュリティ対策
         $_SESSION['q_data']['user_id'] = null;
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
@@ -204,12 +205,9 @@ class QuestionLogic
      * @param int $question_id
      * @return bool $result
     */
-
-
     public static function editQuestion()
     {
       $result = false;
-
       $upd_date = date("Y/m/d H:i:s");
 
       // SQLの準備
@@ -219,12 +217,12 @@ class QuestionLogic
 
       // 編集データを配列に入れる
       $arr = [];
-      $arr[] = $_SESSION['q_data']['title'];                                  // title
-      $arr[] = $_SESSION['q_data']['message'];                                // message
-      $arr[] = $upd_date;                                                     // upd_date
-      $arr[] = $_SESSION['q_data']['category'];                               // cate_id
-      $arr[] = $_SESSION['q_data']['question_image'];                         // question_image
-      $arr[] = $_SESSION['q_data']['question_id'];                            // question_id
+      $arr[] = $_SESSION['q_data']['title'];
+      $arr[] = $_SESSION['q_data']['message'];
+      $arr[] = $upd_date;
+      $arr[] = $_SESSION['q_data']['category'];
+      $arr[] = $_SESSION['q_data']['question_image'];
+      $arr[] = $_SESSION['q_data']['question_id'];
       
       try {
         $stmt = connect()->prepare($sql);
@@ -232,7 +230,6 @@ class QuestionLogic
         $stmt->execute($arr);
         // SQLの結果を返す
         $question = $stmt->fetch();
-
 
         //SQL実行後、question_id以外の$_SESSIONの内容を消去
         $_SESSION['q_data']['title'] = null;
@@ -254,13 +251,12 @@ class QuestionLogic
     */
 
     // 本メソッドの論理構成
-    // 質問に返答、返答にいいねがあると、外部キー制約で消去不可能
+    // ※質問に返答、返答にいいねがあると、外部キー制約で消去不可能
     // １：質問に対して返答の有無を検索（無い場合、５へ）
     // ２：返答に対していいねの有無を検索（無い場合、４へ）
     // ３：いいねを消去
     // ４：返答を消去
     // ５：質問を消去
-
     public static function deleteQuestion($questionData)
     {
       $result = false;
@@ -271,7 +267,7 @@ class QuestionLogic
                         WHERE question_answers.question_id = ?';
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $questionData;                                  // question_id
+      $arr[] = $questionData;
       
       try {
         $stmt = connect()->prepare($sql_search_ans);
@@ -295,7 +291,7 @@ class QuestionLogic
         foreach($search_ans as $value){
           // answer_idを配列に入れる
           $arr = [];
-          $arr[] = $value['answer_id'];                                     // answer_id
+          $arr[] = $value['answer_id'];
           
           try{
             $stmt = connect()->prepare($sql_search_like);
@@ -333,7 +329,7 @@ class QuestionLogic
         $sql_dlt_ans = 'DELETE FROM question_answers WHERE question_id = ?';
         // question_idを配列に入れる
         $arr = [];
-        $arr[] = $questionData['question_id'];                                  // question_id
+        $arr[] = $questionData['question_id'];
 
         try {
           $stmt = connect()->prepare($sql_dlt_ans);
@@ -362,10 +358,6 @@ class QuestionLogic
     }
 
 
-
-
-
-
     /**
      * 返答を個別表示する
      * @param array $answerData
@@ -380,7 +372,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData;                                     // question_id
+      $arr[] = $answerData;
 
       try{
         $stmt = connect()->prepare($sql);
@@ -414,7 +406,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData['question_id'];                                     // question_id
+      $arr[] = $answerData['question_id'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -445,10 +437,10 @@ class QuestionLogic
       $sql = 'INSERT INTO question_answers (message, user_id, question_id)VALUES (?, ?, ?)';
       // 返答データを配列に入れる
       $arr = [];
-      $arr[] = $_SESSION['a_data']['message'];                                     // message
+      $arr[] = $_SESSION['a_data']['message'];
       $arr[] = 999;                                     // user_id(仮置き)
-      // $arr[] = $_SESSION['a_data']['user_id'];                                     // user_id
-      $arr[] = $_SESSION['a_data']['question_id'];                                 // question_id
+      // $arr[] = $_SESSION['a_data']['user_id'];
+      $arr[] = $_SESSION['a_data']['question_id'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -459,7 +451,6 @@ class QuestionLogic
 
         $_SESSION['a_data']['message'] = null;
         $_SESSION['a_data']['user_id'] = null;
-        // $_SESSION['a_data']['question_id'] = null;
 
         return $result;
       }catch(\Exception $e){
@@ -478,8 +469,6 @@ class QuestionLogic
      * @param int $answer_id
      * @return bool $result
     */
-
-
     public static function editAnswer()
     {
       $result = false;
@@ -492,9 +481,9 @@ class QuestionLogic
       
       // 編集データを配列に入れる
       $arr = [];
-      $arr[] = $_SESSION['a_data']['message'];                              // message
-      $arr[] = $upd_date;                                                   // upd_time
-      $arr[] = $_SESSION['a_data']['answer_id'];                            // answer_id
+      $arr[] = $_SESSION['a_data']['message'];
+      $arr[] = $upd_date;
+      $arr[] = $_SESSION['a_data']['answer_id'];
 
       try {
         $stmt = connect()->prepare($sql);
@@ -503,9 +492,7 @@ class QuestionLogic
         // SQLの結果を返す
         $answer = $stmt->fetch();
 
-
         $_SESSION['a_data']['message'] = null;
-        // $_SESSION['a_data']['answer_id'] = null;
 
         return $answer;
       } catch(\Exception $e) {
@@ -528,7 +515,7 @@ class QuestionLogic
 
       // answer_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData['question_id'];                                  // question_id
+      $arr[] = $answerData['question_id'];
 
       try {
         $stmt = connect()->prepare($sql);
@@ -596,7 +583,7 @@ class QuestionLogic
 
       // answer_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData;                                  // answer_id
+      $arr[] = $answerData;
 
       try {
         $stmt = connect()->prepare($sql);
@@ -625,7 +612,7 @@ class QuestionLogic
 
       // answer_idを配列に入れる
       $arr = [];
-      $arr[] = $likeData;                                     // answer_id
+      $arr[] = $likeData;
 
       try{
         $stmt = connect()->prepare($sql);
@@ -633,7 +620,6 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
-        // return $result;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
@@ -655,8 +641,8 @@ class QuestionLogic
       $sql = 'INSERT INTO question_likes (user_id, answer_id)VALUES (?, ?)';
       // id情報を配列に入れる
       $arr = [];
-      $arr[] = $likeData['user_id'];                                     // user_id
-      $arr[] = $likeData['answer_id'];                                   // answer_id
+      $arr[] = $likeData['user_id'];
+      $arr[] = $likeData['answer_id'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -685,8 +671,8 @@ class QuestionLogic
       $sql = 'UPDATE question_likes SET like_flg=? WHERE like_id = ?';
       // フラグの値(0,1)をデータを配列に入れる
       $arr = [];
-      $arr[] = $likeData['like_flg'];                                  // like_flg
-      $arr[] = $likeData['like_id'];                                   // like_id
+      $arr[] = $likeData['like_flg'];
+      $arr[] = $likeData['like_id'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -717,7 +703,7 @@ class QuestionLogic
 
       // answer_idを配列に入れる
       $arr = [];
-      $arr[] = $likeData['answer_id'];                                  // answer_id
+      $arr[] = $likeData['answer_id'];
 
       try {
         $stmt = connect()->prepare($sql);
