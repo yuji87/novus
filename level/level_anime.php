@@ -17,7 +17,7 @@
   <div class="cherry-blossom-container">
     <!-- レベルによる表示画像変更 -->
     <img id="hero" class="col-4 d-block mx-auto" style="width: 100px; padding-left:27px; height: auto" src="../../level/img/22338667.png" alt="ないよ">
-    <div id="lv" class="col-4 d-block mx-auto">Lv.<span id="level"><?php echo $login_user['level']; ?></span>
+    <div id="lv" class="col-4 d-block mx-auto">Lv.<span id="level"><?php echo $login_user['pre_level']; ?></span>
       <!-- <span id="level"><?php// echo $user_data('pre_level') ?></span> -->
     </div>
       <progress class=" d-block mx-auto" id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
@@ -29,15 +29,15 @@
   <script type="text/javascript">
     // 前回マイページ参照時からレベルが上がった分だけ処理を繰り返し
     
-    // let previousLevel = <?php //echo $user_data('pre_level') ?>;
+    let previousLevel = <?php echo $login_user['pre_level'] ?>;
     let currentLevel = <?php echo $login_user['level'] ?>;
-    // let previousExp = <?php //echo $user_data('pre_exp') ?>;
+    let previousExp = <?php echo $login_user['pre_exp'] ?>;
     let currentExp = <?php echo $login_user['exp'] ?>;
     
-    // let lifeBar.value = previousExp
-    // let exExp = currentExp % 100;
+    let lifeBar.value = previousExp
+    let exExp = currentExp % 100;
     
-    let previousLevel = 1;
+    // let previousLevel = 1;
     // let currentLevel = 3;
     // lifeBar.value = 0;
     // let exExp = 70;
