@@ -97,7 +97,10 @@
         <?php endif; ?>
       </div>
       <div>いいね数：<?php echo count($likes) ?></div>
-      <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0): ?>
+      <?php if($value['best_flg']): ?>
+        <div>ベストアンサー選択されてます！！！！！</div>
+      <?php endif; ?>
+      <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']  ): ?>
         <form method="POST" action="best_answer.php">
           <input type="hidden" name="question_id" value="<?php echo $question_id ?>">
           <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
