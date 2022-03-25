@@ -2,9 +2,9 @@
 
 session_start();
 //ファイル読み込み
-require_once '../classes/UserLogic.php';
-require_once '../classes/QuestionLogic.php';
-require_once '../functions.php';
+require_once '../../classes/UserLogic.php';
+require_once '../../classes/QuestionLogic.php';
+require_once '../../functions.php';
 
 $question_id = filter_input(INPUT_GET, 'question_id');
 

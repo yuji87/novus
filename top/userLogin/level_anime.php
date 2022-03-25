@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport">
   <title>Cherry Blossom DEMO</title>
-  <link rel="stylesheet" type="text/css" href="../../level/level_anime.css">
+  <link rel="stylesheet" type="text/css" href="../../css/level_anime.css">
 </head>
 <body>
   <div class="mx-auto" style="width: 200px;">
@@ -55,13 +55,13 @@
         
         // 一定レベルを超えたら表示画像が変更される
         if(level.innerHTML >= 5){
-          document.getElementById("hero").src='../../level/img/22503431.png';
+          document.getElementById("hero").src='/img/22503431.png';
         } 
         if(level.innerHTML >= 10){
-          document.getElementById("hero").src='../../level/img/22350820.png';
+          document.getElementById("hero").src='/img/22350820.png';
         }
         if (level.innerHTML >= 20){
-          document.getElementById("hero").src='../../level/img/22493175.png';
+          document.getElementById("hero").src='/img/22493175.png';
         }
       }
         //規定レベルに達したらループ終了

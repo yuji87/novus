@@ -2,7 +2,9 @@
     session_start();
 
     //ファイルの読み込み
-    require_once '../classes/QuestionLogic.php';
+    require_once '../../classes/QuestionLogic.php';
+    require_once '../../classes/UserLogic.php';
+
 
     //error
     $err = [];
@@ -19,6 +21,12 @@
 
         if(!$hasCreated){
           $err[] = '登録に失敗しました';
+        }elseif($hasCreated){
+          // 経験値を加算する処理
+          $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
+        }
+        if(!$plusEXP){
+          $err['plusEXP'] = '経験値加算処理に失敗しました';
         }
       }
       

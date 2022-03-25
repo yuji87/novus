@@ -1,7 +1,7 @@
 <?php
 
 //ファイル読み込み
-require_once '../core/DBconnect.php';
+require_once '../../core/DBconnect.php';
 
 class QuestionLogic
 {
@@ -125,7 +125,7 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'SELECT question_id, title, message, post_date, upd_date, users.user_id, name, icon, categories.cate_id, category_name
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, best_select_flg, users.user_id, name, icon, categories.cate_id, category_name
               FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id
               INNER JOIN categories ON question_posts.cate_id = categories.cate_id
@@ -329,7 +329,7 @@ class QuestionLogic
         $sql_dlt_ans = 'DELETE FROM question_answers WHERE question_id = ?';
         // question_idを配列に入れる
         $arr = [];
-        $arr[] = $questionData['question_id'];
+        $arr[] = $questionData;
 
         try {
           $stmt = connect()->prepare($sql_dlt_ans);
@@ -346,7 +346,7 @@ class QuestionLogic
       try {
         $stmt = connect()->prepare($sql_dlt);
         $arr = [];
-        $arr[] = $questionData['question_id']; 
+        $arr[] = $questionData; 
         // SQL実行
         $stmt->execute($arr);
         // SQLの結果を返す
@@ -356,6 +356,7 @@ class QuestionLogic
         return false;
       }
     }
+
 
 
     /**
@@ -438,8 +439,7 @@ class QuestionLogic
       // 返答データを配列に入れる
       $arr = [];
       $arr[] = $_SESSION['a_data']['message'];
-      $arr[] = 999;                                     // user_id(仮置き)
-      // $arr[] = $_SESSION['a_data']['user_id'];
+      $arr[] = $_SESSION['login_user']['user_id'];
       $arr[] = $_SESSION['a_data']['question_id'];
 
       try{
@@ -448,9 +448,8 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetch();
 
-
+        // セッション変数の一部消去
         $_SESSION['a_data']['message'] = null;
-        $_SESSION['a_data']['user_id'] = null;
 
         return $result;
       }catch(\Exception $e){
@@ -628,6 +627,50 @@ class QuestionLogic
         return $result;
       }
     }
+
+    /**
+     * ベストアンサーを登録する
+     * @param array $answerData
+     * @return bool $result
+     */
+    public static function bestAnswer()
+    {
+      $result = false;
+
+      $sql_q = 'UPDATE question_posts SET best_select_flg=1 WHERE question_id = ?';
+      $sql_a = 'UPDATE question_answers SET best_flg=1 WHERE answer_id = ?';
+
+      // answer_id情報を配列に入れる
+      $arr_q = [];
+      $arr_q[] = $_SESSION['a_data']['question_id'];
+      
+      // question_id情報を配列に入れる
+      $arr_a = [];
+      $arr_a[] = $_SESSION['a_data']['answer_id'];
+      
+      try{
+        $stmt_q = connect()->prepare($sql_q);
+        // SQL実行
+        $result_q = $stmt_q-> execute($arr_q);
+        
+        $stmt_a = connect()->prepare($sql_a);
+        // SQL実行
+        $result_a = $stmt_a-> execute($arr_a);
+
+        if(($result_q == true) && ($result_a == true)){
+          $result = true;
+        }
+        return $result;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
+
+
 
     /**
      * いいねを登録する

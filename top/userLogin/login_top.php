@@ -52,7 +52,7 @@ if (!$level) {
         <!--各ページへのLink-->
 		<ul class="nav nav-fill" >
 			<li class="nav-item">
-				<a class="nav-link active small text-white" href="#">質問Page</a>
+				<a class="nav-link active small text-white" href="../../question/view/question_search.php">質問Page</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link small text-white" href="#">記事Page</a>

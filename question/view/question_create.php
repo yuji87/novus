@@ -2,15 +2,16 @@
     session_start();
     
     //ファイルの読み込み
-    require_once '../classes/UserLogic.php';
-    require_once '../classes/QuestionLogic.php';
-    require_once '../classes/CategoryLogic.php';
+    require_once '../../classes/UserLogic.php';
+    require_once '../../classes/QuestionLogic.php';
+    require_once '../../classes/CategoryLogic.php';
 
 
     $result = UserLogic::checkLogin();
-    if($result) {
-    header('Location: login_top.php');
-    return;
+    if(!$result) {
+        $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+        header('Location: ../../top/userLogin/login_top.php');
+        return;
     }
 
 
@@ -65,7 +66,7 @@
 <div>質問したい内容を入力してください</div>
 
 <form method="POST" action="" name="q_data">
-    <input type="hidden" name="user_id" value="<?php echo "999"; ?>">
+    <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
     <div class=""style="text-align: center">
     <div>
         <?php if(isset($err['title'])): ?>
