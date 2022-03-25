@@ -2,7 +2,7 @@
   session_start();
 
   //ファイルの読み込み
-  require_once '../classes/QuestionLogic.php';
+  require_once '../../classes/QuestionLogic.php';
 
   //error
   $err = [];
@@ -57,6 +57,6 @@
   <input type="hidden" name="question_id" value="<?php echo $question_id ?>">
   <input type="submit" name="a_comp"value="投稿">
 </form>
-<button type="button" onclick="location.href='../top/login_top.php'">TOP</button>
+<button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
 
 <button type="button" onclick="history.back()">戻る</button>

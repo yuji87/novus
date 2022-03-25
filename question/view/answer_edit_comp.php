@@ -2,7 +2,7 @@
     session_start();
 
     //ファイルの読み込み
-    require_once '../classes/QuestionLogic.php';
+    require_once '../../classes/QuestionLogic.php';
 
     //error
     $err = [];
@@ -48,7 +48,8 @@
     <input type="hidden" name="question_id" value="<?php echo $hasTaken['question_id']; ?>">
     <a href="javascript:form1.submit()">詳細画面へ</a>
   </form>
-<a href="../login_top.php">TOP</a>
+  <button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
+
 
 
 <?php

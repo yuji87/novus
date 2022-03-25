@@ -66,7 +66,7 @@ $showicon = UserLogic::showIcon();
     
     <!--モーダル-->
     <div id="modal-content">
-	    <p style="text-align:canter;"><?php require_once '../../level/level_anime.php'; ?></p>
+	    <p style="text-align:canter;"><?php require_once 'level_anime.php'; ?></p>
 	    <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
     </div>
     <!-- 2番目に表示されるモーダル（オーバーウエィ)半透明な膜 -->

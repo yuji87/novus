@@ -3,14 +3,15 @@
   session_start();
 
   //ファイルの読み込み
-  require_once '../classes/QuestionLogic.php';
-  require_once '../classes/CategoryLogic.php';
-  require_once '../classes/UserLogic.php';
+  require_once '../../classes/QuestionLogic.php';
+  require_once '../../classes/CategoryLogic.php';
+  require_once '../../classes/UserLogic.php';
 
   $result = UserLogic::checkLogin();
-  if($result) {
-  header('Location: login_top.html');
-  return;
+  if(!$result) {
+    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+    header('Location: ../../top/userLogin/login_top.php');
+    return;
   }
 
   $categories = CategoryLogic::getCategory();

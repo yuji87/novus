@@ -530,23 +530,22 @@ class UserLogic
         $arr = [];
         $arr[] = $new_exp;
         $arr[] = $new_level;
-        $arr[] = $userData['user_id'];
+        $arr[] = $user_id;
     }else{// 新しいレベルが取得レベルと同じ場合
     // 経験値だけを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
         $arr = [];
         $arr[] = $new_exp;
-        $arr[] = $userData['user_id'];
-
+        $arr[] = $user_id;
+    }
         try{
             $stmt = connect()->prepare($sql_upd);
             // SQL実行
             $data = $stmt-> execute($arr);
-            return $result;
+            return $data;
         } catch(\Exception $e) {
             // エラーの出力
             echo $e;
         }
-    }
     }
 }

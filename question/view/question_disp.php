@@ -3,7 +3,7 @@
   session_start();
 
   //ファイルの読み込み
-  require_once '../classes/QuestionLogic.php';
+  require_once '../../classes/QuestionLogic.php';
 
   //error
   $err = [];
@@ -27,7 +27,6 @@
       $err['answer'] = '返信の読み込みに失敗しました';
     }
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +46,7 @@
 <div>質問内容</div>
   <div>題名：<?php echo $question['title'] ?></div>
   <div>カテゴリ：<?php echo $question['category_name'] ?></div>
-  <div>本文：<?php echo $question['message'] ?></div>
+  <div>本文：<?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8') ?></div>
   <div>日付：
     <?php if (!isset($question['upd_date'])): ?>
 
@@ -65,7 +64,7 @@
     <?php endif; ?>
   </div>
 
-  <?php //if($_SESSION['id'] == $question['user_id']): ?>
+  <?php if($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
     <form method="POST" name="question" action="question_edit.php">
       <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
       <input type="submit" value="編集">
@@ -74,7 +73,7 @@
       <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
       <input type="submit" value="削除">
     </form>
-  <?php //endif; ?>
+  <?php endif; ?>
   <?php if(!empty($answer)): ?>
     <?php if(isset($err['answer'])):  ?>
       <?php echo $err['answer'] ?>
@@ -89,7 +88,7 @@
           <?php echo $value['icon'] ?>
         <?php endif; ?>
       </div>
-      <div>本文：<?php echo $value['message'] ?></div>
+      <div>本文：<?php echo htmlspecialchars($value['message'], \ENT_QUOTES, 'UTF-8') ?></div>
       <div>
         <?php if (!isset($value['upd_date'])): ?>
           投稿：<?php echo $value['answer_date']  ?>
@@ -98,23 +97,36 @@
         <?php endif; ?>
       </div>
       <div>いいね数：<?php echo count($likes) ?></div>
-      <?php //if($_SESSION['id'] == $value['user_id']): ?>
+      <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0): ?>
+        <form method="POST" action="best_answer.php">
+          <input type="hidden" name="question_id" value="<?php echo $question_id ?>">
+          <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
+          <input type="submit" value="ベストアンサー">
+        </form>
+      <?php endif; ?>
+
+      <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
         <form method="POST" action="answer_edit.php">
+          <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
           <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
           <input type="submit" name="a_edit" value="編集">
         </form>
         <form method="POST" action="answer_delete.php">
+          <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
           <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
           <input type="submit" name="a_edit" value="削除">
         </form>
-      <?php //endif; ?>
+      <?php endif; ?>
       <div>----------------</div>
     <?php }; ?>
   <?php endif; ?>
 
 <form method="POST" action="answer_create_conf.php">
-  <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
+  <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
   <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
   <textarea placeholder="ここに返信を入力してください" name="a_message"></textarea>
   <input type="submit">
 </form>
+
+<button type="button" onclick="location.href='question_search.php'">戻る</button>
+
