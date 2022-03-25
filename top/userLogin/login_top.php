@@ -3,7 +3,9 @@ session_start();
 
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
+require_once '../../classes/LevelLogic.php';
 require_once '../../functions.php';
+$err = [];
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
@@ -12,8 +14,15 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
-
 $login_user = $_SESSION['login_user'];
+
+//上位３位のレベルを表示
+$level = LevelLogic::levelTop3();
+if (!$level) {
+	$err[] = '表示するレベルがありません';
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +32,7 @@ $login_user = $_SESSION['login_user'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-
+    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
@@ -53,7 +62,7 @@ $login_user = $_SESSION['login_user'];
 			</li>
 			<li class="nav-item">
 				<form type="hidden" action="mypage.php" method="POST" name="mypage">
-				    <input type="submit" class="nav-link small text-white" value="MyPage">
+				    <input type="submit" class="nav-link small text-white" value="MyPage" style="background-color:rgba(55, 55, 55, 0.98);">
                 </form>
 			</li>
 		</ul>
@@ -64,12 +73,25 @@ $login_user = $_SESSION['login_user'];
 	    <div class="text-center">
             <div class="form-row text-center">
                 <div id="title">
-                    <label class="mt-5 mb-2" style="font-weight:bold;">レベルランキング</label>
-					<p>NO.1&ensp;<?php echo "レベル数と名前を出す"; ?></p>
-					<p>NO.2&ensp;<?php echo "レベル数と名前を出す"; ?></p>
-					<p>NO.3&ensp;<?php echo "レベル数と名前を出す"; ?></p>
+				<h2 class="heading mt-2">レベルランキング TOP3</h2>
+					<?php foreach($level as $value): ?>
+                    <!--ユーザーが登録した画像を表示-->
+                    <div class="level-icon"><br>
+                        <?php if (isset($value['icon'])): ?> 
+                            <img src="../img/<?php echo $value['icon']; ?>">
+                        <?php else: ?>
+                        <?php echo "<img src="."../img/sample_icon.png".">"; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text">
+                        <!--名前-->
+                        <?php echo $value['name']; ?>
+                        <!--レベル-->
+                        Lv.<?php echo $value['level']; ?>
+                    </div>
+                    <?php endforeach ?>
 					<a class="small" href="../level/levelDisp.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+				</div>
             </div>
             <hr>
         </div>

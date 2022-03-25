@@ -39,7 +39,7 @@ public static function levelTop3()
 {
 $result = false;
 
-$sql = 'SELECT user_id, name, level, icon FROM users ORDER BY level DESC';
+$sql = 'SELECT user_id, name, level, icon FROM users ORDER BY level DESC LIMIT 3';
 try{
    $stmt = connect()->prepare($sql);
    // SQL実行
