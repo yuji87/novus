@@ -6,7 +6,6 @@ require_once '../../core/DBconnect.php';
 class QuestionLogic
 {
     /**
-
      * 特定ユーザーの質問を表示する
      * @param int $user_id
      * @return bool $result
@@ -400,7 +399,7 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, upd_date
+      $sql = 'SELECT users.user_id, name, icon, message, answer_id, answer_date, best_flg, upd_date
               FROM question_answers
               INNER JOIN users ON users.user_id = question_answers.user_id 
               WHERE question_answers.question_id = ? ORDER BY question_answers.answer_id DESC';
