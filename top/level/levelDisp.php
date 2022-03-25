@@ -61,7 +61,7 @@ if(count($err) === 0) {
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOPページ</a></li>
+            <li class="top"><a href="../userLogin/login_top.php">TOPページ</a></li>
             <li><a href="../userEdit/edit_user.php">会員情報 編集</a></li>
             <li><a href="../../question/qhistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>

@@ -354,6 +354,7 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  background-color: none;
 }
 
 button,
@@ -2486,7 +2487,7 @@ textarea.form-control-lg {
   height: 1em;
   margin-top: 0.25em;
   vertical-align: top;
-  background-color: #fff;
+  /* background-color: #fff; */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -2776,7 +2777,7 @@ textarea.form-control-lg {
   color: #212529;
   text-align: center;
   white-space: nowrap;
-  background-color: #e9ecef;
+  /* background-color: #e9ecef; */
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
