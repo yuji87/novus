@@ -1,21 +1,20 @@
 @font-face {
   font-family: 'PixelMplus12';
-  src: url('fonts/PixelMplus12-Bold.ttf') format('truetype');
+  src: url('../../level/fonts/PixelMplus12-Bold.ttf') format('truetype');
   }
 
 
-
-body{
-  /* background-color: aqua; */
-  font-family:"Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体";
-}
-
+#modal-content{
+  padding:0 30px;
+  text-align: center;
+  }
 .inline{
   display: inline-block;
 }
 
 #lv, #ohome_word{
   font-family: 'PixelMplus12';
+  font-weight: bold;
 }
 
 .js-animation {
@@ -128,10 +127,6 @@ transition: all .3s
   transition: transform .6s cubic-bezier(.08, .35, .13, 1.02), opacity
 }
 
-
-/* .is-fs-l {
-  font-size: 140%;
-} */
 
 
 
