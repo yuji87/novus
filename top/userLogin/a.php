@@ -43,7 +43,7 @@ $login_user = $_SESSION['login_user'];
     <!--ヘッダ-->
 	<header>
 	  <nav class="navbar navbar-expand-lg" style="background-color:rgba(55, 55, 55, 0.98);">
-		<div class="pt-2 ml-2">
+		<div class="pt-2">
 			<a class="avbar-brand font-weight-bold h3 text-white" href="login_top.php">Q&A SITE</a>
 			<span class="navbar-text">
 			    <form type="hidden" action="mypage.php" method="POST" name="mypage">
@@ -75,7 +75,7 @@ $login_user = $_SESSION['login_user'];
 	    <div class="text-center">
             <div class="form-row text-center">
                 <div id="title">
-				<h2 class="heading" id="rankingtitle">レベルランキング TOP3</h2>
+				<h2 class="heading mt-2">レベルランキング TOP3</h2>
 					<?php foreach($level as $value): ?>
                     <!--ユーザーが登録した画像を表示-->
                     <div class="level-icon"><br>

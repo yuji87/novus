@@ -17,26 +17,10 @@ if (!$result) {
 }
 $login_user = $_SESSION['login_user'];
 
-$data = LevelLogic::levelRanking();
-if (!$data) {
+$data = LevelLogic::getLevel();
+$paging = LevelLogic::levelRanking();
+if (!$data || !$paging) {
     $err[] = 'レベルの取り込みに失敗しました';
-}
-
-//エラーがない場合
-if(count($err) === 0) { 
-        
-    //ページング設定
-    if (isset($_GET['page'])) {
-        $page = (int)$_GET['page'];
-    } else {
-        $page = 1;
-    }
-
-    if ($page > 1) {
-        $start = ($page * 10) - 10;
-    } else {
-        $start = 0;
-    }
 }
 
 ?>
@@ -48,7 +32,8 @@ if(count($err) === 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="paginathing.min.js"></script> 
     <title>My Page</title>
 </head>
 
@@ -74,8 +59,6 @@ if(count($err) === 0) {
         </ul>
     </header>
 
-
-
     <section class="wrapper">
         <div class="container">
             <div class="content">
@@ -85,9 +68,19 @@ if(count($err) === 0) {
                     <!--ユーザーが登録した画像を表示-->
                     <div class="level-icon"><br>
                         <?php if (isset($value['icon'])): ?> 
-                            <img src="../img/<?php echo $value['icon']; ?>">
+                        <!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
+							<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+								echo '../userLogin/mypage.php'; } else {
+                                echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+                            <img src="../img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
-                        <?php echo "<img src="."../img/sample_icon.png".">"; ?>
+							<!--上記と同じ処理-->
+							<!-- <form type="hidden" name="userpage" action="-->
+							<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+								echo '../userLogin/mypage.php'; } else {
+								echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+								<?php echo "<img src="."../img/sample_icon.png".">"; ?></a>
+							    <!-- <input id="imginput" type="submit" value=""></form> -->
                         <?php endif; ?>
                     </div>
                     <div class="text">
@@ -103,22 +96,28 @@ if(count($err) === 0) {
     </section>
  
 	<!-- フッタ -->
-    <!--<footer>
-    <ul class="pagination">
-        <li><a href="#">«</a></li>
-        <li><a href="#">1</a></li>
-        <li><a class="active" href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
-        <li><a href="#">»</a></li>
-    </ul>-->
+    <footer> 
         <div class="">
-            <br><br><hr>
-	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
+            <ul class="pagination">
+                <li class="page">
+                    <?php for ($x=1; $x <= $paging ; $x++) { ?>
+	                <a href="?page=<?php echo $x ?>"><?php echo $x; ?></a>
+                    <?php } // End of for ?>
+                </li>
+                <script type="text/javascript">
+                    jQuery(document).ready(function($){
+                        $('.list-group').paginathing({
+                            perPage: 4,
+                            firstLast: false,
+                            prevText:'prev' ,
+                            nextText:'next' ,
+                            activeClass: 'active',
+                        })
+                    });
+                </script>
+            </ul>
         </div>
+        <hr><p>Copyright (c) HTMQ All Rights Reserved.</p>
     </footer>
     </body>
 </html>
