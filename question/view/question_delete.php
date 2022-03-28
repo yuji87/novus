@@ -12,7 +12,6 @@
     header('Location: ../../top/userLogin/login_top.php');
     return;
   }
-
   $categories = CategoryLogic::getCategory();
 
   //error
