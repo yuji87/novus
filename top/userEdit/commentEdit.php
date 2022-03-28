@@ -13,20 +13,17 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
+
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
 if (isset($_SESSION['commentEdit'])) {
     //セッションから情報を取得
-    $name = $_SESSION['commentEdit'];
+    $comment = $_SESSION['commentEdit'];
 } else {
     //セッションがなかった場合
-    $name = array();
+    $comment = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +33,8 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報変更[comment]</title>
 </head>
 
 <body>
@@ -54,8 +52,8 @@ $err = $_SESSION;
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="../login/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -70,11 +68,12 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="comment" style="float:left; padding-left:30px; padding-bottom:10px;">Comment :</label>
-                            <input id="comment" type="text" name="comment" value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="comment" style="text-align:center">[comment]</label>
+                            <p><input id="editdetail" type="text" name="comment" value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
-                        <input type="submit" value="変更">
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>

@@ -25,7 +25,8 @@ $_SESSION['edit'] = $_POST;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報一覧</title>
 </head>
 
 <body>
@@ -57,47 +58,46 @@ $_SESSION['edit'] = $_POST;
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="name" style="float:left; padding-left:30px; padding-bottom:10px;">Name :</label>
-                            <input id="name" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>">
-                            <a class="edit" href="nameEdit.php" role="button">&ensp;編集</a>
+                            <label id="editdisp" for="name" style="padding-bottom:10px;">Name:&ensp;</label>
+                            <input id="name" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>" disabled>
+                            <a class="edit" href="nameEdit.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <!--ユーザーが登録した電話番号を表示-->
                         <div class="text">
-                            <label for="tel" style="float:left; padding-left:30px; padding-bottom:10px;">Tel :</label>
-                            <input id="tel" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>">
-                            <a class="edit" href="telEdit.php" role="button">&ensp;編集</a>
+                            <label id="editdisp"  for="tel" style="padding-bottom:10px;">Tel:&ensp;</label>
+                            <input id="tel" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>" disabled>
+                            <a class="edit" href="telEdit.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <!--ユーザーが登録したメールアドレスを表示-->
                         <div class="text">
-                            <label for="email" style="float:left; padding-left:30px; padding-bottom:10px;">Email :</label>
+                            <label id="editdisp"  for="email" style="padding-bottom:10px;">Email:&ensp;</label>
                             <input id="email" type="email" name="email" value="<?php 
                                 if(isset($login_user['email'])) {echo htmlspecialchars($login_user['email'], ENT_QUOTES,'UTF-8');
-                                } else { echo ''; }?>">
-                            <a class="edit" href="emailEdit.php" role="button">&ensp;編集</a>
+                                } else { echo ''; }?>" disabled>
+                            <a class="edit" href="emailEdit.php" role="button" id="edit">&ensp;編集</a>
                         </div>   
                         <!--パスワード入力（非表示）--> 
                         <div class="text">
-                            <label for="password" style="float:left; padding-left:30px; padding-bottom:10px;">Password :</label>
-                            <input id="password" type="text" name="password" value="＊＊＊＊＊＊">
-                            <a class="edit" href="passwordEdit.php" role="button">&ensp;編集</a>
-                            <p style="color:#dc3545; font-size:8px;">セキュリティ保護のため表示していません</p>
-                            
-                            </div>
+                            <label id="editdisp"  for="password" style="padding-bottom:10px;">Password:&ensp;</label>
+                            <input id="password" type="text" name="password" value="＊＊＊＊＊＊" disabled>
+                            <a class="edit" href="passwordEdit.php" role="button" id="edit">&ensp;編集</a>
+                            <p style="color:#dc3545; font-size:9px;">セキュリティ保護のため表示していません</p>
+                        </div>
                         <!--アイコン用の画像を選択-->
                         <div class="text">
-                            <label for="password" style="float:left; padding-left:30px; padding-bottom:10px;">Icon :</label>
+                            <label id="editdisp"  for="password" style="padding-bottom:10px;">Icon:&ensp;</label>
                             <input id="icon" type="text" name="icon" value="<?php 
                                 if(isset($login_user['icon'])) {echo $login_user['icon'];
-                                } else { echo ''; }?>">
-                            <a class="edit" href="iconEdit.php" role="button">&ensp;編集</a>
+                                } else { echo ''; }?>" disabled>
+                            <a class="edit" href="iconEdit.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <!--コメント入力--> 
                         <div class="text">
-                            <label for="comment" style="float:left; padding-left:30px; padding-bottom:10px;">comment :</label>
+                            <label id="editdisp"  for="comment" style="padding-bottom:10px;">comment:&ensp;</label>
                             <input id="comment" type="text" name="comment" value="<?php 
                                 if(isset($login_user['comment'])) {echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8');
-                                } else { echo '&emsp;Introduce Yourself!'; }?>">
-                                <a class="edit" href="commentEdit.php" role="button">&ensp;編集</a>
+                                } else { echo '&emsp;Introduce Yourself!'; }?>" disabled>
+                                <a class="edit" href="commentEdit.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <br><br>
                         <a class="edit" href="../userDelete/userDelete.php" role="button">ユーザー削除</a>

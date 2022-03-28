@@ -19,15 +19,8 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 if (!empty($_POST['formcheck'])) {
-    
     $_SESSION['emailEdit'] = $_POST['email'];
-
-    $name = filter_input(INPUT_POST, 'email');
-
-    //バリデーション
-    if(!$_SESSION['emailEdit']){
-        echo "記入をしなくてよろしいですか？";
-    }
+    $email = filter_input(INPUT_POST, 'email');
 }
 
 //エラーがなかった場合の処処理
@@ -51,7 +44,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <title>変更確認画面[email]</title>
 </head>
 
 <body>
@@ -83,20 +76,20 @@ if (count($err) === 0 && (isset($_POST['check']))) {
                 <form action="" method="POST">
                 <input type="hidden" name="check" value="checked">
                 <h1 class="my-3 h1" style="text-align:center;">入力情報の確認</h1>
-        <p class="my-2" style="text-align:center;">ご入力内容に変更が必要な場合は、下記の<br>ボタンを押して、変更を行ってください。</p>
-        <?php if (!empty($err) && $err === "err"): ?>
-            <p class="err">＊会員情報更新に失敗しました。</p>
-        <?php endif ?>
+                <p class="my-2" style="text-align:center;">ご入力内容に変更が必要な場合は、下記の<br>ボタンを押して、変更を行ってください。</p>
+                <?php if (!empty($err) && $err === "err"): ?>
+                    <p class="err">＊会員情報更新に失敗しました。</p>
+                <?php endif ?>
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="name" style="float:center; padding-left:120px; padding-bottom:10px;">[Email]</label>
-                            <span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['emailEdit'], ENT_QUOTES, 'UTF-8'); ?></span>
+                        <label for="name">[Email]</label>
+                            <p><span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['emailEdit'], ENT_QUOTES, 'UTF-8'); ?></span></p>
                         </div>
                         <br><br>
                         <!--未記入時のエラーメッセージ表示-->
-                        <?php if (isset($err['email'])) : ?>
-                            <p class="text-danger"><?php echo $err['email']; ?></p>
+                        <?php if (!isset($err['email'])) : ?>
+                            <p class="text-danger"><?php echo '登録しなくてよろしいですか？'; ?></p>
                         <?php endif; ?>
                         </div>
                         <!--エラーが発生した場合、メッセージと戻る画面を作成-->
@@ -105,8 +98,9 @@ if (count($err) === 0 && (isset($_POST['check']))) {
                             <a href="../userEdit/emailEdit.php" class="back-btn text-white">再入力する</a>
                         </div>
                         <?php else :?>
-                        <div class="col-4 bg-secondary">
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <div class="text-center">
+                            <a href="../userEdit/emailEdit.php" class="p-2 text-white bg-secondary">戻る</a>
+                            <p><button type="submit">変更</button></p>
                         </div>
                         <?php endif ?>
                     </div>

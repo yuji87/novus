@@ -6,6 +6,9 @@ session_start();
 require_once '../../classes/UserLogic.php';
 require_once '../../functions.php';
 
+//エラーメッセージ
+$err = [];
+
 //ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
@@ -33,7 +36,8 @@ if (isset($_SESSION['nameEdit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報変更[name]</title>
 </head>
 
 <body>
@@ -51,8 +55,8 @@ if (isset($_SESSION['nameEdit'])) {
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="../login/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -67,11 +71,12 @@ if (isset($_SESSION['nameEdit'])) {
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="name" style="float:left; padding-left:50px; padding-bottom:10px;">Name :</label>
-                            <input id="name" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="name" style="text-align:center">[Name]</label>
+                            <p><input id="editdetail" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
-                        <input type="submit" value="変更">
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>

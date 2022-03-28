@@ -34,6 +34,7 @@ $showicon = UserLogic::showIcon($_GET);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <link rel="stylesheet" href="../../level/level_anime.css">
     <title>User Page</title>
 </head>
@@ -44,9 +45,8 @@ $showicon = UserLogic::showIcon($_GET);
         <div class="navtext-container">
             <div class="navtext">Q&A SITE</div>
         </div>
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     </header>
-
+    <!--コンテンツ-->
     <section class="wrapper">
         <div class="container">
             <div class="content">
@@ -81,18 +81,15 @@ $showicon = UserLogic::showIcon($_GET);
                                echo 'Let us introduce yourself!';
                             } ?>
                     </div>
-                    <button><a href="login_top.php">戻る</a></button>
+                    <a href="login_top.php" id="back">戻る</a>
                 </div>
             </div>
         </div>
     </section>
-
 	<!-- フッタ -->
     <footer>
-        <div class="">
-            <br><br><hr>
-	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
-        </div>
+        <hr>
+	    <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
     </footer>
 </body>
 </html>

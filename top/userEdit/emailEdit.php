@@ -18,17 +18,11 @@ $login_user = $_SESSION['login_user'];
 //セッションに保存データがあるかを確認
 if (isset($_SESSION['emailEdit'])) {
     //セッションから情報を取得
-    $name = $_SESSION['emailEdit'];
+    $email = $_SESSION['emailEdit'];
 } else {
     //セッションがなかった場合
-    $name = array();
+    $email = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +32,8 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報変更[email]</title>
 </head>
 
 <body>
@@ -72,11 +67,12 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="email" style="float:left; padding-left:30px; padding-bottom:10px;">Email :</label>
-                            <input id="email" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="email" style="text-align:center">[Email]</label>
+                            <p><input id="editdetail" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
-                        <input type="submit" value="変更">
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>

@@ -23,12 +23,6 @@ if (isset($_SESSION['telEdit'])) {
     //セッションがなかった場合
     $name = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +32,8 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報変更[tel]</title>
 </head>
 
 <body>
@@ -72,11 +67,12 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した電話番号を表示-->
                         <div class="text">
-                            <label for="tel" style="float:left; padding-left:30px; padding-bottom:10px;">Tel :</label>
-                            <input id="tel" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="tel" style="text-align:center">[Tel]</label>
+                            <p><input id="editdetail" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
-                        <input type="submit" value="変更">
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>
