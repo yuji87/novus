@@ -1,3 +1,6 @@
+<script src="/js/like.js"></script>
+<script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
+
 <?php
 
 //ファイル読み込み
@@ -596,7 +599,7 @@ class QuestionLogic
 
 
     /**
-     * 返答に紐づくいいね数を表示する
+     * 返答に紐づき、フラグがONのいいね数を表示する
      * @param array $answerData
      * @return bool $result
      */
@@ -604,9 +607,9 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'SELECT q_like_id
-              FROM question_likes
-              WHERE answer_id = ?';
+      $sql = 'SELECT * FROM question_likes
+              WHERE answer_id = ?
+              AND like_flg = 1';
 
       // answer_idを配列に入れる
       $arr = [];
@@ -670,6 +673,35 @@ class QuestionLogic
     }
 
 
+    /**
+     * いいねの有無をチェックする
+     * @param array $likeData
+     * @return bool $result
+     */
+    public static function checkLike($user_id, $answer_id)
+    {
+      $result = false;
+
+      $sql = "SELECT * FROM question_likes WHERE user_id = ? AND answer_id = ?";
+      // id情報を配列に入れる
+      $arr = [];
+      $arr[] = $user_id;
+      $arr[] = $answer_id;
+
+      try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $data = $stmt->fetch();
+        return $data;
+      }catch(\Exception $e){
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+      }
+    }
 
     /**
      * いいねを登録する
@@ -706,15 +738,15 @@ class QuestionLogic
      * @param array $likeData
      * @return bool $result
      */
-    public static function sqitchLike($likeData)
+    public static function switchLike($like_flg, $like_id)
     {
       $result = false;
 
-      $sql = 'UPDATE question_likes SET like_flg=? WHERE like_id = ?';
+      $sql = 'UPDATE question_likes SET like_flg=? WHERE q_like_id = ?';
       // フラグの値(0,1)をデータを配列に入れる
       $arr = [];
-      $arr[] = $likeData['like_flg'];
-      $arr[] = $likeData['like_id'];
+      $arr[] = $like_flg;
+      $arr[] = $like_id;
 
       try{
         $stmt = connect()->prepare($sql);

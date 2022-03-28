@@ -21,9 +21,8 @@
     $err['question_id'] = '質問を選択し直してください';
   }
 
-  
+  // 投稿ボタン押下時の内部処理（成功でページ移動）
   if(isset($_POST['a_comp'])){
-
     $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
     $_SESSION['a_data']['user_id'] = filter_input(INPUT_POST, 'user_id');
     $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');

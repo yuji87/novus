@@ -2,14 +2,9 @@
 <script src="../js/user_page.js"></script>
 <?php
 session_start();
-session_regenerate_id(true);
 require_once('../core/Config.php');
 
 function check_favolite_duplicate($user_id,$post_id){
-    $dsn='mysql:dbname=db;host=localhost;charset=utf8';
-    $user='root';
-    $password='';
-    $dbh=new PDO($dsn,$user,$password);
     $sql = "SELECT *
             FROM favorite
             WHERE user_id = :user_id AND post_id = :post_id";

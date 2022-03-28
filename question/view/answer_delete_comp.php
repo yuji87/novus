@@ -9,6 +9,7 @@
   //error
   $err = [];
 
+  // ログインチェック処理
   $result = UserLogic::checkLogin();
   if(!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
@@ -16,17 +17,10 @@
     return;
   }
 
+  // 返答の削除処理
   $dlt = QuestionLogic::deleteOneAnswer($_SESSION['a_data']['answer_id']);
   if(empty($dlt)){
     $err[] = '返答の削除に失敗しました';
-  }
-
-  $categories = CategoryLogic::getCategory();
-
-
-  $question_id = filter_input(INPUT_POST, 'question_id');
-  if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
-    $err[] = '質問を選択し直してください';
   }
 
 ?>
@@ -40,7 +34,7 @@
   <title>質問を削除しました</title>
 </head>
 <body>
-
-<div>削除が成功しました</div>
-<button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
-<button type="button" onclick="location.href='question_disp.php?question_id=<?php echo $_SESSION['a_data']['question_id']  ?>'">質問へ戻る</button>
+  <div>削除が成功しました</div>
+  <button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
+  <button type="button" onclick="location.href='question_disp.php?question_id=<?php echo $_SESSION['a_data']['question_id']  ?>'">質問へ戻る</button>
+</body>

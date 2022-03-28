@@ -6,6 +6,7 @@
   require_once '../../classes/QuestionLogic.php';
   require_once '../../classes/UserLogic.php';
 
+  // ログインチェック
   $result = UserLogic::checkLogin();
   if(!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
@@ -16,27 +17,23 @@
   //error
   $err = [];
 
+  // データ受け渡しチェック
   if (isset($_SESSION['q_data']['title']) &&
     isset($_SESSION['q_data']['category']) &&
     isset($_SESSION['q_data']['message']) &&
     isset($_SESSION['q_data']['question_id'])
     ){
-      
       //質問を登録する処理
       $question = QuestionLogic::editQuestion();
-      
-      if(!$question){
-        $err[] = '変更の保存に失敗しました';
-      }
+        if(!$question){
+          $err[] = '変更の保存に失敗しました';
+        }
     }
-      
   // 質問IDから質問内容を取り込む処理
   $data = QuestionLogic::displayQuestion($_SESSION['q_data']);
-
-  if(!$data){
-    $err[] = '変更の保存に失敗しました';
-  }
-
+    if(!$data){
+      $err[] = '変更の保存に失敗しました';
+    }
   $title = $data['title'];
   $category = $data['category_name'];
   $message = $data['message'];
