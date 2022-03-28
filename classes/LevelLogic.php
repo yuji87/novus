@@ -102,8 +102,8 @@ class LevelLogic
     }
     }
 
-        /**
-     * 質問の詳細を表示する
+    /**
+     * ユーザーの情報を表示する
      * @param array $levelData
      * @return bool $result
      */

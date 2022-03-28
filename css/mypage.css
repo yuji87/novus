@@ -14,11 +14,21 @@ h1 {
 a {
     text-decoration: none;
 }
+a #mypage {
+    text-align:right;
+}
+
+#logout {
+    background-color: rgba(55, 55, 55, 0.98);
+    color: #ddd;
+    border: 0px solid rgba(55, 55, 55, 0.98);
+}
 
 /*メニュー*/
 header {
 
     width: 100%;
+    height: 60px;
     background-color: rgba(55, 55, 55, 0.98);
     font-family: "Futura", Helvetica, sans-serif;
 }
@@ -40,7 +50,7 @@ header {
   list-style: none;
   position: absolute;
 
-  width: 86%;
+  width: 100%;
   height: auto;
   top: 0;
   margin-top: 52px;
@@ -61,7 +71,7 @@ header {
 /* Hamburger menbu text */
 
 .menu a, header form {
-    width: 90%;
+    width: 100%;
     text-decoration: none;
     font-weight: 500;
     letter-spacing: 2px;
@@ -153,8 +163,8 @@ header {
 
 /* Navbar Container */
 .navtext-container {
-    width: 100%;
-    height: 52px;
+    width: 95%;
+    height: 60px;
     position: absolute;
     box-sizing: border-box;
     display: flex;
@@ -180,7 +190,7 @@ section {
     z-index: 3;
 }
 .wrapper .container{
-    max-width:100%;
+    max-width:95%;
     max-height: 100%;
     margin:10px auto;
     padding-top: 20px;
@@ -212,22 +222,15 @@ form {
 .level-icon {
     margin: 15px;
     text-align: center;
-   
 }
 .level-icon img{
     align-items: center;
 	width: 50px;
     height: 50px;
     border-radius: 50%;
-    z-index: 3;
 }
 
 /*トップページのアイコン*/
-#imginput {
-    border:none;
-    background-color:rgba(236, 235, 235, 0.945);
-    opacity: 0;
-}
 .userpage {
     text-align: center;
 }
@@ -243,12 +246,10 @@ form {
     align-items: center;
 }
 .wrapper .content{
-
-    padding:0px 50px;
+    padding:0px 10px;
     text-align:center;
 }
 .wrapper .content .level-list{
-
     display: block;
     width:100%;
     height: 100%;
@@ -269,30 +270,37 @@ form {
     margin:20px auto;
     border-radius:100%;
 }
-
-label {
-    display: block;
+label#editdisp  {
+    display: inline-block;
     font-size: 18px;
     text-align: right;
     font-weight:bold;
-    width: 105px;
+    width: 115px;
+    height: 30px;
+    padding-top: 5px;
+}
+label  {
+    display: inline-block;
+    font-size: 18px;
+    text-align: center;
+    font-weight:bold;
+    width: 115px;
     height: 30px;
     padding-top: 5px;
 }
 
 input,
 #file-upload-button {
-    height: 30px;
-    width: 35%;
+    height: 40px;
 }
-
 .text {
     padding-bottom: 30px;
+    padding-right: 10px;
 }
 .edit {
-    color:rgb(75, 75, 75);
+    color:rgb(185, 68, 0);
+    font-weight: bold;
 }
-
 footer {
     text-align: center;
     font-size: 13px;
@@ -300,30 +308,43 @@ footer {
 }
 
 /*編集画面*/
+#name, #tel, #email, #password, #icon, #comment {
+    width: 30%;
+    font-size: 16px;
+    background-color: rgba(236, 235, 235, 0.945);
+    border: none; 
+}
 button,
 .btn-confirm,
 a.btn-confirm {
   color: #fff;
-  background-color: #0dbdd4;
-  min-width: 200px;
-  max-width: 600px;
+  background-color: #e78b13;
+  border: 0;
+  max-width: 200px;
   padding: 10px;
+  width: 80px;
+  height: 40px;
+  margin: 10px auto;
 }
-
 .btn-confirm:hover,
 a.btn-confirm:hover {
   color: #fff;
-  background: #0dbdd4;
+  background: #ca9c39;
 }
+a#edit {
+    padding-top: 20px;
+}
+input#editdetail {
+    margin-top: 20px;
+}
+
 /*ページネーション*/
 ul.pagination {
     display: inline-block;
     padding: 0;
     margin: 0;
 }
-
 ul.pagination li {display: inline;}
-
 ul.pagination li a {
     color: black;
     float: left;
@@ -344,7 +365,7 @@ ul.pagination li a {
 	top:30%;
 	left: 17%;
 	/* 幅・高さ */
-	width:50%;
+	width:65%;
 	height:auto;
 	/* 外側の余白 */
 	margin:auto;
@@ -374,5 +395,8 @@ ul.pagination li a {
 	background-color:rgba(51,51,51,0.6);
 	/* 外側の余白 */
 	margin-top:0px;
-	
+}
+/*戻るボタン（userpage）*/
+a#back {
+    padding-bottom:20px;
 }

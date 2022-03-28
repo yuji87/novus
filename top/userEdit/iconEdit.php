@@ -22,14 +22,8 @@ if (isset($_SESSION['iconEdit'])) {
     $icon = $_SESSION['iconEdit'];
 } else {
     //セッションがなかった場合
-    $name = array();
+    $icon = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +33,8 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <title>会員情報変更[icon]</title>
 </head>
 
 <body>
@@ -73,17 +68,13 @@ $err = $_SESSION;
                     <div class="list">
                         <!--アイコン用の画像を選択-->
                         <div class="row my-3">
-                            <label for="icon" class="form-label font-weight-bold">Icon</label>
+                            <label for="icon" style="text-align:center">[Icon]</label>
                             <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
-                                <input type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon ?>">
-                                <!--欄の下に未記入時のエラーメッセージ表示-->
-                                <?php if (isset($err['icon'])) : ?>
-                                    <p class="text-danger"><?php echo $err['icon']; ?></p>
-                                <?php endif; ?>
-                            </div>
+                            <p><input id="editdetail" type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon ?>"></p>
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>

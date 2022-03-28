@@ -179,13 +179,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['name'] = $_SESSION['nameEdit'];
         $user = $stmt->fetch();
-
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['nameEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null; 
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -218,13 +214,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['tel'] = $_SESSION['telEdit'];
         $user = $stmt->fetch();
-
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['telEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null;
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -258,13 +250,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['email'] = $_SESSION['emailEdit']; 
         $user = $stmt->fetch();
-
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['emailEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null;
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -297,13 +285,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['password'] = $_SESSION['passwordEdit'];
         $user = $stmt->fetch();
-
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['passwordEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null;
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -336,13 +320,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['icon'] = $_SESSION['iconEdit']['name'];
         $user = $stmt->fetch();
-
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['iconEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null;
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -377,13 +357,9 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        //セッション値を最新に更新
         $_SESSION['login_user']['comment'] = $_SESSION['commentEdit']; 
-
         $user = $stmt->fetch();
-        //SQL実行後、$_SESSIONの内容を消去
-        $_SESSION['commentEdit'] = null; 
-        $_SESSION['login_user']['user_id'] = null;
-
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
@@ -484,8 +460,8 @@ class UserLogic
             // ログの出力
             error_log($e, 3, '../error.log');
             return $result;
+        }
     }
-}
 
     /**
      * 経験値取得処理

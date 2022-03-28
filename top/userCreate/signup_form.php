@@ -1,8 +1,10 @@
 <?php
     session_start();
+    
     //ファイルの読み込み
     require_once '../../classes/UserLogic.php';
     require_once '../../functions.php';
+
     //ログインチェック
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);

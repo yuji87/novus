@@ -3,7 +3,7 @@
 session_start();
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
-require_once '../../classes/QuestionLogic.php';
+require_once '../../classes/ArticleLogic.php';
 require_once '../../functions.php';
 
 //エラー
@@ -13,21 +13,20 @@ $err = [];
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: userCreate/signup_form.php');
+    header('Location: ../../userCreate/signup_form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
-$question_id = filter_input(INPUT_GET, 'question_id');
+$article_id = filter_input(INPUT_GET, 'article_id');
 
 
-//自身が投稿した質問を表示
-$question = QuestionLogic::userQuestion();
-if (isset($question['title']) || isset($question['category_name']) || isset($question['message']) || isset($question['upd_date']) || isset($question['post_date']) || isset($question['name'])) {
-if (!$question) {
-    $err[] = 'まだ投稿した質問はありません';
+//自身が投稿した記事を表示
+$article = ArticleLogic::userArticle();
+if (isset($article['title']) || isset($article['category_name']) || isset($article['message']) || isset($article['upd_date']) || isset($article['post_date']) || isset($article['name'])) {
+if (!$article) {
+    $err[] = 'まだ投稿した記事はありません';
 }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +37,7 @@ if (!$question) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
     <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-    <title>過去の質問履歴</title>
+    <title>過去の記事履歴</title>
 </head>
 
 <body>
@@ -50,14 +49,13 @@ if (!$question) {
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="../top/userLogin/login_top.php">TOPページ</a></li>
-            <li><a href="../userEdit/edit_user.php">会員情報 編集</a></li>
-            <li><a href="../../study-main/ARTICLE/ahistory.php">質問 履歴</a></li>
-            <li><a href="#contact">記事 履歴</a></li>
+            <li class="top"><a href="../../top/userLogin/login_top.php">TOPページ</a></li>
+            <li><a href="../../userEdit/edit_user.php">会員情報 編集</a></li>
+            <li><a href="../../question/view/qhistory.php">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -66,27 +64,27 @@ if (!$question) {
     <section class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading">HISTORY OF QUESTION</h2>
+                <h2 class="heading">HISTORY OF ARTICLE</h2>
                 <div class="list">
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
-                        <div>質問履歴</div>
-                        <div>題名：<?php echo $question['title'] ?></div>
-                        <div>カテゴリ：<?php echo $question['category_name'] ?></div>
-                        <div>本文：<?php echo $question['message'] ?></div>
+                        <div>記事履歴</div>
+                        <div>題名：<?php echo $article['title'] ?></div>
+                        <div>カテゴリ：<?php echo $article['category_name'] ?></div>
+                        <div>本文：<?php echo $article['message'] ?></div>
                         <div>日付：
-                          <?php if (!isset($question['upd_date'])): ?>
-                            <?php echo $question['post_date']  ?>
+                          <?php if (!isset($article['upd_date'])): ?>
+                            <?php echo $article['post_date']  ?>
                           <?php else: ?>
-                            <?php echo $question['upd_date'] ?>
+                            <?php echo $article['upd_date'] ?>
                           <?php endif; ?>
                         </div>
-                        <div>名前：<?php echo $question['name'] ?></div>
+                        <div>名前：<?php echo $article['name'] ?></div>
                         <div>アイコン：
-                          <?php if(!isset($question['icon'])): ?>
-                            <?php echo $question['post_date']  ?>
+                          <?php if(!isset($article['icon'])): ?>
+                            <?php echo $article['post_date']  ?>
                           <?php else: ?>
-                            <?php echo $question['icon'] ?>
+                            <?php echo $article['icon'] ?>
                           <?php endif; ?>
                         </div>
                     </div>

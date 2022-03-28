@@ -10,9 +10,9 @@
 </head>
 <body>
   <div class="mx-auto" style="width: 200px;">
-  <div class="cherry-blossom-container">
+  <div class="cherry-blossom-container text-center">
     <!-- レベルによる表示画像変更 -->
-    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="../../level/img/22338667.png" alt="ないよ">
+    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="img/22338667.png" alt="ないよ">
     <div id="lv" class="col-4 d-block">Lv.
       <span id="level"><?php echo $user_data['pre_level'] ?></span>
     </div>

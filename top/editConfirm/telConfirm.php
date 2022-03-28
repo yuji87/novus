@@ -19,14 +19,17 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 if (!empty($_POST['formcheck'])) {
-    
     $_SESSION['telEdit'] = $_POST['tel'];
-
-    $name = filter_input(INPUT_POST, 'tel');
+    $tel = filter_input(INPUT_POST, 'tel');
 
     //バリデーション
-    if(!$_SESSION['telEdit']){
-        $err['tel'] = '名前を入力してください';
+    if(empty($_SESSION['telEdit'])){
+        $err['tel'] = '電話番号を入力してください';
+    }
+    //電話で重複チェック
+    $checkDuplicate = UserLogic::checkDuplicateByTel($_SESSION['telEdit']);
+    if ($checkDuplicate['cnt'] > 0){
+        $err['tel'] = 'この電話番号は既に登録されています';
     }
 }
 
@@ -41,10 +44,6 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     $err[] = '更新に失敗しました';
     }
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +53,7 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <title>変更確認画面[tel]</title>
 </head>
 
 <body>
@@ -93,18 +92,23 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した電話を表示-->
                         <div class="text">
-                            <label for="name" style="float:center; padding-left:100px; padding-bottom:10px;">[Tel]</label>
-                            <span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['telEdit'], ENT_QUOTES, 'UTF-8'); ?></span>
+                            <label for="name">[Tel]</label>
+                            <p><span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['telEdit'], ENT_QUOTES, 'UTF-8'); ?></span></p>
+                            <!--未記入時等のエラーメッセージ表示-->
+                            <?php if (isset($err['tel'])) : ?>
+                                <p class="text-danger"><?php echo $err['tel']; ?></p>
+                            <?php endif; ?>
                         </div>
                         <br><br>
                         <!--エラーが発生した場合、メッセージと戻る画面を作成-->
                         <?php if (count($err) > 0) :?>
                         <div class="col-4 bg-secondary">
-                            <a href="../userEdit/nameEdit.php" class="back-btn text-white">再入力する</a>
+                            <a href="../userEdit/telEdit.php" class="back-btn text-white">再入力する</a>
                         </div>
                         <?php else :?>
                         <div class="col-4 bg-secondary">
-                        <button type="submit" class="btn-edit-check">変更</button>
+                            <a href="../userEdit/telEdit.php" class="p-2 text-white bg-secondary">戻る</a>
+                            <p><button type="submit" class="btn-edit-check">変更</button></p>
                         </div>
                         <?php endif ?>
                     </div>

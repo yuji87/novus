@@ -2,7 +2,6 @@
 session_start();
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
-require_once '../../functions.php';
 
 $err = []; 
 
@@ -34,9 +33,6 @@ $err = [];
             <!--TOPページへ-->
             <form action="../userLogin/mypage.php" method="POST" name="editDone">
                 <div class="text-center">
-                    <!--トークン-->
-			    	<input type="hidden" name="csrf_token" value="<?php echo h(setToken()); ?>">
-                    <br><br>
                     <input type="submit" value="MyPageに戻る">
                 </div>
             </form>

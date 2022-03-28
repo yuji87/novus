@@ -16,20 +16,15 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['passwordEdit'])) {
+if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit']['password_conf'])) {
     //セッションから情報を取得
-    $password = $_SESSION['passwordEdit'];
-    $user_id = $_SESSION['user_id'];
+    $password = $_SESSION['passwordEdit']['password'];
+    $password_conf = $_SESSION['passwordEdit']['password_conf'];
 } else {
     //セッションがなかった場合
-    $name = array();
+    $password = array();
+    $password_conf = array();
 }
-
-//エラーメッセージ表示
-$err = $_SESSION;
-//セッションを消す
-// $_SESSION = array();
-// session_destroy(); 
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +34,7 @@ $err = $_SESSION;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>My Page</title>
+    <title>会員情報変更[password]</title>
 </head>
 
 <body>
@@ -73,8 +68,11 @@ $err = $_SESSION;
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="password" style="float:left; padding-left:30px; padding-bottom:10px;">Password :</label>
-                            <input id="password" type="text" name="password" value="<?php $password ?>">
+                            <label for="password" style="text-align:center">[password]</label>
+                            <p><input id="editdetail" type="text" name="password" value="<?php $password ?>"></p>
+                            <!--確認用-->
+                            <br><p for="password" style="text-align:center">[確認のため再度記入して下さい]</p>
+                            <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf ?>"></p>
                         </div>
                         <br><br>
                         <button type="submit" class="btn-edit-check">変更</button>

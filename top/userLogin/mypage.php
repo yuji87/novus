@@ -1,18 +1,13 @@
 <?php
-
 session_start();
 //ファイル読み込み
 require_once '../../classes/UserLogic.php';
-require_once '../../functions.php';
-
-$name = filter_input(INPUT_POST, 'name');
-$icon = filter_input(INPUT_GET, 'icon');
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: userCreate/signup_form.php');
+    header('Location: ../userLogin/login_form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -27,7 +22,7 @@ if (!$user_data) {
 }
 }
 
-//画像が入っていたら表示
+//画像情報の取得
 $showicon = UserLogic::showIcon();
 ?>
 
@@ -38,6 +33,7 @@ $showicon = UserLogic::showIcon();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
     <link rel="stylesheet" href="../../level/level_anime.css">
     <title>My Page</title>
 </head>
@@ -53,12 +49,12 @@ $showicon = UserLogic::showIcon();
         <ul class="menu">
             <li class="top"><a href="login_top.php">TOPページ</a></li>
             <li><a href="../userEdit/edit_user.php">会員情報 編集</a></li>
-            <li><a href="../../question/qhistory.php">質問 履歴</a></li>
+            <li><a href="../../question/view/qhistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -69,14 +65,14 @@ $showicon = UserLogic::showIcon();
 	    <p style="text-align:canter;"><?php require_once 'level_anime.php'; ?></p>
 	    <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
     </div>
-    <!-- 2番目に表示されるモーダル（オーバーウエィ)半透明な膜 -->
+    <!-- 2番目に表示されるモーダル（オーバーウエィ）半透明な膜 -->
     <div id="modal-overlay" ></div>
     <!-- JavaScript -->
     <script type="text/javascript">
-    function modal_onclick_close(){
-    document.getElementById("modal-content").style.display = "none";
-    document.getElementById("modal-overlay").style.display = "none";
-    }
+        function modal_onclick_close(){
+        document.getElementById("modal-content").style.display = "none";
+        document.getElementById("modal-overlay").style.display = "none";
+        }
     </script>
 
     <section class="wrapper">

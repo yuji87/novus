@@ -10,15 +10,11 @@
         header('location: ../userLogin/login_top.php');
         return;
     }
-
+    //ログインチェック
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
     unset($_SESSION['login_err']);
 
-    //エラーメッセージ表示
     $err = $_SESSION;
-    //セッションを消す
-    // $_SESSION = array();
-    // session_destroy(); 
 ?>
 
 <!--ログインフォーム-->
