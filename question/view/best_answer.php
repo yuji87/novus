@@ -69,6 +69,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ベストアンサー選択</title>
 </head>
+
 <body>
   <div>返答内容</div>
   <!-- 通常時処理 -->
@@ -92,6 +93,7 @@
       <input type="submit" name="a_best_comp">
     </form>
     <button type="button" onclick="history.back()">戻る</button>
+    
   <!-- ボタン押下時の処理 -->
   <?php elseif(isset($_POST['a_best_comp']) && count($err) === 0): ?>
     <div>ベストアンサー登録が完了しました</div>

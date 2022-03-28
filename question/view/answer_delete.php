@@ -73,6 +73,7 @@
       <?php echo $err['message'] ?>
       <?php endif; ?>
     </div>
+    
     <!-- 質問内容表示 -->
     <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8') ?></div>
     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">

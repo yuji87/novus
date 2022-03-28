@@ -58,15 +58,16 @@ var_dump($err);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>質問削除</title>
 </head>
-<body>
 
-<div>質問内容</div>
-<form method="POST" action="">
-<div>題名：<div><?php echo $question['title'] ?></div>
-  <div>カテゴリ：<div><?php echo $question['category_name'] ?></div></div>
-  <div>本文：<div><?php echo $question['message'] ?></div></div>
-  <div>添付</div>
-  <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
-  <input type="submit" name="q_dlt"value="削除">
-</form>
-<button type="button" onclick="history.back()">戻る</button>
+<body>
+  <div>質問内容</div>
+  <form method="POST" action="">
+  <div>題名：<div><?php echo $question['title'] ?></div>
+    <div>カテゴリ：<div><?php echo $question['category_name'] ?></div></div>
+    <div>本文：<div><?php echo $question['message'] ?></div></div>
+    <div>添付</div>
+    <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
+    <input type="submit" name="q_dlt"value="削除">
+  </form>
+  <button type="button" onclick="history.back()">戻る</button>
+</body>

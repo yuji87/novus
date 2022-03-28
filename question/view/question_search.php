@@ -32,6 +32,7 @@ if(isset($_GET['search'])){
 <!-- Bootstrap読み込み -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 </head>
+
 <body>
 	<h1 class="col-xs-6 col-xs-offset-3">質問 Page</h1>
 
@@ -60,11 +61,11 @@ if(isset($_GET['search'])){
 			<button type="submit" class="btn btn-default" name="search">検索</button>
 		</form>
 	</div>
+
 	<div class="col-xs-6 col-xs-offset-3">
 		<!-- 検索ボタン押下時、取得データを表示する -->
 		<?php if(isset($searchQuestion) && count($searchQuestion)): ?>
 			<p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
-		
 			<?php foreach($searchQuestion as $value): ?>
 				<div><a href="question_disp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
 				<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
@@ -80,9 +81,11 @@ if(isset($_GET['search'])){
 						<?php endif; ?>
         </div>
 			<?php endforeach; ?>
+
 		<?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 			<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
-		<!-- 通常時、新着の質問を表示 -->
+		
+			<!-- 通常時、新着の質問を表示 -->
 		<?php elseif(isset($newQuestion)): ?>
 			<div>新着の質問</div>
 			<?php foreach($newQuestion as $value): ?>
@@ -94,6 +97,7 @@ if(isset($_GET['search'])){
 			<div>日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
 			<?php endforeach; ?>
 		<?php endif; ?>
+		
 	</div>
 	<button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
 </body>

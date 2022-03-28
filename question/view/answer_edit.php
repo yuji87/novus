@@ -56,6 +56,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>質問編集</title>
 </head>
+
 <body>
   <div>質問内容</div>
   <form method="POST" action="">
