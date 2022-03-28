@@ -18,8 +18,8 @@
 
   // ボタン押下時の処理（成功でページ移動）
   if(isset($_POST['a_edit_conf'])){
-    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
-    $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id');
+    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
     // エラーチェック
     if(empty($_SESSION['a_data']['message'])) {
