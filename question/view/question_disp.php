@@ -9,7 +9,7 @@
   $err = [];
 
   $question_id = filter_input(INPUT_GET, 'question_id');
-  if(!$question_id = filter_input(INPUT_GET, 'question_id')) {
+  if(!$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
   }
   if (count($err) === 0){
@@ -67,7 +67,7 @@
   <div>質問内容</div>
     <div>題名：<?php echo $question['title'] ?></div>
     <div>カテゴリ：<?php echo $question['category_name'] ?></div>
-    <div>本文：<?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8') ?></div>
+    <div>本文：<?php echo htmlspecialchars($question['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8') ?></div>
     <!-- 更新されていた場合、その日付を優先表示 -->
     <div>
     <?php if (!isset($question['upd_date'])): ?>
@@ -79,12 +79,12 @@
     <div>名前：<?php echo $question['name'] ?></div>
     <div>アイコン：
       <!-- アイコン設定時、アイコン表示 -->
-      <?php if(!isset($question['icon'])): ?>
-        <!-- 現在、アイコンからの時にPost_date表示する仮置き状態 -->
-        <?php echo $question['post_date']  ?>
-      <?php else: ?>
-        <?php echo $question['icon'] ?>
-      <?php endif; ?>
+      <div class="list-item">
+        <?php if (isset($login_user['icon'])): ?> 
+            <img src="../img/<?php echo $login_user['icon']; ?>">
+        <?php else: ?>
+        <?php echo "<img src="."../../top/img/sample_icon.png".">"; ?>
+        <?php endif; ?>
     </div>
 
     <!-- 質問者本人の時、編集・削除ボタン表示 -->
@@ -108,14 +108,14 @@
 
         <div>名前：<?php echo $value['name'] ?></div>
         <div>アイコン：
-          <!-- 現在、アイコン空の時にanswer_dateを仮置き状態 -->
-          <?php if(!isset($value['icon'])): ?>
-            <?php echo $value['answer_date']  ?>
-          <?php else: ?>
-            <?php echo $value['icon'] ?>
-          <?php endif; ?>
+        <div class="list-item">
+        <?php if (isset($login_user['icon'])): ?> 
+            <img src="../img/<?php echo $login_user['icon']; ?>">
+        <?php else: ?>
+        <?php echo "<img src="."../../top/img/sample_icon.png".">"; ?>
+        <?php endif; ?>
         </div>
-        <div>本文：<?php echo htmlspecialchars($value['message'], \ENT_QUOTES, 'UTF-8') ?></div>
+        <div>本文：<?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8') ?></div>
         <div>
           <!-- 更新されていた場合、その日付を優先表示 -->
           <?php if (!isset($value['upd_date'])): ?>

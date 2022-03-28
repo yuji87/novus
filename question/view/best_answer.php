@@ -25,8 +25,8 @@
     if(!$_POST['question_id'] || !$_POST['answer_id']) {
       $err['a_id'] = '返答が選択されていません';
     }else{
-      $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id');
-      $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+      $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);
+      $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
     }
     // ページ読み込み処理
     //質問を引っ張る処理

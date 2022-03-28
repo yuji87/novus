@@ -18,7 +18,7 @@
   $err = [];
 
   $question_id = filter_input(INPUT_POST, 'question_id');
-  if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
+  if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
   }
 ?>

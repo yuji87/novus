@@ -41,8 +41,8 @@
     if(!$_POST['answer_id']) {
       $err['a_id'] = '返答が選択されていません';
     }else{
-        $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id');
-        $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+        $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
     }
     if (count($err) === 0){
       header('Location: answer_delete_comp.php');

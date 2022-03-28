@@ -7,9 +7,9 @@
   //error
   $err = [];
 
-  $a_message = filter_input(INPUT_POST, 'a_message');
-  $user_id = filter_input(INPUT_POST, 'user_id');
-  $question_id = filter_input(INPUT_POST, 'question_id');
+  $a_message = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+  $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
+  $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
   if(!$a_message) {
     $err[] = '本文を入力してください';
@@ -23,9 +23,9 @@
 
   // 投稿ボタン押下時の内部処理（成功でページ移動）
   if(isset($_POST['a_comp'])){
-    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
-    $_SESSION['a_data']['user_id'] = filter_input(INPUT_POST, 'user_id');
-    $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['a_data']['user_id'] = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if(empty($_SESSION['a_data']['message'])) {
       $err['q_id'] = '本文が入力されていません';
