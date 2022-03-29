@@ -1,6 +1,6 @@
 <?php
 
-require_once "app/ArticleAct.php";
+require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once "../../app/Utils.php";
 

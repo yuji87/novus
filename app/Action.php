@@ -7,7 +7,7 @@ require_once __DIR__ . '/database.php';
 // ユーザー情報取得系
 define("QUERY_MEMBER", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE user_id=:user_id");
 define("QUERY_MEMBER_REF", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE USER_ID=:user_id");
-define("QUERY_MEMBER_EMAIL", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE TEL=:tel");
+define("QUERY_MEMBER_TEL", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE TEL=:tel");
 define("QUERY_MEMBERLIST_IDS", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE USER_ID IN (%s)");
 
 // ユーザー情報更新系
@@ -93,7 +93,7 @@ class Action
     $this->conn = Database::getInstance();
 
     // telから user情報取得
-    $stmt = $this->conn->prepare(QUERY_MEMBER_EMAIL);
+    $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
     $stmt->bindValue(':tel', $tel);
     $result = $stmt->execute();
     $this->member = $result ? $stmt->fetch(\PDO::FETCH_ASSOC): NULL;
@@ -162,9 +162,9 @@ class Action
     $member = $stmt->fetch(\PDO::FETCH_ASSOC);
     return $member;
   }
-  // emailからユーザ情報を取得
+  // telからユーザ情報を取得
   function memberrefemail($email) {
-    $stmt = $this->conn->prepare(QUERY_MEMBER_EMAIL);
+    $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
     $stmt->bindValue(':email', $email);
     $result = $stmt->execute();
     if (! $result) {
