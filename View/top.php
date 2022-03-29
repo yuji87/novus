@@ -10,5 +10,5 @@ $act = new Action();
 $act->begin($mode);
 
 // 基本的にマイページへリダイレクトさせる。
-header('Location: ' . DOMAIN . '/public/article/mypage.php');
+header('Location: ' . DOMAIN . '/View/article/mypage.php');
 

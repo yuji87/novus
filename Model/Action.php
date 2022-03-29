@@ -217,7 +217,7 @@ class Action
       // フッダー出力
         echo '<hr/>';
         echo '<div class="row m-2">';
-        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/home.php">記事一覧へ</a>';
+        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/View/article/home.php">記事一覧へ</a>';
         echo '<a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>';
         echo '</div>';
       }
@@ -232,9 +232,9 @@ class Action
       echo '<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">';
       echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
       echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/qanda.css?ver=' . VERSION . '" />';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css" media="screen" />';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
+      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/View/CSS/qanda.css?ver=' . VERSION . '" />';
+      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/View/CSS/jquery.datetimepicker.css" media="screen" />';
+      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/View/CSS/bootstrap-4.4.1.css">';
       echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
       echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';
       echo '<link rel="stylesheet" href="https://unpkg.com/mavon-editor@2.7.4/dist/css/index.css">';//vue(マークダウン記法)
@@ -243,12 +243,12 @@ class Action
       echo '<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>';//vue
       echo '<script src="https://unpkg.com/mavon-editor@2.7.4/dist/mavon-editor.js"></script>';//vue(マークダウン記法)
       echo '<script src= "https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/qapi.js?ver={$version}"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
+      echo '<script src="' . DOMAIN . '/View/JS/jquery-3.1.1.js"></script>';
+      echo '<script src="' . DOMAIN . '/View/JS/jquery.datetimepicker.full.js"></script>';
+      echo '<script src="' . DOMAIN . '/View/JS/qapi.js?ver={$version}"></script>';
+      echo '<script src="' . DOMAIN . '/View/JS/bootstrap-4.4.1.js"></script>';
       echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
+      echo '<script src="' . DOMAIN . '/View/JS/marked.min.v1.js"></script>';
       echo '<title>' . SYSTITLE . '</title>';
       echo '</head>';
       echo '<body><div class="container">';

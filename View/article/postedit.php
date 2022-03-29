@@ -1,8 +1,8 @@
 <?php
 
-require_once "../../app/ArticleAct.php";
-require_once '../../app/Token.php';
-require_once "../../app/Utils.php";
+require_once "../../Model/ArticleAct.php";
+require_once '../../Model/Token.php';
+require_once "../../Model/Utils.php";
 
 use Qanda\ArticleAct;
 use Qanda\Token;
@@ -91,7 +91,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
           echo('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
         }
         ?>
-        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
+        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/View/article/home.php">一覧に戻る</a>
       </div>
     </div>
   </form>
