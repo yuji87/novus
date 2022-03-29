@@ -142,6 +142,20 @@
           <div>ベストアンサー選択されてます！！！！！</div>
         <?php endif; ?>
 
+        <div class="col-sm-2">
+    <?php
+    if ($retinfo["article"]["USER_ID"] != $act->getMemberId()) {
+      if ($retinfo["postlike"] == NULL || $retinfo["postlike"]["LIKE_FLG"] == 0) {
+        // いいねボタン押下で、いいねにする
+        print('<a class="btn btn-primary" id="btnlike">いいね</a>');
+      } else {
+        // いいね済み。ボタン押下で、いいねを解除
+        print('<a class="btn btn-primary active" id="btnlike">いいね[済]</a>');
+      }
+    }
+    ?>
+  </div>
+
         <!-- いいねボタンの表示部分 -->
         <?php $checkLike = QuestionLogic::checkLike($_SESSION['login_user']['user_id'],$value['answer_id']); ?>
         <form class="favorite_count" action="#" method="post">
