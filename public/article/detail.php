@@ -1,6 +1,6 @@
 <?php
 // 記事一覧表示
-require_once "app/ArticleAct.php";
+require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
 require_once "../../app/VendorUtils.php";
@@ -104,7 +104,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
     if ($retinfo["article"]["USER_ID"] == $act->getMemberId()) {
       // 自分が投稿した記事
       printf('<a class="btn btn-primary m-2" href="%sarticle/postedit.php?articleid=%d">編集する</a>',
-              DOMAIN,
+              DOMAIN."/public/",
               $articleid
       );
       print('<div class="btn btn-primary m-2" id="btndelete">削除する</div>');
