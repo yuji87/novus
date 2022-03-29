@@ -131,13 +131,13 @@ if(!$newQuestion){
 	    		<h4>Q&A SITE</h4>
 	    		<ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
-	    				<a class="nav-link small" href="#">記事</a>
+	    				<a class="nav-link small" href="../../public/article/home.php">記事</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">質問</a>
 	    			</li>
 	    			<li class="nav-item">
-	    				<a class="nav-link small" href="#">本検索</a>
+	    				<a class="nav-link small" href="../../public/bookApi.php">本検索</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">お問い合わせ</a>

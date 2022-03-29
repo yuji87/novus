@@ -1,15 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="../CSS/style.css">
-  <title>GoogleBook Api</title>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <script type="text/javascript" src="../JS/index.js"></script>
-</head>
+
+<?php require_once "bookApi/head.php" ?>
 
 <body>
   <div class="wrap">
@@ -20,9 +12,9 @@
 
       <div class="search col-8 offset-2">
         <div class="search__text">
-          <input type="text" id="search-word" class="search__text__input text-center" placeholder="検索する"><!--  :cut -->
+          <input type="text" id="search-word" class="search__text__input text-center" placeholder="検索する">
         </div>
-        <button id="search-button" class="search__btn">検索する</button><!--  :cut -->
+        <button id="search-button" class="search__btn">検索する</button>
       </div>
 
       <div class="row flex">
