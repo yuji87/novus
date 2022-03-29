@@ -16,12 +16,12 @@ if ( $email && $password ) {
   $retcode = $act->login($email, $password);
   switch ($retcode) {
     case  'SUCCESS':
-      header('Location: ' . DOMAIN . '/View/article/mypage.php');
+      header('Location: ' . DOMAIN . '/public/article/mypage.php');
       exit;
     default:
       break;
   }
 }
 
-header('Location: ' . DOMAIN . '/View/login.php?retcode=' . $retcode);
+header('Location: ' . DOMAIN . '/public/login.php?retcode=' . $retcode);
 exit;

@@ -1,9 +1,9 @@
 <?php
 // 記事一覧表示
-require_once "../../Model/ArticleAct.php";
-require_once '../../Model/Token.php';
-require_once '../../Model/Utils.php';
-require_once "../../Model/VendorUtils.php";
+require_once "../../app/ArticleAct.php";
+require_once '../../app/Token.php';
+require_once '../../app/Utils.php';
+require_once "../../app/VendorUtils.php";
 
 use Qanda\ArticleAct;
 use Qanda\Token;
@@ -23,7 +23,7 @@ if ($articleid) {
 }
 if ($retinfo == NULL) {
   // 記事がない場合は、記事一覧へリダイレクト
-  header("Location: " . DOMAIN . "/View/article/home.php");
+  header("Location: " . DOMAIN . "/public/article/home.php");
   exit;
 }
 
@@ -95,16 +95,16 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 
 <div class="row m-2">
   <div class="col-sm-6">
-    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/View/todo/index.php">todoへ</a>
+    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
     <a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>
   </div>
   <div class="col-sm-6">
-  <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/View/article/home.php">一覧に戻る</a>
+  <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
     <?php
     if ($retinfo["article"]["USER_ID"] == $act->getMemberId()) {
       // 自分が投稿した記事
       printf('<a class="btn btn-primary m-2" href="%sarticle/postedit.php?articleid=%d">編集する</a>',
-              DOMAIN."/View/",
+              DOMAIN."/public/",
               $articleid
       );
       print('<div class="btn btn-primary m-2" id="btndelete">削除する</div>');

@@ -1,8 +1,8 @@
 <?php
 // ToDo追加処理
-require_once "../../Model/todo/TodoAct.php";
-require_once '../../Model/todo/Token.php';
-require_once '../../Model/todo/Utils.php';
+require_once "../../app/TodoAct.php";
+require_once '../../app/Token.php';
+require_once '../../app/Utils.php';
 
 use Qanda\TodoAct;
 use Qanda\Token;
@@ -21,13 +21,13 @@ $newtodotitle = Utils::mbtrim($newtodotitle);
 
 if (!Utils::isStrLen($newtodotitle, 128)) {
   // 範囲外
-  header('Location: ' . DOMAIN . '/View/todo/index.php?errid=invalidtitle');
+  header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidtitle');
   exit;
 }
 
 if (!Utils::checkDatetimeFormat($newtododt)) {
   // 日付フォーマットが違う
-  header('Location: ' . DOMAIN . '/View/todo/index.php?errid=invalidformatdt');
+  header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidformatdt');
   exit;
 }
 
@@ -35,4 +35,4 @@ if (!Utils::checkDatetimeFormat($newtododt)) {
 $act->add($newtodotitle, $newtododt);
 
 // ToDo一覧へリダイレクト
-header('Location: ' . DOMAIN . '/View/todo/index.php');
+header('Location: ' . DOMAIN . '/public/todo/index.php');
