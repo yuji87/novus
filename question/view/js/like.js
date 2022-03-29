@@ -13,17 +13,27 @@ function get_param(name, url) {
 $(document).on('click','.like_btn',function(e){
   e.stopPropagation();
   var $this = $(this),
-      user_id = get_param('user_id'),
-      answer_id = get_param('answer_id');
+  // user_id = get_param('user_id'),
+  // like_id = get_param('like_id'),
+  // answer_id = get_param('answer_id');
+  user_id = $('input[name=user_id]').val(),//インプット欄の日付を取得
+  like_id = $('input[name=like_id]').val(),//インプット欄の日付を取得
+  answer_id = $('input[name=answer_id]').val();//インプット欄の日付を取得
   $.ajax({
-      type: 'POST',
-      url: '../question_disp.php',
-      dataType: 'json',
-      data: { user_id: user_id,
-              answer_id: answer_id}
-  }).done(function(data){
+    type: 'POST',
+    url: '../view/question_disp.php',
+    dataType: 'json',
+    data: { user_id: user_id,
+      like_id: like_id,
+      answer_id: answer_id}
+    }).done(function(data){
+      $('.result').json(data);
       location.reload();
-  }).fail(function() {
-    location.reload();
+    }).fail(function() {//現在失敗している。
+      console.log(user_id);
+      console.log(like_id);
+      console.log(answer_id);
+      console.log(this);
+    // location.reload();
   });
 });
