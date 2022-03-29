@@ -1,7 +1,7 @@
 // qanda向けjavascript関数
 
 // domain prefix
-var $domainurl = '/qandasite-main/public/';
+var $domainurl = '/qandasite-main/View/';
 
 // $urlへリダイレクト
 function jumpapi($url) {

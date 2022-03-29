@@ -1,8 +1,8 @@
 <?php
 // 記事一覧表示
-require_once "../../app/ArticleAct.php";
-require_once '../../app/Token.php';
-require_once '../../app/Utils.php';
+require_once "../../model/ArticleAct.php";
+require_once '../../model/Token.php';
+require_once '../../model/Utils.php';
 
 use Qanda\ArticleAct;
 use Qanda\Token;
@@ -76,14 +76,14 @@ if (count($retinfo['articlelist']) == 0) {
   if ($page <= 0) {
     echo '<div class="col-sm-1 text-right"><span class="btn btn-link disabled ">&lt;&lt;</span></div>';
   } else {
-    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/public/", 0);
+    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/View/", 0);
     printf('<div class="col-sm-1 text-right"><a class="btn btn-link" href="%s">&lt;&lt;</a></div>', $urlstr);
   }
   // ひとつ前に戻る(page)
   if ($page <= 0) {
     echo '<div class="col-sm-1 text-right"><span class="btn btn-link disabled ">&lt;</span></div>';
   } else {
-    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/public/", $page - 1);
+    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/View/", $page - 1);
     printf('<div class="col-sm-1 text-right"><a class="btn btn-link" href="%s">&lt;</a></div>', $urlstr);
   }
   // ページボタン
@@ -100,7 +100,7 @@ if (count($retinfo['articlelist']) == 0) {
       printf('<div class="col-sm-1 cur"><a class="btn btn-primary  disabled">%d</a></span></div>', $i + 1); //表示
     }
     else {
-      $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/public/", $i);
+      $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/View/", $i);
       printf('<div class="col-sm-1"><a class="btn btn-light" href="%s">%d</a></span></div>', $urlstr, $i + 1); //表示
     }
   }
@@ -109,14 +109,14 @@ if (count($retinfo['articlelist']) == 0) {
     echo '<div class="col-sm-1 text-left"><span class="btn btn-link disabled">&gt;</span></div>';
   } else {
     $nextpage = ($page + 1) >= $retinfo['MAXPAGE'] ? $retinfo['MAXPAGE']: $page + 1;
-    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/public/", $nextpage);
+    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/View/", $nextpage);
     printf('<div class="col-sm-1 text-left"><a class="btn btn-link" href="%s">&gt;</a></div>', $urlstr);
   }
   // 次送り page=MAXPAGE
   if ($page >= $retinfo['MAXPAGE']) {
     echo '<div class="col-sm-1 text-left"><span class="btn btn-link disabled">&gt;&gt;</span></div>';
   } else {
-    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/public/", $retinfo['MAXPAGE']);
+    $urlstr = sprintf("%sarticle/home.php?page=%d", DOMAIN."/View/", $retinfo['MAXPAGE']);
     printf('<div class="col-sm-1 text-left"><a class="btn btn-link" href="%s">&gt;&gt;</a></div>', $urlstr);
   }
   ?>
@@ -151,11 +151,11 @@ if (count($retinfo['articlelist']) == 0) {
 <hr />
 <div class="row m-2">
   <div class="col-sm-8">
-  <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
+  <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/View/todo/index.php">todoへ</a>
     <a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>
   </div>
   <div class="col-sm-4">
-    <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/postedit.php">投稿する</a>
+    <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/View/article/postedit.php">投稿する</a>
   </div>
 </div>
 

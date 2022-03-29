@@ -1,8 +1,8 @@
 <?php
 // 記事投稿/編集反映処理
-require_once "../../app/ArticleAct.php";
-require_once '../../app/Token.php';
-require_once '../../app/Utils.php';
+require_once "../../Model/ArticleAct.php";
+require_once '../../Model/Token.php';
+require_once '../../Model/Utils.php';
 
 use Qanda\ArticleAct;
 use Qanda\Token;
