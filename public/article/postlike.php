@@ -1,7 +1,7 @@
 <?php
 // いいね編集処理
-require_once "../../Model/ArticleAct.php";
-require_once '../../Model/Token.php';
+require_once "../../app/ArticleAct.php";
+require_once '../../app/Token.php';
 
 use Qanda\ArticleAct;
 use Qanda\Token;

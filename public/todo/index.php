@@ -1,7 +1,7 @@
 <?php
-require_once "../../Model/todo/TodoAct.php";
-require_once '../../Model/todo/Token.php';
-require_once '../../Model/todo/Utils.php';
+require_once "../../app/TodoAct.php";
+require_once '../../app/Token.php';
+require_once '../../app/Utils.php';
 
 use Qanda\TodoAct;
 use Qanda\Token;
@@ -28,7 +28,7 @@ $errid = filter_input(INPUT_GET, 'errid');
 </div>
 
 <h5>Todo</h5>
-<form method="POST" class="form-horizontal" name="qandaAddForm" action="<?php echo DOMAIN . '/View/todo/add.php'; ?>">
+<form method="POST" class="form-horizontal" name="qandaAddForm" action="<?php echo DOMAIN . '/public/todo/add.php'; ?>">
   <div class="row m-2">
     <div class="col-sm-6">
       <input type="text" class="form-control" id="newtodotitle" name="newtodotitle" value="" maxlength="64" />
@@ -101,7 +101,7 @@ $errid = filter_input(INPUT_GET, 'errid');
 
 <!-- 編集ダイアログ  -->
 <div class="modal fade" id="demoNormalModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-  <form method="POST" class="form-horizontal" name="qandaEditForm" action="<?php echo DOMAIN . '/View/todo/edit.php'; ?>">
+  <form method="POST" class="form-horizontal" name="qandaEditForm" action="<?php echo DOMAIN . '/public/todo/edit.php'; ?>">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">

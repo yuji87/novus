@@ -2,8 +2,8 @@
 
 namespace Qanda;
 
-require_once '../Action.php';
-require_once '../Utils.php';
+require_once 'Action.php';
+require_once 'Utils.php';
 
 // ToDo取得系
 define("QUERY_TODO_LIST", "SELECT TODO_ID,USER_ID,TITLE,STATE,REMIND_DATE FROM todo WHERE USER_ID=:user_id");

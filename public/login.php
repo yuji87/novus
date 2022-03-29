@@ -17,7 +17,7 @@ $retcode = filter_input(INPUT_GET, 'retcode');
 </p>
 
 <div class="container-fluid">
-  <form method="POST" class="form-horizontal" name="qandaForm" action="<?php echo DOMAIN . '/View/loginexec.php'; ?>">
+  <form method="POST" class="form-horizontal" name="qandaForm" action="<?php echo DOMAIN . '/public/loginexec.php'; ?>">
     <div class="row m-2 form-group">
       <div class="col-sm-4">アカウント(E-MAIL)</div>
       <div class="col-sm-8"><input type="text" class="form-control" id="email" name="email" value="" maxlength="64" /></div>

@@ -1,7 +1,7 @@
 <?php
 // ToDoステータス変更
-require_once "../../Model/todo/TodoAct.php";
-require_once "../../Model/todo/Token.php";
+require_once "../../app/TodoAct.php";
+require_once "../../app/Token.php";
 
 use Qanda\TodoAct;
 use Qanda\Token;
