@@ -45,7 +45,7 @@ if(isset($_GET['search'])){
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOP Page</a></li>
+            <li class="top"><a href="../../top/userLogin/login_top.php">TOP Page</a></li>
             <li><a href="../userEdit/edit_user.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
             <li><a href="../../question/view/qhistory.php">質問 履歴</a></li>
@@ -62,7 +62,7 @@ if(isset($_GET['search'])){
 	<section class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="col-xs-6 col-xs-offset-3 pb-3">質問サイトへようこそ</h2>
+                <h2 class="col-xs-6 col-xs-offset-3 pb-3 mt-4">質問サイトへようこそ</h2>
                 <a href="question_create.php" class="text-dark">質問を投稿する</a>
                 <div class="col-xs-6 col-xs-offset-3 well">
 	                <!-- ②検索フォーム  -->
@@ -92,12 +92,13 @@ if(isset($_GET['search'])){
         		    <!-- 検索ボタン押下時、取得データを表示する -->
         		    <?php if(isset($searchQuestion) && count($searchQuestion)): ?>
         			<p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
-        			<?php foreach($searchQuestion as $value): ?>
+        			<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
+					<?php foreach($searchQuestion as $value): ?>
         			<div><a href="question_disp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-        			<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+					<div><img src="../../top/img/<?php echo $value['icon']; ?>"></div>
+					<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
+					<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
         			<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-        			<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
-        			<div><?php echo htmlspecialchars($value['icon']) ?></div>
         			<!-- 更新されていた場合、その日付を優先表示 -->
 				    <div>
 					    <?php if (!isset($value['upd_date'])): ?>
@@ -113,14 +114,14 @@ if(isset($_GET['search'])){
 		
 			        <!-- 通常時、新着の質問を表示 -->
 		            <?php elseif(isset($newQuestion)): ?>
-		            	<div>新着の質問</div>
+		            	<div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		            	<?php foreach($newQuestion as $value): ?>
-		            		<div><a href="question_disp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-		            		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+		            		<div><a href="question_disp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+		            		<div><img src="../../top/img/<?php echo $value['icon']; ?>"></div>
+							<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
+							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		            		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-		            		<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
-		            		<div><?php echo htmlspecialchars($value['icon']) ?></div>
-		            	<div>日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
+		            	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
 		            	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>
