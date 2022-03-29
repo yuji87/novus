@@ -1,7 +1,7 @@
 <?php
 // ログイン画面★
 require_once '../app/Action.php';
-
+ 
 use Qanda\Action;
 
 $act = new Action();
