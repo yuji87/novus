@@ -1,6 +1,6 @@
 <?php
 // 記事一覧表示
-require_once "app/ArticleAct.php";
+require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
 require_once "../../app/VendorUtils.php";
@@ -23,7 +23,7 @@ if ($articleid) {
 }
 if ($retinfo == NULL) {
   // 記事がない場合は、記事一覧へリダイレクト
-  header("Location: " . DOMAIN . "/public/article/home.php");
+  header("Location: " . DOMAIN . "/public/article/index.php");
   exit;
 }
 
@@ -42,17 +42,19 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 
 <div class="row m-2">
   <div class="col-sm-8"></div>
-  <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さんがログイン</div>
+  <?php if (isset($_SESSION['login_user'])) : ?>
+    <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さんがログイン</div>
+  <?php endif ?>
 </div>
 
 <!-- ここから本文 -->
 <h5 class="artListTitle mt-3 font-weight-bold">記事詳細</h5>
 <!-- 投稿者名といいね数 -->
 <div class="row m-2">
-  <div class="col-sm-9"><?php echo $retinfo["user"]["NAME"]; ?>さん</div>
+  <div class="col-sm-9"><?php echo $retinfo["user"]["NAME"]; ?>さんの投稿</div>
   <div class="col-sm-2">
     <?php
-    if ($retinfo["article"]["USER_ID"] != $act->getMemberId()) {
+    if (isset($_SESSION['login_user']) && $retinfo["article"]["USER_ID"] != $act->getMemberId()) {
       if ($retinfo["postlike"] == NULL || $retinfo["postlike"]["LIKE_FLG"] == 0) {
         // いいねボタン押下で、いいねにする
         print('<a class="btn btn-primary" id="btnlike">いいね</a>');
@@ -71,17 +73,17 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <!-- タイトルと本文 -->
 <div class="container-fluid">
   <!-- タイトル -->
-  <div class="row m-2 form-group" style="height:60%;">
-    <div class="col-sm-12"  style="word-break:break-all;">
-  <h2 class="artDetailTitle"><?php echo Utils::h($retinfo['article']['TITLE']); //この行をこれ以上右に動かすとレイアウトが崩れる?></h2>
-  <span class="artDetailContents" id="preview"><?php echo $message;  //この行をこれ以上右に動かすとレイアウトが崩れる ?></span>
+  <div class="row m-2 form-group" style="height:55vh;">
+    <div class="col-sm-12" style="word-break:break-all;">
+      <h2 class="artDetailTitle"><?php echo Utils::h($retinfo['article']['TITLE']); ?></h2>
+      <span class="artDetailContents" id="preview"><?php echo $message; ?></span>
     </div>
   </div>
   <!-- カテゴリバッジ -->
   <div class="row m-2 form-group">
     <div class="catename col-sm-1">
       <div class="badge rounded-pill bg-danger p-2">
-        <?php echo $catename;?>
+        <?php echo $catename; ?>
       </div>
     </div>
     <div class="col-sm1-11"></div>
@@ -93,19 +95,25 @@ $message = Utils::compatiStr($message); // 改行を <br/>
   </div>
 </div>
 
+<hr>
 <div class="row m-2">
   <div class="col-sm-6">
     <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
-    <a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>
+    <?php if (isset($_SESSION['login_user'])) : ?>
+      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/userLogin/login_top.php">ホーム画面へ</a>
+    <?php else : ?>
+      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/toppage/top.php">ホーム画面へ</a>
+    <?php endif ?>
   </div>
   <div class="col-sm-6">
-  <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
+    <a class="btn btn-primary m-2" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
     <?php
     if ($retinfo["article"]["USER_ID"] == $act->getMemberId()) {
       // 自分が投稿した記事
-      printf('<a class="btn btn-primary m-2" href="%sarticle/postedit.php?articleid=%d">編集する</a>',
-              DOMAIN,
-              $articleid
+      printf(
+        '<a class="btn btn-primary m-2" href="%sarticle/postedit.php?articleid=%d">編集する</a>',
+        DOMAIN . "/public/",
+        $articleid
       );
       print('<div class="btn btn-primary m-2" id="btndelete">削除する</div>');
     }
@@ -122,8 +130,8 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 
     // 送信(ajax)
     var $data = 'articleid=' + <?php echo $_GET['articleid']; ?> + '&token=<?php echo $_SESSION["token"]; ?>';
-    formapiCallback('article/postlike.php', $data, function($result) {
-      
+    formapiCallback('article/process/postlike.php', $data, function($result) {
+
       const $postlikecnt = $('#postlikecnt');
       const cnt = parseInt($postlikecnt.html());
 
@@ -156,9 +164,9 @@ $message = Utils::compatiStr($message); // 改行を <br/>
         var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
-        formapiCallback('article/delete.php', $data, function($retcode) {
+        formapiCallback('article/process/delete.php', $data, function($retcode) {
           // 投稿一覧画面へ
-          jumpapi('article/home.php');
+          jumpapi('article/index.php');
         });
       }
     });
@@ -170,15 +178,6 @@ $message = Utils::compatiStr($message); // 改行を <br/>
     $('#btndelete').click(onDelete);
 
   });
-/*
-  Vue.use(window['MavonEditor'])
-  new Vue({
-    el: '#app',
-    data: {
-      value: "# Hellow Vue"
-    }
-  })
-*/
 </script>
 
 <?php

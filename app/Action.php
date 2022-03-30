@@ -7,7 +7,7 @@ require_once __DIR__ . '/database.php';
 // ユーザー情報取得系
 define("QUERY_MEMBER", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE user_id=:user_id");
 define("QUERY_MEMBER_REF", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE USER_ID=:user_id");
-define("QUERY_MEMBER_EMAIL", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE TEL=:tel");
+define("QUERY_MEMBER_TEL", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE TEL=:tel");
 define("QUERY_MEMBERLIST_IDS", "SELECT USER_ID,NAME,TEL,NAME,PASSWORD,EMAIL,ICON,TW_USER,Q_DISP_FLG,LEVEL,EXP,COMMENT,PRE_LEVEL,PRE_EXP FROM users WHERE USER_ID IN (%s)");
 
 // ユーザー情報更新系
@@ -30,13 +30,13 @@ class Action
   // ページ表示不要のリクエストは,mode=1にして呼ぶ。
   function begin($mode = 0) {
     session_start();
-
-    // Cookie
-    if (isset($_SESSION["USER_ID"]) == false && isset($_SESSION["login_user"]) == false) {
-      // LOGIN PAGEへ
-      header('Location: '. DOMAIN .'/top/login_form.php');
-      exit;
-    }
+    
+    // // Cookie
+    // if (isset($_SESSION["USER_ID"]) == false && isset($_SESSION["login_user"]) == false) {
+    //   // LOGIN PAGEへ
+    //   header('Location: '. DOMAIN .'/top/login_form.php');
+    //   exit;
+    // }
 
     // DB接続
     $this->conn = Database::getInstance();
@@ -45,14 +45,6 @@ class Action
     if (isset($_SESSION['login_user'])) {
     // セッションに全部ある場合
       $this->member = $_SESSION['login_user'];
-    }
-    else {
-    // USER_IDのみの場合,DBから取得
-      $userid = $_SESSION["USER_ID"];
-      $stmt = $this->conn->prepare(QUERY_MEMBER);
-      $stmt->bindValue(':user_id', $userid);
-      $result = $stmt->execute();
-      $this->member = $result ? $stmt->fetch(\PDO::FETCH_ASSOC): NULL;
     }
 
     // 外部サイトからフレームでのページの読み込みを制限
@@ -93,7 +85,7 @@ class Action
     $this->conn = Database::getInstance();
 
     // telから user情報取得
-    $stmt = $this->conn->prepare(QUERY_MEMBER_EMAIL);
+    $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
     $stmt->bindValue(':tel', $tel);
     $result = $stmt->execute();
     $this->member = $result ? $stmt->fetch(\PDO::FETCH_ASSOC): NULL;
@@ -148,7 +140,9 @@ class Action
   }
   // メンバーのIDを返す
   function getMemberId() {
-    return $this->member['user_id'];
+    if (isset($_SESSION['login_user'])){
+      return $this->member['user_id'];
+    }
   }
 
   // userIdからユーザ情報を取得
@@ -162,9 +156,9 @@ class Action
     $member = $stmt->fetch(\PDO::FETCH_ASSOC);
     return $member;
   }
-  // emailからユーザ情報を取得
+  // telからユーザ情報を取得
   function memberrefemail($email) {
-    $stmt = $this->conn->prepare(QUERY_MEMBER_EMAIL);
+    $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
     $stmt->bindValue(':email', $email);
     $result = $stmt->execute();
     if (! $result) {
@@ -217,21 +211,25 @@ class Action
       // フッダー出力
         echo '<hr/>';
         echo '<div class="row m-2">';
-        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/home.php">記事一覧へ</a>';
-        echo '<a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>';
+        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/index.php">記事一覧へ</a>';
+        // if(isset($_SESSION['login_user'])){
+          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/userLogin/login_top.php">ホーム画面へ</a>';
+        // }else{
+          // echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/toppage/top.php">ホーム画面へ</a>';
+        // }
         echo '</div>';
       }
       echo '</div></body>';
       echo '</html>';
     }
-    // header,include,bodyまで出力する
-    // SEO対策、javascript/cssを追加するときは、ここに追加。
+    // header,bodyまで出力する
     function printHeader() {
-      echo '<html>';
+      echo '<!DOCTYPE html>';
+      echo '<html lang="ja">';
       echo '<head>';
       echo '<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">';
       echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-      echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+      echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
       echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/qanda.css?ver=' . VERSION . '" />';
       echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css" media="screen" />';
       echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
@@ -245,7 +243,7 @@ class Action
       echo '<script src= "https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/qapi.js?ver={$version}"></script>';
+      echo '<script src="' . DOMAIN . '/public/JS/qapi.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
       echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
@@ -254,6 +252,7 @@ class Action
       echo '<body><div class="container">';
     }
 }
+
 
 
 

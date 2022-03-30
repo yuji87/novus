@@ -11,11 +11,6 @@ class Utils
   {
     return str_replace("\n", "<br/>", $str);
   }
-  // // ランダムな文字列作成★
-  // public static function randstr($length = 24)
-  // {
-  //   return substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyz', $length)), 0, $length);
-  // }
   // 日時の文字列作成
   public static function compatiDate($date, $format = "Y-m-d H:i")
   {
@@ -54,6 +49,15 @@ class Utils
       return FALSE;
     }
   }
+  public static function checkLogin()
+  {
+    $result = false;
+    // セッションにログインユーザが入っていなければfalse
+    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
+      return $result = true;
+    }
+    return $result;
+  } 
   // 現在の時刻から $addday日後の日時の文字列を作成
   public static function addDay($addday, $format = 0)
   {

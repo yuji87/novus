@@ -1,5 +1,5 @@
 <?php
-require_once "app/TodoAct.php";
+require_once "../../app/TodoAct.php";
 require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
 
@@ -8,7 +8,8 @@ use Qanda\Token;
 use Qanda\Utils;
 
 // ToDo一覧取得
-$act = new ToDoAct(0);
+$act = new ToDoAct();
+$retinfo = $act->begin();
 $retinfo = $act->get();
 
 // Token生成
@@ -28,7 +29,7 @@ $errid = filter_input(INPUT_GET, 'errid');
 </div>
 
 <h5>Todo</h5>
-<form method="POST" class="form-horizontal" name="qandaAddForm" action="<?php echo DOMAIN . '/public/todo/add.php'; ?>">
+<form method="POST" class="form-horizontal" name="qandaAddForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
   <div class="row m-2">
     <div class="col-sm-6">
       <input type="text" class="form-control" id="newtodotitle" name="newtodotitle" value="" maxlength="64" />
@@ -101,7 +102,7 @@ $errid = filter_input(INPUT_GET, 'errid');
 
 <!-- 編集ダイアログ  -->
 <div class="modal fade" id="demoNormalModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-  <form method="POST" class="form-horizontal" name="qandaEditForm" action="<?php echo DOMAIN . '/public/todo/edit.php'; ?>">
+  <form method="POST" class="form-horizontal" name="qandaEditForm" action="<?php echo DOMAIN . '/public/todo/process/edit.php'; ?>">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -184,7 +185,7 @@ $errid = filter_input(INPUT_GET, 'errid');
       if (isConfirm) {
         var $data = 'todoid=' + todoid + '&token=<?php echo $_SESSION["token"]; ?>';
         // ajax呼び出し
-        formapiCallback('todo/delete.php', $data, function(result) {
+        formapiCallback('todo/process/delete.php', $data, function(result) {
           // 一覧を再読み込み
           jumpapi('todo/index.php');
         });
@@ -197,7 +198,7 @@ $errid = filter_input(INPUT_GET, 'errid');
     var todoid = $(this).attr('todoid');
     var $data = 'state=finish&todoid=' + todoid + '&token=<?php echo $_SESSION["token"]; ?>';
     // ajax呼び出し
-    formapiCallback('todo/toggle.php', $data, function(result) {
+    formapiCallback('todo/process/toggle.php', $data, function(result) {
       // 一覧を再読み込み
       jumpapi('todo/index.php');
     });
@@ -207,7 +208,7 @@ $errid = filter_input(INPUT_GET, 'errid');
     var todoid = $(this).attr('todoid');
     var $data = 'state=active&todoid=' + todoid + '&token=<?php echo $_SESSION["token"]; ?>';
     // ajax呼び出し
-    formapiCallback('todo/toggle.php', $data, function(result) {
+    formapiCallback('todo/process/toggle.php', $data, function(result) {
       // 一覧を再読み込み
       jumpapi('todo/index.php');
     });

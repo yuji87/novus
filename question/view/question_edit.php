@@ -10,8 +10,8 @@
   // ログインチェック
   $result = UserLogic::checkLogin();
   if(!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../top/userLogin/login_top.php');
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../../user/login/home.php');
     return;
   }
 
@@ -36,9 +36,9 @@
   // ボタン押下時の処理（成功でページ移動）
   if(isset($_POST['q_edit_conf'])){
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category'FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category');
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id'FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
     if(isset($_POST['question_image'])){
         $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
     }else{

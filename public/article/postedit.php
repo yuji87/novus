@@ -1,6 +1,6 @@
 <?php
 
-require_once "app/ArticleAct.php";
+require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once "../../app/Utils.php";
 
@@ -58,7 +58,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
         <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>" />
       </div>
     </div>
-    <div class="row m-2 form-group" style="height:60%;">
+    <div class="row m-2 form-group" style="height:55vh">
       <!-- 入力欄 -->
       <div class="col-sm-6">
         <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%;"><?php echo $message; ?></textarea>
@@ -70,19 +70,20 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
     </div>
     <div class="row m-2 form-group">
       <div class="col-sm-3">カテゴリ</div>
-      <div class="col-sm-9"><select id="category" name="category" style="width:100%;" placeholder="カテゴリ">
+      <div class="col-sm-9">
+        <select id="category" name="category" style="width:100%;" placeholder="カテゴリ">
           <?php
           foreach ($category as $key => $val) {
             printf('<option value="%s">%s</option>', $key, $val);
           }
           ?>
-        </select></div>
+        </select>
+      </div>
     </div>
     <div class="row m-2 form-group">
       <div class="col-sm-12 text-center">
         <input type="hidden" name="articleid" id="articleid" value="<?php echo $articleid; ?>" />
         <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" />
-        <!-- ajax送信。submitでは不可。 -->
         <div class="btn btn-success" onclick="onPostArticle();"><?php echo $modenamebtn; ?></div>
       </div>
       <div class="col-sm-12 text-right">
@@ -91,7 +92,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
           echo('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
         }
         ?>
-        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
+        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
       </div>
     </div>
   </form>
@@ -137,7 +138,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       '&token=<?php echo $_SESSION["token"]; ?>';
 
     // 送信(ajax)
-    formapiCallback('article/post.php', $data, function($retcode) {
+    formapiCallback('article/process/post.php', $data, function($retcode) {
       // 送信完了後の処理
       if ($retcode == 'success') {
         swal({
@@ -150,13 +151,13 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       }
       switch ($retcode) {
         case 'failed-title':
-          onShow('タイトルに誤りがあります');
+          onShow('タイトルは150文字以内で入力してください');
           break;
         case 'failed-message':
-          onShow('本文に誤りがあります');
+          onShow('本文は1500文字以内で入力してください');
           break;
         case 'failed-category':
-          onShow('カテゴリに誤りがあります');
+          onShow('カテゴリが入力されていません');
           break;
         default:
           break;
@@ -176,22 +177,13 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
         var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
-        formapiCallback('article/delete.php', $data, function($retcode) {
+        formapiCallback('article/process/delete.php', $data, function($retcode) {
           // 投稿一覧画面へ
-          jumpapi('article/home.php');
+          jumpapi('article/index.php');
         });
       }
     });
   }
-/*
-  Vue.use(window['MavonEditor'])
-  new Vue({
-    el: '#app',
-    data: {
-      value: "# こちらから入力できます"
-    }
-  })
-*/
 </script>
 
 <?php

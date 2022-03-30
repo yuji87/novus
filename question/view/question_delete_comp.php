@@ -9,8 +9,8 @@
   // ログインチェック
   $result = UserLogic::checkLogin();
   if(!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../top/userLogin/login_top.php');
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../../user/login/form.php');
     return;
   }
   
@@ -33,6 +33,6 @@
 </head>
 <body>
   <div>削除が成功しました</div>
-  <button type="button" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
+  <button type="button" onclick="location.href='../../user/login/home.php'">TOP</button>
   <button type="button" onclick="location.href='question_search.php'">質問TOPへ</button>
 </body>
