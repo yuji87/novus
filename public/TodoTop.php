@@ -8,7 +8,8 @@ use Qanda\Token;
 use Qanda\Utils;
 
 // ToDo一覧取得
-$act = new ToDoAct(0);
+$act = new ToDoAct();
+$retinfo = $act->begin();
 $retinfo = $act->get();
 
 // Token生成

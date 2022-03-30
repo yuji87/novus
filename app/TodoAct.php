@@ -27,10 +27,22 @@ class TodoAct extends Action
     }
   }
 
+  function begin($mode = 0)
+  {
+    session_start();
+    // Cookie
+    if (isset($_SESSION["user_id"]) == false && isset($_SESSION["login_user"]) == false) {
+      // LOGIN PAGEへ
+      header('Location: ' . DOMAIN . '/top/userLogin/login_form.php');
+      exit;
+    }
+  }
+
   // ToDo一覧取得
   function get()
   {
     $retinfo = array();
+    var_dump(QUERY_TODO_LIST);
 
     // ToDo情報取得
     $activelist = array();
