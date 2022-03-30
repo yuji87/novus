@@ -23,10 +23,9 @@ $errid = filter_input(INPUT_GET, 'errid');
 
 $result = Utils::checkLogin();
 if (!$result) {
-    header("Location: ../../top/userLogin/login_top.php");
+    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
     return;
 }
-
 ?>
 
 <div class="row m-2">
