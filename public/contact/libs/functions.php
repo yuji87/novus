@@ -1,14 +1,14 @@
 <?php
-// //エスケープ処理を行う関数
-// function h($var)
-// {
-//   if (is_array($var)) {
-//     //$varが配列の場合、h()関数をそれぞれの要素について呼び出す（再帰）
-//     return array_map('h', $var);
-//   } else {
-//     return htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
-//   }
-// }
+//エスケープ処理を行う関数
+function h($var)
+{
+  if (is_array($var)) {
+    //$varが配列の場合、h()関数をそれぞれの要素について呼び出す（再帰）
+    return array_map('h', $var);
+  } else {
+    return htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
+  }
+}
 
 //入力値に不正なデータがないかなどをチェックする関数
 function checkInput($var)

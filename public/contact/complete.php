@@ -1,8 +1,8 @@
-<?php require_once "../process/complete.php" ?>
+<?php require_once "process/complete.php" ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-<?php require_once "head.php" ?>
+<?php require_once "process/head.php" ?>
 
 <body>
   <div class="container">
