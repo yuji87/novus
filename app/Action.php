@@ -231,7 +231,7 @@ class Action
       echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
       echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
       echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/qanda.css?ver=' . VERSION . '" />';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css" media="screen" />';
+      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css">';
       echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
       echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
       echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';

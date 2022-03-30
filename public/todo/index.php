@@ -21,6 +21,12 @@ $remainddt = Utils::addDay(7, 1);
 // エラーコード
 $errid = filter_input(INPUT_GET, 'errid');
 
+$result = Utils::checkLogin();
+if (!$result) {
+    header("Location: ../../top/userLogin/login_top.php");
+    return;
+}
+
 ?>
 
 <div class="row m-2">

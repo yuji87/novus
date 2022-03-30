@@ -19,7 +19,7 @@ $newtododt = filter_input(INPUT_POST, 'newtododt');
 
 $newtodotitle = Utils::mbtrim($newtodotitle);
 
-if (!Utils::isStrLen($newtodotitle, 128)) {
+if (!Utils::isStrLen($newtodotitle, 100)) {
   // 範囲外
   header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidtitle');
   exit;
