@@ -98,6 +98,6 @@
   <?php elseif(isset($_POST['a_best_comp']) && count($err) === 0): ?>
     <div>ベストアンサー登録が完了しました</div>
     <button type="button" onclick="location.href='../../userLogin/home.php'">TOP</button>
-  <button type="button" onclick="location.href='qdisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']  ?>'">質問へ戻る</button>
+  <button type="button" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']  ?>'">質問へ戻る</button>
   <?php endif; ?>
 </body>

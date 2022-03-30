@@ -58,7 +58,7 @@
         $err['q_id'] = '質問IDが選択されていません';
     }
     if (count($err) === 0){
-        header('Location: qeditComp.php');
+        header('Location: qEditComp.php');
     }
 }
 ?>

@@ -47,7 +47,7 @@ $showicon = UserLogic::showIcon();
         <ul class="menu">
             <li class="top"><a href="home.php">TOPページ</a></li>
             <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../question/qhistory.php">質問 履歴</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>

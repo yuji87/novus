@@ -29,7 +29,7 @@
         $err['a_id'] = '返答が選択されていません';
     }
     if (count($err) === 0){
-        header('Location: aeditComp.php');
+        header('Location: aEditComp.php');
     }
   }else{
     // 非ボタン押下時（通常時）の処理

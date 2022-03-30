@@ -99,6 +99,7 @@
     <!--ログイン画面へ遷移-->
     <div class="text-center mb-4">
     <a href = "../userLogin/form.php">ログインはこちら</a>
+    <a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a>
     </div>
     </div>
 </body>

@@ -38,7 +38,7 @@
   <div>以下の内容で編集が完了しました</div>
     <div>本文：<?php echo $hasTaken['message'] ?></div>
 
-    <form method="GET" name="form1" action="qdisp.php">
+    <form method="GET" name="form1" action="qDisp.php">
       <input type="hidden" name="question_id" value="<?php echo $hasTaken['question_id']; ?>">
       <a href="javascript:form1.submit()">詳細画面へ</a>
     </form>

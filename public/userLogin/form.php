@@ -59,9 +59,10 @@
         </div>
         <!--送信ボタン-->
         <div class="col-12 my-4 text-center">
-            <p><input type="submit" class="btn btn-primary" value="Log in"></p>
+            <p><input type="submit" class="btn btn-primary mt-3" value="Log in"></p>
             <!--signup_form.phpへ-->
             <a href = "../userRegister/form.php">新規登録はこちら</a>
+            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a></p>
         </div>
     </form>
 </body>

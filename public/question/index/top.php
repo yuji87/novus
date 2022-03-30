@@ -48,7 +48,7 @@ if(isset($_GET['search'])){
             <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
             <li><a href="../userEdit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../public/question/qhistory.php">質問 履歴</a></li>
+            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
@@ -94,7 +94,7 @@ if(isset($_GET['search'])){
         			<p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
         			<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					<?php foreach($searchQuestion as $value): ?>
-        			<div><a href="qdisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
+        			<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
 					<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
 					<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 					<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
@@ -116,7 +116,7 @@ if(isset($_GET['search'])){
 		            <?php elseif(isset($newQuestion)): ?>
 		            	<div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		            	<?php foreach($newQuestion as $value): ?>
-		            		<div><a href="qdisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+		            		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 		            		<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
 							<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>

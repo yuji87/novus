@@ -63,7 +63,7 @@ if(!$newQuestion){
 			<li><a class="nav-link active small text-white" href="../../question/index/top.php">質問Page</a></li>
             <li><a class="nav-link small text-white" href="#">記事ページ</a>
             <li><a class="nav-link small text-white" href="#">ライブラリ</a>
-            <li><a class="nav-link small text-white" href="#contact">お問い合わせ</a></li>
+            <li><a class="nav-link small text-white" href="#contact">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="Log Out" id="logout">
@@ -113,7 +113,7 @@ if(!$newQuestion){
 		        <?php if(isset($newQuestion)): ?>
 		        	<div>新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
-		        		<div><a href="qdisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
+		        		<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
 		        		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		        		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
 		        		<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>

@@ -87,7 +87,7 @@
             <li class="top"><a href="login_top.php">TOP Page</a></li>
             <li><a href="../userEdit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../public/question/qhistory.php">質問 履歴</a></li>
+            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
@@ -103,16 +103,15 @@
             <div class="content">
                 <!--質問の詳細表示-->
                 <?php if(isset($err['question'])):  ?>
-                  <?php echo $err['question'] ?>
+                    <?php echo $err['question'] ?>
                 <?php endif; ?>
-                <!-- 質問表示 -->
                 <p class="h4 pb-3">詳細表示</p>
-                <!-- アイコン設定時、アイコン表示 -->
-                <div class="level-icon">
-                    <?php if (isset($login_user['icon'])): ?> 
-                        <img src="../img/<?php echo $login_user['icon']; ?>">
+                <!--アイコン-->
+                <div class="pb-1 small">
+                    <?php if(!isset($question['icon'])): ?>
+                      <?php echo $question['post_date']  ?>
                     <?php else: ?>
-                    <?php echo "<img src="."../../top/img/sample_icon.png".">"; ?>
+                      <img src="../../top/img/<?php echo $question['icon']; ?>">
                     <?php endif; ?>
                 </div>
                 <!--投稿者-->
@@ -121,30 +120,29 @@
                 </div>
                 <!--題名-->
                 <div class="fw-bold pb-1">題名</div>
-                <div><?php echo $question['title'] ?></div>
+                    <div><?php echo $question['title'] ?></div>
                 <!--カテゴリー-->
                 <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                <div><?php echo $question['category_name'] ?></div>
+                    <div><?php echo $question['category_name'] ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div><?php echo htmlspecialchars($question['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8') ?></div>
-                <!-- 更新されていた場合、その日付を優先表示 -->
-                <div class="pt-4 pb-1 small">
+                    <div><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8') ?></div>
+                <!--日付-->
+                <div class="pt-4 pb-1 small">投稿日時：
                     <?php if (!isset($question['upd_date'])): ?>
-                        投稿：<?php echo $question['post_date']  ?>
+                        <?php echo $question['post_date']  ?>
                     <?php else: ?>
-                        更新：<?php echo $question['upd_date'] ?>
+                        <?php echo $question['upd_date'] ?>
                     <?php endif; ?>
                 </div>
 
-
                 <!-- 質問者本人の時、編集・削除ボタン表示 -->
                 <?php if($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
-                  <form method="POST" name="question" action="qedit.php" id="qedit">
+                  <form method="POST" name="question" action="qEdit.php" id="qedit">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <i class="fa-solid fa-pen"><input type="submit" id="edit" value="編集"></i>
                   </form>
-                  <form method="POST" name="question" action="question_delete.php" id="qdelete">
+                  <form method="POST" name="question" action="question_delete.php" id="qDelete">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <i class="fa-solid fa-trash-can"><input type="submit" id="delete" value="削除"></i>
                   </form>
@@ -240,12 +238,12 @@
 
               <!-- 本人の返答に対して、返答の編集・削除ボタン表示 -->
               <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
-                <form method="POST" action="aedit.php">
+                <form method="POST" action="aEdit.php">
                   <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                   <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
                   <input type="submit" name="a_edit" value="編集">
                 </form>
-                <form method="POST" action="adelete.php">
+                <form method="POST" action="aDelete.php">
                   <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                   <input type="hidden" name="answer_id" value="<?php echo $value['answer_id'] ?>">
                   <input type="submit" name="a_edit" value="削除">
@@ -257,7 +255,7 @@
 
           <!-- ベストアンサーが選択されていると新規投稿できなくなる処理 -->
           <?php if($question['best_select_flg'] == 0): ?>
-            <form method="POST" action="acreateConf.php">
+            <form method="POST" action="aCreateConf.php">
               <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
               <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
               <textarea placeholder="ここに返信を入力してください" name="a_message"></textarea>
@@ -265,7 +263,7 @@
             </form>
           <?php endif; ?>
         
-          <button type="button" onclick="location.href='index/top.php'">戻る</button>
+          <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index/top.php'">戻る</button>
           <!-- <script>
             //URLから引数に入っている値を渡す処理
         function get_param(name, url) {
