@@ -68,7 +68,7 @@
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/edit_user.php">My Page</a></li>
+            <li><a href="../edit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
             <li><a href="../../question/view/qhistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
@@ -95,7 +95,7 @@
                     <input type="hidden" name="question_id" value="<?php echo $question_id ?>">
                     <input type="submit" name="a_comp"value="投稿">
                 </form>
-                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
+                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../../user/login/home.php'">TOP</button>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
             </div>
         </div>
