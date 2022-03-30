@@ -1,7 +1,7 @@
 <?php
 
 //ファイル読み込み
-require_once '../../../app/Dbconnect.php';
+require_once '../../app/Dbconnect.php';
 
 class categoryLogic
 {
