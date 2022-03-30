@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<?php require_once "bookAPI/head.php" ?>
+<?php require_once "head.php" ?>
 
 <body>
   <div class="wrap">

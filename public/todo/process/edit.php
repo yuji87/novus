@@ -19,7 +19,7 @@ $edittododt = filter_input(INPUT_POST, 'edittododt');
 
 $edittodotitle = Utils::mbtrim($edittodotitle);
 
-if (!Utils::isStrLen($edittodotitle, 128)) {
+if (!Utils::isStrLen($edittodotitle, 100)) {
   // 範囲外
   header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidtitle');
   exit;
