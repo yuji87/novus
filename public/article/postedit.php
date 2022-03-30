@@ -58,7 +58,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
         <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>" />
       </div>
     </div>
-    <div class="row m-2 form-group" style="height:60%;">
+    <div class="row m-2 form-group" style="height:55vh">
       <!-- 入力欄 -->
       <div class="col-sm-6">
         <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%;"><?php echo $message; ?></textarea>
@@ -70,19 +70,20 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
     </div>
     <div class="row m-2 form-group">
       <div class="col-sm-3">カテゴリ</div>
-      <div class="col-sm-9"><select id="category" name="category" style="width:100%;" placeholder="カテゴリ">
+      <div class="col-sm-9">
+        <select id="category" name="category" style="width:100%;" placeholder="カテゴリ">
           <?php
           foreach ($category as $key => $val) {
             printf('<option value="%s">%s</option>', $key, $val);
           }
           ?>
-        </select></div>
+        </select>
+      </div>
     </div>
     <div class="row m-2 form-group">
       <div class="col-sm-12 text-center">
         <input type="hidden" name="articleid" id="articleid" value="<?php echo $articleid; ?>" />
         <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" />
-        <!-- ajax送信。submitでは不可。 -->
         <div class="btn btn-success" onclick="onPostArticle();"><?php echo $modenamebtn; ?></div>
       </div>
       <div class="col-sm-12 text-right">

@@ -231,12 +231,14 @@ class ArticleAct extends Action
   // いいね情報取得
   function postlike($article_id)
   {
-    $stmt = $this->conn->prepare(QUERY_POSTLIKE);
-    $stmt->bindValue(':article_id', $article_id);
-    $stmt->bindValue(':user_id', $this->member['user_id']);
-    $result = $stmt->execute();
-    $postlike = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
-    return $postlike;
+    if (isset($_SESSION['login_user'])){
+      $stmt = $this->conn->prepare(QUERY_POSTLIKE);
+      $stmt->bindValue(':article_id', $article_id);
+      $stmt->bindValue(':user_id', $this->member['user_id']);
+      $result = $stmt->execute();
+      $postlike = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
+      return $postlike;
+    }
   }
 
   // いいねした記事の一覧取得

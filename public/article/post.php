@@ -45,5 +45,13 @@ if (! $articleid) {
     $act->updatearticle($articleid, $title, $message, $category);
 }
 
+// ログインチェック
+$result = Utils::checkLogin();
+if (!$result) {
+    header('Location: ../../top/userLogin/login_top.php');
+    return;
+}
+
+
 // ajax呼び出し。 戻り値を出力
 echo 'success';

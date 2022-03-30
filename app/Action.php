@@ -224,8 +224,7 @@ class Action
       echo '</div></body>';
       echo '</html>';
     }
-    // header,include,bodyまで出力する
-    // SEO対策、javascript/cssを追加するときは、ここに追加。
+    // header,bodyまで出力する
     function printHeader() {
       echo '<!DOCTYPE html>';
       echo '<html lang="ja">';
