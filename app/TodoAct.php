@@ -52,9 +52,9 @@ class TodoAct extends Action
     }
     $retinfo['activelist'] = $activelist;
     $retinfo['finlist'] = $finlist;
-
     return $retinfo;
   }
+
   // ToDo登録
   function add($title, $remind_date)
   {

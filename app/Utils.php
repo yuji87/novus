@@ -26,7 +26,6 @@ class Utils
       // email認証を省略
       return true;
     }
-
     mb_language("Japanese");
     mb_internal_encoding("UTF-8");
     $heads = sprintf("From: %s", GMEMAIL);
