@@ -13,17 +13,16 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
+
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit']['password_conf'])) {
+if (isset($_SESSION['iconEdit'])) {
     //セッションから情報を取得
-    $password = $_SESSION['passwordEdit']['password'];
-    $password_conf = $_SESSION['passwordEdit']['password_conf'];
+    $icon = $_SESSION['iconEdit'];
 } else {
     //セッションがなかった場合
-    $password = array();
-    $password_conf = array();
+    $icon = array();
 }
 ?>
 
@@ -33,8 +32,9 @@ if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdi
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <title>会員情報変更[password]</title>
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <title>会員情報変更[icon]</title>
 </head>
 
 <body>
@@ -63,19 +63,18 @@ if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdi
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/passwordConfirm.php" method="POST">
+                <form action="../editConfirm/iconConfirm.php" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した名前を表示-->
-                        <div class="text">
-                            <label for="password" style="text-align:center">[password]</label>
-                            <p><input id="editdetail" type="text" name="password" value="<?php $password ?>"></p>
-                            <!--確認用-->
-                            <br><p for="password" style="text-align:center">[確認のため再度記入して下さい]</p>
-                            <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf ?>"></p>
+                        <!--アイコン用の画像を選択-->
+                        <div class="row my-3">
+                            <label for="icon" style="text-align:center">[Icon]</label>
+                            <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
+                            <p><input id="editdetail" type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon ?>"></p>
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <a href="edit_user.php" id="back">戻る</a>
+                        <p><input type="submit" value="変更"></p>
                     </div>
                 </form>
             </div>

@@ -2,9 +2,9 @@
 session_start();
 
 //ファイル読み込み
-require_once '../../classes/UserLogic.php';
-require_once '../../classes/QuestionLogic.php';
-require_once '../../classes/LevelLogic.php';
+require_once '../../app/UserLogic.php';
+require_once '../../app/QuestionLogic.php';
+require_once '../../app/LevelLogic.php';
 require_once '../../functions.php';
 //エラーメッセージ
 $err = [];
@@ -39,8 +39,8 @@ if(!$newQuestion){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
@@ -131,13 +131,13 @@ if(!$newQuestion){
 	    		<h4>Q&A SITE</h4>
 	    		<ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
-	    				<a class="nav-link small" href="../../public/article/home.php">記事</a>
+	    				<a class="nav-link small" href="#">記事</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">質問</a>
 	    			</li>
 	    			<li class="nav-item">
-	    				<a class="nav-link small" href="../../public/bookApi.php">本検索</a>
+	    				<a class="nav-link small" href="#">本検索</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">お問い合わせ</a>

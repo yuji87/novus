@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../classes/UserLogic.php';
+require_once '../../app/UserLogic.php';
 
 if (!$logout = filter_input(INPUT_POST, 'logout')) {
     exit ('不正なリクエストです');

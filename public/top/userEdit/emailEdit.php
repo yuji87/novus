@@ -3,7 +3,7 @@
 session_start();
 
 //ファイル読み込み
-require_once '../../classes/UserLogic.php';
+require_once '../../app/UserLogic.php';
 require_once '../../functions.php';
 
 //ログインしているか判定して、していなかったらログインへ移す
@@ -13,16 +13,15 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
-
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['iconEdit'])) {
+if (isset($_SESSION['emailEdit'])) {
     //セッションから情報を取得
-    $icon = $_SESSION['iconEdit'];
+    $email = $_SESSION['emailEdit'];
 } else {
     //セッションがなかった場合
-    $icon = array();
+    $email = array();
 }
 ?>
 
@@ -32,9 +31,9 @@ if (isset($_SESSION['iconEdit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-    <title>会員情報変更[icon]</title>
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <title>会員情報変更[email]</title>
 </head>
 
 <body>
@@ -63,14 +62,13 @@ if (isset($_SESSION['iconEdit'])) {
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/iconConfirm.php" method="POST"  enctype="multipart/form-data">
+                <form action="../editConfirm/emailConfirm.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--アイコン用の画像を選択-->
-                        <div class="row my-3">
-                            <label for="icon" style="text-align:center">[Icon]</label>
-                            <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
-                            <p><input id="editdetail" type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon ?>"></p>
+                        <!--ユーザーが登録した名前を表示-->
+                        <div class="text">
+                            <label for="email" style="text-align:center">[Email]</label>
+                            <p><input id="editdetail" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
                         <a href="edit_user.php" id="back">戻る</a>
