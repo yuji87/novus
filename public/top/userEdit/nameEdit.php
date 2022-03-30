@@ -3,8 +3,11 @@
 session_start();
 
 //ファイル読み込み
-require_once '../../classes/UserLogic.php';
+require_once '../../app/UserLogic.php';
 require_once '../../functions.php';
+
+//エラーメッセージ
+$err = [];
 
 //ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
@@ -13,15 +16,16 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
+
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['emailEdit'])) {
+if (isset($_SESSION['nameEdit'])) {
     //セッションから情報を取得
-    $email = $_SESSION['emailEdit'];
+    $name = $_SESSION['nameEdit'];
 } else {
     //セッションがなかった場合
-    $email = array();
+    $name = array();
 }
 ?>
 
@@ -31,9 +35,9 @@ if (isset($_SESSION['emailEdit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-    <title>会員情報変更[email]</title>
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <title>会員情報変更[name]</title>
 </head>
 
 <body>
@@ -51,8 +55,8 @@ if (isset($_SESSION['emailEdit'])) {
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="../login/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -62,13 +66,13 @@ if (isset($_SESSION['emailEdit'])) {
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/emailConfirm.php" method="POST">
+                <form action="../editConfirm/nameConfirm.php" method="POST" name="confirm">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="email" style="text-align:center">[Email]</label>
-                            <p><input id="editdetail" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>"></p>
+                            <label for="name" style="text-align:center">[Name]</label>
+                            <p><input id="editdetail" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
                         <a href="edit_user.php" id="back">戻る</a>

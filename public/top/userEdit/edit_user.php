@@ -3,7 +3,7 @@
 session_start();
 
 //ファイル読み込み
-require_once '../../classes/UserLogic.php';
+require_once '../../app/UserLogic.php';
 require_once '../../functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
@@ -24,8 +24,8 @@ $_SESSION['edit'] = $_POST;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
     <title>会員情報一覧</title>
 </head>
 

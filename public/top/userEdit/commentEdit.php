@@ -3,7 +3,7 @@
 session_start();
 
 //ファイル読み込み
-require_once '../../classes/UserLogic.php';
+require_once '../../app/UserLogic.php';
 require_once '../../functions.php';
 
 //ログインしているか判定して、していなかったらログインへ移す
@@ -13,15 +13,16 @@ if (!$result) {
     header('Location: ../userCreate/signup_form.php');
     return;
 }
+
 $login_user = $_SESSION['login_user'];
 
 //セッションに保存データがあるかを確認
-if (isset($_SESSION['telEdit'])) {
+if (isset($_SESSION['commentEdit'])) {
     //セッションから情報を取得
-    $name = $_SESSION['telEdit'];
+    $comment = $_SESSION['commentEdit'];
 } else {
     //セッションがなかった場合
-    $name = array();
+    $comment = array();
 }
 ?>
 
@@ -31,9 +32,9 @@ if (isset($_SESSION['telEdit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-    <title>会員情報変更[tel]</title>
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <title>会員情報変更[comment]</title>
 </head>
 
 <body>
@@ -51,8 +52,8 @@ if (isset($_SESSION['telEdit'])) {
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
-                <form action="../login/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -62,13 +63,13 @@ if (isset($_SESSION['telEdit'])) {
         <div class="container">
             <div class="content">
                 <h2 class="heading">アカウント編集画面</h2>
-                <form action="../editConfirm/telConfirm.php" method="POST">
+                <form action="../editConfirm/commentConfirm.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した電話番号を表示-->
+                        <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <label for="tel" style="text-align:center">[Tel]</label>
-                            <p><input id="editdetail" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>"></p>
+                            <label for="comment" style="text-align:center">[comment]</label>
+                            <p><input id="editdetail" type="text" name="comment" value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                         </div>
                         <br><br>
                         <a href="edit_user.php" id="back">戻る</a>

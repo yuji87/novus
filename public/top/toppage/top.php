@@ -3,8 +3,8 @@
 session_start();
 
 //ファイルの読み込み
-require_once '../../classes/CategoryLogic.php';
-require_once '../../classes/QuestionLogic.php';
+require_once '../../app/CategoryLogic.php';
+require_once '../../app/QuestionLogic.php';
 
 //エラーメッセージ
 $err = [];
