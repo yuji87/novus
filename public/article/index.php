@@ -51,14 +51,17 @@ Token::create();
 <h5 class="artListTitle mt-3 font-weight-bold">記事一覧 <?php echo $headertitle; ?></h5>
 
 <?php
+//全データを展開
 foreach ($retinfo['articlelist'] as $art) {
-  // ユーザ情報
+
+  // 投稿ユーザ情報
   $user = $retinfo['usermap'][$art['USER_ID']];
-  $username = ($user == NULL) ? '非ログインユーザー' : $user['NAME'];
+  // 投稿者の名前
+  $username = $user["NAME"];
   // 投稿日時
   $postdt = Utils::compatiDate($art['UPD_DATE'], 'Y/m/d H:i');
   // いいね数
-  $postlikecnt = isset($retinfo['postlikemap'][$art['ARTICLE_ID']]) ? $retinfo['postlikemap'][$art['ARTICLE_ID']] : 0;
+  $postlikecnt = $retinfo['postlikemap'][$art['ARTICLE_ID']] ??  0; //合体演算子
 
   echo '<div class="artfrm" articleid="' . $art['ARTICLE_ID'] . '">';
   echo '<div class="arthead">' . $username . ' さんの投稿</div>';
@@ -150,7 +153,7 @@ if (count($retinfo['articlelist']) == 0) {
 
     // 検索キーワード指定で、本ページ再読み込み
     var txtdata = $(this).val();
-    jumpapi('article/article.php?page=' + <?php echo $page; ?> + '&searchtext=' + encodeURIComponent(txtdata));
+    jumpapi('article/index.php?page=' + <?php echo $page; ?> + '&searchtext=' + encodeURIComponent(txtdata));
   });
 </script>
 
