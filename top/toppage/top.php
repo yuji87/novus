@@ -51,7 +51,7 @@ if(isset($_GET['search'])){
 				<a class="nav-link active small text-white" href="#">質問コーナー</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small text-white" href="#">記事コーナー</a>
+				<a class="nav-link small text-white" href="../../public/article/index.php">記事コーナー</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link small text-white" href="#">本ライブラリ</a>
@@ -124,7 +124,7 @@ if(isset($_GET['search'])){
 			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-					<a class="nav-link small" href="#">記事</a>
+					<a class="nav-link small" href="../../public/article/index.php">記事</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link small" href="#">質問</a>
