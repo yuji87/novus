@@ -53,7 +53,7 @@
             <li class="top"><a href="login_top.php">TOP Page</a></li>
             <li><a href="../userEdit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qhistory.php">質問 履歴</a></li>
+            <li><a href="../../qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
@@ -69,7 +69,7 @@
             <div class="content">
                 <p class="h4">回答完了</p>
                 <p>返答の投稿が完了しました</p>
-                <form method="GET" action="qdisp.php">
+                <form method="GET" action="qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $_SESSION['a_data']['question_id'] ?>">
                     <input type="submit" class="btn btn-warning mb-3" name="q_disp"value="質問表示へ戻る">
                 </form>

@@ -45,7 +45,7 @@
         $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
     }
     if (count($err) === 0){
-      header('Location: adeleteComp.php');
+      header('Location: aDeleteComp.php');
     }
 }
 

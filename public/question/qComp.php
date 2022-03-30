@@ -58,7 +58,7 @@
             <li class="top"><a href="login_top.php">TOP Page</a></li>
             <li><a href="../userEdit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qhistory.php">質問 履歴</a></li>
+            <li><a href="../../qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
@@ -87,7 +87,7 @@
                 <?php if (isset($hasTaken[0]['question_image'])): ?>
                   <img src="../../top/img/<?php echo $hasTaken[0]['question_image']; ?>">
                 <?php endif; ?> 
-                <form method="GET" name="form1" action="qdisp.php">
+                <form method="GET" name="form1" action="qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
                     <a href="javascript:form1.submit()" class="btn btn-warning mt-2">詳細画面へ</a>
                 </form>

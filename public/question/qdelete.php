@@ -42,7 +42,7 @@
     }
 
     if (count($err) === 0){
-        header('Location: qdeleteComp.php');
+        header('Location: qDeleteComp.php');
     }
 }
 
@@ -75,7 +75,7 @@
             <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
             <li><a href="../userEdit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qhistory.php">質問 履歴</a></li>
+            <li><a href="../../qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">

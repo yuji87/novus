@@ -96,7 +96,7 @@ if(isset($_GET['search'])){
 		    <p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
 	    
 		    <?php foreach($searchQuestion as $value): ?>
-		    	<div><a href="qdisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
+		    	<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
 		    	<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		    	<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
 		    	<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
@@ -107,7 +107,7 @@ if(isset($_GET['search'])){
 		    	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
 		    <?php elseif(isset($newQuestion)): ?>
 		    	<?php foreach($newQuestion as $value): ?>
-		    		<div><a href="qdisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
+		    		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
 		    		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		    		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
 		    		<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>

@@ -47,7 +47,7 @@ if (!$data || !$paging) {
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../../public/question/qhistory.php">質問 履歴</a></li>
+            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
