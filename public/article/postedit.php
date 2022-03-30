@@ -92,7 +92,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
           echo('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
         }
         ?>
-        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
+        <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
       </div>
     </div>
   </form>
@@ -138,7 +138,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       '&token=<?php echo $_SESSION["token"]; ?>';
 
     // 送信(ajax)
-    formapiCallback('article/post.php', $data, function($retcode) {
+    formapiCallback('article/process/post.php', $data, function($retcode) {
       // 送信完了後の処理
       if ($retcode == 'success') {
         swal({
@@ -177,9 +177,9 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
         var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
-        formapiCallback('article/delete.php', $data, function($retcode) {
+        formapiCallback('article/process/delete.php', $data, function($retcode) {
           // 投稿一覧画面へ
-          jumpapi('article/home.php');
+          jumpapi('article/index.php');
         });
       }
     });

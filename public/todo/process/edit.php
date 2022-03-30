@@ -1,7 +1,7 @@
 <?php
 // ToDo編集
-require_once "../../app/TodoAct.php";
-require_once '../../app/Token.php';
+require_once "../../../app/TodoAct.php";
+require_once '../../../app/Token.php';
 
 use Qanda\TodoAct;
 use Qanda\Token;
