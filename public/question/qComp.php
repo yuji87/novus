@@ -2,8 +2,8 @@
     session_start();
 
     //ファイルの読み込み
-    require_once '../../classes/QuestionLogic.php';
-    require_once '../../classes/UserLogic.php';
+    require_once '../../app/QuestionLogic.php';
+    require_once '../../app/UserLogic.php';
 
     //error
     $err = [];
@@ -41,8 +41,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
   <title>質問投稿完了</title>
 </head>
 
@@ -83,10 +83,6 @@
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
                 <div><?php echo $hasTaken[0]['message'] ?></div>
-                <!--ファイルを投稿していたら表示-->
-                <?php if (isset($hasTaken[0]['question_image'])): ?>
-                  <img src="../../top/img/<?php echo $hasTaken[0]['question_image']; ?>">
-                <?php endif; ?> 
                 <form method="GET" name="form1" action="qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
                     <a href="javascript:form1.submit()" class="btn btn-warning mt-2">詳細画面へ</a>

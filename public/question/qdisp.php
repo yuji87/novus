@@ -5,8 +5,8 @@
   session_start();
 
   //ファイルの読み込み
-  require_once '../../classes/QuestionLogic.php';
-  require_once '../../classes/UserLogic.php';
+  require_once '../../app/QuestionLogic.php';
+  require_once '../../app/UserLogic.php';
 
   //error
   $err = [];
@@ -55,8 +55,8 @@
         $err['plusEXP'] = '経験値加算処理に失敗しました';
       }
     }
-    var_dump($_POST);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,9 +69,9 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/question.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/question.css" />
   <title>質問表示</title>
 </head>
 
@@ -111,7 +111,7 @@
                     <?php if(!isset($question['icon'])): ?>
                       <?php echo $question['post_date']  ?>
                     <?php else: ?>
-                      <img src="../../top/img/<?php echo $question['icon']; ?>">
+                      <img src="../user/img/<?php echo $question['icon']; ?>">
                     <?php endif; ?>
                 </div>
                 <!--投稿者-->
@@ -142,7 +142,7 @@
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <i class="fa-solid fa-pen"><input type="submit" id="edit" value="編集"></i>
                   </form>
-                  <form method="POST" name="question" action="question_delete.php" id="qDelete">
+                  <form method="POST" name="question" action="qDelete.php" id="qDelete">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <i class="fa-solid fa-trash-can"><input type="submit" id="delete" value="削除"></i>
                   </form>
@@ -258,12 +258,12 @@
             <form method="POST" action="aCreateConf.php">
               <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
               <input type="hidden" name="question_id" value="<?php echo $question['question_id'] ?>">
-              <textarea placeholder="ここに返信を入力してください" name="a_message"></textarea>
-              <input type="submit">
+              <textarea placeholder="ここに返信を入力してください" name="a_message" class="w-75" rows="3"></textarea>
+              <br><input type="submit" class="btn btn-warning mt-2" value="返信">
             </form>
           <?php endif; ?>
         
-          <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index/top.php'">戻る</button>
+          <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index.php'">戻る</button>
           <!-- <script>
             //URLから引数に入っている値を渡す処理
         function get_param(name, url) {

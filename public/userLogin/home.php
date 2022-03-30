@@ -60,7 +60,7 @@ if(!$newQuestion){
 				    <input type="hidden">
                 </form>
             </li>
-			<li><a class="nav-link active small text-white" href="../../question/index/top.php">質問Page</a></li>
+			<li><a class="nav-link active small text-white" href="../../question/index.php">質問Page</a></li>
             <li><a class="nav-link small text-white" href="#">記事ページ</a>
             <li><a class="nav-link small text-white" href="#">ライブラリ</a>
             <li><a class="nav-link small text-white" href="#contact">TO DO LIST</a></li>
