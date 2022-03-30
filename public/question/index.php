@@ -3,8 +3,8 @@
 session_start();
 
 //ファイルの読み込み
-  require_once '../../../app/CategoryLogic.php';
-  require_once '../../../app/QuestionLogic.php';
+  require_once '../../app/CategoryLogic.php';
+  require_once '../../app/QuestionLogic.php';
 
 //error
 $err = [];
@@ -30,10 +30,9 @@ if(isset($_GET['search'])){
 <title>質問</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="2.css" />
-<link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-<link rel="stylesheet" type="text/css" href="../../css/top.css" />
-<link rel="stylesheet" type="text/css" href="../../css/question.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/question.css" />
 </head>
 
 <body>
@@ -95,7 +94,7 @@ if(isset($_GET['search'])){
         			<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					<?php foreach($searchQuestion as $value): ?>
         			<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-					<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
+					<div><img src="../user/img/<?php echo $value['icon']; ?>"></div>
 					<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 					<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
         			<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
@@ -117,7 +116,7 @@ if(isset($_GET['search'])){
 		            	<div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		            	<?php foreach($newQuestion as $value): ?>
 		            		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
-		            		<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
+		            		<div><img src="../user/img/<?php echo $value['icon']; ?>"></div>
 							<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		            		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>

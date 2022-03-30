@@ -2,9 +2,9 @@
   session_start();
 
   //ファイルの読み込み
-  require_once '../../classes/QuestionLogic.php';
-  require_once '../../classes/CategoryLogic.php';
-  require_once '../../classes/UserLogic.php';
+  require_once '../../app/QuestionLogic.php';
+  require_once '../../app/CategoryLogic.php';
+  require_once '../../app/UserLogic.php';
 
   $result = UserLogic::checkLogin();
   if(!$result) {
@@ -31,7 +31,7 @@
   }
   
   if(isset($_POST['q_dlt'])){
-    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
     if(!$_SESSION['q_data']['question_id']) {
       $err['q_id'] = '質問IDが選択されていません';
     }
@@ -57,9 +57,9 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/top.css" />
-  <link rel="stylesheet" type="text/css" href="../../css/question.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+  <link rel="stylesheet" type="text/css" href="../CSS/question.css" />
   <title>質問削除</title>
 </head>
 

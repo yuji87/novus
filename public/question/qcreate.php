@@ -2,9 +2,9 @@
     session_start();
     
     //ファイルの読み込み
-    require_once '../../classes/UserLogic.php';
-    require_once '../../classes/QuestionLogic.php';
-    require_once '../../classes/CategoryLogic.php';
+    require_once '../../app/UserLogic.php';
+    require_once '../../app/QuestionLogic.php';
+    require_once '../../app/CategoryLogic.php';
 
     // ログインチェック
     $result = UserLogic::checkLogin();
@@ -55,8 +55,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="2.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
     <title>質問投稿ページ</title>
 </head>
 
@@ -125,10 +125,6 @@
                             <p class="text-danger pt-2"><?php echo $err['message'] ?></p>
                         <?php endif; ?>
                     </div>
-                    <!--添付ファイル-->
-                    <div class="fw-bold pt-4 pb-1">添付</div>
-                    <div class="small pb-3">※jpgまたはpng形式にてお願いいたします</div>
-                        <input type="file" name="question_image" accept="image/png, image/jpeg">
                     <input type="submit" name="create_question" class="btn btn-warning mt-5 mb-5" value="投稿する">
                 </form>
             </div>
