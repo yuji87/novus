@@ -60,8 +60,8 @@ if(!$hasTaken){
 				    <input type="hidden">
                 </form>
             </li>
-			<li><a class="nav-link active small text-white" href="../../question/view/question_search.php">質問Page</a></li>
-            <li><a class="nav-link small text-white" href="../../public/article/index.php">記事ページ</a>
+			<li><a class="nav-link active small text-white" href="#">質問Page</a></li>
+            <li><a class="nav-link small text-white" href="#">記事ページ</a>
             <li><a class="nav-link small text-white" href="#">ライブラリ</a>
             <li><a class="nav-link small text-white" href="#contact">お問い合わせ</a></li>
             <li>
@@ -127,13 +127,13 @@ if(!$hasTaken){
 	    		<h4>Q&A SITE</h4>
 	    		<ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
-	    				<a class="nav-link small" href="../../public/article/index.php">記事</a>
+	    				<a class="nav-link small" href="#">記事</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">質問</a>
 	    			</li>
 	    			<li class="nav-item">
-	    				<a class="nav-link small" href="../../public/bookApi/index.php">本検索</a>
+	    				<a class="nav-link small" href="#">本検索</a>
 	    			</li>
 	    			<li class="nav-item">
 	    				<a class="nav-link small" href="#">お問い合わせ</a>
