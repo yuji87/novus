@@ -2,8 +2,8 @@
 
 namespace Qanda;
 
-require_once 'Action.php';
-require_once 'Utils.php';
+require_once "Action.php";
+require_once "Utils.php";
 
 // 記事取得系
 define("QUERY_ARTICLE_LIST", "SELECT ARTICLE_ID,USER_ID,TITLE,MESSAGE,POST_DATE,UPD_DATE,CATE_ID,ARTICLE_IMAGE FROM article_posts %s ORDER BY UPD_DATE DESC LIMIT :limit OFFSET :offset");
@@ -32,7 +32,7 @@ define("DELETE_POSTLIKE", "DELETE FROM article_likes WHERE ARTICLE_ID=:article_i
 define("TITLE_LENGTH", 150);
 
 // 記事の長さ
-define("MESSAGE_LENGTH", 5000);
+define("MESSAGE_LENGTH", 1500);
 
 // 記事/いいね関連クラス
 class ArticleAct extends Action
@@ -44,15 +44,15 @@ class ArticleAct extends Action
   }
 
   // 記事一覧
-  function articlelist($page, $searchtext = '')
+  function articlelist($page, $searchtext = "")
   {
     $retinfo = array(); {
       // 検索指定時、where句を追加する
       $retlist = array();
-      $inWhere = '';
+      $inWhere = "";
 
       // 検索指定時
-      if ($searchtext != '') {
+      if ($searchtext != "") {
       // 検索文字指定不可の文字をエスケープ
         $searchtext = Utils::convertSQL($searchtext);
         $inWhere = "WHERE TITLE LIKE '%" . $searchtext . "%' ESCAPE '#'";
@@ -61,21 +61,21 @@ class ArticleAct extends Action
       // 記事リスト(指定されたpage 20件)
       $offset = $page * LISTCOUNT;
       $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_LIST, $inWhere));
-      $stmt->bindValue(':limit', (int)LISTCOUNT, \PDO::PARAM_INT);
-      $stmt->bindValue(':offset', (int)$offset, \PDO::PARAM_INT);
+      $stmt->bindValue(":limit", (int)LISTCOUNT, \PDO::PARAM_INT);
+      $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
       $result = $stmt->execute();
       if ($result) {
         while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
           $retlist[] = $rec;
         }
       }
-      $retinfo['articlelist'] = $retlist;
+      $retinfo["articlelist"] = $retlist;
 
       // ユーザ情報
-      $retinfo['usermap'] = $this->membermap($retlist, 'USER_ID');
+      $retinfo["usermap"] = $this->membermap($retlist, "USER_ID");
 
       // いいね数
-      $retinfo['postlikemap'] = $this->likecountmap($retlist);
+      $retinfo["postlikemap"] = $this->likecountmap($retlist);
     }
 
     // 記事全体の数
@@ -83,10 +83,10 @@ class ArticleAct extends Action
       $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_COUNT, $inWhere));
       $result = $stmt->execute();
       $cntrec = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
-      $cnt = $cntrec == NULL ? 0 : $cntrec['CNT'];
-      $retinfo['cnt'] = $cnt;
+      $cnt = $cntrec == NULL ? 0 : $cntrec["CNT"];
+      $retinfo["cnt"] = $cnt;
       $maxpage = floor(($cnt - 1) / LISTCOUNT);
-      $retinfo['MAXPAGE'] = $maxpage;
+      $retinfo["MAXPAGE"] = $maxpage;
     }
 
     // カテゴリ
@@ -259,7 +259,7 @@ class ArticleAct extends Action
     }
     $retinfo['articlelist'] = $retlist;
 
-    // ユーザ情報★
+    // ユーザ情報
     $retinfo['usermap'] = $this->membermap($retlist, 'USER_ID');
 
     // いいね数
