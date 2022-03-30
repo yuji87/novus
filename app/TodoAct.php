@@ -27,10 +27,22 @@ class TodoAct extends Action
     }
   }
 
+  function begin($mode = 0)
+  {
+    session_start();
+    // Cookie
+    if (isset($_SESSION["user_id"]) == false && isset($_SESSION["login_user"]) == false) {
+      // LOGIN PAGEへ
+      header('Location: ' . DOMAIN . '/top/userLogin/login_form.php');
+      exit;
+    }
+  }
+
   // ToDo一覧取得
   function get()
   {
     $retinfo = array();
+    var_dump(QUERY_TODO_LIST);
 
     // ToDo情報取得
     $activelist = array();
@@ -61,6 +73,7 @@ class TodoAct extends Action
     if (!$title || !$remind_date) {
       return;
     }
+
     // DB登録
     $stmt = $this->conn->prepare(INSERT_TODO);
     $stmt->bindValue(':user_id', $this->member['user_id']);
@@ -68,13 +81,13 @@ class TodoAct extends Action
     $stmt->bindValue(':remind_date', $remind_date);
     $stmt->execute();
   }
-
   // ToDo編集
   function edit($todo_id, $title, $remind_date)
   {
     if (!$todo_id || !$title || !$remind_date ) {
       return;
     }
+
     // DB登録
     $stmt = $this->conn->prepare(UPDATE_TODO);
     $stmt->bindValue(':todo_id', $todo_id);
@@ -83,7 +96,6 @@ class TodoAct extends Action
     $stmt->bindValue(':remind_date', $remind_date);
     return $stmt->execute();
   }
-
   // ToDo 状態変更
   function toggle($todo_id, $state)
   {
@@ -93,13 +105,13 @@ class TodoAct extends Action
     if ($state != 'active' && $state != 'finish') {
       return;
     }
+
     $stmt = $this->conn->prepare(UPDATE_TODO_STATE);
     $stmt->bindValue(':todo_id', $todo_id);
     $stmt->bindValue(':user_id', $this->member['user_id']);
     $stmt->bindValue(':state', $state);
     return $stmt->execute();
   }
-  
   // ToDo削除
   function delete($todo_id)
   {

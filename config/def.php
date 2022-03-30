@@ -2,7 +2,7 @@
 
 namespace Qanda;
 
-require_once "configA.php";
+require_once "config.php";
 
 // 定数
 define("VERSION", "1.0.0");

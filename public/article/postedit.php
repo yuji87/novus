@@ -151,13 +151,13 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       }
       switch ($retcode) {
         case 'failed-title':
-          onShow('タイトルは150文字以内で入力してください');
+          onShow('タイトルに誤りがあります');
           break;
         case 'failed-message':
-          onShow('本文は1500文字以内で入力してください');
+          onShow('本文に誤りがあります');
           break;
         case 'failed-category':
-          onShow('カテゴリが入力されていません');
+          onShow('カテゴリに誤りがあります');
           break;
         default:
           break;
@@ -184,6 +184,15 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       }
     });
   }
+/*
+  Vue.use(window['MavonEditor'])
+  new Vue({
+    el: '#app',
+    data: {
+      value: "# こちらから入力できます"
+    }
+  })
+*/
 </script>
 
 <?php
