@@ -30,7 +30,7 @@ class Action
   // ページ表示不要のリクエストは,mode=1にして呼ぶ。
   function begin($mode = 0) {
     session_start();
-   
+    
     // // Cookie
     // if (isset($_SESSION["USER_ID"]) == false && isset($_SESSION["login_user"]) == false) {
     //   // LOGIN PAGEへ
