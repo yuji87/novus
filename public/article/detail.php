@@ -23,7 +23,7 @@ if ($articleid) {
 }
 if ($retinfo == NULL) {
   // 記事がない場合は、記事一覧へリダイレクト
-  header("Location: " . DOMAIN . "/public/article/home.php");
+  header("Location: " . DOMAIN . "/public/article/index.php");
   exit;
 }
 
@@ -75,10 +75,8 @@ $message = Utils::compatiStr($message); // 改行を <br/>
   <!-- タイトル -->
   <div class="row m-2 form-group" style="height:55vh;">
     <div class="col-sm-12" style="word-break:break-all;">
-      <h2 class="artDetailTitle"><?php echo Utils::h($retinfo['article']['TITLE']); //この行をこれ以上右に動かすとレイアウトが崩れる
-                                  ?></h2>
-      <span class="artDetailContents" id="preview"><?php echo $message;  //この行をこれ以上右に動かすとレイアウトが崩れる 
-                                                    ?></span>
+      <h2 class="artDetailTitle"><?php echo Utils::h($retinfo['article']['TITLE']); ?></h2>
+      <span class="artDetailContents" id="preview"><?php echo $message; ?></span>
     </div>
   </div>
   <!-- カテゴリバッジ -->
@@ -100,7 +98,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <hr>
 <div class="row m-2">
   <div class="col-sm-6">
-    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/TodoTop.php">todoへ</a>
+    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
     <?php if (isset($_SESSION['login_user'])) : ?>
       <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/userLogin/login_top.php">ホーム画面へ</a>
     <?php else : ?>
@@ -108,7 +106,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
     <?php endif ?>
   </div>
   <div class="col-sm-6">
-    <a class="btn btn-primary m-2" href="<?php echo DOMAIN; ?>/public/article/home.php">一覧に戻る</a>
+    <a class="btn btn-primary m-2" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
     <?php
     if ($retinfo["article"]["USER_ID"] == $act->getMemberId()) {
       // 自分が投稿した記事
@@ -132,7 +130,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 
     // 送信(ajax)
     var $data = 'articleid=' + <?php echo $_GET['articleid']; ?> + '&token=<?php echo $_SESSION["token"]; ?>';
-    formapiCallback('article/postlike.php', $data, function($result) {
+    formapiCallback('article/process/postlike.php', $data, function($result) {
 
       const $postlikecnt = $('#postlikecnt');
       const cnt = parseInt($postlikecnt.html());
@@ -166,9 +164,9 @@ $message = Utils::compatiStr($message); // 改行を <br/>
         var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
-        formapiCallback('article/delete.php', $data, function($retcode) {
+        formapiCallback('article/process/delete.php', $data, function($retcode) {
           // 投稿一覧画面へ
-          jumpapi('article/home.php');
+          jumpapi('article/index.php');
         });
       }
     });

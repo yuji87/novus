@@ -30,13 +30,13 @@ class Action
   // ページ表示不要のリクエストは,mode=1にして呼ぶ。
   function begin($mode = 0) {
     session_start();
-
-    // Cookie
-    if (isset($_SESSION["USER_ID"]) == false && isset($_SESSION["login_user"]) == false) {
-      // LOGIN PAGEへ
-      header('Location: '. DOMAIN .'/top/login_form.php');
-      exit;
-    }
+    
+    // // Cookie
+    // if (isset($_SESSION["USER_ID"]) == false && isset($_SESSION["login_user"]) == false) {
+    //   // LOGIN PAGEへ
+    //   header('Location: '. DOMAIN .'/top/login_form.php');
+    //   exit;
+    // }
 
     // DB接続
     $this->conn = Database::getInstance();
@@ -45,14 +45,6 @@ class Action
     if (isset($_SESSION['login_user'])) {
     // セッションに全部ある場合
       $this->member = $_SESSION['login_user'];
-    }
-    else {
-    // USER_IDのみの場合,DBから取得
-      $userid = $_SESSION["USER_ID"];
-      $stmt = $this->conn->prepare(QUERY_MEMBER);
-      $stmt->bindValue(':user_id', $userid);
-      $result = $stmt->execute();
-      $this->member = $result ? $stmt->fetch(\PDO::FETCH_ASSOC): NULL;
     }
 
     // 外部サイトからフレームでのページの読み込みを制限
@@ -148,7 +140,9 @@ class Action
   }
   // メンバーのIDを返す
   function getMemberId() {
-    return $this->member['user_id'];
+    if (isset($_SESSION['login_user'])){
+      return $this->member['user_id'];
+    }
   }
 
   // userIdからユーザ情報を取得
@@ -217,8 +211,12 @@ class Action
       // フッダー出力
         echo '<hr/>';
         echo '<div class="row m-2">';
-        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/home.php">記事一覧へ</a>';
-        echo '<a class="btn btn-success m-2" href="../../top/userLogin/login_top.php">ホーム画面へ</a>';
+        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/index.php">記事一覧へ</a>';
+        // if(isset($_SESSION['login_user'])){
+          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/userLogin/login_top.php">ホーム画面へ</a>';
+        // }else{
+          // echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/toppage/top.php">ホーム画面へ</a>';
+        // }
         echo '</div>';
       }
       echo '</div></body>';
@@ -245,7 +243,7 @@ class Action
       echo '<script src= "https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/qapi.js?ver={$version}"></script>';
+      echo '<script src="' . DOMAIN . '/public/JS/qapi.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
       echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
