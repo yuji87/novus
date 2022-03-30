@@ -45,8 +45,8 @@ if(isset($_GET['search'])){
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="../../top/userLogin/login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/edit_user.php">My Page</a></li>
+            <li class="top"><a href="../../user/login/home.php">TOP Page</a></li>
+            <li><a href="../edit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
             <li><a href="../../question/view/qhistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>
@@ -125,7 +125,7 @@ if(isset($_GET['search'])){
 		            	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>
-	            <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../../top/userLogin/login_top.php'">TOP</button>
+	            <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../../user/login/home.php'">TOP</button>
 			</div>
 		</div>
 	</section>

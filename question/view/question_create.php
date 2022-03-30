@@ -9,8 +9,8 @@
     // ログインチェック
     $result = UserLogic::checkLogin();
     if(!$result) {
-        $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-        header('Location: ../../top/userLogin/login_top.php');
+        $_SESSION['login_err'] = '再度ログインして下さい';
+        header('Location: ../../user/login/home.php');
         return;
     }
 
@@ -70,7 +70,7 @@
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/edit_user.php">My Page</a></li>
+            <li><a href="../edit/list.php">My Page</a></li>
             <li><a href="#">TO DO LIST</a></li>
             <li><a href="../../question/view/qhistory.php">質問 履歴</a></li>
             <li><a href="../../">記事 履歴</a></li>

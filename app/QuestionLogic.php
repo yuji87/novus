@@ -4,7 +4,7 @@
 <?php
 
 //ファイル読み込み
-require_once '../../core/DBconnect.php';
+require_once '../../../app/Dbconnect.php';
 
 class QuestionLogic
 {

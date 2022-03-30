@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: userCreate/signup_form.php');
+    header('Location: register/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -50,8 +50,8 @@ if (!$question) {
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="../top/userLogin/login_top.php">TOPページ</a></li>
-            <li><a href="../userEdit/edit_user.php">会員情報 編集</a></li>
+            <li class="top"><a href="../user/login/home.php">TOPページ</a></li>
+            <li><a href="../edit/list.php">会員情報 編集</a></li>
             <li><a href="../../study-main/ARTICLE/ahistory.php">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
