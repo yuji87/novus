@@ -198,6 +198,14 @@ section {
     text-align:center;
     overflow: scroll;
 }
+hr#dot {
+    height: 2px;
+    background: #bbb;
+    background-image: -webkit-linear-gradient(left, #eee, #777, #eee);
+    background-image: -moz-linear-gradient(left, #eee, #777, #eee);
+    background-image: -ms-linear-gradient(left, #eee, #777, #eee);
+    background-image: -o-linear-gradient(left, #eee, #777, #eee);
+}
 /* content */
 .wrapper .content .heading{
     margin:20px auto;

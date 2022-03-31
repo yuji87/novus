@@ -1,39 +1,38 @@
 <?php
-
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 
-//ログインしているか判定して、していなかったらログインへ移す
+// ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userCreate/signup_form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
 
-//セッションに保存データがあるかを確認
-if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit']['password_conf'])) {
-    //セッションから情報を取得
+// セッションに保存データがあるかを確認
+if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit']['password_conf'])) {
+    // セッションから情報を取得
     $password = $_SESSION['passwordEdit']['password'];
     $password_conf = $_SESSION['passwordEdit']['password_conf'];
 } else {
-    //セッションがなかった場合
+    // セッションがなかった場合
     $password = array();
     $password_conf = array();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <title>会員情報変更[password]</title>
 </head>
 
@@ -48,12 +47,11 @@ if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdi
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="#projects">質問 履歴</a></li>
-            <li><a href="#contact">記事 履歴</a></li>
-            <li><a href="#contact">お問い合わせ</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
+            <li><a href="../article/aHistory.php">記事 履歴</a></li>
             <li>
-                <form action="../userLogin/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -75,7 +73,8 @@ if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdi
                             <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf ?>"></p>
                         </div>
                         <br><br>
-                        <button type="submit" class="btn-edit-check">変更</button>
+                        <a href="list.php" id="back">戻る</a>
+                        <p><input type="submit" class="mt-3" value="変更"></p>
                     </div>
                 </form>
             </div>
@@ -83,11 +82,25 @@ if (isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdi
     </section>
 
 	<!-- フッタ -->
-    <footer>
-        <div class="">
-            <br><br><hr>
-	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
-        </div>
-    </footer>
+    <footer class="h-10"><hr>
+		<div class="footer-item text-center">
+			<h4>Q&A SITE</h4>
+			<ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+				    <a class="nav-link small" href="../article/index.php">記事</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../question/index.php">質問</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+				</li>
+			</ul>
+		</div>
+		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+  	</footer>
 </body>
 </html>

@@ -1,10 +1,9 @@
 <?php
-
 session_start();
 
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
@@ -19,13 +18,13 @@ $_SESSION['edit'] = $_POST;
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>会員情報一覧</title>
 </head>
 
@@ -39,8 +38,7 @@ $_SESSION['edit'] = $_POST;
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="#projects">質問 履歴</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
             <li><a href="#contact">記事 履歴</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
             <li>
@@ -101,6 +99,7 @@ $_SESSION['edit'] = $_POST;
                         </div>
                         <br><br>
                         <a class="edit" href="../userDelete/confirm.php" role="button">ユーザー削除</a>
+                        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../userLogin/mypage.php" role="button">戻る</a></p>
                     </div>
                 </form>
             </div>

@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport">
   <title>Cherry Blossom DEMO</title>
-  <link rel="stylesheet" type="text/css" href="../../public/CSS/level_anime.css">
+  <link rel="stylesheet" type="text/css" href="../../public/css/level_anime.css">
 </head>
 <body>
   <div class="mx-auto" style="width: 200px;">

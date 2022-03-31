@@ -1,12 +1,13 @@
 <?php
 session_start();
+
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
+//ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+    $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
 }
@@ -14,8 +15,6 @@ $login_user = $_SESSION['login_user'];
 
 //モーダル処理
 if (isset($_POST['mypage'])) {
-    //経験値取得処理
-    $user_exp = UserLogic::plusEXP();
     $user_data = UserLogic::levelModal();
     return;
 }
@@ -25,14 +24,14 @@ $showicon = UserLogic::showIcon();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-    <link rel="stylesheet" href="../../CSS/level_anime.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
+    <link rel="stylesheet" href="../../css/level_anime.css">
     <title>My Page</title>
 </head>
 
@@ -62,7 +61,7 @@ $showicon = UserLogic::showIcon();
     <?php if ($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
         <!--モーダル-->
         <div id="modal-content">
-            <p style="text-align:canter;"><?php require_once 'level_anime.php'; ?></p>
+            <p style="text-align:canter;"><?php require_once '../level/animation.php'; ?></p>
 	        <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
         </div>
         <!-- 2番目に表示されるモーダル（半透明な膜） -->
@@ -106,7 +105,7 @@ $showicon = UserLogic::showIcon();
                     </div>
                     <div class="text">
                         <p class="fw-bold">コメント</p>
-                        <p class="text-sm-start text-break small"><?php
+                        <p class="text-break small"><?php
                             if (isset($login_user['comment'])) {
                                echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); 
                             } else {
@@ -118,12 +117,26 @@ $showicon = UserLogic::showIcon();
         </div>
     </section>
 
-	<!-- フッタ -->
-    <footer>
-        <div class="">
-            <br><br><hr>
-	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- フッタ -->
+    <footer class="h-10"><hr>
+		<div class="footer-item text-center">
+			<h4>Q&A SITE</h4>
+			<ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+				    <a class="nav-link small" href="../article/index.php">記事</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../question/index.php">質問</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+				</li>
+			</ul>
+		</div>
+		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+  	</footer>
 </body>
 </html>

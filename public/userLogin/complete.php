@@ -1,53 +1,54 @@
 <?php
-    session_start();
+session_start();
 
-    // ファイルの読み込み
-    require_once '../../app/UserLogic.php';
+// ファイルの読み込み
+require_once '../../app/UserLogic.php';
 
-    // エラーメッセージ
-    $err = [];
+// エラーメッセージ
+$err = [];
 
-    $tel = filter_input(INPUT_POST, 'tel');
-    $password = filter_input(INPUT_POST, 'password');
-    //未入力チェック
-    if(!$tel = filter_input(INPUT_POST, 'tel')) {
-        $err['tel'] = '電話番号を入力してください';
-    }
-    // 文字数チェック
-    if (strlen($tel) > 12) {
-        $err_msg['tel'] = '12文字で入力してください';
-    }
-    if(!$password = filter_input(INPUT_POST, 'password')) {
-        $err['password'] = 'パスワードを入力してください';
-    }
-    //正規表現
-    if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)){
-        $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
-    }
+$tel = filter_input(INPUT_POST, 'tel');
+$password = filter_input(INPUT_POST, 'password');
 
-    // エラーがあったらフォーム画面に戻す
-    if (count($err)>0){
-        $_SESSION = $err;
-        header('Location: form.php');
-        return;
-    }
+//未入力チェック
+if(!$tel = filter_input(INPUT_POST, 'tel')) {
+    $err['tel'] = '電話番号を入力してください';
+}
+// 文字数チェック
+if (strlen($tel) > 12) {
+    $err_msg['tel'] = '12文字で入力してください';
+}
+if(!$password = filter_input(INPUT_POST, 'password')) {
+    $err['password'] = 'パスワードを入力してください';
+}
+//正規表現
+if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)){
+    $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
+}
 
-    // ログインに成功した時の処理
-    $result = UserLogic::login($tel, $password);
-    // ログインに失敗した時の処理
-    if (!$result){
-        header('Location: form.php');
-        return;
-    }
+// エラーがあったらフォーム画面に戻す
+if (count($err)>0){
+    $_SESSION = $err;
+    header('Location: form.php');
+    return;
+}
+
+// ログインに成功した時の処理
+$result = UserLogic::login($tel, $password);
+// ログインに失敗した時の処理
+if (!$result){
+    header('Location: form.php');
+    return;
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
     <title>ログイン完了画面</title>
 </head>
 

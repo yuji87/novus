@@ -1,30 +1,34 @@
 <?php
-    session_start();
+session_start();
 
-    require_once '../../app/UserLogic.php';
-    require_once '../../app/Dbconnect.php';
-    require_once '../../app/functions.php';
 
-    $result = UserLogic::checkLogin();
-    if ($result){
-        header('location: ../userLogin/form.php');
-        return;
-    }
-    //ログインチェック
-    $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
-    unset($_SESSION['login_err']);
+//ファイル読み込み
+require_once '../../app/UserLogic.php';
+require_once '../../app/Dbconnect.php';
+require_once '../../app/Functions.php';
 
-    $err = $_SESSION;
+
+// ログインチェック処理
+$result = UserLogic::checkLogin();
+if ($result){
+    header('location: ../userLogin/form.php');
+    return;
+}
+
+//ログインチェック
+$login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
+unset($_SESSION['login_err']);
+$err = $_SESSION;
 ?>
 
 <!--ログインフォーム-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>ログインフォーム</title>
 </head>
 
@@ -41,7 +45,7 @@
             <div class="md-3">
                 <input type="tel" oninput="value = value.replace(/[０-９]/g,s => String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" class="form-control col-10" name="tel">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
-                <?php if (isset($err['tel'])) : ?>
+                <?php if (isset($err['tel'])): ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
                 <?php endif; ?>
             </div>
@@ -52,7 +56,7 @@
             <div class="md-3">
                <input type="password" class="form-control col-6" id="inputPassword8" name="password">
                <!--欄の下に未記入時のエラーメッセージ表示-->
-               <?php if (isset($err['password'])) : ?>
+               <?php if (isset($err['password'])): ?>
                     <p class="text-danger"><?php echo $err['password']; ?></p>
                 <?php endif; ?>
             </div>
@@ -62,7 +66,7 @@
             <p><input type="submit" class="btn btn-primary mt-3" value="Log in"></p>
             <!--signup_form.phpへ-->
             <a href = "../userRegister/form.php">新規登録はこちら</a>
-            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a></p>
+            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
         </div>
     </form>
 </body>

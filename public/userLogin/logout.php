@@ -1,8 +1,11 @@
 <?php
 session_start();
+
+// ファイルの読み込み
 require_once '../../app/UserLogic.php';
 
-if (!$logout = filter_input(INPUT_POST, 'logout')) {
+// ログアウトチェック
+if(!$logout = filter_input(INPUT_POST, 'logout')) {
     exit ('不正なリクエストです');
 }
 
@@ -12,7 +15,6 @@ if (!$result) {
     exit ('セッションが切れているので、再ログインをして下さい');
     header('Location: ../userLogin/form.php');
     return;
-    
 }
 
 //ログアウトをする
@@ -20,12 +22,12 @@ UserLogic::logout();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>ログアウト画面</title>
 </head>
 

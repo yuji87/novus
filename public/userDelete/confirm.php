@@ -1,43 +1,41 @@
 <?php 
-    session_start();
-    
-    require_once '../../../classes/UserLogic.php';
-    require_once '../../../functions.php';
+session_start();
 
-    //エラーメッセージ
-    $err = [];
-    
-    //ログインしているか判定して、していなかったら新規登録画面へ移す
-    $result = UserLogic::checkLogin();
-    if (!$result) {
-        $_SESSION['login_err'] = '再度ログインして下さい';
-        header('Location: ../userRegister/form.php');
-        return;
+require_once '../../../app/UserLogic.php';
+require_once '../../../app/Functions.php';
+
+//エラーメッセージ
+$err = [];
+
+//ログインしているか判定して、していなかったらログイン画面へ移す
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/form.php');
+    return;
+}
+$login_user = $_SESSION['login_user'];
+
+//エラーがなかった場合の処処理
+if(count($err) === 0 && (isset($_POST['check']))) {
+    //ユーザーを登録する
+    $userDelete = UserLogic::deleteUser($_SESSION);
+    header('Location: complete.php');
+    //失敗した場合
+    if(!$userDelete){
+    $err[] = '削除に失敗しました';
     }
-    $login_user = $_SESSION['login_user'];
-
-    //エラーがなかった場合の処処理
-    if (count($err) === 0 && (isset($_POST['check']))) {
-        
-        //ユーザーを登録する
-        $userDelete = UserLogic::deleteUser($_SESSION);
-        header('Location: complete.php');
-        //失敗した場合
-        if(!$userDelete){
-        $err[] = '削除に失敗しました';
-        }
-    }
-
+}
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>会員削除確認画面</title>
 </head>
 
@@ -55,10 +53,6 @@
         </div>
         <p><input type="submit" class="btn btn-primary" value="削除"></p>
         <div class="clear"></div>
-
-    </div>
     </form>
-        </div>
-    </div>
 </body>
 </html>

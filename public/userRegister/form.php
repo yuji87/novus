@@ -1,39 +1,40 @@
 <?php
-    session_start();
-    
-    //ファイルの読み込み
-    require_once '../../app/UserLogic.php';
-    require_once '../../app/functions.php';
 
-    //ログインチェック
-    $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
-    unset($_SESSION['login_err']);
-    
-    //セッションに保存データがあるかを確認
-    if (isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
-        //セッションから情報を取得
-        $name = $_SESSION['signUp']['name'];
-        $tel = $_SESSION['signUp']['tel'];
-        $email = $_SESSION['signUp']['email'];
-        $password = $_SESSION['signUp']['password'];
-    } else {
-        //セッションがなかった場合
-        $name = '';
-        $tel = '';
-        $email = '';
-        $password = '';
-        $icon = '';
-    }
+session_start();
+
+//ファイルの読み込み
+require_once '../../app/UserLogic.php';
+require_once '../../app/Functions.php';
+
+//ログインチェック
+$login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err']: null;
+unset($_SESSION['login_err']);
+
+//セッションに保存データがあるかを確認
+if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
+    //セッションから情報を取得
+    $name = $_SESSION['signUp']['name'];
+    $tel = $_SESSION['signUp']['tel'];
+    $email = $_SESSION['signUp']['email'];
+    $password = $_SESSION['signUp']['password'];
+} else {
+    //セッションがなかった場合
+    $name = '';
+    $tel = '';
+    $email = '';
+    $password = '';
+    $icon = '';
+}
 ?>
 
 <!--ログインフォーム-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>新規会員登録</title>
 </head>
 
@@ -42,7 +43,7 @@
     <form enctype="multipart/form-data" action="confirm.php" method="POST" name="create">
     <input type="hidden" name="formcheck" value="checked">
     <h1 class="my-3" style="text-align:center;">アカウント作成</h1>
-            <?php if (isset($login_err)) : ?>
+            <?php if (isset($login_err)): ?>
                 <p><?php echo $login_err; ?></p>
             <?php endif; ?>
         <p class="my-3" style="text-align:center;">当サービスを利用するために、次のフォームに必要事項をご記入ください。</p>
@@ -50,7 +51,7 @@
         <div class="row my-4">
             <label for="name" class="form-label font-weight-bold">*Name</label>
             <div class="md-3">
-                <input type="text" class="form-control col-6" name="name" value="<?php $name ?>">
+                <input type="text" class="form-control col-6" name="name" value="<?php $name; ?>">
             </div>
         </div>
 
@@ -69,7 +70,7 @@
         <div class="row my-3">
             <label for="email" class="form-label font-weight-bold">Email</label>
             <div class="md-3">
-                <input type="email" class="form-control col-6" name="email" value="<?php $email ?>">
+                <input type="email" class="form-control col-6" name="email" value="<?php $email; ?>">
             </div>
         </div>
 
@@ -97,9 +98,9 @@
         </div>
     </form>
     <!--ログイン画面へ遷移-->
-    <div class="text-center mb-4">
-    <a href = "../userLogin/form.php">ログインはこちら</a>
-    <a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a>
+    <div class="text-center">
+        <a href = "../userLogin/form.php">ログインはこちら</a>
+        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
     </div>
     </div>
 </body>
