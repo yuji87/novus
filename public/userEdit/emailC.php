@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //ファイル読み込み
@@ -34,7 +33,6 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     $err[] = '更新に失敗しました';
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -87,15 +85,15 @@ if (count($err) === 0 && (isset($_POST['check']))) {
                             <p><span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['emailEdit'], ENT_QUOTES, 'UTF-8'); ?></span></p>
                         </div>
                         <br><br>
-                        <!--未記入時のエラーメッセージ表示-->
+                        <!--未記入時のメッセージ表示-->
                         <?php if (!isset($_SESSION['emailEdit'])) : ?>
                             <p class="text-danger"><?php echo '登録しなくてよろしいですか？'; ?></p>
                         <?php endif; ?>
                         </div>
                         <!--エラーが発生した場合、メッセージと戻る画面を作成-->
                         <?php if (count($err) > 0) :?>
-                        <div class="col-4 bg-secondary">
-                            <a href="../userEdit/email.php" class="back-btn text-white">再入力する</a>
+                        <div class="text-center">
+                            <a href="../userEdit/email.php" class="p-2 text-white bg-secondary">再入力する</a>
                         </div>
                         <?php else :?>
                         <div class="text-center">
@@ -109,12 +107,26 @@ if (count($err) === 0 && (isset($_POST['check']))) {
         </div>
     </section>
 
-	<!-- フッタ -->
-    <footer>
-        <div class="">
-            <br><br><hr>
-	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- フッタ -->
+    <footer class="h-10"><hr>
+		<div class="footer-item text-center">
+			<h4>Q&A SITE</h4>
+			<ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+				    <a class="nav-link small" href="../article/index.php">記事</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../question/index.php">質問</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+				</li>
+			</ul>
+		</div>
+		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+  	</footer>
 </body>
 </html>

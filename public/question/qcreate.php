@@ -1,62 +1,62 @@
 <?php
-    session_start();
+session_start();
+
+// ファイルの読み込み
+require_once '../../app/UserLogic.php';
+require_once '../../app/QuestionLogic.php';
+require_once '../../app/CategoryLogic.php';
+
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../../userLogin/home.php');
+    return;
+}
+
+// エラーメッセージ
+$err = [];
+
+//カテゴリ処理
+$categories = CategoryLogic::getCategory();
+
+// ボタン押下時の処理（成功でページ移動）
+if(isset($_POST['create_question'])) {
+    $_SESSION['q_data']['user_id'] = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
     
-    //ファイルの読み込み
-    require_once '../../app/UserLogic.php';
-    require_once '../../app/QuestionLogic.php';
-    require_once '../../app/CategoryLogic.php';
-
-    // ログインチェック
-    $result = UserLogic::checkLogin();
-    if(!$result) {
-        $_SESSION['login_err'] = '再度ログインして下さい';
-        header('Location: ../../userLogin/home.php');
-        return;
+    if(isset($_POST['question_image'])) {
+        $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
+    } else {
+        $_SESSION['q_data']['question_image'] = null;
     }
-
-    //error
-    $err = [];
-    $categories = CategoryLogic::getCategory();
-
-    // ボタン押下時の処理（成功でページ移動）
-    if(isset($_POST['create_question'])){
-        $_SESSION['q_data']['user_id'] = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
-        $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-        $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
-        $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
-        
-        if(isset($_POST['question_image'])){
-            $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
-        }else{
-            $_SESSION['q_data']['question_image'] = null;
-        }
-        // 必須部分チェック
-        if(!$_SESSION['q_data']['title']) {
-            $err['title'] = '質問タイトルを入力してください';
-        }
-        if(!$_SESSION['q_data']['category']) {
-            $err['category'] = 'カテゴリを選択してください';
-        }
-        if(!$_SESSION['q_data']['message']) {
-            $err['message'] = '本文を入力してください';
-        }
-        
-        if (count($err) === 0){
-            header('Location: qComp.php');
-        }
+    // 必須部分チェック
+    if(!$_SESSION['q_data']['title']) {
+        $err['title'] = '質問タイトルを入力してください';
     }
+    if(!$_SESSION['q_data']['category']) {
+        $err['category'] = 'カテゴリを選択してください';
+    }
+    if(!$_SESSION['q_data']['message']) {
+        $err['message'] = '本文を入力してください';
+    }
+    if (count($err) === 0) {
+        header('Location: qComp.php');
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="2.css" />
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問投稿ページ</title>
 </head>
 
@@ -69,11 +69,9 @@
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
-            <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
+            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
+            <li><a href="../userLogin/mypage.php">マイページ</a></li>
+            <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -97,23 +95,23 @@
                     <!--エラー表示-->
                     <div>
                         <?php if(isset($err['title'])): ?>
-                            <p class="text-danger pt-2"><?php echo $err['title'] ?></p>
+                            <p class="text-danger pt-2"><?php echo $err['title']; ?></p>
                         <?php endif; ?>
                     </div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-4 pb-1">カテゴリ</div>
                     <select name="category">
                         <option></option>
-                        <?php foreach($categories as $value){ ?>
-                            <option value="<?php echo $value['cate_id'] ?>"> 
-                                <?php echo $value['category_name'] ?>
+                        <?php foreach($categories as $value): ?>
+                            <option value="<?php echo $value['cate_id']; ?>"> 
+                                <?php echo $value['category_name']; ?>
                             </option>";
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </select>
                     <!--エラー表示-->
                     <div>
                         <?php if(isset($err['category'])): ?>
-                            <p class="text-danger pt-2"><?php echo $err['category'] ?></p>
+                            <p class="text-danger pt-2"><?php echo $err['category']; ?></p>
                         <?php endif; ?>
                     </div>
                     <!--本文-->
@@ -122,7 +120,7 @@
                     <!--エラー表示-->
                     <div>
                         <?php if(isset($err['message'])): ?>
-                            <p class="text-danger pt-2"><?php echo $err['message'] ?></p>
+                            <p class="text-danger pt-2"><?php echo $err['message']; ?></p>
                         <?php endif; ?>
                     </div>
                     <input type="submit" name="create_question" class="btn btn-warning mt-5 mb-5" value="投稿する">
@@ -137,16 +135,16 @@
 			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-					<a class="nav-link small" href="#">記事</a>
+					<a class="nav-link small" href="../article/index.php">記事</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link small" href="#">質問</a>
+					<a class="nav-link small" href="index.php">質問</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link small" href="#">本検索</a>
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link small" href="#">お問い合わせ</a>
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
 				</li>
 			</ul>
 		</div>

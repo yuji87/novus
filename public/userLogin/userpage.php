@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/LevelLogic.php';
@@ -18,6 +18,7 @@ $login_user = $_SESSION['login_user'];
 $data = $_GET;
 $user_id = filter_input(INPUT_GET, 'user_id');
 
+// レベル表示処理
 $data = LevelLogic::displayUsers($_GET);
 if (!$data) {
 	$err[] = '表示するレベルがありません';
@@ -28,13 +29,13 @@ $showicon = UserLogic::showIcon($_GET);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" href="../../public/css/level_anime.css">
     <title>User Page</title>
 </head>
@@ -46,6 +47,7 @@ $showicon = UserLogic::showIcon($_GET);
             <div class="navtext">Q&A SITE</div>
         </div>
     </header>
+
     <!--コンテンツ-->
     <section class="wrapper">
         <div class="container">
@@ -86,10 +88,27 @@ $showicon = UserLogic::showIcon($_GET);
             </div>
         </div>
     </section>
-	<!-- フッタ -->
-    <footer>
-        <hr>
-	    <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
-    </footer>
+
+    <!-- フッタ -->
+    <footer class="h-10"><hr>
+		<div class="footer-item text-center">
+			<h4>Q&A SITE</h4>
+			<ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+				    <a class="nav-link small" href="../article/index.php">記事</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../question/index.php">質問</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+				</li>
+			</ul>
+		</div>
+		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+  	</footer>
 </body>
 </html>
