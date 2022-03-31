@@ -27,6 +27,7 @@ if ($retinfo == NULL) {
   exit;
 }
 
+$category = $act->categorymap();
 // カテゴリ名
 $catename = $retinfo["category"][$retinfo["article"]["CATE_ID"]];
 
@@ -98,11 +99,10 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <hr>
 <div class="row m-2">
   <div class="col-sm-6">
-    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
     <?php if (isset($_SESSION['login_user'])) : ?>
-      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/userLogin/login_top.php">ホーム画面へ</a>
+      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/userLogin/home.php">ホーム画面へ</a>
     <?php else : ?>
-      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/toppage/top.php">ホーム画面へ</a>
+      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/user/top.php">ホーム画面へ</a>
     <?php endif ?>
   </div>
   <div class="col-sm-6">
@@ -122,10 +122,9 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 </div>
 
 <script type="text/javascript">
-  // いいねボタンを押した
+  // いいねボタンを押したとき
   function onPostLike() {
     // ボタンを一時的に無効にする
-    // ボタンを
     const $btnlike = $('#btnlike').off().removeClass('active');
 
     // 送信(ajax)
@@ -147,7 +146,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
       } else {
         // いいね解除。ボタンを再いいねできるようにする。
         $btnlike.html('いいね');
-        $postlikecnt.html(cnt > 0 ? cnt - 1 : 0);
+        $postlikecnt.html(cnt > 0 ? cnt - 1 : 0); //三項演算子 → 条件式 ? true式1 : false式2
       }
     });
   }

@@ -24,12 +24,13 @@ if ($searchtext != '') {
   $searchtext =  rawurldecode($searchtext); // urldecodeをしておく
   $title = Utils::h($searchtext) . 'の検索結果';
   $headertitle = ' (' . $title . ')';
-  $searchtextrow = rawurlencode(Utils::h($searchtext)); // 特殊文字をjavascriptにそのまま渡すとエラーになるので encodeしておく
+  $searchtextrow = rawurlencode(Utils::h($searchtext)); // 特殊文字を変換しておく
 }
 
 // 記事一覧
 $act = new ArticleAct(0);
 $retinfo = $act->articlelist($page, $searchtext);
+$category = $act->categorymap();
 
 // Token生成
 Token::create();
@@ -44,7 +45,15 @@ Token::create();
   <div class="col-sm-7 text-center">
     <input type="search" style="width:100%;" id="searcharticle" placeholder="キーワードを入力" value="<?php echo Utils::h($searchtext); ?>" />
   </div>
-  <div class="col-sm-3">
+  <div class="d-flex align-items-center col-sm-3">
+  <select class="" id="searcharticle" name="category" placeholder="カテゴリ">
+    <?php
+      // echo '<option></option>';
+    foreach ($category as $key => $val) {
+      printf('<option value="%s">%s</option>', $key, $val);
+    }
+    ?>
+  </select>
   </div>
 </div>
 
@@ -60,6 +69,8 @@ foreach ($retinfo['articlelist'] as $art) {
   $username = $user["NAME"];
   // 投稿日時
   $postdt = Utils::compatiDate($art['UPD_DATE'], 'Y/m/d H:i');
+  // カテゴリ名
+  $catename = $retinfo["category"][$art["CATE_ID"]];
   // いいね数
   $postlikecnt = $retinfo['postlikemap'][$art['ARTICLE_ID']] ??  0; //合体演算子
 
@@ -67,6 +78,7 @@ foreach ($retinfo['articlelist'] as $art) {
   echo '<div class="arthead">' . $username . ' さんの投稿</div>';
   echo '<div class="arttitle">' . Utils::h($art['TITLE']) . '</div>';
   echo '<div class="artFootLeft">' . $postdt . '</div>';
+  echo '<div class="artFootLeft badge rounded-pill border border-secondary ml-3 ">' . $catename . '</div>';
   echo '<div class="artfoot">' . "&hearts; " . $postlikecnt . '</div>';
   echo '</div>';
 }
@@ -75,7 +87,6 @@ if (count($retinfo['articlelist']) == 0) {
   echo '<div class="row m-2"><div class="col-sm-12">1件も記事はありません</div></div>';
 }
 ?>
-
 
 <!-- ページネーション -->
 <?php if (count($retinfo['articlelist']) > 0) : ?>
@@ -157,23 +168,6 @@ if (count($retinfo['articlelist']) == 0) {
   });
 </script>
 
-<hr />
-<div class="row m-2">
-  <div class="col-sm-8">
-    <a class="btn btn-warning m-2" href="<?php echo DOMAIN; ?>/public/todo/index.php">todoへ</a>
-  <?php if (isset($_SESSION['login_user'])) : ?>
-    <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/userLogin/login_top.php">ホーム画面へ</a>
-  <?php else: ?>
-    <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/top/toppage/top.php">ホーム画面へ</a>
-  <?php endif ?>
-  </div>
-  <?php if (isset($_SESSION['login_user'])) : ?>
-  <div class="col-sm-4">
-    <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/postedit.php">投稿する</a>
-  </div>
-  <?php endif; ?>
-</div>
-
 <?php
-$act->end(1);
+$act->end(0);
 ?>

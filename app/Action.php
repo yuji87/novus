@@ -211,12 +211,20 @@ class Action
       // フッダー出力
         echo '<hr/>';
         echo '<div class="row m-2">';
-        echo '<a class="btn btn-warning m-2" href="' . DOMAIN . '/public/article/index.php">記事一覧へ</a>';
-        // if(isset($_SESSION['login_user'])){
-          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/userLogin/login_top.php">ホーム画面へ</a>';
-        // }else{
-          // echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/top/toppage/top.php">ホーム画面へ</a>';
-        // }
+          if(isset($_SESSION['login_user'])){
+            echo '<div class="col-sm-8">';
+              echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
+            echo '</div>';
+          }else{
+            echo '<div class="col-sm-8">';
+              echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
+            echo '</div>';
+          }
+          if (isset($_SESSION['login_user'])){
+            echo '<div class="col-sm-4">';
+              echo '<a class="btn btn-primary" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
+            echo '</div>';
+          }
         echo '</div>';
       }
       echo '</div></body>';
@@ -243,7 +251,7 @@ class Action
       echo '<script src= "https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/qapi.js"></script>';
+      echo '<script src="' . DOMAIN . '/public/JS/qapi.js" defer></script>';
       echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
       echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
       echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
