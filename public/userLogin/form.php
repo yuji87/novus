@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Dbconnect.php';
 require_once '../../app/Functions.php';
+
 
 // ログインチェック処理
 $result = UserLogic::checkLogin();

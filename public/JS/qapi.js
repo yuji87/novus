@@ -1,5 +1,7 @@
 
+
 var $domainurl = '/qandasite/public/';
+
 
 // $urlへリダイレクト
 function jumpapi($url) {

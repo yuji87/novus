@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 //ファイルの読み込み

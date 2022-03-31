@@ -1,6 +1,7 @@
 <?php 
 session_start();
     
+
 //ファイルの読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';

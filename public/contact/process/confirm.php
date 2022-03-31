@@ -37,20 +37,24 @@ $contents = trim(filter_input(INPUT_POST, 'contents'));
 //エラーメッセージを保存する配列の初期化
 $error = array();
 //値の検証（入力内容が条件を満たさない場合はエラーメッセージを配列 $error に設定）
-if ($name == '') {
+if ($name == trim('')) {
   $error['name'] = '*お名前は必須項目です。';
   //制御文字でないことと文字数をチェック
 } else if (preg_match('/\A[[:^cntrl:]]{1,30}\z/u', $name) == 0) {
   $error['name'] = '*お名前は30文字以内でお願いします。';
 }
+
 if ($email == '') {
   $error['email'] = '*メールアドレスは必須です。';
-} else { //メールアドレスを正規表現でチェック
-  $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/uiD';
-  if (!preg_match($pattern, $email)) {
-    $error['email'] = '*メールアドレスの形式が正しくありません。';
-  }
+} else if (preg_match('/\A[[:^cntrl:]]{1,200}\z/u', $name) == 0) {
+  $error['name'] = '*メールアドレスは200文字以内でお願いします。';
 }
+//メールアドレスを正規表現でチェック
+$pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/uiD';
+if (!preg_match($pattern, $email)) {
+  $error['email'] = '*メールアドレスの形式が正しくありません。';
+}
+
 if ($email_check == '') {
   $error['email_check'] = '*確認用メールアドレスは必須です。';
 } else { //メールアドレスを正規表現でチェック
@@ -62,13 +66,13 @@ if ($title == '') {
   $error['title'] = '*タイトルは必須項目です。';
   //制御文字でないことと文字数をチェック
 } else if (preg_match('/\A[[:^cntrl:]]{1,100}\z/u', $title) == 0) {
-  $error['title'] = '*タイトルは100文字以内でお願いします。';
+  $error['title'] = '*タイトルは150文字以内でお願いします。';
 }
 if ($contents == '') {
   $error['contents'] = '*内容は必須項目です。';
   //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
 } else if (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1050}\z/u', $contents) == 0) {
-  $error['contents'] = '*内容は1000文字以内でお願いします。';
+  $error['contents'] = '*内容は1500文字以内でお願いします。';
 }
 
 //POSTされたデータとエラーの配列をセッション変数に保存

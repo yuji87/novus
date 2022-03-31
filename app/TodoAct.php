@@ -40,7 +40,7 @@ class TodoAct extends Action
     $result = $stmt->execute();
     if ($result) {
       while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        switch ($rec['STATE']) {
+        switch ($rec['STATUS']) {
           case 'active':
             $activelist[] = $rec;
             break;

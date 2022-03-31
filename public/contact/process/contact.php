@@ -1,10 +1,11 @@
+
 <?php
 //セッションを開始
 session_start();
 //セッションIDを更新して変更（セッションハイジャック対策）
 session_regenerate_id(TRUE);
 //エスケープ処理やデータチェックを行う関数のファイルの読み込み
-require '../libs/functions.php';
+
 //NULL 合体演算子を使ってセッション変数を初期化
 $name = $_SESSION['name'] ?? NULL;
 $email = $_SESSION['email'] ?? NULL;
@@ -22,8 +23,6 @@ $error_tel = $error['tel'] ?? NULL;
 $error_subject = $error['title'] ?? NULL;
 $error_body = $error['contents'] ?? NULL;
 
-
-
 //CSRF対策の固定トークンを生成
 if (!isset($_SESSION['ticket'])) {
   //セッション変数にトークンを代入
@@ -31,3 +30,9 @@ if (!isset($_SESSION['ticket'])) {
 }
 //トークンを変数に代入
 $ticket = $_SESSION['ticket'];
+
+$result = Utils::checkLogin();
+if (!$result) {
+    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
+    return;
+}
