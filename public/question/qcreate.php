@@ -55,8 +55,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="2.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>質問投稿ページ</title>
 </head>
 

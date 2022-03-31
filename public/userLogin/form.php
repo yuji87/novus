@@ -3,7 +3,7 @@
 
     require_once '../../app/UserLogic.php';
     require_once '../../app/Dbconnect.php';
-    require_once '../../functions.php';
+    require_once '../../app/Functions.php';
 
     $result = UserLogic::checkLogin();
     if ($result){
@@ -24,7 +24,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/css/top.css" />
     <title>ログインフォーム</title>
 </head>
 
@@ -62,7 +62,7 @@
             <p><input type="submit" class="btn btn-primary mt-3" value="Log in"></p>
             <!--signup_form.phpへ-->
             <a href = "../userRegister/form.php">新規登録はこちら</a>
-            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a></p>
+            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
         </div>
     </form>
 </body>

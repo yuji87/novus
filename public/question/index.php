@@ -3,11 +3,15 @@
 session_start();
 
 //ファイルの読み込み
+  require_once '../../app/UserLogic.php';
   require_once '../../app/CategoryLogic.php';
   require_once '../../app/QuestionLogic.php';
 
 //error
 $err = [];
+
+//ログインしているか判定
+$result = UserLogic::checkLogin();
 
 $categories = CategoryLogic::getCategory();
 
@@ -30,9 +34,9 @@ if(isset($_GET['search'])){
 <title>質問</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-<link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-<link rel="stylesheet" type="text/css" href="../CSS/question.css" />
+<link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+<link rel="stylesheet" type="text/css" href="../css/top.css" />
+<link rel="stylesheet" type="text/css" href="../css/question.css" />
 </head>
 
 <body>
@@ -41,20 +45,29 @@ if(isset($_GET['search'])){
         <div class="navtext-container">
             <div class="navtext">Q&A SITE</div>
         </div>
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
-            <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
-            <li>
-                <form type="hidden" action="logout.php" method="POST">
-				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
-                </form>
-            </li>
-        </ul>
+		<?php if($result): // ログインしていれば下記の表示 ?>
+            <input type="checkbox" class="menu-btn" id="menu-btn">
+            <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
+                <li><a href="../userEdit/list.php">My Page</a></li>
+                <li><a href="#">TO DO LIST</a></li>
+                <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
+                <li><a href="../../">記事 履歴</a></li>
+                <li>
+                    <form type="hidden" action="logout.php" method="POST">
+			    	    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+                    </form>
+                </li>
+            </ul>
+		<?php else: // 未ログインであれば下記の表示 ?>
+			<input type="checkbox" class="menu-btn" id="menu-btn">
+            <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li class="top"><a href="../user/top.php">TOPページ</a></li>
+                <li><a href="../../public/question/qHistory.php">記事ページ</a></li>
+            </ul>
+		<?php endif; ?>
     </header>
 
 	<!--コンテンツ-->
@@ -101,9 +114,9 @@ if(isset($_GET['search'])){
         			<!-- 更新されていた場合、その日付を優先表示 -->
 				    <div>
 					    <?php if (!isset($value['upd_date'])): ?>
-					    	投稿：<?php echo htmlspecialchars($value['answer_date'])  ?>
+					    	投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']))  ?>
 					    <?php else: ?>
-					    	更新：<?php echo htmlspecialchars($value['upd_date']) ?>
+					    	更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])) ?>
 					    <?php endif; ?>
                     </div>
 			        <?php endforeach; ?>
@@ -113,14 +126,14 @@ if(isset($_GET['search'])){
 		
 			        <!-- 通常時、新着の質問を表示 -->
 		            <?php elseif(isset($newQuestion)): ?>
-		            	<div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
+		            	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		            	<?php foreach($newQuestion as $value): ?>
 		            		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 		            		<div><img src="../user/img/<?php echo $value['icon']; ?>"></div>
 							<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		            		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-		            	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
+		            	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
 		            	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>

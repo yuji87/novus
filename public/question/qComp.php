@@ -41,8 +41,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+  <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../css/top.css" />
   <title>質問投稿完了</title>
 </head>
 
@@ -55,14 +55,12 @@
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
-            <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
+            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
+            <li><a href="../userEdit/list.php">マイページ</a></li>
+            <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
-				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+				            <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -72,8 +70,8 @@
     <section class="wrapper">
         <div class="container">
             <div class="content">
-                <p class="h4">投稿完了</p>
-                <p>以下の内容で投稿が完了しました</p>
+                <p class="h4 mt-5">投稿完了</p>
+                <p class="pb-3">以下の内容で投稿が完了しました</p>
                 <!--題名-->
                 <div class="fw-bold pb-1">題名</div>
                 <div><?php echo $hasTaken[0]['title'] ?></div>
@@ -87,7 +85,7 @@
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
                     <a href="javascript:form1.submit()" class="btn btn-warning mt-2">詳細画面へ</a>
                 </form>
-                <a href="../login_top.php" class="btn btn-outline-dark fw-bold">TOP</a>
+                <a href="index.php" class="btn btn-outline-dark fw-bold">TOP</a>
             </div>
         </div>
     </section>

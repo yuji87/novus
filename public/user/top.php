@@ -20,6 +20,12 @@ if(isset($_GET['search'])){
 		$newQuestion = QuestionLogic::newQuestion();
 	}
 }
+
+//最新の質問を表示
+$newQuestion = QuestionLogic::newQuestion();
+if(!$newQuestion){
+	$err['question'] = '質問の読み込みに失敗しました';
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +34,8 @@ if(isset($_GET['search'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/css/top.css" />
+	<link rel="stylesheet" type="text/css" href="../css/question.css" />
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
@@ -48,13 +55,13 @@ if(isset($_GET['search'])){
 
 		<ul class="nav">
 			<li class="nav-item">
-				<a class="nav-link active small text-white" href="#">質問コーナー</a>
+				<a class="nav-link active small text-white" href="../question/index.php">質問ページ</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small text-white" href="#">記事コーナー</a>
+				<a class="nav-link small text-white" href="../article/index.php">記事ページ</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link small text-white" href="#">本ライブラリ</a>
+				<a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a>
 			</li>
 		</ul>
 	</header>
@@ -86,7 +93,7 @@ if(isset($_GET['search'])){
                   </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary" name="search">検索</button><hr>
+                <button type="submit" class="btn btn-primary mt-3 mb-5" name="search">検索</button>
 			</form>
         </div>
 
@@ -96,30 +103,66 @@ if(isset($_GET['search'])){
 		    <p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
 	    
 		    <?php foreach($searchQuestion as $value): ?>
-		    	<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-		    	<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-		    	<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-		    	<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
-		    	<div><?php echo htmlspecialchars($value['icon']) ?></div>
-		    	<div>日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
+			<!--題名-->
+			<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+			    <!--アイコン-->
+			    <div class="level-icon">
+                    <?php if (isset($value['icon'])): ?> 
+                        <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+                    <?php else: ?>
+						<!--アイコンをクリックするとユーザーページへ-->
+						<a name="icon" href="<?php 
+							//user_idをユーザーページに引き継ぐ
+							echo "userpage.php?user_id=".$value['user_id'] ; ?>">
+							<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+                    <?php endif; ?>
+                </div>
+				<!--ユーザー名-->
+				<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
+				<!--カテゴリ-->
+				<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+				<!--本文-->
+				<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+				<!--投稿日時-->
+			    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
 		    	<?php endforeach; ?>
 		    <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		    	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
-		    <?php elseif(isset($newQuestion)): ?>
-		    	<?php foreach($newQuestion as $value): ?>
-		    		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-		    		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-		    		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-		    		<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
-		    		<div><?php echo htmlspecialchars($value['icon']) ?></div>
-		    	<div>日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
-		    	<?php endforeach; ?>
+			<?php endif; ?>
+
+		    <!-- 通常時、新着の質問を表示 -->
+		    <?php if(!isset($searchQuestion) && isset($newQuestion)): ?>
+			<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
+			<?php foreach($newQuestion as $value): ?>
+				<!--題名-->
+				<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+			    <!--アイコン-->
+			    <div class="level-icon">
+                    <?php if (isset($value['icon'])): ?> 
+                        <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+                    <?php else: ?>
+						<!--アイコンをクリックするとユーザーページへ-->
+						<a name="icon" href="<?php 
+							//user_idをユーザーページに引き継ぐ
+							echo "userpage.php?user_id=".$value['user_id'] ; ?>">
+							<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+                    <?php endif; ?>
+                </div>
+				<!--ユーザー名-->
+				<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
+				<!--カテゴリ-->
+				<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+				<!--本文-->
+				<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+				<!--投稿日時-->
+			    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
+			<?php endforeach; ?>
 		    <?php endif; ?>
 		</div>
 	</div>
 	
 	<!-- フッタ -->
-	<footer class="h-10">
+	<footer class="h-10"><hr>
 		<div class="footer-item text-center">
 			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">

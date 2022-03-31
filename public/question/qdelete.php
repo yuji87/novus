@@ -57,9 +57,9 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/question.css" />
+  <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../css/top.css" />
+  <link rel="stylesheet" type="text/css" href="../css/question.css" />
   <title>質問削除</title>
 </head>
 
