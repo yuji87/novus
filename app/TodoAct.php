@@ -6,12 +6,12 @@ require_once 'Action.php';
 require_once 'Utils.php';
 
 // ToDo取得系
-define("QUERY_TODO_LIST", "SELECT TODO_ID,USER_ID,TITLE,STATE,REMIND_DATE FROM todo WHERE USER_ID=:user_id");
+define("QUERY_TODO_LIST", "SELECT TODO_ID,USER_ID,TITLE,STATUS,REMIND_DATE FROM todo WHERE USER_ID=:user_id");
 
 // ToDo更新系
-define("INSERT_TODO", "INSERT INTO todo (USER_ID,TITLE,STATE,REMIND_DATE) VALUES (:user_id, :title, 'active', :remind_date)");
+define("INSERT_TODO", "INSERT INTO todo (USER_ID,TITLE,STATUS,REMIND_DATE) VALUES (:user_id, :title, 'active', :remind_date)");
 define("UPDATE_TODO", "UPDATE todo SET TITLE=:title,REMIND_DATE=:remind_date WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
-define("UPDATE_TODO_STATE", "UPDATE todo SET STATE=:state WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
+define("UPDATE_TODO_STATUS", "UPDATE todo SET STATUS=:state WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
 define("DELETE_TODO", "DELETE FROM todo WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
 
 // タイトルの長さ
@@ -93,7 +93,7 @@ class TodoAct extends Action
     if ($state != 'active' && $state != 'finish') {
       return;
     }
-    $stmt = $this->conn->prepare(UPDATE_TODO_STATE);
+    $stmt = $this->conn->prepare(UPDATE_TODO_STATUS);
     $stmt->bindValue(':todo_id', $todo_id);
     $stmt->bindValue(':user_id', $this->member['user_id']);
     $stmt->bindValue(':state', $state);

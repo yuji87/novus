@@ -19,18 +19,18 @@ class Utils
     }
     return date($format, strtotime($date));
   }
-  // EMAIL送信★
-  public static function sendEmail($email, $subject, $msg)
-  {
-    if (LOCAL == "1") {
-      // email認証を省略
-      return true;
-    }
-    mb_language("Japanese");
-    mb_internal_encoding("UTF-8");
-    $heads = sprintf("From: %s", GMEMAIL);
-    return mb_send_mail($email, $subject, $msg, $heads);
-  }
+  // // EMAIL送信★
+  // public static function sendEmail($email, $subject, $msg)
+  // {
+  //   if (LOCAL == "1") {
+  //     // email認証を省略
+  //     return true;
+  //   }
+  //   mb_language("Japanese");
+  //   mb_internal_encoding("UTF-8");
+  //   $heads = sprintf("From: %s", GMEMAIL);
+  //   return mb_send_mail($email, $subject, $msg, $heads);
+  // }
   // 現在、期間内の時間か？★
   public static function isSpanOver($tgtstrdt, $spanhour)
   {
@@ -118,7 +118,9 @@ class Utils
     '&lt;ul&gt;' => '<ul>',
     '&lt;/ul&gt;'=> '</ul>',
     '&lt;li&gt;' => '<li>',
-    '&lt;/li&gt;'=> '</li>'
+    '&lt;/li&gt;'=> '</li>',
+    '&lt;'=> '<',
+    '&gt;'=> '>'
    );
   static $btable = array(
    '/&lt;img(.*)&gt;/' => '<img$1>'

@@ -52,7 +52,7 @@ if (!$result) {
     return;
 }
 // 経験値を加算する処理
-$plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
+// $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
 
 
 // ajax呼び出し。 戻り値を出力

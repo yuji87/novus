@@ -10,7 +10,6 @@ use Qanda\Utils;
 
 // 記事投稿/編集
 $act = new ArticleAct();
-// $mode === 0
 $act->begin();
 $category = $act->categorymap();
 
@@ -44,7 +43,6 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
   $catval = $retinfo['article']['CATE_ID'];
 }
 ?>
-
 <div class="row m-2">
   <div class="col-sm-8"></div>
   <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さん</div>
@@ -187,5 +185,5 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
 </script>
 
 <?php
-$act->end();
+$act->end(1);
 ?>
