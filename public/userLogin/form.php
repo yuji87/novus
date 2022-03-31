@@ -3,7 +3,7 @@
 
     require_once '../../app/UserLogic.php';
     require_once '../../app/Dbconnect.php';
-    require_once '../../functions.php';
+    require_once '../../app/functions.php';
 
     $result = UserLogic::checkLogin();
     if ($result){

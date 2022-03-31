@@ -1,5 +1,5 @@
 
-var $domainurl = '/qandasiteteam/public/';
+const $domainurl = '/qandasiteteam/public/';
 
 // $urlへリダイレクト
 function jumpapi($url) {

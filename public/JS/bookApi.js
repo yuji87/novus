@@ -90,7 +90,7 @@ $(function () {
         "</li>";
     });
     //↓"ulのlists"に変数templateを挿入
-    $("ul.lists").prepend(template);
+    $("div.lists").prepend(template);
   }
 
   // 通信失敗した場合のエラーメッセージを表示するための処理

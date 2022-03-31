@@ -138,6 +138,10 @@ class Action
   function getMemberName() {
     return $this->member['name'];
   }
+  // メンバーの名前を返す
+  function getMemberEmail() {
+    return $this->member['email'];
+  }
   // メンバーのIDを返す
   function getMemberId() {
     if (isset($_SESSION['login_user'])){
@@ -201,66 +205,64 @@ class Action
     return $members;
   }
 
-    
-    // footerを出力
-    // ページ表示不要のリクエストは,mode=1にして呼ぶ。
-    function end($mode = 0) {
-      $domain = DOMAIN;
+  // ページ表示がないファイルは、mode=1で呼ぶ
+  //footer
+  function end($mode = 0) {
+    $domain = DOMAIN;
+    if ($mode == 0) {
+      echo '<hr/>';
+      echo '<div class="row m-2">';
+        if(isset($_SESSION['login_user'])){
+          echo '<div class="col-sm-8">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
+          echo '</div>';
+        }else{
+          echo '<div class="col-sm-8">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
+          echo '</div>';
+        }
+        if (isset($_SESSION['login_user'])){
+          echo '<div class="col-sm-4">';
+            echo '<a class="btn btn-primary m-2" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
+          echo '</div>';
+        }
+      echo '</div>';
+    }
+    echo '</div></body>';
+    echo '</html>';
+  }
 
-      if ($mode == 0) {
-      // フッダー出力
-        echo '<hr/>';
-        echo '<div class="row m-2">';
-          if(isset($_SESSION['login_user'])){
-            echo '<div class="col-sm-8">';
-              echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-            echo '</div>';
-          }else{
-            echo '<div class="col-sm-8">';
-              echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
-            echo '</div>';
-          }
-          if (isset($_SESSION['login_user'])){
-            echo '<div class="col-sm-4">';
-              echo '<a class="btn btn-primary" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
-            echo '</div>';
-          }
-        echo '</div>';
-      }
-      echo '</div></body>';
-      echo '</html>';
-    }
-    // header,bodyまで出力する
-    function printHeader() {
-      echo '<!DOCTYPE html>';
-      echo '<html lang="ja">';
-      echo '<head>';
-      echo '<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">';
-      echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-      echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/qanda.css?ver=' . VERSION . '" />';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css">';
-      echo '<link rel="stylesheet" type="text/css" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
-      echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
-      echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';
-      echo '<link rel="stylesheet" href="https://unpkg.com/mavon-editor@2.7.4/dist/css/index.css">';//vue(マークダウン記法)
-      echo '<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>';
-      echo '<script src="https://kit.fontawesome.com/3f20c0ff36.js" crossorigin="anonymous"></script>';
-      echo '<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>';//vue
-      echo '<script src="https://unpkg.com/mavon-editor@2.7.4/dist/mavon-editor.js"></script>';//vue(マークダウン記法)
-      echo '<script src= "https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/qapi.js" defer></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
-      echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
-      echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
-      echo '<title>' . SYSTITLE . '</title>';
-      echo '</head>';
-      echo '<body><div class="container">';
-    }
+  // head,body開始タグ
+  function printHeader() {
+    echo '<!DOCTYPE html>';
+    echo '<html lang="ja">';
+    echo '<head>';
+    echo '<meta charset=UTF-8" http-equiv="Content-Type">';
+    echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+    echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/qanda.css?ver=' . VERSION . '" />';
+    echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css">';
+    echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
+    // echo '<link rel="stylesheet" href="' . DOMAIN . '/public/css/bookApi.css">';
+    // echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
+    echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
+    echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';
+    echo '<link rel="stylesheet" href="https://unpkg.com/mavon-editor@2.7.4/dist/css/index.css">';//vue(マークダウン記法)
+    echo '<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>';
+    echo '<script src="https://kit.fontawesome.com/3f20c0ff36.js" crossorigin="anonymous"></script>';
+    echo '<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>';//vue
+    echo '<script src="https://unpkg.com/mavon-editor@2.7.4/dist/mavon-editor.js"></script>';//vue(マークダウン記法)
+    echo '<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
+    echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
+    // echo '<script src="' . DOMAIN . '/public/js/bookApi.js" defer></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/qapi.js" defer></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
+    // echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
+    echo '<title>' . SYSTITLE . '</title>';
+    echo '</head>';
+    echo '<body><div class="container">';
+  }
 }
-
-
-
-

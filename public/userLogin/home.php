@@ -5,7 +5,7 @@ session_start();
 require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/LevelLogic.php';
-require_once '../../functions.php';
+require_once '../../app/functions.php';
 //エラーメッセージ
 $err = [];
 
@@ -61,7 +61,7 @@ if(!$newQuestion){
                 </form>
             </li>
 			<li><a class="nav-link active small text-white" href="../../question/index/top.php">質問Page</a></li>
-            <li><a class="nav-link small text-white" href="#">記事ページ</a>
+            <li><a class="nav-link small text-white" href="../article/index.php">記事ページ</a>
             <li><a class="nav-link small text-white" href="#">ライブラリ</a>
             <li><a class="nav-link small text-white" href="#contact">TO DO LIST</a></li>
             <li>
