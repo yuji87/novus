@@ -1,78 +1,82 @@
 <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-  <script src="/qandasite/public/question/js/like.js" defer></script>
+<script src="/qandasite/public/question/js/like.js" defer></script>
 
 <?php
-  session_start();
+session_start();
 
-  //ファイルの読み込み
-  require_once '../../app/QuestionLogic.php';
-  require_once '../../app/UserLogic.php';
+// ファイルの読み込み
+require_once '../../app/QuestionLogic.php';
+require_once '../../app/UserLogic.php';
 
-  //error
-  $err = [];
+// エラーメッセージ
+$err = [];
 
-  $question_id = filter_input(INPUT_GET, 'question_id');
-  if(!$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
+// 詳細表示する質問の選択処理
+$question_id = filter_input(INPUT_GET, 'question_id');
+if(!$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
-  }
-  if (count($err) === 0){
-    //質問を引っ張る処理
-    $question = QuestionLogic::displayQuestion($_GET);
-      if(!$question){
-        $err['question'] = '質問の読み込みに失敗しました';
-      }
-    // 質問への返答を引っ張る処理
-    $answer = QuestionLogic::displayAnswer($_GET);
-      if(!$answer){
-        $err['answer'] = '返信の読み込みに失敗しました';
-      }
-  }
+}
 
-  
-  if(isset($_POST['like_id'])){
-    if(isset($_POST['like_delete'])){
-      $like_btn = QuestionLogic::switchLike(0, $_POST['like_id']);
-      if(!$like_btn){
-        $err['like'] = 'いいねの切り替えに失敗しました';
-      }
+// 質問表示処理
+if (count($err) === 0) {
+    // 質問の取得
+    $question = QuestionLogic::displayQuestion($_GET);
+    if(!$question) {
+      $err['question'] = '質問の読み込みに失敗しました';
     }
-    if(isset($_POST['like_reregist'])){
-      $like_btn = QuestionLogic::switchLike(1, $_POST['like_id']);
-      if(!$like_btn){
-        $err['like'] = 'いいねの切り替えに失敗しました';
-      }
+  // 質問返答の取得
+  $answer = QuestionLogic::displayAnswer($_GET);
+    if(!$answer) {
+      $err['answer'] = '返信の読み込みに失敗しました';
     }
-  }
-    if(isset($_POST['like_regist'])){
-      // いいね登録処理
-      $like_btn = QuestionLogic::createLike($_POST);
-      if(!$like_btn){
+}
+
+//いいね処理
+if(isset($_POST['like_id'])) {
+    if(isset($_POST['like_delete'])) {
+        $like_btn = QuestionLogic::switchLike(0, $_POST['like_id']);
+        if(!$like_btn) {
+            $err['like'] = 'いいねの切り替えに失敗しました';
+        }
+    }
+    if(isset($_POST['like_reregist'])) {
+        $like_btn = QuestionLogic::switchLike(1, $_POST['like_id']);
+        if(!$like_btn) {
+            $err['like'] = 'いいねの切り替えに失敗しました';
+        }
+    }
+}
+
+//いいね登録処理
+if(isset($_POST['like_regist'])) {
+    // 登録処理
+    $like_btn = QuestionLogic::createLike($_POST);
+    if(!$like_btn) {
         $err['like'] = 'いいねの登録に失敗しました';
-      }
-      // 経験値を加算する処理
-      $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 5);
-      if(!$plusEXP){
-        $err['plusEXP'] = '経験値加算処理に失敗しました';
-      }
     }
+    // 経験値を加算する処理
+    $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 5);
+    if(!$plusEXP) {
+        $err['plusEXP'] = '経験値加算処理に失敗しました';
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-  <script src="/qandasite/public/question/js/like.js" defer></script>
-  <!-- <script src="js/like.js"></script> -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="2.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-  <link rel="stylesheet" type="text/css" href="../CSS/question.css" />
-  <title>質問表示</title>
+    <meta charset="UTF-8">
+    <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
+    <script src="/qandasite/public/question/js/like.js" defer></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="2.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/question.css" />
+    <title>質問表示</title>
 </head>
 
 <body>
@@ -84,14 +88,12 @@
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
+            <li class="top"><a href="login_top.php">TOPページ</a></li>
+            <li><a href="../userEdit/list.php">マイページ</a></li>
             <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
-				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+				            <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
@@ -105,7 +107,7 @@
                 <?php if(isset($err['question'])):  ?>
                     <?php echo $err['question'] ?>
                 <?php endif; ?>
-                <p class="h4 pb-3">詳細表示</p>
+                <p class="h4 pb-3 pt-4">詳細表示</p>
                 <!--アイコン-->
                 <div class="pb-1 small">
                     <?php if(!isset($question['icon'])): ?>
@@ -130,9 +132,9 @@
                 <!--日付-->
                 <div class="pt-4 pb-1 small">投稿日時：
                     <?php if (!isset($question['upd_date'])): ?>
-                        <?php echo $question['post_date']  ?>
+                        <?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
                     <?php else: ?>
-                        <?php echo $question['upd_date'] ?>
+                        <?php echo $question['upd_date']; ?>
                     <?php endif; ?>
                 </div>
 
@@ -184,18 +186,18 @@
                     <?php endif; ?>
             
                     <div class="col-sm-2">
-                <?php
-                if ($retinfo["article"]["USER_ID"] != $act->getMemberId()) {
-                  if ($retinfo["postlike"] == NULL || $retinfo["postlike"]["LIKE_FLG"] == 0) {
-                    // いいねボタン押下で、いいねにする
-                    print('<a class="btn btn-primary" id="btnlike">いいね</a>');
-                  } else {
-                    // いいね済み。ボタン押下で、いいねを解除
-                    print('<a class="btn btn-primary active" id="btnlike">いいね[済]</a>');
-                  }
-                }
-                ?>
-              </div>
+                        <?php
+                        if ($retinfo["article"]["USER_ID"] != $act->getMemberId()) {
+                          if ($retinfo["postlike"] == NULL || $retinfo["postlike"]["LIKE_FLG"] == 0) {
+                            // いいねボタン押下で、いいねにする
+                            print('<a class="btn btn-primary" id="btnlike">いいね</a>');
+                          } else {
+                            // いいね済み。ボタン押下で、いいねを解除
+                            print('<a class="btn btn-primary active" id="btnlike">いいね[済]</a>');
+                          }
+                        }
+                        ?>
+                    </div>
             
               <!-- いいねボタンの表示部分 -->
               <?php $checkLike = QuestionLogic::checkLike($_SESSION['login_user']['user_id'],$value['answer_id']); ?>
@@ -264,41 +266,7 @@
           <?php endif; ?>
         
           <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index.php'">戻る</button>
-          <!-- <script>
-            //URLから引数に入っている値を渡す処理
-        function get_param(name, url) {
-          if (!url) url = window.location.href;
-          name = name.replace(/[\[\]]/g, "\\$&");
-          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-              results = regex.exec(url);
-          if (!results) return null;
-          if (!results[2]) return false;
-          return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-        
-        
-        $(document).on('click','.like_btn',function(e){
-          e.stopPropagation();
-          var $this = $(this),
-          user_id = get_param('user_id'),
-          like_id = get_param('like_id'),
-          answer_id = get_param('answer_id');
-          console.log(like_id);
-          $.ajax({
-            type: 'POST',
-            url: '../view/question_disp.php',
-            dataType: 'json',
-            data: { user_id: user_id,
-              like_id: like_id,
-              answer_id: answer_id}
-            }).done(function(data){
-              $('.result').json(data);
-              location.reload();
-            }).fail(function() {
-              location.reload();
-            });
-        });
-          </script> -->
+
       </div>
       </div>
       </section>

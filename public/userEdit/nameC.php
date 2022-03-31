@@ -4,7 +4,7 @@ session_start();
 
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 
 //エラーメッセージ
 $err = [];
@@ -12,8 +12,8 @@ $err = [];
 //ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../register/form.php');
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -52,8 +52,8 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>変更確認画面[name]</title>
 </head>
 

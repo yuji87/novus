@@ -4,7 +4,7 @@ session_start();
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/LevelLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
@@ -33,9 +33,9 @@ $showicon = UserLogic::showIcon($_GET);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-    <link rel="stylesheet" href="../../public/CSS/level_anime.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" href="../../public/css/level_anime.css">
     <title>User Page</title>
 </head>
 

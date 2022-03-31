@@ -1,17 +1,17 @@
 <?php 
     session_start();
     
-    require_once '../../../classes/UserLogic.php';
-    require_once '../../../functions.php';
+    require_once '../../../app/UserLogic.php';
+    require_once '../../../app/Functions.php';
 
     //エラーメッセージ
     $err = [];
     
-    //ログインしているか判定して、していなかったら新規登録画面へ移す
+    //ログインしているか判定して、していなかったらログイン画面へ移す
     $result = UserLogic::checkLogin();
     if (!$result) {
         $_SESSION['login_err'] = '再度ログインして下さい';
-        header('Location: ../userRegister/form.php');
+        header('Location: ../userLogin/form.php');
         return;
     }
     $login_user = $_SESSION['login_user'];

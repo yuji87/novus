@@ -71,9 +71,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="../../public/CSS/mypage.css" />
-  <link rel="stylesheet" type="text/css" href="../../public/CSS/top.css" />
-  <link rel="stylesheet" type="text/css" href="../../public/CSS/question.css" />
+  <link rel="stylesheet" type="text/css" href="../../public/css/mypage.css" />
+  <link rel="stylesheet" type="text/css" href="../../public/css/top.css" />
+  <link rel="stylesheet" type="text/css" href="../../public/css/question.css" />
   <title>質問編集</title>
 </head>
 

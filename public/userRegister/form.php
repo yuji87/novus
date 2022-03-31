@@ -3,7 +3,7 @@
     
     //ファイルの読み込み
     require_once '../../app/UserLogic.php';
-    require_once '../../functions.php';
+    require_once '../../app/Functions.php';
 
     //ログインチェック
     $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>新規会員登録</title>
 </head>
 
@@ -97,9 +97,9 @@
         </div>
     </form>
     <!--ログイン画面へ遷移-->
-    <div class="text-center mb-4">
-    <a href = "../userLogin/form.php">ログインはこちら</a>
-    <a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">戻る</a>
+    <div class="text-center">
+        <a href = "../userLogin/form.php">ログインはこちら</a>
+        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
     </div>
     </div>
 </body>

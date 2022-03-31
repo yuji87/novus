@@ -5,15 +5,15 @@ session_start();
 require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/LevelLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 //エラーメッセージ
 $err = [];
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
+//ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../register/form.php');
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -39,8 +39,8 @@ if(!$newQuestion){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
@@ -60,13 +60,13 @@ if(!$newQuestion){
 				    <input type="hidden">
                 </form>
             </li>
-			<li><a class="nav-link active small text-white" href="../../question/index.php">質問Page</a></li>
-            <li><a class="nav-link small text-white" href="#">記事ページ</a>
-            <li><a class="nav-link small text-white" href="#">ライブラリ</a>
-            <li><a class="nav-link small text-white" href="#contact">TO DO LIST</a></li>
+			<li><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
+            <li><a class="nav-link small text-white" href="../article/index.php">記事ページ</a>
+            <li><a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a>
+            <li><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
-				    <input type="submit" name="logout" value="Log Out" id="logout">
+				    <input type="submit" name="logout" value="ログアウト" id="logout">
                 </form>
             </li>
         </ul>
@@ -105,20 +105,43 @@ if(!$newQuestion){
                             Lv.<?php echo $value['level']; ?>
                         </div>
                         <?php endforeach ?>
-		        		<a class="small" href="../level/list.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a><hr>
+		        		<a class="small mb-5" href="../level/list.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a><hr size="5">
 		        	</div>
                 </div>
 
 			    <!-- 通常時、新着の質問を表示 -->
 		        <?php if(isset($newQuestion)): ?>
-		        	<div>新着の質問</div>
+		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
-		        		<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-		        		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-		        		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
-		        		<div>名前：<?php echo htmlspecialchars($value['name']) ?></div>
-		        		<div><?php echo htmlspecialchars($value['icon']) ?></div>
-		        	<div>日時：<?php echo htmlspecialchars($value['post_date']) ?></div>
+						<!--題名-->
+						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+					    <!--アイコン-->
+					    <div class="level-icon">
+                            <?php if (isset($value['icon'])): ?> 
+		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
+		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo 'mypage.php'; } else {
+                                    echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+                                <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+                            <?php else: ?>
+		    					<!--上記と同じ処理-->
+		    					<!-- <form type="hidden" name="userpage" action="-->
+		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+		    						echo 'mypage.php'; } else {
+									//user_idをユーザーページに引き継ぐ
+		    						echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+		    						<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
+                            <?php endif; ?>
+                        </div>
+						<!--ユーザー名-->
+						<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
+		        		<!--カテゴリ-->
+						<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+		        		<!--本文-->
+						<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+		        		<!--投稿日時-->
+		        	    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
 		        	<?php endforeach; ?>
 		        <?php endif; ?>
 			</div>

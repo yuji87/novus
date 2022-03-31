@@ -4,29 +4,28 @@ session_start();
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
-require_once '../../functions.php';
+require_once '../../app/Functions.php';
 
 //エラー
 $err = [];
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
+//ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: userRegister/form.php');
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
 $question_id = filter_input(INPUT_GET, 'question_id');
 
-
 //自身が投稿した質問を表示
 $question = QuestionLogic::userQuestion();
-if (isset($question['title']) || isset($question['category_name']) || isset($question['message']) || isset($question['upd_date']) || isset($question['post_date']) || isset($question['name'])) {
+// if (isset($question['title']) || isset($question['category_name']) || isset($question['message']) || isset($question['upd_date']) || isset($question['post_date']) || isset($question['name'])) {
 if (!$question) {
     $err[] = 'まだ投稿した質問はありません';
 }
-}
+// }
 
 ?>
 
@@ -36,8 +35,8 @@ if (!$question) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../CSS/mypage.css" />
-    <link rel="stylesheet" type="text/css" href="../CSS/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
     <title>過去の質問履歴</title>
 </head>
 
@@ -71,9 +70,10 @@ if (!$question) {
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
                         <div>質問履歴</div>
-                        <?php if (isset($question)): ?>
+                        <?php if(isset($question)): ?>
+                        <?php foreach($question as $value): ?>
+                        <?php var_dump($question) ?>
                             <!--題名-->
-                            <?php if (isset($question['title'])): ?>
                             <div>題名：<?php echo $question['title']; ?></div>
                             <?php endif; ?>
                             <!--カテゴリ-->
@@ -94,7 +94,7 @@ if (!$question) {
                             <?php if (isset($question['name'])): ?>
                             <div>名前：<?php echo $question['name']; ?></div>
                             <?php endif; ?>
-                        <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
