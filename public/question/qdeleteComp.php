@@ -1,38 +1,39 @@
 <?php
-  session_start();
+session_start();
 
-  //ファイルの読み込み
-  require_once '../../app/QuestionLogic.php';
-  require_once '../../app/CategoryLogic.php';
-  require_once '../../app/UserLogic.php';
+// ファイルの読み込み
+require_once '../../app/QuestionLogic.php';
+require_once '../../app/CategoryLogic.php';
+require_once '../../app/UserLogic.php';
 
-  // ログインチェック
-  $result = UserLogic::checkLogin();
-  if(!$result) {
-    $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../../userLogin/form.php');
-    return;
-  }
-  
-  //error
-  $err = [];
+// エラーメッセージ
+$err = [];
 
-  $question_id = filter_input(INPUT_POST, 'question_id');
-  if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
-    $err[] = '質問を選択し直してください';
-  }
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+  $_SESSION['login_err'] = '再度ログインして下さい';
+  header('Location: ../../userLogin/form.php');
+  return;
+}
+
+$question_id = filter_input(INPUT_POST, 'question_id');
+if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
+  $err[] = '質問を選択し直してください';
+}
 ?>
+
 <!DOCTYPE HTML>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>質問削除</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="../css/mypage.css" />
-<link rel="stylesheet" type="text/css" href="../css/top.css" />
-<link rel="stylesheet" type="text/css" href="../css/question.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/question.css">
+    <title>質問削除</title>
 </head>
 
 <body>
@@ -44,11 +45,9 @@
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="login_top.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
-            <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
+            <li class="top"><a href="../userLogin/home.php">TOP Page</a></li>
+            <li><a href="../userLogin/mypage.php">My Page</a></li>
+            <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -75,20 +74,21 @@
 		    	  <h4>Q&A SITE</h4>
 		    	  <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-		    			  <a class="nav-link small" href="#">記事</a>
-		    		</li>
-		    		<li class="nav-item">
-		    			  <a class="nav-link small" href="#">質問</a>
-		    		</li>
-		    		<li class="nav-item">
-		    			  <a class="nav-link small" href="#">本検索</a>
-		    		</li>
-		    		<li class="nav-item">
-		    			  <a class="nav-link small" href="#">お問い合わせ</a>
-		    		</li>
-		    	</ul>
+		    			      <a class="nav-link small" href="../article/index.php">記事</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="index.php">質問</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+		    		    </li>
+		      	</ul>
 		    </div>
-		  <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-	</footer>
+		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+	  </footer>
 </body>
+</html>
 

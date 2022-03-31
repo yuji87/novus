@@ -6,6 +6,7 @@ require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/LevelLogic.php';
 require_once '../../app/Functions.php';
+
 //エラーメッセージ
 $err = [];
 
@@ -39,12 +40,11 @@ if(!$newQuestion){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
-
 
 <body>
 	<!--メニュー-->
@@ -148,26 +148,26 @@ if(!$newQuestion){
 		</div>
 	</section>
 	
-	    <!-- フッタ -->
-	    <footer class="h-10"><hr>
-	    	<div class="footer-item text-center">
-	    		<h4>Q&A SITE</h4>
-	    		<ul class="nav nav-pills nav-fill">
-                    <li class="nav-item">
-	    				<a class="nav-link small" href="#">記事</a>
-	    			</li>
-	    			<li class="nav-item">
-	    				<a class="nav-link small" href="#">質問</a>
-	    			</li>
-	    			<li class="nav-item">
-	    				<a class="nav-link small" href="#">本検索</a>
-	    			</li>
-	    			<li class="nav-item">
-	    				<a class="nav-link small" href="#">お問い合わせ</a>
-	    			</li>
-	    		</ul>
-	    	</div>
-	    	<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-	    </footer>
+    <!-- フッタ -->
+    <footer class="h-10"><hr>
+		<div class="footer-item text-center">
+			<h4>Q&A SITE</h4>
+			<ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+				    <a class="nav-link small" href="../article/index.php">記事</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../question/index.php">質問</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+				</li>
+			</ul>
+		</div>
+		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+  	</footer>
 </body>
 </html>
