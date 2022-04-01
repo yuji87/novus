@@ -9,7 +9,7 @@ require_once '../../app/Functions.php';
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userCreate/signup_form.php');
+    header('Location: ../userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -33,6 +33,7 @@ if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>会員情報変更[password]</title>
 </head>
 
@@ -47,8 +48,8 @@ if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="../question/qHistory.php">質問 履歴</a></li>
-            <li><a href="../article/aHistory.php">記事 履歴</a></li>
+            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
+            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
             <li>
                 <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -57,20 +58,21 @@ if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit
         </ul>
     </header>
 
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading">アカウント編集画面</h2>
+                <h2 class="heading mt-5">アカウント編集画面</h2>
                 <form action="../userEdit/passwordC.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
                             <label for="password" style="text-align:center">[password]</label>
-                            <p><input id="editdetail" type="text" name="password" value="<?php $password ?>"></p>
+                            <p><input id="editdetail" type="text" name="password" value="<?php $password; ?>"></p>
+                            <p class="small text-muted">（半角英数字・4文字以上20文字以下）</p>
                             <!--確認用-->
                             <br><p for="password" style="text-align:center">[確認のため再度記入して下さい]</p>
-                            <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf ?>"></p>
+                            <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf; ?>"></p>
                         </div>
                         <br><br>
                         <a href="list.php" id="back">戻る</a>
@@ -79,12 +81,12 @@ if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit
                 </form>
             </div>
         </div>
-    </section>
+    </div>
 
-	<!-- フッタ -->
+    <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h3>novus</h3>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>
