@@ -44,30 +44,41 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <div class="row m-2">
   <div class="col-sm-8"></div>
   <?php if (isset($_SESSION['login_user'])) : ?>
-    <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さんがログイン</div>
-  <?php endif ?>
+    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo $act->getMemberName(); ?> さん
+    </a>
+  <?php endif; ?>
 </div>
 
 <!-- ここから本文 -->
 <h5 class="artListTitle mt-3 font-weight-bold">記事詳細</h5>
 <!-- 投稿者名といいね数 -->
 <div class="row m-2">
-  <div class="col-sm-9"><?php echo $retinfo["user"]["NAME"]; ?>さんの投稿</div>
-  <div class="col-sm-2">
+  <?php if($_SESSION['login_user']['user_id'] === $retinfo["article"]["USER_ID"]): ?>
+    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-9 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo $act->getMemberName(); ?> さん
+    </a>
+  <?php else: ?>
+    <a href="<?php echo DOMAIN ?>/public/userLogin/userpage.php?user_id=<?php echo $retinfo["article"]["USER_ID"] ?>" class="d-flex align-items-center col-sm-9">
+      <?php echo (isset($retinfo["user"]["ICON"]) ? '<img src="'. DOMAIN .'/public/user/img/'. $retinfo["user"]["ICON"] .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">'); ?>
+      <?php echo $retinfo["user"]["NAME"]; ?>さんの投稿
+    </a>
+  <?php endif ?> 
+  <div class="d-flex align-items-center col-sm-2 mt-2">
     <?php
     if (isset($_SESSION['login_user']) && $retinfo["article"]["USER_ID"] != $act->getMemberId()) {
       if ($retinfo["postlike"] == NULL || $retinfo["postlike"]["LIKE_FLG"] == 0) {
         // いいねボタン押下で、いいねにする
-        print('<a class="btn btn-primary" id="btnlike">いいね</a>');
+        print('<a class="btn btn-warning like" id="btnlike">いいね</a>');
       } else {
         // いいね済み。ボタン押下で、いいねを解除
-        print('<a class="btn btn-primary active" id="btnlike">いいね[済]</a>');
+        print('<a class="btn btn-warning active liked" id="btnlike">いいね</a>');
       }
     }
     ?>
-  </div>
-  <div class="col-sm-1">
-    &hearts; <span id="postlikecnt"><?php echo $retinfo["postlikecnt"]; ?></span>
+  <span class="ml-3">&hearts; <span id="postlikecnt"><?php echo $retinfo["postlikecnt"]; ?></span></span>
   </div>
 </div>
 
@@ -141,7 +152,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
       if ($result == 'likeset') {
         // いいねにした
         $btnlike.addClass('active');
-        $btnlike.html('いいね[済]');
+        $btnlike.html('いいね');
         $postlikecnt.html(cnt + 1);
       } else {
         // いいね解除。ボタンを再いいねできるようにする。

@@ -11,7 +11,6 @@ use Qanda\Utils;
 $act = new ContactAct(0);
 Token::create();
 
-
 //セッションを開始
 // session_start();
 //セッションIDを更新して変更（セッションハイジャック対策）
@@ -43,11 +42,6 @@ if (!isset($_SESSION['ticket'])) {
 //トークンを変数に代入
 $ticket = $_SESSION['ticket'];
 
-$result = Utils::checkLogin();
-if (!$result) {
-    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
-    return;
-}
 ?>
 
 <body>

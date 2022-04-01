@@ -5,7 +5,7 @@ namespace Qanda;
 require_once "Action.php";
 require_once "Utils.php";
 
-// 記事取得系
+// 記事取得
 define("QUERY_ARTICLE_LIST", "SELECT ARTICLE_ID,USER_ID,TITLE,MESSAGE,POST_DATE,UPD_DATE,CATE_ID,ARTICLE_IMAGE FROM article_posts %s ORDER BY UPD_DATE DESC LIMIT :limit OFFSET :offset");
 define("QUERY_ARTICLE", "SELECT ARTICLE_ID,USER_ID,TITLE,MESSAGE,POST_DATE,UPD_DATE,CATE_ID,ARTICLE_IMAGE FROM article_posts WHERE ARTICLE_ID=:article_id");
 define("QUERY_ARTICLE_COUNT", "SELECT COUNT(ARTICLE_ID) AS CNT FROM article_posts %s");
@@ -19,14 +19,23 @@ define("DELETE_ARTICLE", "DELETE FROM article_posts WHERE ARTICLE_ID=:article_id
 // カテゴリ一覧
 define("QUERY_CATEGORY_LIST", "SELECT CATE_ID,CATEGORY_NAME FROM categories");
 
-// いいね取得系
+// いいね取得
 define("QUERY_POSTLIKE", "SELECT A_LIKE_ID,USER_ID,ARTICLE_ID,LIKE_FLG FROM article_likes WHERE ARTICLE_ID=:article_id AND USER_ID=:user_id");
 define("QUERY_POSTLIKE_COUNTLIST", "SELECT ARTICLE_ID,COUNT(A_LIKE_ID) AS LIKECNT FROM article_likes WHERE ARTICLE_ID IN (%s) AND LIKE_FLG=1 GROUP BY ARTICLE_ID");
 
-// いいね更新系
+// いいね更新
 define("INSERT_POSTLIKE", "INSERT INTO article_likes (USER_ID, ARTICLE_ID, LIKE_FLG) VALUES (:user_id, :article_id, 1)");
 define("UPDATE_POSTLIKE", "UPDATE article_likes SET LIKE_FLG=:like_flg WHERE A_LIKE_ID=:a_like_id");
 define("DELETE_POSTLIKE", "DELETE FROM article_likes WHERE ARTICLE_ID=:article_id");
+
+// レベル, 経験値取得
+define("QUERY_LEVEL","SELECT LEVEL, EXP FROM users WHERE USER_ID=:user_id");
+
+// レベル, 経験値更新
+define("UPDATE_LEVEL","UPDATE users SET EXP=:exp, LEVEL=:level WHERE USER_ID=:user_id");
+
+//経験値更新
+define("UPDATE_EXP","UPDATE users SET EXP=:exp WHERE USER_ID=:user_id");
 
 // タイトルの長さ
 define("TITLE_LENGTH", 150);
@@ -170,7 +179,7 @@ class ArticleAct extends Action
       $this->conn->commit();
     } catch (\Exception $e) {
       $this->conn->rollback();
-      echo 'error';
+      echo $e;
     }
   }
 
@@ -207,6 +216,59 @@ class ArticleAct extends Action
     }
     return $retcode;
   }
+
+  //経験値付与処理
+  function addEXP($user_id, $plus_exp)
+  {
+    try{
+        $stmt = $this->conn->prepare(QUERY_LEVEL);
+        $stmt->bindValue(':user_id', $user_id);
+        $data = $stmt->execute();
+        if (! $data) {
+          return NULL;
+        }
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+    } catch(\Exception $e) {
+        echo $e;
+    }
+    // QUERY_LEVELで取得した経験値とレベルを定義
+    $exp = $data['EXP'];
+    $level = $data['LEVEL'];
+
+    $new_exp = $exp + $plus_exp; // 合算経験値
+    $new_level = floor($new_exp / 100) + 1; //合算レベル
+
+    // 取得レベルと合算レベルの比較
+    if($level < $new_level){ 
+        try{
+          $stmt = $this->conn->prepare(UPDATE_LEVEL);// 経験値とレベルを更新
+          $stmt->bindValue(':user_id', $user_id);
+          $stmt->bindValue(':exp', $new_exp);
+          $stmt->bindValue(':level', $new_level);
+          $data = $stmt-> execute();
+          $_SESSION['login_user']['level'] = $new_level;
+          $_SESSION['login_user']['exp'] = $new_exp;
+          return $data;
+      } catch(\Exception $e) {
+          echo $e;
+      }
+    }else{
+        // レベルに変化なし
+        try{
+          $stmt = $this->conn->prepare(UPDATE_EXP);// 経験値のみ付与
+          $stmt->bindValue(':user_id', $user_id);
+          $stmt->bindValue(':exp', $new_exp);
+          $data = $stmt-> execute();
+          $_SESSION['login_user']['LEVEL'] = $new_level;
+          $_SESSION['login_user']['EXP'] = $new_exp;
+          return $data;
+      } catch(\Exception $e) {
+          echo $e;
+      }
+    }
+
+  }
+
 
   // カテゴリマップ。戻り値は CATE_ID とカテゴリ名の連想配列。
   function categorymap()

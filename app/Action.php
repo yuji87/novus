@@ -130,17 +130,9 @@ class Action
     return $errorMessage;
   }
 
-  // メンバー情報を返す
+  // メンバー情報(全てを)を返す
   function getMember() {
     return $this->member;
-  }
-  // メンバーの名前を返す
-  function getMemberName() {
-    return $this->member['name'];
-  }
-  // メンバーの名前を返す
-  function getMemberEmail() {
-    return $this->member['email'];
   }
   // メンバーのIDを返す
   function getMemberId() {
@@ -148,6 +140,27 @@ class Action
       return $this->member['user_id'];
     }
   }
+  // メンバーの名前を返す
+  function getMemberIcon() {
+    return $this->member['icon'];
+  }
+  // メンバーの名前を返す
+  function getMemberName() {
+    return $this->member['name'];
+  }
+  // メンバーのメールアドレスを返す
+  function getMemberEmail() {
+    return $this->member['email'];
+  }
+  // メンバーのレベルを返す
+  function getMemberLevel() {
+    return $this->member['level'];
+  }
+  // メンバーの経験値を返す
+  function getMemberExp() {
+    return $this->member['exp'];
+  }
+
 
   // userIdからユーザ情報を取得
   function memberref($userid) {
