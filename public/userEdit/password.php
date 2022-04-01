@@ -15,14 +15,12 @@ if(!$result) {
 $login_user = $_SESSION['login_user'];
 
 // セッションに保存データがあるかを確認
-if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit']['password_conf'])) {
+if(isset($_SESSION['passwordEdit']['password'])) {
     // セッションから情報を取得
     $password = $_SESSION['passwordEdit']['password'];
-    $password_conf = $_SESSION['passwordEdit']['password_conf'];
 } else {
     // セッションがなかった場合
     $password = array();
-    $password_conf = array();
 }
 ?>
 
@@ -72,7 +70,7 @@ if(isset($_SESSION['passwordEdit']['password']) || isset($_SESSION['passwordEdit
                             <p class="small text-muted">（半角英数字・4文字以上20文字以下）</p>
                             <!--確認用-->
                             <br><p for="password" style="text-align:center">[確認のため再度記入して下さい]</p>
-                            <p><input id="editdetail" type="text" name="password_conf" value="<?php $password_conf; ?>"></p>
+                            <p><input id="editdetail" type="text" name="password_conf"></p>
                         </div>
                         <br><br>
                         <a href="list.php" id="back">戻る</a>

@@ -45,7 +45,7 @@ if(!$hasTaken) {
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問投稿完了</title>
 </head>
-
+<?php var_dump($_SESSION['q_data']) ?>
 <body>
     <!--メニュー-->
     <header>
