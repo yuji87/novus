@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/ArticleLogic.php';
 require_once '../../app/Functions.php';
@@ -35,7 +35,7 @@ if(!$article) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>過去の質問履歴</title>
+    <title>過去の記事履歴</title>
 </head>
 
 <body>
@@ -62,7 +62,7 @@ if(!$article) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">HISTORY OF QUESTION</h2>
+                <h2 class="heading mt-5">HISTORY OF ARTICLE</h2>
                 <div class="list">
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
