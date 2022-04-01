@@ -191,13 +191,6 @@ hr#dot {
 form {
     margin: 20px auto;
 }
-@media (min-width: 992px) {
-    .wrapper .content .list {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
 
 /*レベルランキング*/
 /*アイコン表示*/
@@ -231,13 +224,15 @@ form {
     color:#666666;
 }
 .list-item img {
+    text-align: center;
     display: block;
     width:200px;
     height: 200px;
-    max-width:300px;
-    max-height: 300px;
+    max-width:1168px;
+    max-height: 347px;
     margin:20px auto;
     border-radius:100%;
+    z-index: 0;
 }
 label#editdisp {
     display: inline-block;
@@ -335,6 +330,9 @@ ul.pagination li a {
 	padding-top: 15px;
 	border:2px solid #aaa;
 	background:#fff;
+}
+#modal-close {
+    cursor: pointer;
 }
 /* 2番目に表示させるdiv半透明の膜 */
 #modal-overlay{

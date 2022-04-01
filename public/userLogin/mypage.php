@@ -65,7 +65,7 @@ $showicon = UserLogic::showIcon();
 	        <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
         </div>
         <!-- 2番目に表示されるモーダル（半透明な膜） -->
-        <div id="modal-overlay" ></div>
+        <div id="modal-overlay"></div>
         <!-- JavaScript -->
         <script type="text/javascript">
             function modal_onclick_close(){

@@ -2,4 +2,12 @@ PDOException: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'user
 Stack trace:
 #0 C:\xampp\htdocs\qandasite\app\QuestionLogic.php(60): PDOStatement->execute()
 #1 C:\xampp\htdocs\qandasite\public\userLogin\home.php(29): QuestionLogic::newQuestion()
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\app\UserLogic.php:271
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\app\UserLogic.php(271): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\public\userEdit\passwordC.php(41): UserLogic::editUserPassword(Array)
+#2 {main}PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\qandasite\app\UserLogic.php:271
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\app\UserLogic.php(271): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\public\userEdit\passwordC.php(41): UserLogic::editUserPassword(Array)
 #2 {main}

@@ -18,7 +18,7 @@ if(!$result) {
 $login_user = $_SESSION['login_user'];
 
 if(!empty($_POST['formcheck'])) {
-    $_SESSION['passwordEdit'] = array($_POST['password'], $_POST['password_conf']);
+    $_SESSION['passwordEdit'] = $_POST['password'];
     $password = filter_input(INPUT_POST, 'password');
     $password_conf = filter_input(INPUT_POST, 'password_conf');
     //バリデーション
@@ -29,7 +29,7 @@ if(!empty($_POST['formcheck'])) {
     if(!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)) {
         $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
     }
-    if($_SESSION['passwordEdit']['0'] !== $_SESSION['passwordEdit']['1']) {
+    if($_SESSION['passwordEdit'] !== $password_conf) {
         $err['password'] = '確認用パスワードと異なっています';
     }
 }
@@ -94,7 +94,7 @@ if(count($err) === 0 && (isset($_POST['check']))) {
                         <!--ユーザーが登録したパスワードを表示-->
                         <div class="text">
                             <label for="password">[Password]</label>
-                            <p><span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['passwordEdit']['0'], ENT_QUOTES, 'UTF-8'); ?></span></p>
+                            <p><span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['passwordEdit'], ENT_QUOTES, 'UTF-8'); ?></span></p>
                             <!--未記入時のエラーメッセージ表示-->
                             <?php if(isset($err['password'])): ?>
                                 <p class="text-danger"><?php echo $err['password']; ?></p>
