@@ -2,9 +2,9 @@
 session_start();
 
 // ファイルの読み込み
-require_once '../../classes/QuestionLogic.php';
-require_once '../../classes/CategoryLogic.php';
-require_once '../../classes/UserLogic.php';
+require_once '../../app/QuestionLogic.php';
+require_once '../../app/CategoryLogic.php';
+require_once '../../app/UserLogic.php';
 
 // エラーメッセージ
 $err = [];
@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -68,7 +68,7 @@ if(isset($_POST['a_dlt_conf'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -77,15 +77,15 @@ if(isset($_POST['a_dlt_conf'])) {
             <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
-				        <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
     <!--コンテンツ-->
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4">返答内容</p>
@@ -104,34 +104,34 @@ if(isset($_POST['a_dlt_conf'])) {
                     <!-- 質問内容表示 -->
                     <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
-                    <input type="hidden" name="answer_id" value="<?php echo $answer_id ?>">
+                    <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
                     <input type="submit" name="a_dlt_conf">
                 </form>
-                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../../userLogin/home.php'">TOP</button>
+                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOP</button>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
-		    <div class="footer-item text-center">
-		    	  <h4>Q&A SITE</h4>
-		    	  <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-		    			  <a class="nav-link small" href="../article/index.php">記事</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="index.php">質問</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-		    		    </li>
-		    	  </ul>
-		    </div>
-		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+        <div class="footer-item text-center">
+                <h4>novus</h4>
+                <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                        <a class="nav-link small" href="../article/index.php">記事</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="index.php">質問</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                    </li>
+                </ul>
+        </div>
+        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
   	</footer>
 </body>

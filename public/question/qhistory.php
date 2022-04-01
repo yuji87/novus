@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: userLogin/form.php');
+    header('Location: ../userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
@@ -41,7 +41,7 @@ if (!$question) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -51,14 +51,14 @@ if (!$question) {
             <li><a href="../../study-main/ARTICLE/ahistory.php">【 履歴 】質問</a></li>
             <li><a href="#contact">【 履歴 】記事</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
 	  		        <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <h2 class="heading">HISTORY OF QUESTION</h2>
@@ -71,7 +71,6 @@ if (!$question) {
                         <?php endif; ?> 
                         <?php if(isset($question)): ?>
                             <?php foreach($question as $value): ?>
-                            <?php var_dump($question) ?>
                             <!--題名-->
                             <div>題名：<?php echo $value['title']; ?></div>
                             <!--カテゴリ-->
@@ -80,9 +79,9 @@ if (!$question) {
                             <div>本文：<?php echo $value['message']; ?></div>
                             <!--日付-->
                             <?php if (!isset($value['upd_date']) && isset($value['post_date'])): ?>
-                            <div>日付：<?php echo $value['post_date']  ?></div>
+                            <div>日付：<?php echo $value['post_date']; ?></div>
                             <?php elseif (isset($value['upd_date'])): ?>
-                            <div>日付：<?php echo $value['upd_date'] ?></div>
+                            <div>日付：<?php echo $value['upd_date']; ?></div>
                             <?php endif; ?>
                             <!--名前-->
                             <div>名前：<?php echo $value['name']; ?></div>
@@ -93,12 +92,12 @@ if (!$question) {
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h4>novus</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

@@ -518,8 +518,8 @@ class UserLogic
             $stmt = connect()->prepare($sql_upd);
             // SQL実行
             $data = $stmt-> execute($arr);
-            $_SESSION['login_err']['level'] = $new_level;
-            $_SESSION['login_err']['exp'] = $new_exp;
+            $_SESSION['login_user']['level'] = $new_level;
+            $_SESSION['login_user']['exp'] = $new_exp;
             return $data;
         } catch(\Exception $e) {
             // エラーの出力

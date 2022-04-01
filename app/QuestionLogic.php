@@ -92,12 +92,12 @@ class QuestionLogic
       }
       if($where){
         $whereSql = implode(' AND ', $where);
-        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
+        $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                 WHERE ' . $whereSql ;
       }else{
-        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
+        $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                 ORDER BY question_posts.question_id DESC';
@@ -350,9 +350,8 @@ class QuestionLogic
         $arr = [];
         $arr[] = $questionData; 
         // SQL実行
-        $stmt->execute($arr);
+        $result = $stmt->execute($arr);
         // SQLの結果を返す
-        $question = $stmt->fetch();
         return $result;
       } catch(\Exception $e) {
         return false;

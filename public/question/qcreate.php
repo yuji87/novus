@@ -10,7 +10,7 @@ require_once '../../app/CategoryLogic.php';
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -64,7 +64,7 @@ if(isset($_POST['create_question'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -73,14 +73,14 @@ if(isset($_POST['create_question'])) {
             <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4">質問投稿</p>
@@ -127,12 +127,12 @@ if(isset($_POST['create_question'])) {
                 </form>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 	    <div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h4>novus</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 					<a class="nav-link small" href="../article/index.php">記事</a>
