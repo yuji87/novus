@@ -10,14 +10,14 @@
 </head>
 <body>
   <div class="mx-auto" style="width: 200px;">
-  <div class="cherry-blossom-container text-center">
+  <div class="cherry-blossom-container" style=" height: auto">
     <!-- レベルによる表示画像変更 -->
     <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="../user/img/level/22338667.png" alt="ないよ">
     <div id="lv" class="col-4 d-block">Lv.
       <span id="level"><?php echo $user_data['pre_level'] ?></span>
-    </div>
       <progress class=" d-block mx-auto" id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
       <div class="col-4 d-block  element js-animation" id="ohome_word">Congratulation!</div>
+    </div>
     <div id="bg"></div>
   </div>
   </div>

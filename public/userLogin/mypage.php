@@ -61,7 +61,7 @@ $showicon = UserLogic::showIcon();
     <?php if($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
         <!--モーダル-->
         <div id="modal-content">
-            <p style="text-align:canter;"><?php require_once '../level/animation.php'; ?></p>
+            <p style="text-align:center;"><?php require_once '../level/animation.php'; ?></p>
 	        <p><a id="modal-close" class="button-link" onclick="modal_onclick_close()" >CLOSE</a></p>
         </div>
         <!-- 2番目に表示されるモーダル（半透明な膜） -->

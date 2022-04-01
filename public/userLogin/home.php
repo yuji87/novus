@@ -114,7 +114,7 @@ if(!$newQuestion) {
 		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
 						<!--題名-->
-						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 					    <!--アイコン-->
 					    <div class="level-icon">
                             <?php if (isset($value['icon'])): ?> 
@@ -138,8 +138,13 @@ if(!$newQuestion) {
 						<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
 		        		<!--カテゴリ-->
 						<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-		        		<!--本文-->
-						<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+		        		<!--本文：50文字以上だと省略-->
+						<?php if(mb_strlen($value['message']) > 10): ?>
+							<?php $limit_content = mb_substr($value['message'],0,10); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
 		        		<!--投稿日時-->
 		        	    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
 		        	<?php endforeach; ?>

@@ -102,7 +102,7 @@ if(!$newQuestion) {
 	            <!--質問表示-->
 		        <?php foreach($searchQuestion as $value): ?>
 			        <!--題名-->
-			        <div><a href="qisp.php? question_id=<?php echo $value['question_id']; ?>">題名「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
                         <?php if (isset($value['icon'])): ?> 
@@ -133,7 +133,7 @@ if(!$newQuestion) {
 		    <?php if(!isset($searchQuestion) && isset($newQuestion)): ?>
 			    <?php foreach($newQuestion as $value): ?>
 				    <!--題名-->
-				    <div><a href="qisp.php? question_id=<?php echo $value['question_id']; ?>">題名「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
                         <?php if (isset($value['icon'])): ?> 
