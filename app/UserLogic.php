@@ -1,7 +1,5 @@
 <?php
-    
 //ファイル読み込み
-
 require_once '../../app/Dbconnect.php';
 
 class UserLogic
@@ -11,7 +9,6 @@ class UserLogic
      * @param array $userData
      * @return bool $result
      */
-
     public static function createUser()
     {
     $result = false;
@@ -27,12 +24,11 @@ class UserLogic
             // SQL実行
             $result = $stmt-> execute($arr);
             $user = $stmt->fetch();
-            //実行後、$_SESSIONの内容を消去
+            // 実行後、$_SESSIONの内容を消去
             $_SESSION['signUp']['0'] = null;                                    
             $_SESSION['signUp']['1'] = null;                                     
             $_SESSION['signUp']['2'] = null;                                      
             $_SESSION['signUp']['3'] = null;    
-
             return $result;
         } catch(\Exception $e) {
             // エラーの出力
@@ -69,28 +65,25 @@ class UserLogic
 
     /**
     * ログイン処理
-
     * @param string $tel
     * @param string $password
     * @return bool $result
     */
-
-
     public static function login($tel, $password)
     {
     // 結果
     $result = false;
     // ユーザをtelから検索して取得
     $user = self::getUserByTel($tel);
-
-    if (!$user){
+    // バリデーション
+    if(!$user){
       $_SESSION['msg'] = '電話番号が一致しません。';
       return $result;
     }
     //　パスワードの照会
-    if (password_verify($password, $user['password'])) {
-      //ログイン成功
-      //ハイジャック対策
+    if(password_verify($password, $user['password'])) {
+      // ログイン成功
+      // ハイジャック対策
       session_regenerate_id(true);
       $_SESSION['login_user'] = $user;
       $result = true;
@@ -105,14 +98,12 @@ class UserLogic
      * @param string $tel
      * @return array|bool $user|false
     */
-
     public static function getUserBytel($tel)
     {
     // SQLの準備
     // SQLの実行
     // SQLの結果を返す
     $sql = 'SELECT * FROM users WHERE tel = ?';
-
     // telを配列に入れる
     $arr = [];
     $arr[] = $tel;
@@ -130,17 +121,15 @@ class UserLogic
     }
     
     /**
-
      * ログインチェック
      * @param void
      * @return bool $result
      */
-
     public static function checkLogin()
     {
     $result = false;
     // セッションにログインユーザが入っていなかったらfalse
-    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
+    if(isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
       return $result = true;
     }
     return $result;
@@ -155,14 +144,11 @@ class UserLogic
     session_destroy();
     } 
 
-    
     /**
-
      * ユーザー情報[name]編集
      * @param string $name
      * @return bool $result
      */
-    
     public static function editUserName()
     {
     $result = false;
@@ -170,7 +156,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'UPDATE users SET name=? WHERE user_id=?';
-    //nameを配列に入れる
+    // nameを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['nameEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
@@ -179,7 +165,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['name'] = $_SESSION['nameEdit'];
         $user = $stmt->fetch();
         return $result;
@@ -197,7 +183,6 @@ class UserLogic
      * @param string $tel
      * @return bool $result
      */
-    
     public static function editUserTel()
     {
     $result = false;
@@ -205,7 +190,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'UPDATE users SET tel=? WHERE user_id=?';
-    //nameを配列に入れる
+    // telを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['telEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
@@ -214,7 +199,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['tel'] = $_SESSION['telEdit'];
         $user = $stmt->fetch();
         return $result;
@@ -233,7 +218,6 @@ class UserLogic
      * @param string $email
      * @return bool $result
      */
-    
     public static function editUserEmail()
     {
     $result = false;
@@ -241,7 +225,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'UPDATE users SET email=? WHERE user_id=?';
-    //nameを配列に入れる
+    // emailを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['emailEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
@@ -250,7 +234,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['email'] = $_SESSION['emailEdit']; 
         $user = $stmt->fetch();
         return $result;
@@ -268,7 +252,6 @@ class UserLogic
      * @param string $password
      * @return bool $result
      */
-    
     public static function editUserPassword()
     {
     $result = false;
@@ -276,10 +259,10 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'UPDATE users SET password=? WHERE user_id=?';
-    //nameを配列に入れる
+    // passwordを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['passwordEdit']; 
-    $arr[] = password_hash($_SESSION['login_user']['user_id'], PASSWORD_DEFAULT); // password
+    $arr[] = password_hash($_SESSION['login_user']['user_id'], PASSWORD_DEFAULT);
 
     try{
         $stmt = connect()->prepare($sql);
@@ -303,7 +286,6 @@ class UserLogic
      * @param string $icon
      * @return bool $result
      */
-    
     public static function editUserIcon()
     {
     $result = false;
@@ -311,7 +293,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'UPDATE users SET icon=? WHERE user_id=?';
-    //nameを配列に入れる
+    // iconを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['iconEdit']['name']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
@@ -333,22 +315,19 @@ class UserLogic
     }
     }
     
-     
     /**
      * ユーザー情報[comment]編集
      * @param string $comment
      * @return bool $result
      */
-    
     public static function editUserComment()
     {
     $result = false;
     // SQLの準備
     // SQLの実行
     // SQLの結果を返す
-
     $sql = 'UPDATE users SET comment=? WHERE user_id=?';
-    //nameを配列に入れる
+    // commentを配列に入れる
     $arr = [];
     $arr[] = $_SESSION['commentEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
@@ -375,7 +354,6 @@ class UserLogic
      * @param string $icon
      * @return bool $result
      */
-    
     public static function showIcon()
     {
     $result = false;
@@ -383,7 +361,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'SELECT icon FROM users WHERE user_id=?';
-    //nameを配列に入れる
+    //配列に入れる
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
 
@@ -406,7 +384,6 @@ class UserLogic
      * @param string $user_id
      * @return bool $result
      */
-    
     public static function deleteUser()
     {
     $result = false;
@@ -414,7 +391,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'DELETE FROM users WHERE user_id= ?';
-    //nameを配列に入れる
+    // 配列に入れる
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
 
@@ -439,28 +416,27 @@ class UserLogic
      */
     public static function levelModal()
     {
-    $result = false;
-        
-        //SQLの準備・実行・結果を返す
-        $sql = 'SELECT level, exp, pre_level, pre_exp FROM users WHERE user_id=?';
-        //nameを配列に入れる
-        $arr = [];
-        $arr[] = $_SESSION['login_user']['user_id']; 
-
-        try{
-            $stmt = connect()->prepare($sql);
-            // SQL実行
-            $result = $stmt-> execute($arr);
-            $user = $stmt->fetch();
-            return $user;
-            // return $result??='default value';
-        } catch(\Exception $e) {
-            // エラーの出力
-            echo $e;
-            // ログの出力
-            error_log($e, 3, '../error.log');
-            return $result;
-        }
+    $result = false; 
+    // SQLの準備・実行・結果を返す
+    $sql = 'SELECT level, exp, pre_level, pre_exp FROM users WHERE user_id=?';
+    // 配列に入れる
+    $arr = [];
+    $arr[] = $_SESSION['login_user']['user_id']; 
+    
+    try{
+        $stmt = connect()->prepare($sql);
+        // SQL実行
+        $result = $stmt-> execute($arr);
+        $user = $stmt->fetch();
+        return $user;
+        // return $result??='default value';
+    } catch(\Exception $e) {
+        // エラーの出力
+        echo $e;
+        // ログの出力
+        error_log($e, 3, '../error.log');
+        return $result;
+    }
     }
 
     /**
@@ -476,9 +452,10 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql_sel = 'SELECT level, exp FROM users WHERE user_id=?';
-    // ユーザーIDを配列に入れる
+    // 配列に入れる
     $arr = [];
-    $arr[] = $user_id;                       //user_id
+    $arr[] = $user_id;
+
     try{
         $stmt = connect()->prepare($sql_sel);
         // SQL実行
@@ -492,7 +469,6 @@ class UserLogic
     // SELECT文で取得した経験値とレベルを定義
     $exp = $data['exp'];
     $level = $data['level'];
-
     // 経験値を付与
     $new_exp = $exp + $plus_exp;
     // 経験値を付与した上でのレベルの計算
@@ -514,16 +490,16 @@ class UserLogic
         $arr[] = $new_exp;
         $arr[] = $user_id;
     }
-        try{
-            $stmt = connect()->prepare($sql_upd);
-            // SQL実行
-            $data = $stmt-> execute($arr);
-            $_SESSION['login_err']['level'] = $new_level;
-            $_SESSION['login_err']['exp'] = $new_exp;
-            return $data;
-        } catch(\Exception $e) {
-            // エラーの出力
-            echo $e;
-        }
+    try{
+        $stmt = connect()->prepare($sql_upd);
+        // SQL実行
+        $data = $stmt-> execute($arr);
+        $_SESSION['login_err']['level'] = $new_level;
+        $_SESSION['login_err']['exp'] = $new_exp;
+        return $data;
+    } catch(\Exception $e) {
+        // エラーの出力
+        echo $e;
+    }
     }
 }

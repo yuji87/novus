@@ -52,7 +52,7 @@ $showicon = UserLogic::showIcon($_GET);
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading">MY ACCOUNT</h2>
+                <h2 class="heading mt-5">MY ACCOUNT</h2>
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
