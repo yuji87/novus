@@ -86,3 +86,33 @@ h5{
   color: gray;
 }
 
+.modal{
+  width: 100%; /* 親要素の幅と等しく */
+  height: 100vh; /* ウインドウの高さと等しく */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.modal_bg{
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+.modal_window{
+  width: 80%;
+  height: 50vh;
+  border-radius: 5px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  /* text-align: center !important; */
+  overflow: scroll;
+}
+
+img{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}

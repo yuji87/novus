@@ -32,15 +32,18 @@ $act = new ArticleAct(0);
 $retinfo = $act->articlelist($page, $searchtext);
 $category = $act->categorymap();
 
+// ログインユーザーのアイコン
+$icon = $act->getMemberIcon();
+
 // Token生成
 Token::create();
 ?>
-
 <div class="row m-2 pt-4 pb-2">
   <?php if (isset($_SESSION['login_user'])) : ?>
-    <div class="col-sm-2">
-      <?php echo $act->getMemberName(); ?>さんようこそ
-    </div>
+    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo $act->getMemberName(); ?> さん
+    </a>
   <?php endif; ?>
   <div class="col-sm-7 text-center">
     <input type="search" style="width:100%;" id="searcharticle" placeholder="キーワードを入力" value="<?php echo Utils::h($searchtext); ?>" />
@@ -60,13 +63,16 @@ Token::create();
 <h5 class="artListTitle mt-3 font-weight-bold">記事一覧 <?php echo $headertitle; ?></h5>
 
 <?php
-//全データを展開
+//全データを各投稿ごとに展開
 foreach ($retinfo['articlelist'] as $art) {
-
   // 投稿ユーザ情報
   $user = $retinfo['usermap'][$art['USER_ID']];
+  // 投稿ユーザのアイコン
+  $postIcon = $retinfo['usermap'][$art['USER_ID']]['ICON'];
   // 投稿者の名前
   $username = $user["NAME"];
+  // 投稿タイトル
+  $title = $art['TITLE'];
   // 投稿日時
   $postdt = Utils::compatiDate($art['UPD_DATE'], 'Y/m/d H:i');
   // カテゴリ名
@@ -75,8 +81,11 @@ foreach ($retinfo['articlelist'] as $art) {
   $postlikecnt = $retinfo['postlikemap'][$art['ARTICLE_ID']] ??  0; //合体演算子
 
   echo '<div class="artfrm" articleid="' . $art['ARTICLE_ID'] . '">';
-  echo '<div class="arthead">' . $username . ' さんの投稿</div>';
-  echo '<div class="arttitle">' . Utils::h($art['TITLE']) . '</div>';
+  echo '<a href="#" class="d-flex align-items-end">';
+  echo (isset($postIcon) ? '<img src="'. DOMAIN .'/public/user/img/'. $postIcon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">');
+  echo '<span class="arthead ml-1">' . $username . 'さんの投稿</span>';
+  echo '</a>';
+  echo '<div class="arttitle">' . Utils::h($title) . '</div>';
   echo '<div class="artFootLeft">' . $postdt . '</div>';
   echo '<div class="artFootLeft badge rounded-pill border border-secondary ml-3 ">' . $catename . '</div>';
   echo '<div class="artfoot">' . "&hearts; " . $postlikecnt . '</div>';

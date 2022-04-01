@@ -47,7 +47,9 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
   <div class="col-sm-8"></div>
   <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さん</div>
 </div>
-
+<?php //var_dump($act->getMemberId()); ?>
+<?php //var_dump($act->getMemberLevel()); ?>
+<?php // var_dump($act->addEXP($act->getMemberId(),30)); ?>
 <h5 class="artListTitle mt-3 font-weight-bold">記事<?php echo $modename; ?></h5>
 <div class="container-fluid">
   <form method="POST" class="form-horizontal" name="qandaForm">
@@ -91,6 +93,24 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
         }
         ?>
         <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
+        <div class="open btn btn-primary">説明</div>
+        <div class="modal">
+          <div class="modal_bg"></div>
+          <div class="modal_window">
+            <div class="modal_title text-center">
+              <h3 class="mt-4 mb-4" style="font-weight: bold;">利用方法</h3>
+            </div>
+            <div class="text-center">
+              # おはよう → <span style="font-size:2.5rem; font-weight:500; line-height:1.2;">おはよう</span><br>
+              ## おはよう → <span style="font-size:2rem; font-weight:500; line-height:1.2;">おはよう</span><br>
+              ### おはよう → <span style="font-size:1.75rem; font-weight:500; line-height:1.2;">おはよう</span><br><br>
+              - おはよう → <span>・おはよう</span><br><br>
+              ~~おはよう~~ → <del>おはよう</del><br><br>
+              `おはよう` → <span style="color:red;">おはよう</span>
+            </div>
+            <div class="close btn btn-danger mt-3 mr-3">CLOSE</div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
@@ -136,7 +156,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       '&token=<?php echo $_SESSION["token"]; ?>';
 
     // 送信(ajax)
-    formapiCallback('article/process/post.php', $data, function($retcode) {
+    formapiCallback('article/process/post.php', $data, function($retcode) { //ファイルの中身を読み込む
       // 送信完了後の処理
       if ($retcode == 'success') {
         swal({
@@ -171,7 +191,7 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       dangerMode: true
     }).then(function(isConfirm) {
       if (isConfirm) {
-
+        
         var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
@@ -182,6 +202,18 @@ if ($retinfo != NULL && $retinfo['article'] != NULL) {
       }
     });
   }
+
+  $(function(){
+    $(".open").click(function(){
+      $(".modal").fadeIn();
+    });
+    $(".close").click(function(){
+      $(".modal").fadeOut();
+    });
+    $(".modal_bg").click(function(){
+      $(".modal").fadeOut();
+    });
+  });
 </script>
 
 <?php
