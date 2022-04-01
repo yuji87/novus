@@ -261,9 +261,9 @@ class UserLogic
     $sql = 'UPDATE users SET password=? WHERE user_id=?';
     // passwordを配列に入れる
     $arr = [];
-    $arr[] = $_SESSION['passwordEdit']; 
-    $arr[] = password_hash($_SESSION['login_user']['user_id'], PASSWORD_DEFAULT);
-
+    $arr[] = password_hash($_SESSION['passwordEdit'], PASSWORD_DEFAULT);
+    $arr[] = $_SESSION['login_user']['user_id']; 
+    
     try{
         $stmt = connect()->prepare($sql);
         // SQL実行
@@ -271,6 +271,8 @@ class UserLogic
         //セッション値を最新に更新
         $_SESSION['login_user']['password'] = $_SESSION['passwordEdit'];
         $user = $stmt->fetch();
+        // セッション情報を消去し、セキュリティ対策
+        $_SESSION['login_user']['password'] = null;
         return $result;
     } catch(\Exception $e) {
         // エラーの出力
