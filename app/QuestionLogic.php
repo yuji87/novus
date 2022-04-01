@@ -165,14 +165,13 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
+      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
       // 質問データを配列に入れる
       $arr = [];
       $arr[] = $_SESSION['q_data']['user_id'];
       $arr[] = $_SESSION['q_data']['title'];
       $arr[] = $_SESSION['q_data']['message'];
       $arr[] = $_SESSION['q_data']['category'];
-      $arr[] = $_SESSION['q_data']['question_image'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -185,7 +184,6 @@ class QuestionLogic
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
         $_SESSION['q_data']['category'] = null;
-        $_SESSION['q_data']['questin_image'] = null;
 
         return $result;
       }catch(\Exception $e){
@@ -203,7 +201,6 @@ class QuestionLogic
      * @param string $message
      * @param datetime $upd_time
      * @param int $cate_id
-     * @param string $question_image
      * @param int $question_id
      * @return bool $result
     */
@@ -215,7 +212,7 @@ class QuestionLogic
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=?,question_image=? WHERE question_id = ?';
+      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=? WHERE question_id = ?';
 
       // 編集データを配列に入れる
       $arr = [];
@@ -223,7 +220,6 @@ class QuestionLogic
       $arr[] = $_SESSION['q_data']['message'];
       $arr[] = $upd_date;
       $arr[] = $_SESSION['q_data']['category'];
-      $arr[] = $_SESSION['q_data']['question_image'];
       $arr[] = $_SESSION['q_data']['question_id'];
       
       try {
@@ -237,7 +233,6 @@ class QuestionLogic
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
         $_SESSION['q_data']['category'] = null;
-        $_SESSION['q_data']['questin_image'] = null;
 
         return $result;
       } catch(\Exception $e) {
@@ -408,7 +403,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData['question_id'];
+      $arr[] = $answerData;
 
       try{
         $stmt = connect()->prepare($sql);

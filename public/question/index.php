@@ -109,14 +109,14 @@ if(isset($_GET['search'])) {
         			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 					        <?php if(isset($value['icon'])): ?>
 								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo 'mypage.php'; } else {
-                                    echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
 									<img src="../user/img/<?php echo $value['icon']; ?>">
 								</a>
 							<?php else: ?>
 								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo 'mypage.php'; } else {
-                                    echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
 									<div><img src="../user/img/sample_icon.png"></div>
 								</a>
 							<?php endif; ?>
@@ -130,7 +130,7 @@ if(isset($_GET['search'])) {
 								<?php echo $value['message']; ?>
 							<?php endif; ?>
         			        <!-- 更新されていた場合、その日付を優先表示 -->
-				            <div>
+				            <div class="pt-4 pb-1 small">
 					            <?php if (!isset($value['upd_date'])): ?>
 					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
 					            <?php else: ?>
@@ -150,14 +150,14 @@ if(isset($_GET['search'])) {
 		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 								<?php if(isset($value['icon'])): ?>
 									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo 'mypage.php'; } else {
-                                    echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
 									<img src="../user/img/<?php echo $value['icon']; ?>">
 									</a>
 								<?php else: ?>
 									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-									echo 'mypage.php'; } else {
-									echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
+									echo '../userLogin/mypage.php'; } else {
+									echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
 									<img src="../user/img/sample_icon.png">
 									</a>
 								<?php endif; ?>

@@ -9,22 +9,39 @@ require_once '../../app/UserLogic.php';
 $err = [];
 
 if(isset($_SESSION['a_data']['message']) &&
-    isset($_SESSION['a_data']['user_id']) &&
+    isset($_SESSION['a_data']['a_user_id']) &&
+    isset($_SESSION['a_data']['q_user_id']) &&
     isset($_SESSION['a_data']['question_id'])
 ) {
+    // 今までの返信を取得して、自分の返信があった場合カウントする
+    $hasDisplayed = QuestionLogic::displayAnswer($_SESSION['a_data']['question_id']);
+    if(!$hasDisplayed) {
+        $err['answer'] = '返信の読み込みに失敗しました';
+    } 
+    $count = 0;
+    foreach($hasDisplayed as $value) {
+        if($value['user_id'] == $_SESSION['a_data']['a_user_id']) {
+            $count = $count + 1;
+        }
+    }
     // 返答を登録する処理
     $hasCreated = QuestionLogic::createAnswer();
     if(!$hasCreated) {
-        $err['answer'] = '返信の読み込みに失敗しました';
+        $err['answer'] = '返信の登録に失敗しました';
     } 
-    if($_SESSION['login_user']['user_id'] != $_SESSION['']['user_id']) {// 質問を投稿した本人「でない」 且つ 返信が一回目 のとき
+
+    // 質問者≠返信者 且つ 一度目の返信 の場合、経験値加算処理
+    if($_SESSION['login_user']['user_id'] != $_SESSION['a_data']['q_user_id'] && $count == 0) {// 質問を投稿した本人「でない」 且つ 返信が一回目 のとき
         // 経験値を加算する処理
         $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
         if(!$plusEXP) {
             $err['plusEXP'] = '経験値加算処理に失敗しました';
         }
     }
+} else {
+    $err['other'] = '値の取得に失敗しました';
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +81,11 @@ if(isset($_SESSION['a_data']['message']) &&
         <div class="container">
             <div class="content">
                 <p class="h4">回答完了</p>
-                <p>返答の投稿が完了しました</p>
+                <?php if(count($err) == 0): ?>
+                    <p>返答の投稿が完了しました</p>
+                <?php else: ?>
+                    <p>返信の登録に失敗しました</p>
+                <?php endif; ?>                
                 <form method="GET" action="../question/qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $_SESSION['a_data']['question_id']; ?>">
                     <input type="submit" class="btn btn-warning mb-3" name="q_disp" value="質問表示へ戻る">

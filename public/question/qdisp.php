@@ -28,7 +28,7 @@ if (count($err) === 0) {
         $err['question'] = '質問の読み込みに失敗しました';
     }
   // 質問返答の取得
-    $answer = QuestionLogic::displayAnswer($_GET);
+    $answer = QuestionLogic::displayAnswer($_GET['question_id']);
         if(!$answer) {
             $err['answer'] = '返信の読み込みに失敗しました';
         }
@@ -139,7 +139,7 @@ if(isset($_POST['like_regist'])) {
                     <?php if (!isset($question['upd_date'])): ?>
                         投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
                     <?php else: ?>
-                        更新：<?php echo $question['upd_date']; ?>
+                        更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
                     <?php endif; ?>
                 </div>
 
@@ -165,17 +165,14 @@ if(isset($_POST['like_regist'])) {
                         <?php echo $err['answer']; ?>
                     <?php endif; ?>
                     <?php foreach($answer as $value): ?>
-                        <?php var_dump($value['user_id']) ?>
-                            <?php var_dump($question['user_id']) ?>
-                            <?php var_dump($_SESSION['login_user']['user_id']) ?>
                         <!--ユーザー名-->
                         <div>名前：<?php echo $value['name']; ?></div>
                         <!--アイコン-->
-                        <div class="level-icon">
-                            <?php if (($value['icon'])): ?> 
-                                <img src="../img/<?php echo $value['icon']; ?>">
+                        <div class="pb-1 small">
+                            <?php if(!isset($question['icon'])): ?>
+                                <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
                             <?php else: ?>
-                                <?php echo "<img src="."../../public/user/img/sample_icon.png".">"; ?>
+                                <img src="../user/img/<?php echo $question['icon']; ?>">
                             <?php endif; ?>
                         </div>
                         <!--本文-->
@@ -254,7 +251,8 @@ if(isset($_POST['like_regist'])) {
                 <?php if($result): ?>
                     <?php if($question['best_select_flg'] == 0): ?>
                         <form method="POST" action="../questionAnswer/aCreateConf.php">
-                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                            <input type="hidden" name="a_user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                            <input type="hidden" name="q_user_id" value="<?php echo $question['user_id']; ?>">
                             <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
                             <textarea placeholder="ここに返信を入力してください" name="a_message" class="w-75" rows="3"></textarea>
                             <br><input type="submit" class="btn btn-warning mt-2" value="返信">

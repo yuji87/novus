@@ -56,6 +56,22 @@ if(isset($_POST['q_edit_conf'])) {
     if(empty($_SESSION['q_data']['question_id'])) {
         $err['q_id'] = '質問IDが選択されていません';
     }
+
+    if(!empty($_SESSION['q_data']['title'])) {
+        $limitTitle = 150;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
+        $err['title'] = '150文字以内で入力してください';
+        }
+    }
+    if(!empty($_SESSION['q_data']['message'])) {
+        $limitMessage = 1500;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
+        $err['message'] = '1500文字以内で入力してください';
+        }
+    }
+
     if (count($err) === 0) {
         header('Location: qEditComp.php');
     }

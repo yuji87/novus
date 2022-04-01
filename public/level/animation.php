@@ -55,13 +55,13 @@
         
         // 一定レベルを超えたら表示画像が変更される
         if(level.innerHTML >= 5){
-          document.getElementById("hero").src='/img/22503431.png';
+          document.getElementById("hero").src='../user/img/level/22503431.png';
         } 
         if(level.innerHTML >= 10){
-          document.getElementById("hero").src='/img/22350820.png';
+          document.getElementById("hero").src='../user/img/level/22350820.png';
         }
         if (level.innerHTML >= 20){
-          document.getElementById("hero").src='/img/22493175.png';
+          document.getElementById("hero").src='../user/img/level/22493175.png';
         }
       }
         //規定レベルに達したらループ終了
@@ -73,7 +73,7 @@
           // レベルが上がった場合、桜の花びらを表示
           if(previousLevel != currentLevel){
             // コンテナを指定
-            const section = document.querySelector('.cherry-blossom-container');
+            const section = document.querySelector('#modal-overlay');
             // 花びらを生成する関数
             const createPetal = () => {
               const petalEl = document.createElement('span');
