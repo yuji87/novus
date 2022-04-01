@@ -11,7 +11,7 @@ if(!$logout = filter_input(INPUT_POST, 'logout')) {
 
 //ログイン可否を判定、セッションが切れていたらログインを促すメッセージ
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     exit ('セッションが切れているので、再ログインをして下さい');
     header('Location: ../userLogin/form.php');
     return;

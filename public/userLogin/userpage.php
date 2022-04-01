@@ -8,7 +8,7 @@ require_once '../../app/Functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -20,7 +20,7 @@ $user_id = filter_input(INPUT_GET, 'user_id');
 
 // レベル表示処理
 $data = LevelLogic::displayUsers($_GET);
-if (!$data) {
+if(!$data) {
 	$err[] = '表示するレベルがありません';
 }
 
@@ -36,7 +36,7 @@ $showicon = UserLogic::showIcon($_GET);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <link rel="stylesheet" href="../../public/css/level_anime.css">
+    <link rel="stylesheet" href="../css/level_anime.css">
     <title>User Page</title>
 </head>
 
@@ -44,19 +44,19 @@ $showicon = UserLogic::showIcon($_GET);
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
     </header>
 
     <!--コンテンツ-->
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading">MY ACCOUNT</h2>
+                <h2 class="heading mt-5">MY ACCOUNT</h2>
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
-                        <?php if (isset($data['icon'])): ?> 
+                        <?php if(isset($data['icon'])): ?> 
                             <img src="../user/img/<?php echo $data['icon']; ?>">
                         <?php else: ?>
                         <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
@@ -69,15 +69,16 @@ $showicon = UserLogic::showIcon($_GET);
                     <!--ユーザーの現レベルを表示-->
                     <div class="text">
                         Lv.<?php
-                           if (isset($data['level'])) {
+                           if(isset($data['level'])) {
                                echo htmlspecialchars($data['level'], ENT_QUOTES, 'UTF-8'); 
                            } else {
                                echo '1';
                            } ?>
                     </div>
+                    <!--ユーザーのコメントを表示-->
                     <div class="text">
                         コメント：<?php
-                            if (isset($data['comment'])) {
+                            if(isset($data['comment'])) {
                                echo htmlspecialchars($data['comment'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                echo 'Let us introduce yourself!';
@@ -87,12 +88,12 @@ $showicon = UserLogic::showIcon($_GET);
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h3>novus</h3>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

@@ -6,7 +6,7 @@ require_once '../../app/UserLogic.php';
 
 //ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -14,7 +14,7 @@ if (!$result) {
 $login_user = $_SESSION['login_user'];
 
 //モーダル処理
-if (isset($_POST['mypage'])) {
+if(isset($_POST['mypage'])) {
     $user_data = UserLogic::levelModal();
     return;
 }
@@ -39,16 +39,16 @@ $showicon = UserLogic::showIcon();
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="home.php">TOPページ</a></li>
             <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../question/qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
-            <li><a href="#contact">お問い合わせ</a></li>
+            <li><a href="../question/qHistory.php">【 履歴 】質問</a></li>
+            <li><a href="../article/aHistory.php">【 履歴 】記事</a></li>
+            <li><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -58,7 +58,7 @@ $showicon = UserLogic::showIcon();
     </header>
     
     <!--前回のレベルと変化があった際にのみレベルモーダルを表示させる-->
-    <?php if ($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
+    <?php if($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
         <!--モーダル-->
         <div id="modal-content">
             <p style="text-align:center;"><?php require_once '../level/animation.php'; ?></p>
@@ -75,17 +75,17 @@ $showicon = UserLogic::showIcon();
         </script>
     <?php endif; ?>
 
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading">MY ACCOUNT</h2>
+                <h2 class="heading mt-5">MY ACCOUNT</h2>
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
-                        <?php if (isset($login_user['icon'])): ?> 
+                        <?php if($login_user['icon'] !== null && !empty($login_user['icon'])): ?> 
                             <img src="../user/img/<?php echo $login_user['icon']; ?>">
                         <?php else: ?>
-                        <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                            <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
                         <?php endif; ?>
                     </div>
                     <!--ユーザーが登録した名前を表示-->
@@ -97,7 +97,7 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p class="fw-bold">レベル</p>
                         Lv.<?php
-                           if (isset($login_user['level'])) {
+                           if(isset($login_user['level'])) {
                                echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
                            } else {
                                echo '1';
@@ -106,7 +106,7 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p class="fw-bold">コメント</p>
                         <p class="text-break small"><?php
-                            if (isset($login_user['comment'])) {
+                            if(isset($login_user['comment'])) {
                                echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                echo 'Let us introduce yourself!';
@@ -115,12 +115,12 @@ $showicon = UserLogic::showIcon();
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h3>novus</h3>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

@@ -19,9 +19,10 @@ class QuestionLogic
       $arr = [];
       $arr[] = $_SESSION['login_user']['user_id'];
 
-      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon, category_name
               FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 
+              INNER JOIN categories ON categories.cate_id = question_posts.cate_id
               WHERE users.user_id = ?
               ORDER BY question_posts.question_id DESC';
 
@@ -31,7 +32,6 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
-        // return $result;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
