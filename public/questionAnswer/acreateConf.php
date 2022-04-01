@@ -8,15 +8,19 @@ require_once '../../app/QuestionLogic.php';
 $err = [];
 
 $a_message = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
-$user_id = filter_input(INPUT_POST, 'user_id');
+$a_user_id = filter_input(INPUT_POST, 'a_user_id');
+$q_user_id = filter_input(INPUT_POST, 'q_user_id');
 $question_id = filter_input(INPUT_POST, 'question_id');
 
 //バリデーション
 if(!$a_message) {
     $err[] = '本文を入力してください';
 }
-if(!$user_id) {
+if(!$a_user_id) {
     $err[] = 'ユーザーを選択し直してください';
+}
+if(!$q_user_id) {
+    $err[] = '質問を選択し直してください';
 }
 if(!$question_id) {
     $err['question_id'] = '質問を選択し直してください';
@@ -25,12 +29,13 @@ if(!$question_id) {
 // 投稿ボタン押下時の内部処理（成功でページ移動）
 if(isset($_POST['a_comp'])) {
     $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['a_data']['user_id'] = filter_input(INPUT_POST, 'user_id');
+    $_SESSION['a_data']['a_user_id'] = filter_input(INPUT_POST, 'a_user_id');
+    $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id');
     $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
     if(empty($_SESSION['a_data']['message'])) {
         $err['q_id'] = '本文が入力されていません';
     }
-    if(empty($_SESSION['a_data']['user_id'])) {
+    if(empty($_SESSION['a_data']['a_user_id'])) {
         $err['q_id'] = 'ユーザーが選択されていません';
     }
     if(empty($_SESSION['a_data']['question_id'])) {
@@ -40,6 +45,8 @@ if(isset($_POST['a_comp'])) {
         header('Location: aCreateComp.php');
     }
 }
+
+var_dump($err);
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +93,8 @@ if(isset($_POST['a_comp'])) {
                 <div><?php echo $a_message; ?></div>
                 <form method="POST" action="">
                     <input type="hidden" name="a_message" value="<?php echo $a_message; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                    <input type="hidden" name="a_user_id" value="<?php echo $a_user_id; ?>">
+                    <input type="hidden" name="q_user_id" value="<?php echo $q_user_id; ?>">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <input type="submit" name="a_comp" value="投稿">
                 </form>

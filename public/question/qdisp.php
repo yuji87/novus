@@ -28,7 +28,7 @@ if (count($err) === 0) {
         $err['question'] = '質問の読み込みに失敗しました';
     }
   // 質問返答の取得
-    $answer = QuestionLogic::displayAnswer($_GET);
+    $answer = QuestionLogic::displayAnswer($_GET['question_id']);
         if(!$answer) {
             $err['answer'] = '返信の読み込みに失敗しました';
         }
@@ -254,7 +254,8 @@ if(isset($_POST['like_regist'])) {
                 <?php if($result): ?>
                     <?php if($question['best_select_flg'] == 0): ?>
                         <form method="POST" action="../questionAnswer/aCreateConf.php">
-                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                            <input type="hidden" name="a_user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                            <input type="hidden" name="q_user_id" value="<?php echo $question['user_id']; ?>">
                             <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
                             <textarea placeholder="ここに返信を入力してください" name="a_message" class="w-75" rows="3"></textarea>
                             <br><input type="submit" class="btn btn-warning mt-2" value="返信">
