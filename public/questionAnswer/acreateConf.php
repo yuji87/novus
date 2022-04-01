@@ -25,6 +25,13 @@ if(!$q_user_id) {
 if(!$question_id) {
     $err['question_id'] = '質問を選択し直してください';
 }
+if(!empty($a_message)) {
+    $limitMessage = 1500;
+    // 文字数チェック
+    if(mb_strlen($a_message) > $limitMessage) {
+    $err['message'] = '1500文字以内で入力してください';
+    }
+}
 
 // 投稿ボタン押下時の内部処理（成功でページ移動）
 if(isset($_POST['a_comp'])) {
@@ -33,7 +40,7 @@ if(isset($_POST['a_comp'])) {
     $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id');
     $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
     if(empty($_SESSION['a_data']['message'])) {
-        $err['q_id'] = '本文が入力されていません';
+        $err['message'] = '本文が入力されていません';
     }
     if(empty($_SESSION['a_data']['a_user_id'])) {
         $err['q_id'] = 'ユーザーが選択されていません';

@@ -139,7 +139,7 @@ if(isset($_POST['like_regist'])) {
                     <?php if (!isset($question['upd_date'])): ?>
                         投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
                     <?php else: ?>
-                        更新：<?php echo $question['upd_date']; ?>
+                        更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
                     <?php endif; ?>
                 </div>
 
@@ -165,17 +165,14 @@ if(isset($_POST['like_regist'])) {
                         <?php echo $err['answer']; ?>
                     <?php endif; ?>
                     <?php foreach($answer as $value): ?>
-                        <?php var_dump($value['user_id']) ?>
-                            <?php var_dump($question['user_id']) ?>
-                            <?php var_dump($_SESSION['login_user']['user_id']) ?>
                         <!--ユーザー名-->
                         <div>名前：<?php echo $value['name']; ?></div>
                         <!--アイコン-->
-                        <div class="level-icon">
-                            <?php if (($value['icon'])): ?> 
-                                <img src="../img/<?php echo $value['icon']; ?>">
+                        <div class="pb-1 small">
+                            <?php if(!isset($question['icon'])): ?>
+                                <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
                             <?php else: ?>
-                                <?php echo "<img src="."../../public/user/img/sample_icon.png".">"; ?>
+                                <img src="../user/img/<?php echo $question['icon']; ?>">
                             <?php endif; ?>
                         </div>
                         <!--本文-->

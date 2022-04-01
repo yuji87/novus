@@ -27,6 +27,15 @@ if(isset($_POST['a_edit_conf'])) {
     if(empty($_SESSION['a_data']['answer_id'])) {
         $err['a_id'] = '返答が選択されていません';
     }
+
+    if(!empty($_SESSION['a_data']['message'])) {
+        $limitMessage = 1500;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['a_data']['message']) > $limitMessage) {
+        $err['message'] = '1500文字以内で入力してください';
+        }
+    }
+
     if(count($err) === 0) {
         header('Location: aEditComp.php');
     }

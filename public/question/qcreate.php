@@ -27,11 +27,6 @@ if(isset($_POST['create_question'])) {
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
     
-    if(isset($_POST['question_image'])) {
-        $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
-    } else {
-        $_SESSION['q_data']['question_image'] = null;
-    }
     // 必須部分チェック
     if(!$_SESSION['q_data']['title']) {
         $err['title'] = '質問タイトルを入力してください';
@@ -42,6 +37,22 @@ if(isset($_POST['create_question'])) {
     if(!$_SESSION['q_data']['message']) {
         $err['message'] = '本文を入力してください';
     }
+
+    if(!empty($_SESSION['q_data']['title'])) {
+        $limitTitle = 150;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
+        $err['title'] = '150文字以内で入力してください';
+        }
+    }
+    if(!empty($_SESSION['q_data']['message'])) {
+        $limitMessage = 1500;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
+        $err['message'] = '1500文字以内で入力してください';
+        }
+    }
+
     if (count($err) === 0) {
         header('Location: qComp.php');
     }

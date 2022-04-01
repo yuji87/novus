@@ -42,7 +42,7 @@ if(count($err) === 0 && (isset($_POST['check']))) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
