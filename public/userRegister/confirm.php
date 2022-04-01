@@ -1,7 +1,6 @@
 <?php 
 session_start();
     
-
 //ファイルの読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';
@@ -30,25 +29,33 @@ if(!empty($_POST['formcheck'])) {
     $password_conf = filter_input(INPUT_POST, 'password_conf');
     
     //バリデーション
-    $limit = 15;
+    $limitName = 15; // 名前の文字制限
+    $limitTel = 12; // 電話番号の文字制限
+    $limitEmail = 35; // メールアドレスの文字制限
+    // 名前チェック
     if(!$_SESSION['signUp']['0']){
         $err['name'] = '名前を入力してください';
     }
-    // 文字数チェック
-    if(mb_strlen($name) > $limit) {
-        $err['name'] = '15文字で入力してください';
+    if(mb_strlen($name) > $limitName) {
+        $err['name'] = '15文字以内で入力してください';
     }
+    // 電話チェック
     if(!$_SESSION['signUp']['1']) {
         $err['tel'] = '電話番号を入力してください';
     }
-    // 文字数チェック
-    if(strlen($tel) > $limit) {
-        $err['tel'] = '15文字で入力してください';
+    if(strlen($tel) > $limitTel) {
+        $err['tel'] = '12文字以内で入力してください';
     }
-    //電話で重複チェック
+    // 重複チェック
     $checkDuplicate = UserLogic::checkDuplicateByTel($_SESSION['signUp']['1']);
     if($checkDuplicate['cnt'] > 0) {
         $err['tel'] = 'この電話番号は既に登録されています';
+    }
+    // メールアドレスチェック
+    if(isset($_SESSION['signUp']['2'])) {
+        if(strlen($email) > $limitEmail) {
+            $err['email'] = '35文字以内で入力してください';
+        }
     }
     //パスワード正規表現
     if(!$_SESSION['signUp']['3']) {
@@ -91,9 +98,9 @@ if(count($err) === 0 && (isset($_POST['check']))) {
         <h1 class="my-3 h1" style="text-align:center;">入力情報の確認</h1>
         <p class="my-2" style="text-align:center;">ご入力内容に変更が必要な場合は、下記の<br>ボタンを押して、変更を行ってください。</p>
         <p class="my-1" style="text-align:center;">登録情報は後から変更することもできます。</p>
-        <?php if (!empty($err) && $err === "err"): ?>
+        <?php if(!empty($err) && $err === "err"): ?>
             <p class="err">＊会員登録に失敗しました。</p>
-        <?php endif ?>
+        <?php endif; ?>
         <hr>
     
         <div class="align-items-center">
@@ -101,8 +108,8 @@ if(count($err) === 0 && (isset($_POST['check']))) {
             <div class="control">
                 <p style="font-weight:bold;">[Name]</p>
                 <p><span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['0'], ENT_QUOTES); ?></span></p>
-                <!--未記入時のエラーメッセージ表示-->
-                <?php if (isset($err['name'])): ?>
+                <!--エラーメッセージ表示-->
+                <?php if(isset($err['name'])): ?>
                     <p class="text-danger"><?php echo $err['name']; ?></p>
                 <?php endif; ?>
             </div>
@@ -110,8 +117,8 @@ if(count($err) === 0 && (isset($_POST['check']))) {
             <div class="control">
                 <p style="font-weight:bold;">[Phone]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="tel" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['1'], ENT_QUOTES); ?></span></p>
-                <!--未記入時のエラーメッセージ表示-->
-                <?php if (isset($err['tel'])): ?>
+                <!--エラーメッセージ表示-->
+                <?php if(isset($err['tel'])): ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
                 <?php endif; ?>
             </div>
@@ -119,20 +126,24 @@ if(count($err) === 0 && (isset($_POST['check']))) {
             <div class="control">
                 <p style="font-weight:bold;">[Email]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['2'], ENT_QUOTES); ?></span></p>
+                <!--エラーメッセージ表示-->
+                <?php if(isset($err['email'])): ?>
+                    <p class="text-danger"><?php echo $err['email']; ?></p>
+                <?php endif; ?>
             </div>
             <!--パスワードの確認表示-->
             <div class="control">
                 <p style="font-weight:bold;">[Password]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['3'], ENT_QUOTES); ?></span></p>
                 <!--エラーメッセージ表示-->
-                <?php if (isset($err['password'])): ?>
+                <?php if(isset($err['password'])): ?>
                     <p class="text-danger"><?php echo $err['password']; ?></p>
                 <?php endif; ?>
             </div>
             <br>
 
             <!--エラーが発生した場合、メッセージと戻る画面を作成-->
-            <?php if (count($err) > 0) :?>
+            <?php if(count($err) > 0) :?>
             <div class="text-center mb-5">
                 <a href="form.php" class="btn btn-secondary" role="button">再入力する</a>
             </div>
