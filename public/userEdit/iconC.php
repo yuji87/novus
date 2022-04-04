@@ -16,7 +16,7 @@ if(!$result) {
     return;
 }
 $login_user = $_SESSION['login_user'];
-
+   
 if(isset($_POST['formcheck'])) {
     $_SESSION['iconEdit'] = $_FILES['icon'];
     $icon = filter_input(INPUT_POST, 'icon');
