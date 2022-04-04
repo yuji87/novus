@@ -151,3 +151,25 @@ input:-webkit-autofill, textarea:-webkit-autofill {
   }
 }
 
+/* =============================================== */
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #ff9100;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-link {
+    transition: none;
+  }
+}
+.nav-link:hover, .nav-link:focus {
+  color: #fd7f09;
+}
+.nav-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: default;
+}
