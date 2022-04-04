@@ -332,7 +332,7 @@ class UserLogic
     $arr = [];
     $arr[] = $_SESSION['commentEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
-
+    
     try{
         $stmt = connect()->prepare($sql);
         // SQL実行
