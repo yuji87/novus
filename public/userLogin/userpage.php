@@ -8,11 +8,11 @@ require_once '../../app/Functions.php';
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
-    $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userLogin/form.php');
-    return;
-}
+// if(!$result) {
+//     $_SESSION['login_err'] = '再度ログインして下さい';
+//     header('Location: ../userLogin/form.php');
+//     return;
+// }
 $login_user = $_SESSION['login_user'];
 
 $data = $_GET;

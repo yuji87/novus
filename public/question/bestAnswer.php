@@ -67,8 +67,8 @@ if(isset($_POST['a_best_comp'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>ベストアンサー選択</title>
 </head>
 
@@ -122,7 +122,7 @@ if(isset($_POST['a_best_comp'])) {
                 <?php elseif(isset($_POST['a_best_comp']) && count($err) === 0): ?>
                     <div>ベストアンサー登録が完了しました</div>
                     <button type="button" onclick="location.href='../../userLogin/home.php'">TOP</button>
-                    <button type="button" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ戻る</button>
+                    <button type="button" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ</button>
                 <?php endif; ?>
             </div>
         </div>

@@ -19,9 +19,8 @@ $question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_NUMBER_INT
 if(!$question_id) {
     $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
 }
-$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_NUMBER_INT);
-if(!$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
-    $err[] = '質問を選択し直してください';
+if(!$question_id) {
+    $err['q_id'] = '質問を選択し直してください';
 }
 
 // 質問表示処理
@@ -111,167 +110,170 @@ if(isset($_POST['like_regist'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <!--質問の詳細表示-->
-                <?php if(isset($err['question'])):  ?>
-                    <?php echo $err['question']; ?>
-                <?php endif; ?>
-                <p class="h4 pb-3 pt-4">詳細表示</p>
-                <?php if($question['best_select_flg'] == 1): ?>
-                    <div class="text-danger">解決済み</div>
-                <?php endif; ?>
-                <!--アイコン-->
-                <div class="pb-1 small">
-                    <?php if(!isset($question['icon'])): ?>
-                        <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                    <?php if(!$question_id): ?>
+                        <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
                     <?php else: ?>
-                        <img src="../user/img/<?php echo $question['icon']; ?>">
+                    <!--質問の詳細表示-->
+                    <?php if(isset($err['question'])):  ?>
+                        <?php echo $err['question']; ?>
                     <?php endif; ?>
-                </div>
-                <!--投稿者-->
-                <div class="pb-4 small">投稿者：
-                    <?php echo $question['name']; ?>
-                </div>
-                <!--題名-->
-                <div class="fw-bold pb-1">題名</div>
-                    <div><?php echo $question['title']; ?></div>
-                <!--カテゴリー-->
-                <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                    <div><?php echo $question['category_name']; ?></div>
-                <!--本文-->
-                <div class="fw-bold pt-3 pb-1">本文</div>
-                    <div><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
-                <!--日付-->
-                <div class="pt-4 pb-1 small">
-                    <?php if (!isset($question['upd_date'])): ?>
-                        投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
-                    <?php else: ?>
-                        更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
+                    <p class="h4 pb-3 pt-4">詳細表示</p>
+                    <?php if($question['best_select_flg'] == 1): ?>
+                        <div class="text-danger">解決済み</div>
                     <?php endif; ?>
-                </div>
-
-                <!-- 質問者本人の時、編集・削除ボタン表示 -->
-                <?php if($result): ?>
-                    <?php if($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
-                        <form method="POST" name="question" action="qEdit.php" id="qedit">
-                            <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
-                            <i class="fa-solid fa-pen"><input type="submit" id="edit" value="編集"></i>
-                        </form>
-                        <form method="POST" name="question" action="qDelete.php" id="qDelete">
-                            <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
-                            <i class="fa-solid fa-trash-can"><input type="submit" id="delete" value="削除"></i>
-                        </form>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <br>
-                
-                <!-- 返答表示部分 -->
-                <?php if(!empty($answer)): ?>
-                    <h4>返信一覧</h4>
-                    <?php if(isset($err['answer'])):  ?>
-                        <?php echo $err['answer']; ?>
-                    <?php endif; ?>
-                    <?php foreach($answer as $value): ?>
-                        <!--ユーザー名-->
-                        <div>名前：<?php echo $value['name']; ?></div>
-                        <!--アイコン-->
-                        <div class="pb-1 small">
-                            <?php if(!isset($question['icon'])): ?>
-                                <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
-                            <?php else: ?>
-                                <img src="../user/img/<?php echo $question['icon']; ?>">
-                            <?php endif; ?>
-                        </div>
-                        <!--本文-->
-                        <div>本文：<?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
-                        <!--投稿日時-->
-                        <div>
-                            <!-- 更新されていた場合、その日付を優先表示 -->
-                            <?php if (!isset($value['upd_date'])): ?>
-                                投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
-                            <?php else: ?>
-                                更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-                            <?php endif; ?>
-                        </div>
-                        <!-- フラグがONになっているいいねの数を表示 -->
-                        <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                        <div>いいね数：<?php echo count($likes); ?></div>
-                        <!-- ベストアンサー選択された返答の目印 -->
-                        <?php if($value['best_flg']): ?>
-                            <div class="text-danger">ベストアンサー</div>
+                    <!--アイコン-->
+                    <div class="pb-1 small">
+                        <?php if(!isset($question['icon'])): ?>
+                            <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                        <?php else: ?>
+                            <img src="../user/img/<?php echo $question['icon']; ?>">
                         <?php endif; ?>
+                    </div>
+                    <!--投稿者-->
+                    <div class="pb-4 small">投稿者：
+                        <?php echo $question['name']; ?>
+                    </div>
+                    <!--題名-->
+                    <div class="fw-bold pb-1">題名</div>
+                        <div><?php echo $question['title']; ?></div>
+                    <!--カテゴリー-->
+                    <div class="fw-bold pt-3 pb-1">カテゴリ</div>
+                        <div><?php echo $question['category_name']; ?></div>
+                    <!--本文-->
+                    <div class="fw-bold pt-3 pb-1">本文</div>
+                        <div><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                    <!--日付-->
+                    <div class="pt-4 pb-1 small">
+                        <?php if (!isset($question['upd_date'])): ?>
+                            投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
+                        <?php else: ?>
+                            更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
+                        <?php endif; ?>
+                    </div>
 
-                        <!-- いいねボタンの表示部分 -->
-                        <?php if($result): ?>
-                            <!-- 返信投稿ユーザーと違うユーザーなら、いいねボタン表示 -->
-                            <?php if($value['user_id'] != $_SESSION['login_user']['user_id']): ?>
-                                <form class="favorite_count" action="#" method="post">
-                                    <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
-                                    <input type="hidden" id="answer_id" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                    <!-- いいねの有無チェック -->
-                                    <?php $checkLike = QuestionLogic::checkLike($_SESSION['login_user']['user_id'], $value['answer_id']); ?>
-                                    <!-- いいねがある場合 -->
-                                    <?php if(!empty($checkLike)): ?>
-                                        <input type="hidden" name="like_id" value="<?php echo $checkLike['q_like_id']; ?>">
-                                        <!-- いいねフラグが1の場合、いいね解除のボタンに -->
-                                        <?php if($checkLike['like_flg'] == 1): ?>
-                                            <input type="submit" name="like_delete" value="いいね解除">
-                                        <!-- いいねフラグが0の場合、いいね再登録のボタンに -->
+                    <!-- 質問者本人の時、編集・削除ボタン表示 -->
+                    <?php if($result): ?>
+                        <?php if($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
+                            <form method="POST" name="question" action="qEdit.php" id="qedit">
+                                <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+                                <i class="fa-solid fa-pen"><input type="submit" id="edit" value="編集"></i>
+                            </form>
+                            <form method="POST" name="question" action="qDelete.php" id="qDelete">
+                                <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+                                <i class="fa-solid fa-trash-can"><input type="submit" id="delete" value="削除"></i>
+                            </form>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <br>
+                    
+                    <!-- 返答表示部分 -->
+                    <?php if(!empty($answer)): ?>
+                        <h4>返信一覧</h4>
+                        <?php if(isset($err['answer'])):  ?>
+                            <?php echo $err['answer']; ?>
+                        <?php endif; ?>
+                        <?php foreach($answer as $value): ?>
+                            <!--ユーザー名-->
+                            <div>名前：<?php echo $value['name']; ?></div>
+                            <!--アイコン-->
+                            <div class="pb-1 small">
+                                <?php if(!isset($question['icon'])): ?>
+                                    <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                                <?php else: ?>
+                                    <img src="../user/img/<?php echo $question['icon']; ?>">
+                                <?php endif; ?>
+                            </div>
+                            <!--本文-->
+                            <div>本文：<?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
+                            <!--投稿日時-->
+                            <div>
+                                <!-- 更新されていた場合、その日付を優先表示 -->
+                                <?php if (!isset($value['upd_date'])): ?>
+                                    投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
+                                <?php else: ?>
+                                    更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+                                <?php endif; ?>
+                            </div>
+                            <!-- フラグがONになっているいいねの数を表示 -->
+                            <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
+                            <div>いいね数：<?php echo count($likes); ?></div>
+                            <!-- ベストアンサー選択された返答の目印 -->
+                            <?php if($value['best_flg']): ?>
+                                <div class="text-danger">ベストアンサー</div>
+                            <?php endif; ?>
+
+                            <!-- いいねボタンの表示部分 -->
+                            <?php if($result): ?>
+                                <!-- 返信投稿ユーザーと違うユーザーなら、いいねボタン表示 -->
+                                <?php if($value['user_id'] != $_SESSION['login_user']['user_id']): ?>
+                                    <form class="favorite_count" action="#" method="post">
+                                        <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                                        <input type="hidden" id="answer_id" name="answer_id" value="<?php echo $value['answer_id']; ?>">
+                                        <!-- いいねの有無チェック -->
+                                        <?php $checkLike = QuestionLogic::checkLike($_SESSION['login_user']['user_id'], $value['answer_id']); ?>
+                                        <!-- いいねがある場合 -->
+                                        <?php if(!empty($checkLike)): ?>
+                                            <input type="hidden" name="like_id" value="<?php echo $checkLike['q_like_id']; ?>">
+                                            <!-- いいねフラグが1の場合、いいね解除のボタンに -->
+                                            <?php if($checkLike['like_flg'] == 1): ?>
+                                                <input type="submit" name="like_delete" value="いいね解除">
+                                            <!-- いいねフラグが0の場合、いいね再登録のボタンに -->
+                                            <?php else: ?>
+                                                <input type="submit" name="like_reregist" value="いいね">
+                                            <?php endif; ?>
                                         <?php else: ?>
-                                            <input type="submit" name="like_reregist" value="いいね">
+                                            <!-- いいねがない場合、いいね登録のボタンに -->
+                                            <input type="hidden" name="a_user_id" value="<?php echo $value['user_id']; ?>">
+                                            <input type="hidden" name="q_id" value="<?php echo $question_id; ?>">
+                                            <input type="submit" name="like_regist" value="いいね">
                                         <?php endif; ?>
-                                    <?php else: ?>
-                                        <!-- いいねがない場合、いいね登録のボタンに -->
-                                        <input type="hidden" name="a_user_id" value="<?php echo $value['user_id']; ?>">
-                                        <input type="hidden" name="q_id" value="<?php echo $question_id; ?>">
-                                        <input type="submit" name="like_regist" value="いいね">
-                                    <?php endif; ?>
-                                </form>
-                            <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
-                            <?php else: ?>
-                                <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
-                                    <form method="POST" action="../questionAnswer/aEdit.php">
+                                    </form>
+                                <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
+                                <?php else: ?>
+                                    <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
+                                        <form method="POST" action="../questionAnswer/aEdit.php">
+                                            <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+                                            <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
+                                            <i class="fa-solid fa-pen"><input type="submit" name="a_edit" value="編集"></i>
+                                        </form>
+                                        <form method="POST" action="../questionAnswer/aDelete.php">
+                                            <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+                                            <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
+                                            <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除"></i>
+                                        </form>
+                                        <?php endif; ?>
+                                <?php endif; ?>
+                                
+                                <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
+                                    <!-- 質問者本人 ＆ 返答が質問者以外の場合、ベストアンサーボタンの表示 -->
+                                    <form method="POST" action="bestAnswer.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                         <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                        <i class="fa-solid fa-pen"><input type="submit" name="a_edit" value="編集"></i>
+                                        <input type="submit" value="ベストアンサー">
                                     </form>
-                                    <form method="POST" action="../questionAnswer/aDelete.php">
-                                        <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
-                                        <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                        <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除"></i>
-                                    </form>
-                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <hr>
                             <?php endif; ?>
-                            
-                            <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
-                                <!-- 質問者本人 ＆ 返答が質問者以外の場合、ベストアンサーボタンの表示 -->
-                                <form method="POST" action="bestAnswer.php">
-                                    <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
-                                    <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                    <input type="submit" value="ベストアンサー">
-                                </form>
-                            <?php endif; ?>
-                        <hr>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <!-- ベストアンサーが選択されていると新規投稿できなくなる処理 -->
-                <?php if($result): ?>
-                    <?php if($question['best_select_flg'] == 0): ?>
-                        <form method="POST" action="../questionAnswer/aCreateConf.php">
-                            <input type="hidden" name="a_user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
-                            <input type="hidden" name="q_user_id" value="<?php echo $question['user_id']; ?>">
-                            <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
-                            <textarea placeholder="ここに返信を入力してください" name="a_message" class="w-75" rows="3"></textarea>
-                            <br><input type="submit" class="btn btn-warning mt-2" value="返信">
-                        </form>
+                        <?php endforeach; ?>
                     <?php endif; ?>
-                <?php endif; ?>
-                <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index.php'">戻る</button>
+
+                    <!-- ベストアンサーが選択されていると新規投稿できなくなる処理 -->
+                    <?php if($result): ?>
+                        <?php if($question['best_select_flg'] == 0): ?>
+                            <form method="POST" action="../questionAnswer/aCreateConf.php">
+                                <input type="hidden" name="a_user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
+                                <input type="hidden" name="q_user_id" value="<?php echo $question['user_id']; ?>">
+                                <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
+                                <textarea placeholder="ここに返信を入力してください" name="a_message" class="w-75" rows="3"></textarea>
+                                <br><input type="submit" class="btn btn-warning mt-2" value="返信">
+                            </form>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <button type="button" class="mb-4 mt-3 btn btn-outline-dark" onclick="location.href='index.php'">戻る</button>
+                </div>
             </div>
         </div>
-    </div>
-
+    <?php endif; ?>
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">
