@@ -38,36 +38,37 @@ if(isset($_GET['search'])) {
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
 </head>
-
 <body>
 	<!--メニュー-->
-	<header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
-		<?php if($result): // ログインしていれば下記の表示 ?>
-            <input type="checkbox" class="menu-btn" id="menu-btn" id ="modal-content">
-            <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-            <ul class="menu">
-                <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-                <li><a href="../userLogin/mypage.php">マイページ</a></li>
-                <li><a href="../todo/index.php">TO DO LIST</a></li>
-                <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
-                <li><a href="../../">記事 履歴</a></li>
-                <li>
-                    <form type="hidden" action="../userLogin/logout.php" method="POST">
-			    	    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+    <header>
+	    <?php if($result): // ログインしていれば下記の表示 ?>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="title">novus</div>
+			<ul class="nav justify-content-center">
+                <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
+			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
+			    	    <input type="hidden">
+
                     </form>
                 </li>
+			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../../public/myPage/qHistory.php">【履歴】質問</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../../public/myPage/aHistory.php">【履歴】記事</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
             </ul>
-        </script>
+		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="title">novus</div>
 			<input type="checkbox" class="menu-btn" id="menu-btn">
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-            <ul class="menu">
-                <li class="top"><a href="../user/top.php">TOPページ</a></li>
-                <li><a href="../../public/question/qHistory.php">記事ページ</a></li>
+            <ul class="nav justify-content-center">
+			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../article/index.php">記事ページ</a></li>      
             </ul>
+		</div>
 		<?php endif; ?>
     </header>
 
@@ -108,17 +109,17 @@ if(isset($_GET['search'])) {
         			    <div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					    <?php foreach($searchQuestion as $value): ?>
         			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-					        <?php if(isset($value['icon'])): ?>
+					        <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
 								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../userLogin/mypage.php'; } else {
-                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../user/img/<?php echo $value['icon']; ?>">
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../top/img/<?php echo $value['icon']; ?>">
 								</a>
 							<?php else: ?>
 								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../userLogin/mypage.php'; } else {
-                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-									<div><img src="../user/img/sample_icon.png"></div>
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									<div><img src="../top/img/sample_icon.png"></div>
 								</a>
 							<?php endif; ?>
 					        <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
@@ -150,17 +151,17 @@ if(isset($_GET['search'])) {
 		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		                	<?php foreach($newQuestion as $value): ?>
 		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-								<?php if(isset($value['icon'])): ?>
+								<?php if($value['icon'] !== null && !empty($value['icon'])): ?>
 									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../userLogin/mypage.php'; } else {
-                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../user/img/<?php echo $value['icon']; ?>">
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../top/img/<?php echo $value['icon']; ?>">
 									</a>
 								<?php else: ?>
 									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-									echo '../userLogin/mypage.php'; } else {
-									echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../user/img/sample_icon.png">
+									echo '../myPage/index.php'; } else {
+									echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../top/img/sample_icon.png">
 									</a>
 								<?php endif; ?>
 					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
@@ -188,7 +189,7 @@ if(isset($_GET['search'])) {
 				<?php if($result): // ログインの有無でリンクの変化 ?>
 	            	<button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../userLogin/home.php'">TOP</button>
 				<?php else: ?>
-					<button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../user/top.php'">TOP</button>
+					<button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../top/index.php'">TOP</button>
 				<?php endif; ?>
 			</div>
 		</div>

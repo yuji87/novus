@@ -383,6 +383,7 @@ class UserLogic
 
     /**
      * ユーザー情報の削除
+     * UPDATEで「退会済みユーザー」という表示にして投稿・質問は残す
      * @param string $user_id
      * @return bool $result
      */
@@ -392,7 +393,8 @@ class UserLogic
     // SQLの準備
     // SQLの実行
     // SQLの結果を返す
-    $sql = 'DELETE FROM users WHERE user_id= ?';
+    $sql = 'UPDATE users SET name="退会済みユーザー", tel="", email="", icon="", password="", comment="", level="0", 
+            exp="0", pre_level="0", pre_exp="0" WHERE user_id=?';
     // 配列に入れる
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 

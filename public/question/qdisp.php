@@ -97,7 +97,7 @@ if(isset($_POST['like_regist'])) {
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userLogin/mypage.php">マイページ</a></li>
+            <li><a href="../myPage/index.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="../userLogin/logout.php" method="POST">
@@ -122,9 +122,9 @@ if(isset($_POST['like_regist'])) {
                 <!--アイコン-->
                 <div class="pb-1 small">
                     <?php if(!isset($question['icon'])): ?>
-                        <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                     <?php else: ?>
-                        <img src="../user/img/<?php echo $question['icon']; ?>">
+                        <img src="../top/img/<?php echo $question['icon']; ?>">
                     <?php endif; ?>
                 </div>
                 <!--投稿者-->
@@ -176,9 +176,9 @@ if(isset($_POST['like_regist'])) {
                         <!--アイコン-->
                         <div class="pb-1 small">
                             <?php if(!isset($question['icon'])): ?>
-                                <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                                <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                             <?php else: ?>
-                                <img src="../user/img/<?php echo $question['icon']; ?>">
+                                <img src="../top/img/<?php echo $question['icon']; ?>">
                             <?php endif; ?>
                         </div>
                         <!--本文-->

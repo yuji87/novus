@@ -33,7 +33,6 @@ if(!$newQuestion) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -41,7 +40,7 @@ if(!$newQuestion) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/a.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
 </head>
@@ -79,16 +78,16 @@ if(!$newQuestion) {
                             <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
 		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo 'mypage.php'; } else {
+                                    echo "userPage.php?user_id=".$value['user_id'] ;} ?>">
                                 <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                             <?php else: ?>
 		    					<!--上記と同じ処理-->
 		    					<!-- <form type="hidden" name="userpage" action="-->
 		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
-		    						echo '../myPage/index.php'; } else {
+		    						echo 'mypage.php'; } else {
 									//user_idをユーザーページに引き継ぐ
-		    						echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo "userPage.php?user_id=".$value['user_id'] ;} ?>">
 		    						<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
 		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
                             <?php endif; ?>
@@ -108,22 +107,22 @@ if(!$newQuestion) {
 		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
 						<!--題名-->
-						<div><a href="../question/qdisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 					    <!--アイコン-->
 					    <div class="level-icon">
                             <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
 		    					<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo 'mypage.php'; } else {
+                                    echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
                                 <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                             <?php else: ?>
 		    					<!--上記と同じ処理-->
 		    					<!-- <form type="hidden" name="userpage" action="-->
 		    					<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
-		    						echo '../myPage/index.php'; } else {
+		    						echo 'mypage.php'; } else {
 									//user_idをユーザーページに引き継ぐ
-		    						echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+		    						echo "userpage.php?user_id=".$value['user_id'] ;} ?>">
 		    						<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
 		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
                             <?php endif; ?>

@@ -28,7 +28,7 @@ $err = [];
             <h1 class="my-3 h1">今までのご利用<br>誠にありがとうございました</h1>
             <!--TOPページへ-->
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../../top.php" role="button">TOPに戻る</a>
+                <br><br><a class="btn btn-secondary" href="../top/index.php" role="button">TOPに戻る</a>
             </div>
         <?php endif ?>
         </div>

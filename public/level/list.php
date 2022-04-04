@@ -46,9 +46,9 @@ if(!$data || !$paging) {
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
+            <li><a href="../userEdit/index.php">会員情報 編集</a></li>
+            <li><a href="../../myPage/qHistory.php">【履歴】質問</a></li>
+            <li><a href="../myPage/aHistory.php">【履歴】記事</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -69,15 +69,15 @@ if(!$data || !$paging) {
                         <!--画像をクリック、自分ならmypageに遷移-->
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
-								echo '../userLogin/mypage.php'; } else {
-                                echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-                            <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+								echo '../myPage/index.php'; } else {
+                                echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                         <!--画像をクリック、他人ならuserpageに遷移-->
                         <?php else: ?>
 							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
-								echo '../userLogin/mypage.php'; } else {
-								echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
-								<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+								echo '../myPage/index.php'; } else {
+								echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
                     <div class="text">

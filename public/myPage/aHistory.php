@@ -48,9 +48,9 @@ if(!$article) {
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../question/qHistory.php">【 履歴 】質問</a></li>
-            <li><a href="../article/aHistory.php">【 履歴 】記事</a></li>
+            <li><a href="../userEdit/index.php">会員情報 編集</a></li>
+            <li><a href="../myPage/qHistory.php">【 履歴 】質問</a></li>
+            <li><a href="../myPage/aHistory.php">【 履歴 】記事</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 	  		        <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">

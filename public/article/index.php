@@ -40,8 +40,8 @@ Token::create();
 ?>
 <div class="row m-2 pt-4 pb-2">
   <?php if (isset($_SESSION['login_user'])) : ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
-      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+    <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/top/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php endif; ?>
@@ -82,7 +82,7 @@ foreach ($retinfo['articlelist'] as $art) {
 
   echo '<div class="artfrm" articleid="' . $art['ARTICLE_ID'] . '">';
   echo '<a href="#" class="d-flex align-items-end">';
-  echo (isset($postIcon) ? '<img src="'. DOMAIN .'/public/user/img/'. $postIcon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">');
+  echo (isset($postIcon) ? '<img src="'. DOMAIN .'/public/top/img/'. $postIcon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/top/img/sample_icon.png" class="mr-1">');
   echo '<span class="arthead ml-1">' . $username . 'さんの投稿</span>';
   echo '</a>';
   echo '<div class="arttitle">' . Utils::h($title) . '</div>';

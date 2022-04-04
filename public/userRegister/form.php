@@ -103,7 +103,7 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
     <!--ログイン画面へ遷移-->
     <div class="text-center">
         <a href = "../userLogin/form.php">ログインはこちら</a>
-        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
+        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../top/index.php" role="button">TOPに戻る</a></p>
     </div>
     </div>
 </body>

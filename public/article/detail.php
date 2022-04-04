@@ -44,8 +44,8 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <div class="row m-2">
   <div class="col-sm-8"></div>
   <?php if (isset($_SESSION['login_user'])) : ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
-      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+    <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/top/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php endif; ?>
@@ -56,13 +56,13 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <!-- 投稿者名といいね数 -->
 <div class="row m-2">
   <?php if($_SESSION['login_user']['user_id'] === $retinfo["article"]["USER_ID"]): ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-9 text-dark">
-      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+    <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-9 text-dark">
+      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/top/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php else: ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/userpage.php?user_id=<?php echo $retinfo["article"]["USER_ID"] ?>" class="d-flex align-items-center col-sm-9">
-      <?php echo (isset($retinfo["user"]["ICON"]) ? '<img src="'. DOMAIN .'/public/user/img/'. $retinfo["user"]["ICON"] .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">'); ?>
+    <a href="<?php echo DOMAIN ?>/public/myPage/userPage.php?user_id=<?php echo $retinfo["article"]["USER_ID"] ?>" class="d-flex align-items-center col-sm-9">
+      <?php echo (isset($retinfo["user"]["ICON"]) ? '<img src="'. DOMAIN .'/public/top/img/'. $retinfo["user"]["ICON"] .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/top/img/sample_icon.png" class="mr-1">'); ?>
       <?php echo $retinfo["user"]["NAME"]; ?>さんの投稿
     </a>
   <?php endif ?> 
@@ -113,7 +113,7 @@ $message = Utils::compatiStr($message); // 改行を <br/>
     <?php if (isset($_SESSION['login_user'])) : ?>
       <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/userLogin/home.php">ホーム画面へ</a>
     <?php else : ?>
-      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/user/top.php">ホーム画面へ</a>
+      <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/top/index.php">ホーム画面へ</a>
     <?php endif ?>
   </div>
   <div class="col-sm-6">

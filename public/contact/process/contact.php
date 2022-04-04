@@ -33,6 +33,6 @@ $ticket = $_SESSION['ticket'];
 
 $result = Utils::checkLogin();
 if (!$result) {
-    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
+    header("Location:" .DOMAIN."/top/userLogin/form.php");
     return;
 }
