@@ -45,7 +45,7 @@ if(!$newQuestion) {
 	<header>
 	  <nav class="navbar navbar-expand-lg" style="background-color:rgba(55, 55, 55, 0.98);">
 		<div class="container-fluid">
-			<a class="avbar-brand font-weight-bold h3 text-white" href="top.php">novus</a>
+			<a class="avbar-brand font-weight-bold h3 text-white" href="../top/index.php">novus</a>
 			<span class="navbar-text">
 			    <a href="../userLogin/form.php"><i class="fa-solid fa-arrow-right-to-bracket text-white" style="padding-right:10px;"></i></a>
 			    <a href="../userRegister/form.php"><i class="fa-solid fa-user-plus text-white"></i></a>
@@ -105,14 +105,14 @@ if(!$newQuestion) {
 			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
-                        <?php if (isset($value['icon'])): ?> 
-                            <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+                        <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
 					    	<!--アイコンをクリックするとユーザーページへ-->
 					    	<a name="icon" href="<?php 
 					    	//user_idをユーザーページに引き継ぐ
-					    	echo "userpage.php?user_id=".$value['user_id']; ?>">
-					    	<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
+					    	<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
 				    <!--ユーザー名-->
@@ -136,14 +136,14 @@ if(!$newQuestion) {
 				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
-                        <?php if (isset($value['icon'])): ?> 
-                            <img src="../user/img/<?php echo $value['icon']; ?>"></a>
+                        <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
 				    		<!--アイコンをクリックするとユーザーページへ-->
 				    		<a name="icon" href="<?php 
 				    			//user_idをユーザーページに引き継ぐ
-				    			echo "userpage.php?user_id=".$value['user_id']; ?>">
-				    			<?php echo "<img src="."../user/img/sample_icon.png".">"; ?></a>
+				    			echo "userPage.php?user_id=".$value['user_id']; ?>">
+				    			<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
 				    <!--ユーザー名-->

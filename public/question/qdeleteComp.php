@@ -46,7 +46,7 @@ if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPEC
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userLogin/mypage.php">マイページ</a></li>
+            <li><a href="../myPage/index.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="../userLogin/logout.php" method="POST">

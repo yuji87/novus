@@ -46,10 +46,10 @@ if(isset($_GET['search'])){
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
-            <li><a href="../userEdit/list.php">My Page</a></li>
-            <li><a href="#">TO DO LIST</a></li>
-            <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
-            <li><a href="../../">記事 履歴</a></li>
+            <li><a href="../userEdit/index.php">My Page</a></li>
+            <li><a href="../todo/index.php">TO DO LIST</a></li>
+            <li><a href="../../public/myPage/qHistory.php">質問 履歴</a></li>
+            <li><a href="../../public/myPage/aHistory.php">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -59,7 +59,7 @@ if(isset($_GET['search'])){
     </header>
 
 	<!--コンテンツ-->
-	<section class="wrapper">
+	<div class="wrapper">
         <div class="container">
             <div class="content">
                 <h2 class="col-xs-6 col-xs-offset-3 pb-3 mt-4">質問サイトへようこそ</h2>
@@ -95,7 +95,7 @@ if(isset($_GET['search'])){
         			<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					<?php foreach($searchQuestion as $value): ?>
         			<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名：<?php echo htmlspecialchars($value['title']) ?></a></div>
-					<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
+					<div><img src="../../top/img/<?php echo $value['icon']; ?>"></div>
 					<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 					<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
         			<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
@@ -117,7 +117,7 @@ if(isset($_GET['search'])){
 		            	<div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		            	<?php foreach($newQuestion as $value): ?>
 		            		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
-		            		<div><img src="../../user/img/<?php echo $value['icon']; ?>"></div>
+		            		<div><img src="../../top/img/<?php echo $value['icon']; ?>"></div>
 							<div><?php echo htmlspecialchars($value['name']) ?>さん</div>
 							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		            		<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
@@ -128,7 +128,7 @@ if(isset($_GET['search'])){
 	            <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../../userLogin/home.php'">TOP</button>
 			</div>
 		</div>
-	</section>
+	</div>
 
 	<!-- フッタ -->
 	<footer class="h-10"><hr>

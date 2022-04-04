@@ -6,15 +6,6 @@ require_once '../../app/UserLogic.php';
 require_once '../../app/LevelLogic.php';
 require_once '../../app/Functions.php';
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
-$result = UserLogic::checkLogin();
-if(!$result) {
-    $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userLogin/form.php');
-    return;
-}
-$login_user = $_SESSION['login_user'];
-
 $data = $_GET;
 $user_id = filter_input(INPUT_GET, 'user_id');
 
@@ -23,9 +14,6 @@ $data = LevelLogic::displayUsers($_GET);
 if(!$data) {
 	$err[] = '表示するレベルがありません';
 }
-
-//画像が入っていたら表示
-$showicon = UserLogic::showIcon($_GET);
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +44,10 @@ $showicon = UserLogic::showIcon($_GET);
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
-                        <?php if(isset($data['icon'])): ?> 
-                            <img src="../user/img/<?php echo $data['icon']; ?>">
+                        <?php if($data['icon'] !== null && !empty($data['icon'])): ?> 
+                            <img src="../top/img/<?php echo $data['icon']; ?>">
                         <?php else: ?>
-                        <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                         <?php endif; ?>
                     </div>
                     <!--ユーザーが登録した名前を表示-->
@@ -84,7 +72,7 @@ $showicon = UserLogic::showIcon($_GET);
                                echo 'Let us introduce yourself!';
                             } ?>
                     </div>
-                    <a href="home.php" id="back">戻る</a>
+                    <a href="index.php" id="back">戻る</a>
                 </div>
             </div>
         </div>

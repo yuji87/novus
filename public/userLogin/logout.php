@@ -4,21 +4,19 @@ session_start();
 // ファイルの読み込み
 require_once '../../app/UserLogic.php';
 
-// ログアウトチェック
-if(!$logout = filter_input(INPUT_POST, 'logout')) {
-    exit ('不正なリクエストです');
-}
+$data = $_GET;
+$logout = filter_input(INPUT_GET, 'user_id');
 
 //ログイン可否を判定、セッションが切れていたらログインを促すメッセージ
-$result = UserLogic::checkLogin();
-if(!$result) {
+$data = UserLogic::checkLogin();
+if(!$data) {
     exit ('セッションが切れているので、再ログインをして下さい');
     header('Location: ../userLogin/form.php');
     return;
 }
 
 //ログアウトをする
-UserLogic::logout();
+UserLogic::logout($_GET);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +35,7 @@ UserLogic::logout();
             <h2 class="my-3 h1">ログアウト完了</h2>
             <p>ログアウトが完了しました</p>
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../user/top.php" role="button">TOPページ</a>
+                <br><br><a class="btn btn-secondary" href="../top/index.php" role="button">TOPページ</a>
             </div>
         </div>
     </div>

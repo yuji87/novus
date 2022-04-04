@@ -66,7 +66,7 @@ $err = $_SESSION;
             <p><input type="submit" class="btn btn-primary mt-3" value="Log in"></p>
             <!--登録画面へ-->
             <a href = "../userRegister/form.php">新規登録はこちら</a>
-            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../user/top.php" role="button">TOPに戻る</a></p>
+            <p><a class="mb-2 btn btn-outline-dark mt-5" href="../top/index.php" role="button">TOPに戻る</a></p>
         </div>
     </form>
 </body>

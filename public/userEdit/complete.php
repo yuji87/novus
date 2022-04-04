@@ -32,7 +32,7 @@ $err = [];
         <div class="row align-items-start">
             <h1 class="my-3 h1">情報更新が<br>完了しました</h1>
             <!--TOPページへ-->
-            <form action="../userLogin/mypage.php" method="POST" name="editDone">
+            <form action="../myPage/index.php" method="POST" name="editDone">
                 <div class="text-center">
                     <input type="submit" class="btn btn-secondary mt-4" value="MyPageに戻る">
                 </div>

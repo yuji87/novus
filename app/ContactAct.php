@@ -42,7 +42,7 @@ class ContactAct extends Action
           echo '</div>';
         }else{
           echo '<div class="col-sm-8">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/top/index.php">ホーム画面へ</a>';
           echo '</div>';
         }
       echo '</div>';

@@ -3,4 +3,16 @@ Stack trace:
 #0 C:\xampp\htdocs\qandasite\app\QuestionLogic.php(60): PDOStatement->execute()
 #1 C:\xampp\htdocs\qandasite\public\userLogin\home.php(29): QuestionLogic::newQuestion()
 
+#2 {main}PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column '退会済みユーザー' in 'field list' in C:\xampp\htdocs\qandasite\app\UserLogic.php:404
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\app\UserLogic.php(404): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\public\userDelete\confirm.php(22): UserLogic::deleteUser(Array)
+#2 {main}PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column '退会済みユーザー' in 'field list' in C:\xampp\htdocs\qandasite\app\UserLogic.php:404
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\app\UserLogic.php(404): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\public\userDelete\confirm.php(22): UserLogic::deleteUser(Array)
+#2 {main}PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column '' in 'field list' in C:\xampp\htdocs\qandasite\app\UserLogic.php:404
+Stack trace:
+#0 C:\xampp\htdocs\qandasite\app\UserLogic.php(404): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\qandasite\public\userDelete\confirm.php(22): UserLogic::deleteUser(Array)
 #2 {main}

@@ -29,23 +29,23 @@ $_SESSION['edit'] = $_POST;
 </head>
 
 <body>
-    <!--メニュー-->
+	<!--メニュー-->
     <header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
-            <li>
-                <form action="../userLogin/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト">
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="title">novus</div>
+            <ul class="nav justify-content-center">
+            <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
+				    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
+				    <input type="hidden">
                 </form>
             </li>
+			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
+            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
+        </div>
     </header>
 
     <div class="wrapper">
@@ -97,7 +97,7 @@ $_SESSION['edit'] = $_POST;
                         </div>
                         <br><br>
                         <a class="edit" href="../userDelete/confirm.php" role="button">ユーザー削除</a>
-                        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../userLogin/mypage.php" role="button">戻る</a></p>
+                        <p><a class="mb-2 btn btn-outline-dark mt-5" href="../myPage/index.php" role="button">戻る</a></p>
                     </div>
                 </form>
             </div>

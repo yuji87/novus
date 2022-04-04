@@ -12,7 +12,7 @@
   <div class="mx-auto" style="width: 200px;">
   <div class="cherry-blossom-container" style=" height: auto">
     <!-- レベルによる表示画像変更 -->
-    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="../user/img/level/22338667.png" alt="ないよ">
+    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="../top/img/level/22338667.png" alt="ないよ">
     <div id="lv" class="col-4 d-block">Lv.
       <span id="level"><?php echo $user_data['pre_level'] ?></span>
       <progress class=" d-block mx-auto" id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
@@ -55,13 +55,13 @@
         
         // 一定レベルを超えたら表示画像が変更される
         if(level.innerHTML >= 5){
-          document.getElementById("hero").src='../user/img/level/22503431.png';
+          document.getElementById("hero").src='../top/img/level/22503431.png';
         } 
         if(level.innerHTML >= 10){
-          document.getElementById("hero").src='../user/img/level/22350820.png';
+          document.getElementById("hero").src='../top/img/level/22350820.png';
         }
         if (level.innerHTML >= 20){
-          document.getElementById("hero").src='../user/img/level/22493175.png';
+          document.getElementById("hero").src='../top/img/level/22493175.png';
         }
       }
         //規定レベルに達したらループ終了

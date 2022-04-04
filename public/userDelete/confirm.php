@@ -1,8 +1,8 @@
 <?php 
 session_start();
 
-require_once '../../../app/UserLogic.php';
-require_once '../../../app/Functions.php';
+require_once '../../app/UserLogic.php';
+require_once '../../app/Functions.php';
 
 //エラーメッセージ
 $err = [];
@@ -48,10 +48,10 @@ if(count($err) === 0 && (isset($_POST['check']))) {
             <p class="err">＊会員登録に失敗しました。</p>
         <?php endif ?>
         <hr>
-        <div class="col-4 bg-secondary">
-            <a href="list.php" class="back-btn text-white">戻る</a>
+        <div class="text-center">
+            <a href="list.php" class="btn btn-secondary">戻る</a>
+            <p><input type="submit" class="btn btn-primary mt-3" value="削除する"></p>
         </div>
-        <p><input type="submit" class="btn btn-primary" value="削除"></p>
         <div class="clear"></div>
     </form>
 </body>

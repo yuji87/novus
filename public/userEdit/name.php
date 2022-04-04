@@ -41,22 +41,17 @@ if(isset($_SESSION['nameEdit'])) {
 <body>
     <!--メニュー-->
     <header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
-            <li>
-                <form type="hidden" action="../userLogin/logout.php" method="POST">
-				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
-                </form>
-            </li>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="title">novus</div>
+            <ul class="nav justify-content-center">
+            <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+            <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
+			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
+            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
+        </div>
     </header>
 
     <div class="wrapper">
@@ -73,7 +68,7 @@ if(isset($_SESSION['nameEdit'])) {
                             <p class="small text-muted">（15文字以下）</p>
                         </div>
                         <br><br>
-                        <a href="list.php" id="back">戻る</a>
+                        <a href="index.php" id="back">戻る</a>
                         <p><input type="submit" class="mt-3" value="変更"></p>
                     </div>
                 </form>

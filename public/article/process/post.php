@@ -17,7 +17,7 @@ Token::validate();
 // ログインチェック
 $result = Utils::checkLogin();
 if (!$result) {
-    header("Location: ../../top/userLogin/login_top.php");
+    header("Location: ../../top/userLogin/form.php");
     return;
 }
 
