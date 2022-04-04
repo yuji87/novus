@@ -89,21 +89,19 @@ if(isset($_POST['like_regist'])) {
 <body>
     <!--メニュー-->
     <header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userLogin/mypage.php">マイページ</a></li>
-            <li><a href="../todo/index.php">TO DO LIST</a></li>
-            <li>
-                <form type="hidden" action="../userLogin/logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
-                </form>
-            </li>
-        </ul>
+    <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="title">novus</div>
+			<ul class="nav justify-content-center">
+                <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
+			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
+			    	    <input type="hidden">
+                    </form>
+                </li>
+			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            </ul>
+		</div>
     </header>
 
     <!--コンテンツ-->
@@ -116,6 +114,17 @@ if(isset($_POST['like_regist'])) {
                     <!--質問の詳細表示-->
                     <?php if(isset($err['question'])):  ?>
                         <?php echo $err['question']; ?>
+                <?php endif; ?>
+                <p class="h4 pb-3 pt-4">詳細表示</p>
+                <?php if($question['best_select_flg'] == 1): ?>
+                    <div class="text-danger">解決済み</div>
+                <?php endif; ?>
+                <!--アイコン-->
+                <div class="pb-1 small">
+                    <?php if(!isset($question['icon'])): ?>
+                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
+                    <?php else: ?>
+                        <img src="../top/img/<?php echo $question['icon']; ?>">
                     <?php endif; ?>
                     <p class="h4 pb-3 pt-4">詳細表示</p>
                     <?php if($question['best_select_flg'] == 1): ?>
@@ -171,6 +180,7 @@ if(isset($_POST['like_regist'])) {
                         <h4>返信一覧</h4>
                         <?php if(isset($err['answer'])):  ?>
                             <?php echo $err['answer']; ?>
+
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
                             <!--ユーザー名-->
