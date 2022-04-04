@@ -22,10 +22,6 @@ if (isset($_SESSION['a_data']['answer_id']) &&
         $err[] = '返答の取り込みに失敗しました';
     }
 }
-var_dump($err);
-var_dump($hasTaken);
-var_dump($_SESSION['a_data']['answer_id']);
-var_dump($_SESSION['a_data']['message']);
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +31,8 @@ var_dump($_SESSION['a_data']['message']);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問回答 編集</title>
 </head>
 
@@ -71,7 +67,7 @@ var_dump($_SESSION['a_data']['message']);
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken['question_id']; ?>">
                     <a href="javascript:form1.submit()">詳細画面へ</a>
                 </form>
-                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOPへ戻る</button></body>
+                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOPへ</button></body>
             </div>
         </div>
     </div>

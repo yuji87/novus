@@ -36,14 +36,9 @@ if (count($err) === 0) {
 // ボタン押下時の処理（成功でページ移動）
 if(isset($_POST['q_edit_conf'])) {
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category');
+    $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category',FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
-    if(isset($_POST['question_image'])) {
-        $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
-    } else {
-        $_SESSION['q_data']['question_image'] = null;
-    }
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id',FILTER_SANITIZE_NUMBER_INT);
     if(empty($_SESSION['q_data']['title'])) {
         $err['title'] = '質問タイトルを入力してください';
     }

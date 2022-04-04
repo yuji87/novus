@@ -1,8 +1,8 @@
 <?php 
 session_start();
 
-require_once '../../../app/UserLogic.php';
-require_once '../../../app/Functions.php';
+require_once '../../app/UserLogic.php';
+require_once '../../app/Functions.php';
 
 //エラーメッセージ
 $err = [];
