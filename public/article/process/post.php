@@ -4,22 +4,18 @@ require_once "../../../app/ArticleAct.php";
 require_once "../../../app/Token.php";
 require_once "../../../app/Utils.php";
 
-use Qanda\ArticleAct;
-use Qanda\Token;
-use Qanda\Utils;
+use Novus\ArticleAct;
+use Novus\Token;
+use Novus\Utils;
 
 $act = new ArticleAct();
 $act->begin(1);
 
+// ログインチェック
+$act->checkLogin();
+
 // トークンチェック
 Token::validate();
-
-// ログインチェック
-$result = Utils::checkLogin();
-if (!$result) {
-    header("Location: ../../top/userLogin/form.php");
-    return;
-}
 
 $title = filter_input(INPUT_POST, "title");
 $message = filter_input(INPUT_POST, "message");
@@ -43,15 +39,15 @@ elseif (! $act->isCategory($category)) {
 }
 
 $userId = $act->getMemberId();
-$articleid = filter_input(INPUT_POST, "articleid", FILTER_SANITIZE_NUMBER_INT);
-if (! $articleid) { 
+$article_id = filter_input(INPUT_POST, "article_id", FILTER_SANITIZE_NUMBER_INT);
+if (!$article_id) { 
+    // 記事IDがなければ新規投稿
+    $act->create($title, $message, $category);
     // 経験値を加算する処理
     $act->addEXP($userId, 20);
-    // 記事IDを持っていなければ新規投稿
-    $act->postarticle($title, $message, $category);
 } else {
-    // 記事IDを持っていれば編集処理
-    $act->updatearticle($articleid, $title, $message, $category);
+    // 記事IDがあれば編集処理
+    $act->update($article_id, $title, $message, $category);
 }
 
 // ajax呼び出し。 戻り値を出力

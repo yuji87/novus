@@ -3,11 +3,14 @@
 require_once "../../../app/TodoAct.php";
 require_once '../../../app/Token.php';
 
-use Qanda\TodoAct;
-use Qanda\Token;
+use Novus\TodoAct;
+use Novus\Token;
 
 $act = new ToDoAct();
 $act->begin(1);
+
+// ログインチェック
+$act->checkLogin();
 
 // トークンチェック
 Token::validate();
