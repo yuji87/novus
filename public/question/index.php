@@ -48,7 +48,6 @@ if(isset($_GET['search'])) {
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
 			    	    <input type="hidden">
-
                     </form>
                 </li>
 			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
