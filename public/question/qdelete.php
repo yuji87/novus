@@ -12,9 +12,9 @@ $err = [];
 // ログインチェック処理
 $result = UserLogic::checkLogin();
 if(!$result) {
-  $_SESSION['login_err'] = '再度ログインして下さい';
-  header('Location: ../../userLogin/form.php');
-  return;
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/form.php');
+    return;
 }
 
 // カテゴリ処理
@@ -23,31 +23,31 @@ $categories = CategoryLogic::getCategory();
 // バリデーション
 $question_id = filter_input(INPUT_POST, 'question_id');
 if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
-  $err[] = '質問を選択し直してください';
+    $err[] = '質問を選択し直してください';
 }
 
 // エラーがない場合質問読み込む
 if (count($err) === 0) {
-  // 質問を引っ張る処理
-  $question = QuestionLogic::displayQuestion($_POST);
-  if(!$question) {
-      $err[] = '質問の読み込みに失敗しました';
-  }
+    // 質問を引っ張る処理
+    $question = QuestionLogic::displayQuestion($_POST);
+    if(!$question) {
+        $err[] = '質問の読み込みに失敗しました';
+    }
 }
 
 // 削除処理
 if(isset($_POST['q_dlt'])) {
-  $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
-  if(!$_SESSION['q_data']['question_id']) {
-    $err['q_id'] = '質問IDが選択されていません';
-  }
-  $dlt = QuestionLogic::deleteQuestion($_SESSION['q_data']['question_id']);
-  if(!$dlt) {
-      $err[] = '質問の削除に失敗しました';
-  }
-  if(count($err) === 0) {
-      header('Location: qDeleteComp.php');
-  }
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+    if(!$_SESSION['q_data']['question_id']) {
+        $err['q_id'] = '質問IDが選択されていません';
+    }
+    $dlt = QuestionLogic::deleteQuestion($_SESSION['q_data']['question_id']);
+    if(!$dlt) {
+        $err[] = '質問の削除に失敗しました';
+    }
+    if(count($err) === 0) {
+        header('Location: qDeleteComp.php');
+    }
 }
 ?>
 
@@ -67,18 +67,18 @@ if(isset($_POST['q_dlt'])) {
 
 <body>
   	<!--メニュー-->
-	  <header>
+    <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">マイページ</a></li>
-            <li><a href="#">TO DO LIST</a></li>
+            <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
@@ -86,7 +86,7 @@ if(isset($_POST['q_dlt'])) {
     </header>
 
     <!--コンテンツ-->
-	  <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4 pb-3 mt-3">質問内容</p>
@@ -107,28 +107,28 @@ if(isset($_POST['q_dlt'])) {
                 <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="history.back()">戻る</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
-		    <div class="footer-item text-center">
-		    	  <h4>Q&A SITE</h4>
-		    	  <ul class="nav nav-pills nav-fill">
+        <div class="footer-item text-center">
+            <h4>novus</h4>
+            <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-		    			      <a class="nav-link small" href="../article/index.php">記事</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="index.php">質問</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-		    		    </li>
-		      	</ul>
-		    </div>
-		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-	  </footer>
+                    <a class="nav-link small" href="../article/index.php">記事</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="index.php">質問</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                </li>
+            </ul>
+        </div>
+        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

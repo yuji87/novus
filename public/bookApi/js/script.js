@@ -40,7 +40,12 @@ $(function () {
     var template = '';
 
     if (hitsData === 0) {
-      $(".search").after("<p class='message' style='color:red; font-weight:bold;'>検索結果が見つかりませんでした。</p>");
+      swal({
+        text: '検索結果が見つかりませんでした'
+      }).then(function () {
+        jumpapi('bookApi/index.php');
+      });
+      // $(".search").after("<p class='message' style='color:red; font-weight:bold;'>検索結果が見つかりませんでした。</p>");
     } else {
       // $(".search").after("<p class='message'>" + hitsData + "件ヒットしました</p>");
     }

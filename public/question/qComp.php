@@ -25,7 +25,7 @@ if (isset($_SESSION['q_data']['user_id']) &&
     if(!$plusEXP) {
         $err['plusEXP'] = '経験値加算処理に失敗しました';
     }
-  }
+}
 
 // 最新の質問を取得する処理
 $hasTaken = QuestionLogic::newQuestion();
@@ -50,24 +50,24 @@ if(!$hasTaken) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../userEdit/list.php">マイページ</a></li>
+            <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
-				            <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
     <!--コンテンツ-->
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4 mt-5">投稿完了</p>
@@ -88,28 +88,28 @@ if(!$hasTaken) {
                 <a href="index.php" class="btn btn-outline-dark fw-bold">TOP</a>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
-		    <div class="footer-item text-center">
-		    	  <h4>Q&A SITE</h4>
-		    	  <ul class="nav nav-pills nav-fill">
+        <div class="footer-item text-center">
+            <h4>novus</h4>
+            <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-		    			      <a class="nav-link small" href="../article/index.php">記事</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="index.php">質問</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-		    		    </li>
-		    	  </ul>
-		    </div>
-		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-	  </footer>
+                    <a class="nav-link small" href="../article/index.php">記事</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="index.php">質問</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                </li>
+            </ul>
+        </div>
+        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

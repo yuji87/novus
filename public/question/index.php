@@ -43,19 +43,19 @@ if(isset($_GET['search'])) {
 	<!--メニュー-->
 	<header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
 		<?php if($result): // ログインしていれば下記の表示 ?>
             <input type="checkbox" class="menu-btn" id="menu-btn">
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="menu">
-                <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
-                <li><a href="../userEdit/list.php">My Page</a></li>
-                <li><a href="#">TO DO LIST</a></li>
+                <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
+                <li><a href="../userLogin/mypage.php">マイページ</a></li>
+                <li><a href="../todo/index.php">TO DO LIST</a></li>
                 <li><a href="../../public/question/qHistory.php">質問 履歴</a></li>
                 <li><a href="../../">記事 履歴</a></li>
                 <li>
-                    <form type="hidden" action="logout.php" method="POST">
+                    <form type="hidden" action="../userLogin/logout.php" method="POST">
 			    	    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                     </form>
                 </li>
@@ -71,7 +71,7 @@ if(isset($_GET['search'])) {
     </header>
 
 	<!--コンテンツ-->
-	<section class="wrapper">
+	<div class="wrapper">
         <div class="container">
             <div class="content">
                 <h2 class="col-xs-6 col-xs-offset-3 pb-3 mt-4">質問サイトへようこそ</h2>
@@ -106,15 +106,33 @@ if(isset($_GET['search'])) {
         			    <p class="alert alert-success"><?php echo count($searchQuestion); ?>件見つかりました。</p>
         			    <div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					    <?php foreach($searchQuestion as $value): ?>
-        			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">題名：<?php echo htmlspecialchars($value['title']); ?></a></div>
-					        <div><img src="../user/img/<?php echo $value['icon']; ?>"></div>
-					        <div><?php echo htmlspecialchars($value['name']) ?>さん</div>
-					        <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-        			        <div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+        			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+					        <?php if(isset($value['icon'])): ?>
+								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../user/img/<?php echo $value['icon']; ?>">
+								</a>
+							<?php else: ?>
+								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+									<div><img src="../user/img/sample_icon.png"></div>
+								</a>
+							<?php endif; ?>
+					        <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+					        <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
+							<!-- 本文が50文字以上なら省略 -->
+							<?php if(mb_strlen($value['message']) > 50): ?>
+								<?php $limit_content = mb_substr($value['message'],0,50); ?>
+								<?php echo $limit_content; ?>…
+							<?php else: ?>
+								<?php echo $value['message']; ?>
+							<?php endif; ?>
         			        <!-- 更新されていた場合、その日付を優先表示 -->
-				            <div>
+				            <div class="pt-4 pb-1 small">
 					            <?php if (!isset($value['upd_date'])): ?>
-					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
+					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
 					            <?php else: ?>
 					            	更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
 					            <?php endif; ?>
@@ -129,37 +147,59 @@ if(isset($_GET['search'])) {
 		                <?php elseif(isset($newQuestion)): ?>
 		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		                	<?php foreach($newQuestion as $value): ?>
-		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-		                		<div><img src="../user/img/<?php echo $value['icon']; ?>"></div>
-					    		<div><?php echo htmlspecialchars($value['name']); ?>さん</div>
+		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<?php if(isset($value['icon'])): ?>
+									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../userLogin/mypage.php'; } else {
+                                    echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../user/img/<?php echo $value['icon']; ?>">
+									</a>
+								<?php else: ?>
+									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+									echo '../userLogin/mypage.php'; } else {
+									echo "../userLogin/userpage.php?user_id=".$value['user_id'] ;} ?>">
+									<img src="../user/img/sample_icon.png">
+									</a>
+								<?php endif; ?>
+					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
 					    		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-		                		<div>本文：<?php echo htmlspecialchars($value['message']); ?></div>
+								<!-- 本文が50文字以上なら省略 -->
+								<?php if(mb_strlen($value['message']) > 50): ?>
+									<?php $limit_content = mb_substr($value['message'],0,50); ?>
+									<?php echo $limit_content; ?>…
+								<?php else: ?>
+									<?php echo $value['message']; ?>
+								<?php endif; ?>
 		                	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
 		                	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>
-	            <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../../userLogin/home.php'">TOP</button>
+				<?php if($result): // ログインの有無でリンクの変化 ?>
+	            	<button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../userLogin/home.php'">TOP</button>
+				<?php else: ?>
+					<button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="location.href='../user/top.php'">TOP</button>
+				<?php endif; ?>
 			</div>
 		</div>
-	</section>
+	</div>
 
 	<!-- フッタ -->
 	<footer class="h-10"><hr>
 		<div class="footer-item text-center">
-		    <h4>Q&A SITE</h4>
+		    <h4>novus</h4>
 		    <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-		    		<a class="nav-link small" href="#">記事</a>
-		    	</li>
-		    	<li class="nav-item">
-		    		<a class="nav-link small" href="#">質問</a>
-		    	</li>
-		    	<li class="nav-item">
-		    		<a class="nav-link small" href="#">本検索</a>
-		    	</li>
-		    	<li class="nav-item">
-		    		<a class="nav-link small" href="#">お問い合わせ</a>
-		    	</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="../article/index.php">記事</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="../question/index.php">質問</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+			</li>
 		    </ul>
 		</div>
 		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>

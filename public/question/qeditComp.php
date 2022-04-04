@@ -12,7 +12,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -54,70 +54,70 @@ $question_id = $_SESSION['q_data']['question_id'];
 </head>
 
 <body>
-	  <!--メニュー-->
-	  <header>
+    <!--メニュー-->
+    <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
-            <li class="top"><a href="../../userLogin/home.php">TOP Page</a></li>
-            <li><a href="../userLogin/mrpage.php">My Page</a></li>
+            <li class="top"><a href="../../userLogin/home.php">TOPページ</a></li>
+            <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
-	  		            <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
+                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
     <!--コンテンツ-->
-	  <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4 pb-3 mt-3">編集完了</p>
                 <p>以下の内容で保存しました</p>
                 <!--題名-->
                 <div class="fw-bold pb-1">題名</div>
-                <div><?php echo $title ?></div>
+                <div><?php echo $title; ?></div>
                 <!--カテゴリー-->
                 <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                <div><?php echo $category ?></div>
+                <div><?php echo $category; ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div><?php echo $message ?></div>
+                <div><?php echo $message; ?></div>
                 <form method="GET" action="qdisp.php">
-                    <input type="hidden" name= "question_id" value="<?php echo $question_id ?>">
+                    <input type="hidden" name= "question_id" value="<?php echo $question_id; ?>">
                     <input type="submit" value="質問へ">
                 </form>
-                <button type="button" onclick="">TOP</button>
+                <button type="button" onclick="location.href='../userLogin/home.php'">TOP</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
-		    <div class="footer-item text-center">
-		    	  <h4>Q&A SITE</h4>
-		    	  <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-		    			      <a class="nav-link small" href="../article/index.php">記事</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="index.php">質問</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-		    		    </li>
-		    		    <li class="nav-item">
-		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-		    		    </li>
-		    	  </ul>
-		    </div>
-		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-	  </footer>
+        <div class="footer-item text-center">
+                <h4>novus</h4>
+                <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                            <a class="nav-link small" href="../article/index.php">記事</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="index.php">質問</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                    </li>
+                </ul>
+        </div>
+        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
 
