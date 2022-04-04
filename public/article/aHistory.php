@@ -3,7 +3,7 @@ session_start();
 
 // ファイル読み込み
 require_once '../../app/UserLogic.php';
-require_once '../../app/QuestionLogic.php';
+require_once '../../app/ArticleLogic.php';
 require_once '../../app/Functions.php';
 
 // エラーメッセージ
@@ -11,18 +11,18 @@ $err = [];
 
 // ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userLogin/form.php');
+    header('Location: userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
 $question_id = filter_input(INPUT_GET, 'question_id');
 
-// 自身が投稿した質問を表示
-$question = QuestionLogic::userQuestion();
-if (!$question) {
-    $err[] = 'まだ投稿した質問はありません';
+// 自身が投稿した記事を表示
+$article = ArticleLogic::userArticle();
+if(!$article) {
+    $err[] = 'まだ投稿した記事はありません';
 }
 ?>
 
@@ -35,7 +35,7 @@ if (!$question) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>過去の質問履歴</title>
+    <title>過去の記事履歴</title>
 </head>
 
 <body>
@@ -49,10 +49,10 @@ if (!$question) {
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userEdit/list.php">会員情報 編集</a></li>
-            <li><a href="../../study-main/ARTICLE/ahistory.php">【 履歴 】質問</a></li>
+            <li><a href="../question/qHistory.php">【 履歴 】質問</a></li>
             <li><a href="../article/aHistory.php">【 履歴 】記事</a></li>
             <li>
-                <form type="hidden" action="../userLogin/logout.php" method="POST">
+                <form type="hidden" action="logout.php" method="POST">
 	  		        <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
@@ -62,13 +62,13 @@ if (!$question) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">HISTORY OF QUESTION</h2>
+                <h2 class="heading mt-5">HISTORY OF ARTICLE</h2>
                 <div class="list">
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
-                        <div class="fw-bold mb-4">質問履歴</div>
-                        <?php if(isset($question)): ?>
-                            <?php foreach($question as $value): ?>
+                        <div class="fw-bold mb-4">記事履歴</div>
+                        <?php if(isset($article)): ?>
+                            <?php foreach($article as $value): ?>
                             <!--題名-->
                             <div class="fw-bold pb-1">題名</div>
                             <div><?php echo $value['title']; ?></div>
@@ -97,7 +97,7 @@ if (!$question) {
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>novus</h4>
+			<h3>novus</h3>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

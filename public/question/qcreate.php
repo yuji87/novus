@@ -10,7 +10,7 @@ require_once '../../app/CategoryLogic.php';
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -27,11 +27,6 @@ if(isset($_POST['create_question'])) {
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
     
-    if(isset($_POST['question_image'])) {
-        $_SESSION['q_data']['question_image'] = filter_input(INPUT_POST, 'question_image', FILTER_SANITIZE_SPECIAL_CHARS);
-    } else {
-        $_SESSION['q_data']['question_image'] = null;
-    }
     // 必須部分チェック
     if(!$_SESSION['q_data']['title']) {
         $err['title'] = '質問タイトルを入力してください';
@@ -42,6 +37,22 @@ if(isset($_POST['create_question'])) {
     if(!$_SESSION['q_data']['message']) {
         $err['message'] = '本文を入力してください';
     }
+
+    if(!empty($_SESSION['q_data']['title'])) {
+        $limitTitle = 150;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
+        $err['title'] = '150文字以内で入力してください';
+        }
+    }
+    if(!empty($_SESSION['q_data']['message'])) {
+        $limitMessage = 1500;
+        // 文字数チェック
+        if(mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
+        $err['message'] = '1500文字以内で入力してください';
+        }
+    }
+
     if (count($err) === 0) {
         header('Location: qComp.php');
     }
@@ -64,7 +75,7 @@ if(isset($_POST['create_question'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -73,14 +84,14 @@ if(isset($_POST['create_question'])) {
             <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="logout.php" method="POST">
+                <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
-    <section class="wrapper">
+    <div class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4">質問投稿</p>
@@ -127,12 +138,12 @@ if(isset($_POST['create_question'])) {
                 </form>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 	    <div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h4>novus</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 					<a class="nav-link small" href="../article/index.php">記事</a>

@@ -12,7 +12,7 @@ $err = [];
 
 //ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if (!$result) {
+if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -22,20 +22,20 @@ $login_user = $_SESSION['login_user'];
 //上位３位のレベルを表示
 $level = LevelLogic::levelTop3();
 $paging = LevelLogic::levelRanking();
-if (!$level) {
+if(!$level) {
 	$err[] = '表示するレベルがありません';
 }
 
 //最新の質問を表示
 $newQuestion = QuestionLogic::newQuestion();
-if(!$newQuestion){
+if(!$newQuestion) {
 	$err['question'] = '質問の読み込みに失敗しました';
 }
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,7 +50,7 @@ if(!$newQuestion){
 	<!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">Q&A SITE</div>
+            <div class="navtext">novus</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -64,7 +64,6 @@ if(!$newQuestion){
             <li><a class="nav-link small text-white" href="../article/index.php">記事ページ</a>
             <li><a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a>
             <li><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-
             <li>
                 <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout">
@@ -73,7 +72,7 @@ if(!$newQuestion){
         </ul>
     </header>
 
-	<section class="wrapper">
+	<div class="wrapper">
 	    <div class="container">
 	        <div class="text-center">
 				<!--レベル上位３人を出す-->
@@ -83,7 +82,7 @@ if(!$newQuestion){
 		    			<?php foreach($level as $value): ?>
                         <!--ユーザーが登録した画像を表示-->
                         <div class="level-icon"><br>
-                            <?php if (isset($value['icon'])): ?> 
+                            <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
 		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    						echo 'mypage.php'; } else {
@@ -115,7 +114,7 @@ if(!$newQuestion){
 		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
 						<!--題名-->
-						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">題名「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 					    <!--アイコン-->
 					    <div class="level-icon">
                             <?php if (isset($value['icon'])): ?> 
@@ -139,20 +138,25 @@ if(!$newQuestion){
 						<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
 		        		<!--カテゴリ-->
 						<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
-		        		<!--本文-->
-						<div>本文：<?php echo htmlspecialchars($value['message']) ?></div>
+		        		<!--本文：50文字以上だと省略-->
+						<?php if(mb_strlen($value['message']) > 10): ?>
+							<?php $limit_content = mb_substr($value['message'],0,10); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
 		        		<!--投稿日時-->
 		        	    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
 		        	<?php endforeach; ?>
 		        <?php endif; ?>
 			</div>
 		</div>
-	</section>
+	</div>
 	
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h4>Q&A SITE</h4>
+			<h3>novus</h3>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>
