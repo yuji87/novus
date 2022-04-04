@@ -30,3 +30,9 @@ if (!isset($_SESSION['ticket'])) {
 }
 //トークンを変数に代入
 $ticket = $_SESSION['ticket'];
+
+$result = Utils::checkLogin();
+if (!$result) {
+    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
+    return;
+}

@@ -4,9 +4,9 @@ require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
 require_once 'process/functions.php';
 
-use Novus\ContactAct;
-use Novus\Token;
-use Novus\Utils;
+use Qanda\ContactAct;
+use Qanda\Token;
+use Qanda\Utils;
 
 $act = new ContactAct(0);
 Token::create();

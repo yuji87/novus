@@ -42,15 +42,15 @@ if(isset($_SESSION['nameEdit'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">novus</div>
+            <div class="navtext">Q&A SITE</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
+            <li><a href="../article/aHistory.php">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -59,18 +59,17 @@ if(isset($_SESSION['nameEdit'])) {
         </ul>
     </header>
 
-    <div class="wrapper">
+    <section class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">アカウント編集画面</h2>
-                <form action="nameC.php" method="POST" name="confirm">
+                <h2 class="heading">アカウント編集画面</h2>
+                <form action="../userEdit/nameC.php" method="POST" name="confirm">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
                             <label for="name" style="text-align:center">[Name]</label>
                             <p><input id="editdetail" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>"></p>
-                            <p class="small text-muted">（15文字以下）</p>
                         </div>
                         <br><br>
                         <a href="list.php" id="back">戻る</a>
@@ -79,12 +78,12 @@ if(isset($_SESSION['nameEdit'])) {
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h3>novus</h3>
+			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

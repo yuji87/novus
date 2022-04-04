@@ -1,5 +1,6 @@
 <?php
-namespace Novus;
+
+namespace Qanda;
 
 require_once __DIR__ . '/../config/def.php';
 

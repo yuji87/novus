@@ -2,8 +2,8 @@
 require_once "../../app/BookApiAct.php";
 require_once '../../app/Token.php';
 
-use Novus\BookApiAct;
-use Novus\Token;
+use Qanda\BookApiAct;
+use Qanda\Token;
 
 $act = new BookApiAct(0);
 Token::create();

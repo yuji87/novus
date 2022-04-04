@@ -32,14 +32,15 @@ $_SESSION['edit'] = $_POST;
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">novus</div>
+            <div class="navtext">Q&A SITE</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
+            <li><a href="#contact">記事 履歴</a></li>
+            <li><a href="#contact">お問い合わせ</a></li>
             <li>
                 <form action="../userLogin/logout.php" method="POST">
                     <input type="submit" name="logout" value="ログアウト">
@@ -48,10 +49,10 @@ $_SESSION['edit'] = $_POST;
         </ul>
     </header>
 
-    <div class="wrapper">
+    <section class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">アカウント編集画面</h2><br>
+                <h2 class="heading">アカウント編集画面</h2><br>
                     <div class="list">
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
@@ -69,8 +70,8 @@ $_SESSION['edit'] = $_POST;
                         <div class="text">
                             <label id="editdisp"  for="email" style="padding-bottom:10px;">Email:&ensp;</label>
                             <input id="email" type="email" name="email" value="<?php 
-                                if(isset($login_user['email'])) { 
-                                    echo htmlspecialchars($login_user['email'], ENT_QUOTES,'UTF-8'); }?>" disabled>
+                                if(isset($login_user['email'])) {echo htmlspecialchars($login_user['email'], ENT_QUOTES,'UTF-8');
+                                } else { echo ''; }?>" disabled>
                             <a class="edit" href="email.php" role="button" id="edit">&ensp;編集</a>
                         </div>   
                         <!--パスワード入力（非表示）--> 
@@ -84,15 +85,16 @@ $_SESSION['edit'] = $_POST;
                         <div class="text">
                             <label id="editdisp"  for="password" style="padding-bottom:10px;">Icon:&ensp;</label>
                             <input id="icon" type="text" name="icon" value="<?php 
-                                if(isset($login_user['icon'])) { echo $login_user['icon']; }?>" disabled>
+                                if(isset($login_user['icon'])) {echo $login_user['icon'];
+                                } else { echo ''; }?>" disabled>
                             <a class="edit" href="icon.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <!--コメント入力--> 
                         <div class="text">
                             <label id="editdisp"  for="comment" style="padding-bottom:10px;">comment:&ensp;</label>
                             <input id="comment" type="text" name="comment" value="<?php 
-                                if(isset($login_user['comment'])) {
-                                    echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8'); }?>" disabled>
+                                if(isset($login_user['comment'])) {echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8');
+                                } else { echo '&emsp;Introduce Yourself!'; }?>" disabled>
                                 <a class="edit" href="comment.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <br><br>
@@ -102,28 +104,14 @@ $_SESSION['edit'] = $_POST;
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- フッタ -->
-    <footer class="h-10"><hr>
-		<div class="footer-item text-center">
-			<h3>novus</h3>
-			<ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-				    <a class="nav-link small" href="../article/index.php">記事</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link small" href="../question/index.php">質問</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link small" href="../bookApi/index.php">本検索</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-				</li>
-			</ul>
-		</div>
-		<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-  	</footer>
+	<!-- フッタ -->
+    <footer>
+        <div class="">
+            <br><br><hr>
+	        <p class="text-center">Copyright (c) HTMQ All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

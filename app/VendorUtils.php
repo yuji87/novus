@@ -1,5 +1,6 @@
 <?php
-namespace Novus;
+
+namespace Qanda;
 
 require_once __DIR__ . "/../vendor/cebe/markdown/inline/UrlLinkTrait.php";
 require_once __DIR__ . "/../vendor/cebe/markdown/inline/StrikeoutTrait.php";

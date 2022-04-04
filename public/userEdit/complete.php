@@ -34,7 +34,7 @@ $err = [];
             <!--TOPページへ-->
             <form action="../userLogin/mypage.php" method="POST" name="editDone">
                 <div class="text-center">
-                    <input type="submit" class="btn btn-secondary mt-4" value="MyPageに戻る">
+                    <input type="submit" value="MyPageに戻る">
                 </div>
             </form>
         <?php endif; ?>

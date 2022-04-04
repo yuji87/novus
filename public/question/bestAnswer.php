@@ -2,9 +2,9 @@
 session_start();
 
 // ファイルの読み込み
-require_once '../../app/QuestionLogic.php';
-require_once '../../app/CategoryLogic.php';
-require_once '../../app/UserLogic.php';
+require_once '../../classes/QuestionLogic.php';
+require_once '../../classes/CategoryLogic.php';
+require_once '../../classes/UserLogic.php';
 
 // エラーメッセージ
 $err = [];
@@ -12,9 +12,9 @@ $err = [];
 // ログインチェック
 $result = UserLogic::checkLogin();
 if(!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../userLogin/form.php');
-    return;
+  $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+  header('Location: ../../userLogin/form.php');
+  return;
 }
 //カテゴリ処理
 $categories = CategoryLogic::getCategory();
@@ -42,7 +42,7 @@ if(isset($_POST['a_best_comp'])) {
             $err['plusEXP'] = '経験値加算処理に失敗しました';
         }
 } else { // 通常時処理
-    $question_id = filter_input(INPUT_POST, 'question_id');
+  $question_id = filter_input(INPUT_POST, 'question_id');
     if(empty($question_id)) {
         $err[] = '質問を選択し直してください';
     }
@@ -76,7 +76,7 @@ if(isset($_POST['a_best_comp'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">novus</div>
+            <div class="navtext">Q&A SITE</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -86,14 +86,14 @@ if(isset($_POST['a_best_comp'])) {
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
                 <form type="hidden" action="logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
+				            <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
         </ul>
     </header>
 
     <!--コンテンツ-->
-    <div class="wrapper">
+    <section class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4">返答内容</p>
@@ -112,7 +112,7 @@ if(isset($_POST['a_best_comp'])) {
                             <?php echo $err['message']; ?>
                             <?php endif; ?>
                         </div>
-                        <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8') ?></div>
                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                         <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
                         <input type="submit" name="a_best_comp">
@@ -126,28 +126,28 @@ if(isset($_POST['a_best_comp'])) {
                 <?php endif; ?>
             </div>
         </div>
-    </div>
+    </section>
     
     <!-- フッタ -->
     <footer class="h-10"><hr>
-        <div class="footer-item text-center">
-            <h4>novus</h4>
-            <ul class="nav nav-pills nav-fill">
+		    <div class="footer-item text-center">
+		    	  <h4>Q&A SITE</h4>
+		    	  <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-                    <a class="nav-link small" href="../article/index.php">記事</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link small" href="../question/index.php">質問</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-                </li>
-            </ul>
-        </div>
-        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-    </footer>
+		    			  <a class="nav-link small" href="../article/index.php">記事</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="../question/index.php">質問</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+		    		    </li>
+		    		    <li class="nav-item">
+		    		    	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+		    		    </li>
+		    	  </ul>
+		    </div>
+		    <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+	  </footer>
 </body>
 </html>     

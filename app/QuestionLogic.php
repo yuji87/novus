@@ -19,10 +19,9 @@ class QuestionLogic
       $arr = [];
       $arr[] = $_SESSION['login_user']['user_id'];
 
-      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon, category_name
+      $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon
               FROM question_posts
               INNER JOIN users ON users.user_id = question_posts.user_id 
-              INNER JOIN categories ON categories.cate_id = question_posts.cate_id
               WHERE users.user_id = ?
               ORDER BY question_posts.question_id DESC';
 
@@ -32,6 +31,7 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
+        // return $result;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
@@ -92,12 +92,12 @@ class QuestionLogic
       }
       if($where){
         $whereSql = implode(' AND ', $where);
-        $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
+        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                 WHERE ' . $whereSql ;
       }else{
-        $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
+        $sql = 'SELECT DISTINCT question_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                 ORDER BY question_posts.question_id DESC';
@@ -165,13 +165,14 @@ class QuestionLogic
     {
       $result = false;
 
-      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id) VALUES (?, ?, ?, ?)';
+      $sql = 'INSERT INTO question_posts (user_id, title, message, cate_id, question_image) VALUES (?, ?, ?, ?, ?)';
       // 質問データを配列に入れる
       $arr = [];
       $arr[] = $_SESSION['q_data']['user_id'];
       $arr[] = $_SESSION['q_data']['title'];
       $arr[] = $_SESSION['q_data']['message'];
       $arr[] = $_SESSION['q_data']['category'];
+      $arr[] = $_SESSION['q_data']['question_image'];
 
       try{
         $stmt = connect()->prepare($sql);
@@ -184,6 +185,7 @@ class QuestionLogic
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
         $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
 
         return $result;
       }catch(\Exception $e){
@@ -201,6 +203,7 @@ class QuestionLogic
      * @param string $message
      * @param datetime $upd_time
      * @param int $cate_id
+     * @param string $question_image
      * @param int $question_id
      * @return bool $result
     */
@@ -212,7 +215,7 @@ class QuestionLogic
       // SQLの準備
       // SQLの実行
       // SQLの結果を返す
-      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=? WHERE question_id = ?';
+      $sql = 'UPDATE question_posts SET title=?,message=?,upd_date=?,cate_id=?,question_image=? WHERE question_id = ?';
 
       // 編集データを配列に入れる
       $arr = [];
@@ -220,6 +223,7 @@ class QuestionLogic
       $arr[] = $_SESSION['q_data']['message'];
       $arr[] = $upd_date;
       $arr[] = $_SESSION['q_data']['category'];
+      $arr[] = $_SESSION['q_data']['question_image'];
       $arr[] = $_SESSION['q_data']['question_id'];
       
       try {
@@ -233,6 +237,7 @@ class QuestionLogic
         $_SESSION['q_data']['title'] = null;
         $_SESSION['q_data']['message'] = null;
         $_SESSION['q_data']['category'] = null;
+        $_SESSION['q_data']['questin_image'] = null;
 
         return $result;
       } catch(\Exception $e) {
@@ -345,8 +350,9 @@ class QuestionLogic
         $arr = [];
         $arr[] = $questionData; 
         // SQL実行
-        $result = $stmt->execute($arr);
+        $stmt->execute($arr);
         // SQLの結果を返す
+        $question = $stmt->fetch();
         return $result;
       } catch(\Exception $e) {
         return false;
@@ -403,7 +409,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData;
+      $arr[] = $answerData['question_id'];
 
       try{
         $stmt = connect()->prepare($sql);

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 //ファイルの読み込み
@@ -42,14 +43,13 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
     <form enctype="multipart/form-data" action="confirm.php" method="POST" name="create">
     <input type="hidden" name="formcheck" value="checked">
     <h1 class="my-3" style="text-align:center;">アカウント作成</h1>
-            <?php if(isset($login_err)): ?>
+            <?php if (isset($login_err)): ?>
                 <p><?php echo $login_err; ?></p>
             <?php endif; ?>
         <p class="my-3" style="text-align:center;">当サービスを利用するために、次のフォームに必要事項をご記入ください。</p>
         <!--名前を記入-->
         <div class="row my-4">
             <label for="name" class="form-label font-weight-bold">*Name</label>
-            <p class="small text-muted">（15文字以下）</p>
             <div class="md-3">
                 <input type="text" class="form-control col-6" name="name" value="<?php $name; ?>">
             </div>
@@ -58,7 +58,7 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
         <!--電話番号を記入-->
         <div class="row my-3">
             <label for="tel" class="form-label font-weight-bold">*Phone</label>
-            <p class="small text-muted">（ハイフンなし・半角数字で12文字以下）</p>
+            <p class="small text-muted">（ハイフンなし・半角数字）</p>
             <div class="md-3">
                 <input type="tel" oninput="value = value.replace(/[０-９]/g,s => 
                     String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
@@ -69,7 +69,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
         <!--メアドを記入-->
         <div class="row my-3">
             <label for="email" class="form-label font-weight-bold">Email</label>
-            <p class="small text-muted">（35文字以下）</p>
             <div class="md-3">
                 <input type="email" class="form-control col-6" name="email" value="<?php $email; ?>">
             </div>
@@ -91,7 +90,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
                 <input type="password" class="form-control col-4" id="inputPassword4" name="password_conf">
             </div>
         </div>
-
         <!--トークン-->
         <input type="hidden" name="csrf_token" value="<?php echo h(setToken()); ?>">
         <!--送信ボタン-->
@@ -99,7 +97,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
             <p><input type="submit" class="btn btn-primary" value="登録へ進む"></p>
         </div>
     </form>
-    
     <!--ログイン画面へ遷移-->
     <div class="text-center">
         <a href = "../userLogin/form.php">ログインはこちら</a>

@@ -1,5 +1,6 @@
 <?php
-namespace Novus;
+
+namespace Qanda;
 
 require_once "Action.php";
 require_once "Utils.php";
@@ -17,7 +18,7 @@ class ContactAct extends Action
   }
 
   // 入力内容送信
-  function create($name, $email, $title, $contents)
+  function postarticle($name, $email, $title, $contents)
   {
     // 登録
     $stmt = $this->conn->prepare(INSERT_CONTACT);
@@ -31,6 +32,7 @@ class ContactAct extends Action
   // ページ表示がないファイルは、mode=1で呼ぶ
   //footer
   function end($mode = 0) {
+    $domain = DOMAIN;
     if ($mode == 0) {
       echo '<hr/>';
       echo '<div class="row m-2">';
@@ -45,28 +47,7 @@ class ContactAct extends Action
         }
       echo '</div>';
     }
-    echo '</div>';
-    echo '<footer class="h-10">';
-    echo '<div class="footer-item text-center">';
-    echo '<h4>novus</h4>';
-    echo '<ul class="nav nav-pills nav-fill">';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../article/index.php">記事</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../question/index.php">質問</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../bookApi/index.php">本検索</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</div>';
-    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
-    echo '</footer>';
-    echo '</body>';
+    echo '</div></body>';
     echo '</html>';
   }
 
@@ -81,8 +62,7 @@ class ContactAct extends Action
     echo '<meta name="format-detection" content="telephone=no">';
     echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">';
     echo '<link href="' . DOMAIN . '/public/css/contact.css" rel="stylesheet">';
-    echo '<link href="' . DOMAIN . '/public/css/novus.css" rel="stylesheet">';
-    echo '<script src="' . DOMAIN . '/public/contact/js/script.js" defer></script>';
+    echo '<script src="' . DOMAIN . '/public/js/contact.js" defer></script>';
     echo '<title>' . SYSTITLE . '</title>';
     echo '</head>';
     echo '<body><div class="container">';

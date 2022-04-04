@@ -7,15 +7,15 @@ require_once '../../app/Functions.php';
 
 // ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userLogin/form.php');
+    header('Location: ../userCreate/signup_form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
 
 // セッションに保存データがあるかを確認
-if(isset($_SESSION['iconEdit'])) {
+if (isset($_SESSION['iconEdit'])) {
     // セッションから情報を取得
     $icon = $_SESSION['iconEdit'];
 } else {
@@ -39,15 +39,15 @@ if(isset($_SESSION['iconEdit'])) {
     <!--メニュー-->
     <header>
         <div class="navtext-container">
-            <div class="navtext">novus</div>
+            <div class="navtext">Q&A SITE</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
         <ul class="menu">
             <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
             <li><a href="../userLogin/mypage.php">MyPageに戻る</a></li>
-            <li><a href="../question/qHistory.php">【履歴】質問</a></li>
-            <li><a href="../article/aHistory.php">【履歴】記事</a></li>
+            <li><a href="../question/qHistory.php">質問 履歴</a></li>
+            <li><a href="../article/aHistory.php">記事 履歴</a></li>
             <li>
                 <form type="hidden" action="../userLogin/logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
@@ -56,18 +56,18 @@ if(isset($_SESSION['iconEdit'])) {
         </ul>
     </header>
 
-    <div class="wrapper">
+    <section class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">アカウント編集画面</h2>
-                <form action="iconC.php" method="POST"  enctype="multipart/form-data">
+                <h2 class="heading">アカウント編集画面</h2>
+                <form action="../userEdit/iconC.php" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
                         <!--アイコン用の画像を選択-->
                         <div class="row my-3">
                             <label for="icon" style="text-align:center">[Icon]</label>
                             <div class="md-4" type="hidden" name="MAX_FILE_SIZE" value="1048576">
-                            <p><input id="editdetail" type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon; ?>"></p>
+                            <p><input id="editdetail" type="file" class="form-control-file" accept="image/*" id="input" name="icon" value="<?php $icon ?>"></p>
                         </div>
                         <br><br>
                         <a href="list.php" id="back">戻る</a>
@@ -76,12 +76,12 @@ if(isset($_SESSION['iconEdit'])) {
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 
 	<!-- フッタ -->
     <footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h3>novus</h3>
+			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 				    <a class="nav-link small" href="../article/index.php">記事</a>

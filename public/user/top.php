@@ -45,7 +45,7 @@ if(!$newQuestion) {
 	<header>
 	  <nav class="navbar navbar-expand-lg" style="background-color:rgba(55, 55, 55, 0.98);">
 		<div class="container-fluid">
-			<a class="avbar-brand font-weight-bold h3 text-white" href="top.php">novus</a>
+			<a class="avbar-brand font-weight-bold h3 text-white" href="top.php">Q&A SITE</a>
 			<span class="navbar-text">
 			    <a href="../userLogin/form.php"><i class="fa-solid fa-arrow-right-to-bracket text-white" style="padding-right:10px;"></i></a>
 			    <a href="../userRegister/form.php"><i class="fa-solid fa-user-plus text-white"></i></a>
@@ -102,7 +102,7 @@ if(!$newQuestion) {
 	            <!--質問表示-->
 		        <?php foreach($searchQuestion as $value): ?>
 			        <!--題名-->
-			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+			        <div><a href="qisp.php? question_id=<?php echo $value['question_id']; ?>">題名「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
                         <?php if (isset($value['icon'])): ?> 
@@ -133,7 +133,7 @@ if(!$newQuestion) {
 		    <?php if(!isset($searchQuestion) && isset($newQuestion)): ?>
 			    <?php foreach($newQuestion as $value): ?>
 				    <!--題名-->
-				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+				    <div><a href="qisp.php? question_id=<?php echo $value['question_id']; ?>">題名「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
                         <?php if (isset($value['icon'])): ?> 
@@ -162,7 +162,7 @@ if(!$newQuestion) {
 	<!-- フッタ -->
 	<footer class="h-10"><hr>
 		<div class="footer-item text-center">
-			<h3>novus</h3>
+			<h4>Q&A SITE</h4>
 			<ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
 					<a class="nav-link small" href="../article/index.php">記事</a>

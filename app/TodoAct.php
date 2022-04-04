@@ -1,18 +1,18 @@
 <?php
 
-namespace Novus;
+namespace Qanda;
 
 require_once 'Action.php';
 require_once 'Utils.php';
 
 // ToDo取得系
-define("QUERY_TODO_LIST", "SELECT todo_id,user_id,title,status,remind_date FROM todo WHERE user_id=:user_id");
+define("QUERY_TODO_LIST", "SELECT TODO_ID,USER_ID,TITLE,STATUS,REMIND_DATE FROM todo WHERE USER_ID=:user_id");
 
 // ToDo更新系
-define("INSERT_TODO", "INSERT INTO todo (user_id,title,status,remind_date) VALUES (:user_id, :title, 'active', :remind_date)");
-define("UPDATE_TODO", "UPDATE todo SET title=:title,remind_date=:remind_date WHERE todo_id=:todo_id AND user_id=:user_id");
-define("UPDATE_TODO_STATUS", "UPDATE todo SET status=:state WHERE todo_id=:todo_id AND user_id=:user_id");
-define("DELETE_TODO", "DELETE FROM todo WHERE todo_id=:todo_id AND user_id=:user_id");
+define("INSERT_TODO", "INSERT INTO todo (USER_ID,TITLE,STATUS,REMIND_DATE) VALUES (:user_id, :title, 'active', :remind_date)");
+define("UPDATE_TODO", "UPDATE todo SET TITLE=:title,REMIND_DATE=:remind_date WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
+define("UPDATE_TODO_STATUS", "UPDATE todo SET STATUS=:state WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
+define("DELETE_TODO", "DELETE FROM todo WHERE TODO_ID=:todo_id AND USER_ID=:user_id");
 
 // タイトルの長さ
 define("TITLE_LENGTH", 128);
@@ -30,29 +30,29 @@ class TodoAct extends Action
   // ToDo一覧取得
   function get()
   {
-    $retInfo = array();
+    $retinfo = array();
 
     // ToDo情報取得
-    $activeList = array();
-    $finList = array();
+    $activelist = array();
+    $finlist = array();
     $stmt = $this->conn->prepare(QUERY_TODO_LIST);
     $stmt->bindValue(':user_id', $this->member['user_id']);
     $result = $stmt->execute();
     if ($result) {
       while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        switch ($rec['status']) {
+        switch ($rec['STATUS']) {
           case 'active':
-            $activeList[] = $rec;
+            $activelist[] = $rec;
             break;
           case 'finish':
-            $finList[] = $rec;
+            $finlist[] = $rec;
             break;
         }
       }
     }
-    $retInfo['activeList'] = $activeList;
-    $retInfo['finList'] = $finList;
-    return $retInfo;
+    $retinfo['activelist'] = $activelist;
+    $retinfo['finlist'] = $finlist;
+    return $retinfo;
   }
 
   // ToDo登録
@@ -110,42 +110,5 @@ class TodoAct extends Action
     $stmt->bindValue(':todo_id', $todo_id);
     $stmt->bindValue(':user_id', $this->member['user_id']);
     return $stmt->execute();
-  }
-
-    // ページ表示がないファイルは、mode=1で呼ぶ
-  //footer
-  function end($mode = 0) {
-    if ($mode === 0) {
-      echo '<hr/>';
-      echo '<div class="row m-2">';
-      echo '<div class="col-sm-8">';
-      echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-      echo '<a href="'. DOMAIN.'/public/userLogin/mypage.php" class="btn btn-primary m-2">マイページへ</a>';
-      echo '</div>';
-      echo '</div>';
-    }
-    echo '</div>';
-    echo '<footer class="h-10">';
-    echo '<div class="footer-item text-center">';
-    echo '<h4>novus</h4>';
-    echo '<ul class="nav nav-pills nav-fill">';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../article/index.php">記事</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../question/index.php">質問</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../bookApi/index.php">本検索</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</div>';
-    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
-    echo '</footer>';
-    echo '</body>';
-    echo '</html>';
   }
 }

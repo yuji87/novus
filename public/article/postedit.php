@@ -1,26 +1,24 @@
 <?php
+
 require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once "../../app/Utils.php";
 
-use Novus\ArticleAct;
-use Novus\Token;
-use Novus\Utils;
+use Qanda\ArticleAct;
+use Qanda\Token;
+use Qanda\Utils;
 
 // 記事投稿/編集
 $act = new ArticleAct();
 $act->begin();
-$category = $act->categoryMap();
+$category = $act->categorymap();
 
 // Token生成
 Token::create();
 
-//ログインチェック
-$act->checkLogin();
+$retinfo = NULL;
 
-$retInfo = NULL;
-
-$article_id = 0;
+$articleid = 0;
 $title = '';
 $message = '';
 $catval = 0;
@@ -29,29 +27,35 @@ $catval = 0;
 $modename = '投稿';
 $modenamebtn = '投稿';
 
-$article_id = filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT);
-if ($article_id) {
+$articleid = filter_input(INPUT_GET, 'articleid', FILTER_SANITIZE_NUMBER_INT);
+if ($articleid) {
   // ID指定の場合編集モードにする
   $modename = '編集画面';
   $modenamebtn = '編集反映';
-  $retInfo = $act->article($article_id);
+  $retinfo = $act->article($articleid);
 }
 
-if ($retInfo != NULL && $retInfo['article'] != NULL) {
+if ($retinfo != NULL && $retinfo['article'] != NULL) {
   // 編集モード時の、パラメータ設定
-  $article_id = $_GET['article_id'];
-  $title = Utils::h($retInfo['article']['title']);
-  $message = Utils::h($retInfo['article']['message']);
-  $catval = $retInfo['article']['cate_id'];
+  $articleid = $_GET['articleid'];
+  $title = Utils::h($retinfo['article']['TITLE']);
+  $message = Utils::h($retinfo['article']['MESSAGE']);
+  $catval = $retinfo['article']['CATE_ID'];
 }
 ?>
-
+<div class="row m-2">
+  <div class="col-sm-8"></div>
+  <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さん</div>
+</div>
+<?php //var_dump($act->getMemberId()); ?>
+<?php //var_dump($act->getMemberLevel()); ?>
+<?php // var_dump($act->addEXP($act->getMemberId(),30)); ?>
 <h5 class="artListTitle mt-3 font-weight-bold">記事<?php echo $modename; ?></h5>
 <div class="container-fluid">
-  <form method="POST" class="form-horizontal" name="NovusForm">
+  <form method="POST" class="form-horizontal" name="qandaForm">
     <div class="row m-2 form-group">
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>">
+        <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>" />
       </div>
     </div>
     <div class="row m-2 form-group" style="height:55vh">
@@ -78,13 +82,13 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     </div>
     <div class="row m-2 form-group">
       <div class="col-sm-12 text-center">
-        <input type="hidden" name="article_id" id="article_id" value="<?php echo $article_id; ?>">
-        <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>">
+        <input type="hidden" name="articleid" id="articleid" value="<?php echo $articleid; ?>" />
+        <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" />
         <div class="btn btn-success" onclick="onPostArticle();"><?php echo $modenamebtn; ?></div>
       </div>
       <div class="col-sm-12 text-right">
         <?php
-        if ($article_id > 0) {
+        if ($articleid > 0) {
           echo('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
         }
         ?>
@@ -148,7 +152,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     var $data = 'title=' + encodeURIComponent(document.getElementById('title').value) +
       '&message=' + encodeURIComponent(document.getElementById('message').value) +
       '&category=' + document.getElementById('category').value +
-      '&article_id=' + document.getElementById('article_id').value +
+      '&articleid=' + document.getElementById('articleid').value +
       '&token=<?php echo $_SESSION["token"]; ?>';
 
     // 送信(ajax)
@@ -158,9 +162,9 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
         swal({
           text: '投稿しました'
         }).then(function(isConfirm) {
-          var $article_id = $('#article_id').val();
+          var $articleid = $('#articleid').val();
           // 記事詳細へ戻す                                
-          jumpapi('article/detail.php?article_id=' + $article_id);
+          jumpapi('article/detail.php?articleid=' + $articleid);
         });
       }
       switch ($retcode) {
@@ -188,7 +192,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     }).then(function(isConfirm) {
       if (isConfirm) {
         
-        var $data = 'article_id=' + <?php echo $article_id; ?> +
+        var $data = 'articleid=' + <?php echo $articleid; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
         formapiCallback('article/process/delete.php', $data, function($retcode) {

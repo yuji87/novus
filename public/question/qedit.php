@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
-    header('Location: ../userLogin/home.php');
+    header('Location: ../../userLogin/home.php');
     return;
 }
 
@@ -56,22 +56,6 @@ if(isset($_POST['q_edit_conf'])) {
     if(empty($_SESSION['q_data']['question_id'])) {
         $err['q_id'] = '質問IDが選択されていません';
     }
-
-    if(!empty($_SESSION['q_data']['title'])) {
-        $limitTitle = 150;
-        // 文字数チェック
-        if(mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
-        $err['title'] = '150文字以内で入力してください';
-        }
-    }
-    if(!empty($_SESSION['q_data']['message'])) {
-        $limitMessage = 1500;
-        // 文字数チェック
-        if(mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
-        $err['message'] = '1500文字以内で入力してください';
-        }
-    }
-
     if (count($err) === 0) {
         header('Location: qEditComp.php');
     }
@@ -96,7 +80,7 @@ if(isset($_POST['q_edit_conf'])) {
 	<!--メニュー-->
 	<header>
         <div class="navtext-container">
-            <div class="navtext">novus</div>
+            <div class="navtext">Q&A SITE</div>
         </div>
         <input type="checkbox" class="menu-btn" id="menu-btn">
         <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -105,7 +89,7 @@ if(isset($_POST['q_edit_conf'])) {
             <li><a href="../userLogin/mypage.php">マイページ</a></li>
             <li><a href="../todo/index.php">TO DO LIST</a></li>
             <li>
-                <form type="hidden" action="../userLogin/logout.php" method="POST">
+                <form type="hidden" action="logout.php" method="POST">
 				    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
                 </form>
             </li>
@@ -113,7 +97,7 @@ if(isset($_POST['q_edit_conf'])) {
     </header>
 
     <!--コンテンツ-->
-    <div class="wrapper">
+    <section class="wrapper">
         <div class="container">
             <div class="content">
                 <p class="h4 pb-3 mt-3">質問内容</p>
@@ -143,14 +127,15 @@ if(isset($_POST['q_edit_conf'])) {
                     <div>
                         <select name="category"  required>
                             <option></option>
+                            <option value="1">項目1</option>
                             <?php foreach($categories as $value): ?>
-                            <option 
-                                value="<?php echo $value['cate_id']; ?>"
-                                <?php if($value['cate_id'] == $question['cate_id']): ?>
-                                selected
-                                <?php endif; ?>> 
-                                <?php echo $value['category_name']; ?>
-                            </option>
+                              <option 
+                                  value="<?php echo $value['cate_id']; ?>"
+                                  <?php if($value['cate_id'] == $question['cate_id']): ?>
+                                    selected
+                                  <?php endif; ?>> 
+                                  <?php echo $value['category_name']; ?>
+                              </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -170,28 +155,28 @@ if(isset($_POST['q_edit_conf'])) {
                 <button type="button" class="btn btn-outline-dark fw-bold" onclick="history.back()">戻る</button>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- フッタ -->
-    <footer class="h-10"><hr>
-        <div class="footer-item text-center">
-            <h4>novus</h4>
-            <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
-                    <a class="nav-link small" href="../article/index.php">記事</a>
-                </li>
+	  <!-- フッタ -->
+	  <footer class="h-10"><hr>
+	  	  <div class="footer-item text-center">
+	  	      <h4>Q&A SITE</h4>
+	  	      <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small" href="../bookApi/index.php">本検索</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
-                </li>
-            </ul>
-        </div>
-        <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
-    </footer>
+	  	      		    <a class="nav-link small" href="../article/index.php">記事</a>
+	  	      	  </li>
+	  	      	  <li class="nav-item">
+	  	      	  	  <a class="nav-link small" href="index.php">質問</a>
+	  	      	  </li>
+	  	      	  <li class="nav-item">
+	  	      	    	<a class="nav-link small" href="../bookApi/index.php">本検索</a>
+	  	      	  </li>
+	  	      	  <li class="nav-item">
+	  	      	  	  <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+	  	      	  </li>
+	  	      </ul>
+	  	  </div>
+	  	  <p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>
+	  </footer>
 </body>
 </html>

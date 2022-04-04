@@ -4,15 +4,12 @@ require_once "../../../app/TodoAct.php";
 require_once '../../../app/Token.php';
 require_once '../../../app/Utils.php';
 
-use Novus\TodoAct;
-use Novus\Token;
-use Novus\Utils;
+use Qanda\TodoAct;
+use Qanda\Token;
+use Qanda\Utils;
 
 $act = new ToDoAct();
 $act->begin(1);
-
-// ログインチェック
-$act->checkLogin();
 
 // トークンチェック
 Token::validate();

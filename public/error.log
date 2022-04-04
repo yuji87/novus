@@ -2,5 +2,4 @@ PDOException: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'user
 Stack trace:
 #0 C:\xampp\htdocs\qandasite\app\QuestionLogic.php(60): PDOStatement->execute()
 #1 C:\xampp\htdocs\qandasite\public\userLogin\home.php(29): QuestionLogic::newQuestion()
-
 #2 {main}

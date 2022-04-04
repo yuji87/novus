@@ -1,6 +1,6 @@
 
 
-var $domainurl = '/novus/public/';
+var $domainurl = '/qandasiteteam/public/';
 
 
 // $urlへリダイレクト

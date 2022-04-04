@@ -3,17 +3,14 @@ require_once "../../app/TodoAct.php";
 require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
 
-use Novus\TodoAct;
-use Novus\Token;
-use Novus\Utils;
+use Qanda\TodoAct;
+use Qanda\Token;
+use Qanda\Utils;
 
 // ToDo一覧取得
 $act = new ToDoAct();
-$retInfo = $act->begin();
-$retInfo = $act->get();
-
-//ログインチェック
-$act->checkLogin();
+$retinfo = $act->begin();
+$retinfo = $act->get();
 
 // Token生成
 Token::create();
@@ -23,30 +20,31 @@ $remainddt = Utils::addDay(7, 1);
 
 // エラーコード
 $errid = filter_input(INPUT_GET, 'errid');
+
+$result = Utils::checkLogin();
+if (!$result) {
+    header("Location:" .DOMAIN."/top/userLogin/login_top.php");
+    return;
+}
 ?>
 
 <div class="row m-2">
   <div class="col-sm-8"></div>
-  <?php if (isset($_SESSION['login_user'])): ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-4 text-dark">
-      <?php echo (isset($icon) ? '<img src="' . DOMAIN . '/public/user/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/user/img/sample_icon.png" class="mr-1">') ?>
-      <?php echo $act->getMemberName(); ?> さん
-    </a>
-  <?php endif; ?>
+  <div class="col-sm-4"><?php echo $act->getMemberName(); ?>さん</div>
 </div>
 
 <h5>Todo</h5>
-<form method="POST" class="form-horizontal" name="NovusAddForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
+<form method="POST" class="form-horizontal" name="qandaAddForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
   <div class="row m-2">
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="newtodotitle" name="newtodotitle" value="" maxlength="64">
+      <input type="text" class="form-control" id="newtodotitle" name="newtodotitle" value="" maxlength="64" />
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control dateTimePickerForm" id="newtododt" name="newtododt" maxlength="16" value="<?php echo $remainddt; ?>">
+      <input type="text" class="form-control dateTimePickerForm" id="newtododt" name="newtododt" maxlength="16" value="<?php echo $remainddt; ?>" />
     </div>
     <div class="col-sm-3">
-      <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>">
-      <div class="btn btn-primary" onClick="onAddToDo();">追加</div>
+      <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" />
+      <div class="btn btn-primary" onClick="onAddToDo();">ToDoリスト</div>
     </div>
   </div>
 </form>
@@ -61,18 +59,18 @@ $errid = filter_input(INPUT_GET, 'errid');
   </tr>
   <?php
   $idx = 1;
-  foreach ($retInfo['activeList'] as $active) {
-    $escapetitle = Utils::h($active['title']);
+  foreach ($retinfo['activelist'] as $active) {
+    $escapetitle = Utils::h($active['TITLE']);
     echo '<tr><td>' . $idx . '</td><td>' . $escapetitle . '</td><td>'
-      . Utils::dayFormat($active['remind_date']) . '</td><td>';
-    echo '<span class="btn btn-link done" todoid="' . $active['todo_id'] . '">Done</span>';
-    echo '<span class="btn btn-link edit" todoid="' . $active['todo_id'] . '" todotitle="' . $escapetitle
-      . '" tododt="' . Utils::dayFormat($active['remind_date']) . '">Edit</span>';
-    echo '<span class="btn btn-link delete" todoid="' . $active['todo_id'] . '">Delete</span>';
+      . Utils::dayFormat($active['REMIND_DATE']) . '</td><td>';
+    echo '<span class="btn btn-link done" todoid="' . $active['TODO_ID'] . '">Done</span>';
+    echo '<span class="btn btn-link edit" todoid="' . $active['TODO_ID'] . '" todotitle="' . $escapetitle
+      . '" tododt="' . Utils::dayFormat($active['REMIND_DATE']) . '">Edit</span>';
+    echo '<span class="btn btn-link delete" todoid="' . $active['TODO_ID'] . '">Delete</span>';
     echo '</td></tr>';
     $idx++;
   }
-  if (count($retInfo['activeList']) == 0) {
+  if (count($retinfo['activelist']) == 0) {
     echo '<tr><td colspan="4" class="text-center">1件もありません</td></tr>';
   }
   ?>
@@ -89,18 +87,18 @@ $errid = filter_input(INPUT_GET, 'errid');
   <?php
 
   $idx = 1;
-  foreach ($retInfo['finList'] as $fin) {
-    $escapetitle = Utils::h($fin['title']);
+  foreach ($retinfo['finlist'] as $fin) {
+    $escapetitle = Utils::h($fin['TITLE']);
     echo '<tr><td>' . $idx . '</td><td>' . $escapetitle
-      . '</td><td>' . Utils::dayFormat($fin['remind_date']) . '</td><td>';
-    echo '<span class="btn btn-link return" todoid="' . $fin['todo_id'] . '">Return</span>';
-    echo '<span class="btn btn-link edit" todoid="' . $fin['todo_id'] . '" todotitle="' . $escapetitle
-      . '" tododt="' . Utils::dayFormat($fin['remind_date']) . '">Edit</span>';
-    echo '<span class="btn btn-link delete" todoid="' . $fin['todo_id'] . '">Delete</span>';
+      . '</td><td>' . Utils::dayFormat($fin['REMIND_DATE']) . '</td><td>';
+    echo '<span class="btn btn-link return" todoid="' . $fin['TODO_ID'] . '">Return</span>';
+    echo '<span class="btn btn-link edit" todoid="' . $fin['TODO_ID'] . '" todotitle="' . $escapetitle
+      . '" tododt="' . Utils::dayFormat($fin['REMIND_DATE']) . '">Edit</span>';
+    echo '<span class="btn btn-link delete" todoid="' . $fin['TODO_ID'] . '">Delete</span>';
     echo '</td></tr>';
     $idx++;
   }
-  if (count($retInfo['finList']) == 0) {
+  if (count($retinfo['finlist']) == 0) {
     echo '<tr><td colspan="4" class="text-center">1件もありません</td></tr>';
   }
   ?>
@@ -109,7 +107,7 @@ $errid = filter_input(INPUT_GET, 'errid');
 
 <!-- 編集ダイアログ  -->
 <div class="modal fade" id="demoNormalModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-  <form method="POST" class="form-horizontal" name="NovusEditForm" action="<?php echo DOMAIN . '/public/todo/process/edit.php'; ?>">
+  <form method="POST" class="form-horizontal" name="qandaEditForm" action="<?php echo DOMAIN . '/public/todo/process/edit.php'; ?>">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -121,18 +119,18 @@ $errid = filter_input(INPUT_GET, 'errid');
         <div class="modal-body">
           <div class="row m-2">
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="edittodotitle" name="edittodotitle" value="" maxlength="64">
+              <input type="text" class="form-control" id="edittodotitle" name="edittodotitle" value="" maxlength="64" />
             </div>
             <div class="col-sm-4">
-              <input type="text" class="form-control dateTimePickerForm" id="edittododt" name="edittododt" maxlength="16" value="">
+              <input type="text" class="form-control dateTimePickerForm" id="edittododt" name="edittododt" maxlength="16" value="" />
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
           <button type="button" class="btn btn-primary" id="updateToDo">更新</button>
-          <input type="hidden" id="edittodoid" name="edittodoid" value="">
-          <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>">
+          <input type="hidden" id="edittodoid" name="edittodoid" value="" />
+          <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" />
         </div>
       </div>
     </div>
@@ -149,14 +147,14 @@ $errid = filter_input(INPUT_GET, 'errid');
       return;
     }
     // 送信
-    document.NovusAddForm.submit();
+    document.qandaAddForm.submit();
   }
 
   // Editボタンを押したとき
   function onEdit() {
     // 編集前の値を取得
     var todoid = $(this).attr('todoid');
-    var title = $(this).attr('todotitle');
+    var title =  $(this).attr('todotitle');
     var tododt = $(this).attr('tododt');
 
     // エディットに設定
@@ -176,7 +174,7 @@ $errid = filter_input(INPUT_GET, 'errid');
       }
 
       // 送信
-      document.NovusEditForm.submit();
+      document.qandaEditForm.submit();
     });
   }
 
