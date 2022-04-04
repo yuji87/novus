@@ -53,7 +53,6 @@ if(isset($_POST['a_comp'])) {
     }
 }
 
-var_dump($err);
 ?>
 
 <!DOCTYPE html>
