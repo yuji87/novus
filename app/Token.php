@@ -1,6 +1,5 @@
 <?php
-
-namespace Qanda;
+namespace Novus;
 
 class Token {
   public static function create(){
