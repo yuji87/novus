@@ -29,6 +29,7 @@ if(isset($_POST['formcheck'])) {
         $filesize = $icon['size'];
         //ファイル名を使用して保存先ディレクトリを指定 
         //basename()でファイルシステムトラバーサル攻撃を防ぐ
+        // ファイルに日付をつけて保存（個別化を図るため）
         $save = '../top/img/' . date("YmdHis").basename($_FILES['icon']['name']);
         $_SESSION['iconEdit']['name'] = date("YmdHis").basename($_FILES['icon']['name']);
         // 拡張は画像形式か
