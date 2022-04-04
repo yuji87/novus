@@ -114,7 +114,7 @@ if(!$newQuestion) {
 		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	<?php foreach($newQuestion as $value): ?>
 						<!--題名-->
-						<div><a href="qisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+						<div><a href="../question/qdisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
 					    <!--アイコン-->
 					    <div class="level-icon">
                             <?php if (isset($value['icon'])): ?> 

@@ -234,7 +234,7 @@ class QuestionLogic
         $_SESSION['q_data']['message'] = null;
         $_SESSION['q_data']['category'] = null;
 
-        return $result;
+        return $question;
       } catch(\Exception $e) {
         return false;
       }
@@ -357,10 +357,10 @@ class QuestionLogic
 
     /**
      * 返答を個別表示する
-     * @param array $answerData
+     * @param array $answerId
      * @return bool $result
      */
-    public static function displayOneAnswer($answerData)
+    public static function displayOneAnswer($answerId)
     {
       $result = false;
 
@@ -369,7 +369,7 @@ class QuestionLogic
 
       // question_idを配列に入れる
       $arr = [];
-      $arr[] = $answerData;
+      $arr[] = $answerId;
 
       try{
         $stmt = connect()->prepare($sql);
@@ -377,7 +377,6 @@ class QuestionLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetch();
         return $data;
-        // return $result;
       }catch(\Exception $e){
         // エラーの出力
         echo $e;
@@ -483,13 +482,11 @@ class QuestionLogic
       try {
         $stmt = connect()->prepare($sql);
         // SQL実行
-        $stmt->execute($arr);
-        // SQLの結果を返す
-        $answer = $stmt->fetch();
+        $result = $stmt->execute($arr);
 
         $_SESSION['a_data']['message'] = null;
 
-        return $answer;
+        return $result;
       } catch(\Exception $e) {
         return false;
       }

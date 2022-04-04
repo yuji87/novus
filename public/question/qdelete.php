@@ -21,8 +21,8 @@ if(!$result) {
 $categories = CategoryLogic::getCategory();
 
 // バリデーション
-$question_id = filter_input(INPUT_POST, 'question_id');
-if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
+$question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
+if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
 }
 
@@ -37,7 +37,7 @@ if (count($err) === 0) {
 
 // 削除処理
 if(isset($_POST['q_dlt'])) {
-    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+    $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
     if(!$_SESSION['q_data']['question_id']) {
         $err['q_id'] = '質問IDが選択されていません';
     }

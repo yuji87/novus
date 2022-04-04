@@ -46,7 +46,7 @@ if(isset($_GET['search'])) {
             <div class="navtext">novus</div>
         </div>
 		<?php if($result): // ログインしていれば下記の表示 ?>
-            <input type="checkbox" class="menu-btn" id="menu-btn">
+            <input type="checkbox" class="menu-btn" id="menu-btn" id ="modal-content">
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="menu">
                 <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
@@ -60,6 +60,7 @@ if(isset($_GET['search'])) {
                     </form>
                 </li>
             </ul>
+        </script>
 		<?php else: // 未ログインであれば下記の表示 ?>
 			<input type="checkbox" class="menu-btn" id="menu-btn">
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -130,13 +131,14 @@ if(isset($_GET['search'])) {
 								<?php echo $value['message']; ?>
 							<?php endif; ?>
         			        <!-- 更新されていた場合、その日付を優先表示 -->
-				            <div class="pt-4 pb-1 small">
+				            <div class="small pb-4">
 					            <?php if (!isset($value['upd_date'])): ?>
 					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
 					            <?php else: ?>
 					            	更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
 					            <?php endif; ?>
                             </div>
+							<hr>
 			            <?php endforeach; ?>
 						
                     <!--検索結果が見つからなかった時-->
@@ -170,7 +172,16 @@ if(isset($_GET['search'])) {
 								<?php else: ?>
 									<?php echo $value['message']; ?>
 								<?php endif; ?>
-		                	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+								<!--投稿日時-->
+								<div class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							<hr>
 		                	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>
