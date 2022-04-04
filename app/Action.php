@@ -14,7 +14,7 @@ define("QUERY_MEMBERLIST_IDS", "SELECT user_id,name,tel,name,password,email,icon
 define("INSERT_MEMBER", "INSERT INTO users (name,password,email) VALUES (:name, :password, :email)");
 
 // ベースクラス
-class Action 
+class Action
 {
   protected $member;
   protected $conn;
