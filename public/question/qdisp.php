@@ -15,7 +15,11 @@ $result = UserLogic::checkLogin();
 $err = [];
 
 // 詳細表示する質問の選択処理
-$question_id = filter_input(INPUT_GET, 'question_id');
+$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_NUMBER_INT);
+if(!$question_id) {
+    $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
+}
+$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_NUMBER_INT);
 if(!$question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
 }
@@ -52,16 +56,18 @@ if(isset($_POST['like_id'])) {
 
 // いいね登録処理
 if(isset($_POST['like_regist'])) {
+    $a_user_id = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
     // 登録処理
     $like_btn = QuestionLogic::createLike($_POST);
     if(!$like_btn) {
         $err['like'] = 'いいねの登録に失敗しました';
     }
     // 経験値を加算する処理
-    $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 5);
+    $plusEXP = UserLogic::plusEXP($a_user_id, 5);
     if(!$plusEXP) {
         $err['plusEXP'] = '経験値加算処理に失敗しました';
     }
+    header("Location: qDisp.php?question_id=$question_id");
 }
 ?>
 
@@ -215,6 +221,8 @@ if(isset($_POST['like_regist'])) {
                                         <?php endif; ?>
                                     <?php else: ?>
                                         <!-- いいねがない場合、いいね登録のボタンに -->
+                                        <input type="hidden" name="a_user_id" value="<?php echo $value['user_id']; ?>">
+                                        <input type="hidden" name="q_id" value="<?php echo $question_id; ?>">
                                         <input type="submit" name="like_regist" value="いいね">
                                     <?php endif; ?>
                                 </form>
@@ -224,12 +232,12 @@ if(isset($_POST['like_regist'])) {
                                     <form method="POST" action="../questionAnswer/aEdit.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                         <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                        <input type="submit" name="a_edit" value="編集">
+                                        <i class="fa-solid fa-pen"><input type="submit" name="a_edit" value="編集"></i>
                                     </form>
                                     <form method="POST" action="../questionAnswer/aDelete.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                         <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                        <input type="submit" name="a_edit" value="削除">
+                                        <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除"></i>
                                     </form>
                                     <?php endif; ?>
                             <?php endif; ?>

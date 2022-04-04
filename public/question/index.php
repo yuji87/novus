@@ -48,6 +48,7 @@ if(isset($_GET['search'])) {
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
 			    	    <input type="hidden">
+
                     </form>
                 </li>
 			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
@@ -131,13 +132,14 @@ if(isset($_GET['search'])) {
 								<?php echo $value['message']; ?>
 							<?php endif; ?>
         			        <!-- 更新されていた場合、その日付を優先表示 -->
-				            <div class="pt-4 pb-1 small">
+				            <div class="small pb-4">
 					            <?php if (!isset($value['upd_date'])): ?>
 					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
 					            <?php else: ?>
 					            	更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
 					            <?php endif; ?>
                             </div>
+							<hr>
 			            <?php endforeach; ?>
 						
                     <!--検索結果が見つからなかった時-->
@@ -171,7 +173,16 @@ if(isset($_GET['search'])) {
 								<?php else: ?>
 									<?php echo $value['message']; ?>
 								<?php endif; ?>
-		                	    <div class="small pb-4">日時：<?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+								<!--投稿日時-->
+								<div class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							<hr>
 		                	<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>

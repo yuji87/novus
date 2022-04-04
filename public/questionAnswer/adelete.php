@@ -42,8 +42,8 @@ if(isset($_POST['a_dlt_conf'])) {
     if(!$_POST['answer_id']) {
         $err['a_id'] = '返答が選択されていません';
     } else {
-        $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id');
-        $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+        $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_NUMBER_INT);
+        $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
     }
     if(count($err) === 0) {
         header('Location: aDeleteComp.php');
@@ -59,8 +59,8 @@ if(isset($_POST['a_dlt_conf'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問回答 削除</title>
 </head>
 
@@ -105,7 +105,7 @@ if(isset($_POST['a_dlt_conf'])) {
                     <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
-                    <input type="submit" name="a_dlt_conf">
+                    <input type="submit" name="a_dlt_conf" value="削除">
                 </form>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOP</button>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>

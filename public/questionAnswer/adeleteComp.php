@@ -31,8 +31,8 @@ if(empty($dlt)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問回答 削除完了</title>
 </head>
 

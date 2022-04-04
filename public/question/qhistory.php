@@ -70,7 +70,7 @@ if (!$question) {
                         <?php if(isset($question)): ?>
                             <?php foreach($question as $value): ?>
                             <!--題名-->
-                            <div class="fw-bold pb-1">題名</div>
+                            <div class="fw-bold pb-1"><a href="qdisp.php? question_id=<?php echo $value['question_id']; ?>">題名</a></div>
                             <div><?php echo $value['title']; ?></div>
                             <!--カテゴリ-->
                             <div class="fw-bold pt-3 pb-1">カテゴリ</div>

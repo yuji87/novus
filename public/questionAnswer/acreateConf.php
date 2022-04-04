@@ -8,9 +8,9 @@ require_once '../../app/QuestionLogic.php';
 $err = [];
 
 $a_message = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
-$a_user_id = filter_input(INPUT_POST, 'a_user_id');
-$q_user_id = filter_input(INPUT_POST, 'q_user_id');
-$question_id = filter_input(INPUT_POST, 'question_id');
+$a_user_id = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
+$q_user_id = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
+$question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
 
 //バリデーション
 if(!$a_message) {
@@ -36,9 +36,9 @@ if(!empty($a_message)) {
 // 投稿ボタン押下時の内部処理（成功でページ移動）
 if(isset($_POST['a_comp'])) {
     $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['a_data']['a_user_id'] = filter_input(INPUT_POST, 'a_user_id');
-    $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id');
-    $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id');
+    $_SESSION['a_data']['a_user_id'] = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
+    $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
+    $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
     if(empty($_SESSION['a_data']['message'])) {
         $err['message'] = '本文が入力されていません';
     }
@@ -53,7 +53,6 @@ if(isset($_POST['a_comp'])) {
     }
 }
 
-var_dump($err);
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +62,9 @@ var_dump($err);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>質問回答 投稿内容確認</title>
 </head>
 
@@ -94,12 +93,17 @@ var_dump($err);
         <div class="container">
             <div class="content">
                 <p class="h4">投稿内容の確認</p>
-                <p>以下の内容でよろしいですか？</p>
+                <?php if(empty($err)): ?>
+                    <p>以下の内容でよろしいですか？</p>
+                <?php else: ?>
+                    <?php foreach($err as $value): ?>
+                        <p class="text-danger"><?php  echo $value; ?></p>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <!--回答内容の確認-->
                 <div class="fw-bold pb-1">内容</div>
-                <div><?php echo $a_message; ?></div>
                 <form method="POST" action="">
-                    <input type="hidden" name="a_message" value="<?php echo $a_message; ?>">
+                    <textarea name="a_message"><?php echo $a_message; ?></textarea>
                     <input type="hidden" name="a_user_id" value="<?php echo $a_user_id; ?>">
                     <input type="hidden" name="q_user_id" value="<?php echo $q_user_id; ?>">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">

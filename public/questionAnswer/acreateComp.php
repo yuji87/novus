@@ -51,8 +51,8 @@ if(isset($_SESSION['a_data']['message']) &&
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/mypage.css">
-    <link rel="stylesheet" type="text/css" href="../../css/top.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="../css/top.css">
     <title>返信　投稿完了</title>
 </head>
 
@@ -90,7 +90,7 @@ if(isset($_SESSION['a_data']['message']) &&
                     <input type="hidden" name="question_id" value="<?php echo $_SESSION['a_data']['question_id']; ?>">
                     <input type="submit" class="btn btn-warning mb-3" name="q_disp" value="質問表示へ戻る">
                 </form>
-                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOPへ戻る</button>
+                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOPへ</button>
             </div>
         </div>
     </div>
