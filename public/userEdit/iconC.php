@@ -21,7 +21,7 @@ if(isset($_POST['formcheck'])) {
     $_SESSION['iconEdit'] = $_FILES['icon'];
     $icon = filter_input(INPUT_POST, 'icon');
     // 選択した場合のバリデーション
-    if(isset($_SESSION['iconEdit'])) {
+    if(!empty($_SESSION['iconEdit']['name'])) {
         // ファイル関連の取得
         $icon = $_FILES['icon'];
         $filename = basename($icon['name']);
@@ -29,7 +29,8 @@ if(isset($_POST['formcheck'])) {
         $filesize = $icon['size'];
         //ファイル名を使用して保存先ディレクトリを指定 
         //basename()でファイルシステムトラバーサル攻撃を防ぐ
-        $save = '../top/img/' . basename($_FILES['icon']['name']);
+        $save = '../top/img/' . date("YmdHis").basename($_FILES['icon']['name']);
+        $_SESSION['iconEdit']['name'] = date("YmdHis").basename($_FILES['icon']['name']);
         // 拡張は画像形式か
         $allow_ext = array('','jpg', 'jpeg', 'png');
         $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -40,7 +41,9 @@ if(isset($_POST['formcheck'])) {
         //move_uploaded_fileで、一時ファイルを保存先ディレクトリに移動させる
         move_uploaded_file($_FILES['icon']['tmp_name'], $save);
         }
-    } 
+    } else {
+        $_SESSION['iconEdit']['name'] = null;
+    }
 }
 
 //エラーがなかった場合の処処理

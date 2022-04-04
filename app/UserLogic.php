@@ -290,7 +290,6 @@ class UserLogic
      */
     public static function editUserIcon()
     {
-    $result = false;
     // SQLの準備
     // SQLの実行
     // SQLの結果を返す
