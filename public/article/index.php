@@ -36,14 +36,14 @@ $category = $act->categoryMap();
 if (isset($_SESSION['login_user'])) {
   $icon = $act->getMemberIcon();
 }
-
 // Token生成
 Token::create();
 ?>
+
 <div class="row m-2 pt-4 pb-2">
   <?php if (isset($_SESSION['login_user'])) : ?>
     <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
-      <?php echo (isset($icon) ? '<img src="' . DOMAIN . '/public/user/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php else : ?>
@@ -86,7 +86,7 @@ foreach ($retInfo['articleList'] as $art) {
 
   echo '<div class="artfrm" article_id="' . $art['article_id'] . '">';
   echo '<div href="#" class="d-flex align-items-end">';
-  echo (isset($postIcon) ? '<img src="' . DOMAIN . '/public/user/img/' . $postIcon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/user/img/sample_icon.png" class="mr-1">');
+  echo (isset($postIcon) && !empty($postIcon) ? '<img src="' . DOMAIN . '/public/top/img/' . $postIcon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">');
   echo '<span class="arthead ml-1">' . $username . 'さんの投稿</span>';
   echo '</div>';
   echo '<div class="arttitle">' . Utils::h($title) . '</div>';

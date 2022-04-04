@@ -47,12 +47,12 @@ $message = Utils::compatiStr($message); // 改行を <br/>
 <div class="row m-2">
   <?php if(isset($_SESSION['login_user']['user_id']) && $_SESSION['login_user']['user_id'] === $retInfo["article"]["user_id"]): ?>
     <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-9 text-dark">
-      <?php echo (isset($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo ((isset($icon) && !empty($icon)) ? '<img src="'. DOMAIN .'/public/user/img/'. $icon .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php else: ?>
     <a href="<?php echo DOMAIN ?>/public/userLogin/userpage.php?user_id=<?php echo $retInfo["article"]["user_id"] ?>" class="d-flex align-items-center col-sm-9 text-dark">
-      <?php echo (isset($retInfo["user"]["icon"]) ? '<img src="'. DOMAIN .'/public/user/img/'. $retInfo["user"]["icon"] .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">'); ?>
+      <?php echo (isset($retInfo["user"]["icon"]) && !empty($icon) ? '<img src="'. DOMAIN .'/public/user/img/'. $retInfo["user"]["icon"] .'" class="mr-1">' : '<img src="'. DOMAIN .'/public/user/img/sample_icon.png" class="mr-1">'); ?>
       <?php echo $retInfo["user"]["name"]; ?>さんの投稿
     </a>
   <?php endif ?> 
