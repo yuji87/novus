@@ -1,6 +1,5 @@
 <?php
-
-namespace Qanda;
+namespace Novus;
 
 require_once __DIR__ . '/../config/def.php';
 
@@ -9,7 +8,7 @@ class Utils
   // htmlで行表示対応の文字列作成
   public static function compatiStr($str)
   {
-    return str_replace("\n", "<br/>", $str);
+    return str_replace("\n", "<br>", $str);
   }
   // 日時の文字列作成
   public static function compatiDate($date, $format = "Y-m-d H:i")
@@ -19,18 +18,6 @@ class Utils
     }
     return date($format, strtotime($date));
   }
-  // // EMAIL送信★
-  // public static function sendEmail($email, $subject, $msg)
-  // {
-  //   if (LOCAL == "1") {
-  //     // email認証を省略
-  //     return true;
-  //   }
-  //   mb_language("Japanese");
-  //   mb_internal_encoding("UTF-8");
-  //   $heads = sprintf("From: %s", GMEMAIL);
-  //   return mb_send_mail($email, $subject, $msg, $heads);
-  // }
   // 現在、期間内の時間か？★
   public static function isSpanOver($tgtstrdt, $spanhour)
   {
@@ -48,15 +35,6 @@ class Utils
       return FALSE;
     }
   }
-  public static function checkLogin()
-  {
-    $result = false;
-    // セッションにログインユーザが入っていなければfalse
-    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
-      return $result = true;
-    }
-    return $result;
-  } 
   // 現在の時刻から $addday日後の日時の文字列を作成
   public static function addDay($addday, $format = 0)
   {

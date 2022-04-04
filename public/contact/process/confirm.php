@@ -7,7 +7,7 @@ require_once "config.php";
 require_once "../../app/Action.php";
 require_once "../app/ContactAct.php";
 
-// use Qanda\ContactAct;
+// use Novus\ContactAct;
 
 // $act = new ContactAct();
 // $pdo = Database::getInstance();
