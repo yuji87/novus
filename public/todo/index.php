@@ -38,13 +38,13 @@ $icon = $act->getMemberIcon();
 </div>
 
 <h5>Todo</h5>
-<form method="POST" class="form-horizontal" name="NovusAddForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
+<form method="POST" class="form-horizontal" name="addForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
   <div class="row m-2">
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="newtodotitle" name="newtodotitle" value="" maxlength="64">
+      <input type="text" class="form-control" id="newTodoTitle" name="newTodoTitle" value="" maxlength="64">
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control dateTimePickerForm" id="newtododt" name="newtododt" maxlength="16" value="<?php echo $remainddt; ?>">
+      <input type="text" class="form-control dateTimePickerForm" id="newTodoDt" name="newTodoDt" maxlength="16" value="<?php echo $remainddt; ?>">
     </div>
     <div class="col-sm-3">
       <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>">
@@ -68,7 +68,7 @@ $icon = $act->getMemberIcon();
     echo '<tr><td>' . $idx . '</td><td>' . $escapetitle . '</td><td>'
       . Utils::dayFormat($active['remind_date']) . '</td><td>';
     echo '<span class="btn btn-link done" todoid="' . $active['todo_id'] . '">Done</span>';
-    echo '<span class="btn btn-link edit" todoid="' . $active['todo_id'] . '" todotitle="' . $escapetitle
+    echo '<span class="btn btn-link edit" todoid="' . $active['todo_id'] . '" todoTitle="' . $escapetitle
       . '" tododt="' . Utils::dayFormat($active['remind_date']) . '">Edit</span>';
     echo '<span class="btn btn-link delete" todoid="' . $active['todo_id'] . '">Delete</span>';
     echo '</td></tr>';
@@ -96,7 +96,7 @@ $icon = $act->getMemberIcon();
     echo '<tr><td>' . $idx . '</td><td>' . $escapetitle
       . '</td><td>' . Utils::dayFormat($fin['remind_date']) . '</td><td>';
     echo '<span class="btn btn-link return" todoid="' . $fin['todo_id'] . '">Return</span>';
-    echo '<span class="btn btn-link edit" todoid="' . $fin['todo_id'] . '" todotitle="' . $escapetitle
+    echo '<span class="btn btn-link edit" todoid="' . $fin['todo_id'] . '" todoTitle="' . $escapetitle
       . '" tododt="' . Utils::dayFormat($fin['remind_date']) . '">Edit</span>';
     echo '<span class="btn btn-link delete" todoid="' . $fin['todo_id'] . '">Delete</span>';
     echo '</td></tr>';
@@ -145,20 +145,20 @@ $icon = $act->getMemberIcon();
 <script type="text/javascript">
   // ToDo追加ボタンを押した
   function onAddToDo() {
-    var $newtodotitle = document.getElementById('newtodotitle').value;
-    if (isEmpty($newtodotitle)) {
-      onShow('ToDoを入力してください');
+    var $newTodoTitle = document.getElementById('newTodoTitle').value;
+    if (isEmpty($newTodoTitle)) {
+      onShow('何も入力されていません');
       return;
     }
     // 送信
-    document.NovusAddForm.submit();
+    document.addForm.submit();
   }
 
   // Editボタンを押したとき
   function onEdit() {
     // 編集前の値を取得
     var todoid = $(this).attr('todoid');
-    var title = $(this).attr('todotitle');
+    var title = $(this).attr('todoTitle');
     var tododt = $(this).attr('tododt');
 
     // エディットに設定
@@ -173,7 +173,7 @@ $icon = $act->getMemberIcon();
     $('#updateToDo').off().click(function() {
       var $edittodotitle = document.getElementById('edittodotitle').value;
       if (isEmpty($edittodotitle)) {
-        onShow('ToDoを入力してください');
+        onShow('何も入力されていません');
         return;
       }
 
@@ -254,5 +254,5 @@ $icon = $act->getMemberIcon();
 </script>
 
 <?php
-$act->end();
+$act->printFooter();
 ?>

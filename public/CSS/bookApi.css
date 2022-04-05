@@ -57,7 +57,7 @@ input:-webkit-autofill, textarea:-webkit-autofill {
 }
 .header {
   width: 100%;
-  background-color: #43cee0;
+  background-color: #ff9100;
 }
 .search {
   overflow: hidden;
@@ -84,7 +84,7 @@ input:-webkit-autofill, textarea:-webkit-autofill {
   line-height: 40px;
   font-size: 18px;
   color: #fff;
-  background-color: #43cee0;
+  background-color: #ff9100;
   cursor: pointer;
   border-radius: 5px;
   outline: none;
@@ -135,7 +135,7 @@ input:-webkit-autofill, textarea:-webkit-autofill {
 
 @media screen and (min-width: 769px) {
   .search__btn:hover {
-    background-color: #1eabbd;
+    background-color: #ff91009a;
   }
 }
 

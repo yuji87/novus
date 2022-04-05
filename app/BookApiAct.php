@@ -2,62 +2,24 @@
 namespace Novus;
 
 require_once "Action.php";
+require_once "Log.php";
 require_once "Utils.php";
 
 // 記事/いいね関連クラス
 class BookApiAct extends Action
 {
-  function __construct($mode = -1) {
-    if ($mode >= 0) {
+  public function __construct($mode = 1)
+  {
+    try {
       $this->begin($mode);
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-  }
-
-  // ページ表示がないファイルは、mode=1で呼ぶ
-  //footer
-  function end($mode = 0) {
-    if ($mode == 0) {
-      // echo '<hr/>';
-      echo '<div class="row m-2">';
-        if(isset($_SESSION['login_user'])){
-          echo '<div class="col-sm-1"></div>';
-          echo '<div class="col-sm-11">';
-          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-          echo '</div>';
-        }else{
-          echo '<div class="col-sm-8">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
-          echo '</div>';
-        }
-      echo '</div>';
-    }
-    echo '</div>';
-    echo '<hr><footer class="h-10">';
-    echo '<div class="footer-item text-center">';
-    echo '<h4>novus</h4>';
-    echo '<ul class="nav nav-pills nav-fill">';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../article/index.php">記事</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../question/index.php">質問</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../bookApi/index.php">本検索</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</div>';
-    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
-    echo '</footer>';
-    echo '</body>';
-    echo '</html>';
   }
 
   // head,body開始タグ
-  function printHeader() {
+  public function printHeader() {
     echo '<!DOCTYPE html>';
     echo '<html lang="ja">';
     echo '<head>';
@@ -90,7 +52,7 @@ class BookApiAct extends Action
       echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
       echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
       echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-      echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user["user_id"]; ?>ログアウト</a></li>';
+      echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
       echo '</ul>';
       echo '</div>';
     else :
@@ -105,5 +67,47 @@ class BookApiAct extends Action
     echo '</header>';
     echo '<main><div class="container">';
     echo '<body><div class="container">';
+  }
+
+  // ページ表示がないファイルは、mode=1で呼ぶ
+  public function printFooter($mode = 0) {
+    if ($mode == 0) {
+      // echo '<hr/>';
+      echo '<div class="row m-2">';
+        if(isset($_SESSION['login_user'])){
+          echo '<div class="col-sm-1"></div>';
+          echo '<div class="col-sm-11">';
+          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
+          echo '</div>';
+        }else{
+          echo '<div class="col-sm-8">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/top/index.php">ホーム画面へ</a>';
+          echo '</div>';
+        }
+      echo '</div>';
+    }
+    echo '</div>';
+    echo '<hr><footer class="h-10">';
+    echo '<div class="footer-item text-center">';
+    echo '<h4>novus</h4>';
+    echo '<ul class="nav nav-pills nav-fill">';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/article/index.php">記事</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/question/index.php">質問</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/bookApi/index.php">本検索</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/contact/index.php">お問い合わせ</a>';
+    echo '</li>';
+    echo '</ul>';
+    echo '</div>';
+    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
+    echo '</footer>';
+    echo '</body>';
+    echo '</html>';
   }
 }

@@ -107,7 +107,7 @@ $icon = $retInfo["user"]["icon"];
       <?php if (isset($_SESSION['login_user'])) : ?>
         <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/userLogin/home.php">ホーム画面へ</a>
       <?php else : ?>
-        <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/user/top.php">ホーム画面へ</a>
+        <a class="btn btn-success m-2" href="<?php echo DOMAIN; ?>/public/top/index.php">ホーム画面へ</a>
       <?php endif ?>
     </div>
     <div class="col-sm-6">
@@ -185,5 +185,5 @@ $icon = $retInfo["user"]["icon"];
   </script>
 
   <?php
-  $act->end(1);
+  $act->printFooter(1);
   ?>
