@@ -30,7 +30,7 @@ $icon = $act->getMemberIcon();
 <div class="row m-2">
   <div class="col-sm-8"></div>
   <?php if (isset($_SESSION['login_user'])): ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-4 text-dark">
+    <a href="<?php echo DOMAIN ?>/public/mypage/index.php" class="d-flex align-items-center col-sm-4 text-dark">
       <?php echo (isset($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
@@ -54,7 +54,7 @@ $icon = $act->getMemberIcon();
 </form>
 
 <h5>やること:</h5>
-<table class="table table-striped">
+<table class="table table-striped" style="overflow: hidden; overflow-wrap: break-word;">
   <tr>
     <th style="width: 5%">#</th>
     <th style="width: 45%">Task</th>
@@ -65,8 +65,7 @@ $icon = $act->getMemberIcon();
   $idx = 1;
   foreach ($retInfo['activeList'] as $active) {
     $escapetitle = Utils::h($active['title']);
-    echo '<tr><td>' . $idx . '</td><td>' . $escapetitle . '</td><td>'
-      . Utils::dayFormat($active['remind_date']) . '</td><td>';
+    echo '<tr><td>' . $idx . '</td><td style="word-break: break-all;">' . $escapetitle . '</td><td>' . Utils::dayFormat($active['remind_date']) . '</td><td>';
     echo '<span class="btn btn-link done" todoid="' . $active['todo_id'] . '">Done</span>';
     echo '<span class="btn btn-link edit" todoid="' . $active['todo_id'] . '" todoTitle="' . $escapetitle
       . '" tododt="' . Utils::dayFormat($active['remind_date']) . '">Edit</span>';
@@ -243,7 +242,7 @@ $icon = $act->getMemberIcon();
       // 更新に失敗したとき、リダイレクトして todo/index.phpに引数指定で呼び出されるので
       // ダイアログ表示
       if ($errid == 'invalidtitle') {
-        echo 'swal("タイトルに誤りがあります");';
+        echo 'swal("100文字以内で入力してください");';
       } else if ($errid == 'invalidformatdt') {
         echo 'swal("リマインドの日付に誤りがあります");';
       }

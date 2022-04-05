@@ -35,13 +35,13 @@ $act->printHeader();
                 <label for="title">*タイトル
                     <span class="error-php"><?php echo Utils::h($errors['title'] ?? ''); ?></span>
                 </label>
-                <input type="text" class="required maxlength form-control" data-maxlength="100" id="subject" name="title" placeholder="タイトル" data-error-required="入力は必須です" value="<?php echo Utils::h($inputs['title'] ?? ''); ?>">
+                <input type="text" class="required maxlength form-control" data-maxlength="150" id="subject" name="title" placeholder="タイトル" data-error-required="入力は必須です" value="<?php echo Utils::h($inputs['title'] ?? ''); ?>">
             </div>
             <div class="form-group">
                 <label for="contents">*お問い合わせ内容
                     <span class="error-php"><?php echo Utils::h($errors['contents'] ?? ''); ?></span>
                 </label>
-                <textarea class="required maxlength showCount form-control" data-maxlength="1000" id="contents" name="contents" placeholder="お問い合わせ内容" rows="3"><?php echo Utils::h($inputs['contents'] ?? ''); ?></textarea>
+                <textarea class="required maxlength showCount form-control" data-maxlength="1500" id="contents" name="contents" placeholder="お問い合わせ内容" rows="3"><?php echo Utils::h($inputs['contents'] ?? ''); ?></textarea>
             </div>
         </div>
         <div class="text-center">

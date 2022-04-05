@@ -21,11 +21,11 @@ if(!empty($_POST['formcheck'])) {
     $_SESSION['commentEdit'] = $_POST['comment'];
     $comment = filter_input(INPUT_POST, 'comment');
     //バリデーション
-    $limitComment = 100;
+    $limitComment = 50;
     if(isset($_SESSION['commentEdit'])) {
         // 文字数チェック
         if(mb_strlen($comment) > $limitComment) {
-        $err['comment'] = '100文字以内で入力してください';
+        $err['comment'] = '50文字以内で入力してください';
         }
     }
 }

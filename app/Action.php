@@ -70,8 +70,38 @@ class Action
     if (isset($_SESSION["USER_ID"]) === false && isset($_SESSION["login_user"]) === false) {
       // ログインページへ
       header('Location: '. DOMAIN .'/public/userLogin/form.php');
+      // クッキーの破棄
+      if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params["path"],$params["domain"], $params["secure"], $params["httponly"]);
+      }
       exit;
     }
+  }
+
+  // ログアウト処理
+  public function logout() {
+    session_start();
+
+    if (isset($_SESSION['USER_ID']) == TRUE) {
+      $errorMessage = "ログアウトしました。";
+    } else {
+      $errorMessage = "セッションがタイムアウトしました。";
+    }
+
+    // セッション変数のクリア
+    $_SESSION = array();
+
+    // クッキーの破棄
+    if (ini_get("session.use_cookies")) {
+      $params = session_get_cookie_params();
+      setcookie(session_name(), '', time() - 42000, $params["path"],$params["domain"], $params["secure"], $params["httponly"]);
+    }
+
+    // セッションクリア
+    @session_destroy(); //制御演算子
+
+    return $errorMessage;
   }
 
   // メンバー情報全てを返す
@@ -224,7 +254,7 @@ class Action
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id='.$_SESSION["login_user"]["user_id"].'">ログアウト</a></li>';
     echo '</ul>';
     echo '</div>';
     else:
