@@ -243,7 +243,7 @@ $icon = $act->getMemberIcon();
       // 更新に失敗したとき、リダイレクトして todo/index.phpに引数指定で呼び出されるので
       // ダイアログ表示
       if ($errid == 'invalidtitle') {
-        echo 'swal("タイトルに誤りがあります");';
+        echo 'swal("100文字以内で入力してください");';
       } else if ($errid == 'invalidformatdt') {
         echo 'swal("リマインドの日付に誤りがあります");';
       }
