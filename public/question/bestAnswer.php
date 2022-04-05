@@ -75,21 +75,19 @@ if(isset($_POST['a_best_comp'])) {
 <body>
     <!--メニュー-->
     <header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li class="top"><a href="../userLogin/home.php">TOPページ</a></li>
-            <li><a href="../myPage/index.php">マイページ</a></li>
-            <li><a href="../todo/index.php">TO DO LIST</a></li>
-            <li>
-                <form type="hidden" action="logout.php" method="POST">
-                    <input type="submit" name="logout" value="ログアウト" id="logout" style="text-align:left;">
-                </form>
-            </li>
-        </ul>
+    <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="headerlogo">novus</div>
+			<ul class="nav justify-content-center">
+                <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
+			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
+			    	    <input type="hidden">
+                    </form>
+                </li>
+			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            </ul>
+		</div>
     </header>
 
     <!--コンテンツ-->

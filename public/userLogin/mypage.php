@@ -12,6 +12,7 @@ if(!$result) {
     return;
 }
 $login_user = $_SESSION['login_user'];
+var_dump($login_user);
 
 //モーダル処理
 if(isset($_POST['mypage'])) {
