@@ -28,7 +28,7 @@ if (count($err) === 0) {
     // 質問の取得
     $question = QuestionLogic::displayQuestion($_GET);
     if(!$question) {
-        $err['question'] = '質問の読み込みに失敗しました';
+        $err['q_id'] = '質問を選択し直してください';
     }
   // 質問返答の取得
     $answer = QuestionLogic::displayAnswer($_GET['question_id']);
@@ -121,7 +121,7 @@ if(isset($_POST['like_regist'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <?php if(!$question_id): ?>
+                <?php if(!$question_id || !$question): ?>
                     <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
                 <?php else: ?>
                 <!--質問の詳細表示-->
