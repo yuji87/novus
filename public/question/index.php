@@ -74,7 +74,7 @@ if(isset($_GET['search'])) {
         <div class="container">
             <div class="content">
                 <h2 class="col-xs-6 col-xs-offset-3 pb-3 mt-4">質問サイトへようこそ</h2>
-                <a href="qcreate.php" class="text-dark">質問を投稿する</a>
+                <a href="qcreate.php" class="alert alert-dark">質問を投稿する</a>
                 <div class="col-xs-6 col-xs-offset-3 well">
 	                <!-- ②検索フォーム  -->
 	                <form method="get">

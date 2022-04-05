@@ -60,7 +60,7 @@ if(empty($dlt)) {
             <div class="content">
                 <p class="h4">削除が成功しました</p>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOP</button>
-                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../question/qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ戻る</button>
+                <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../question/qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ</button>
             </div>
         </div>
     </div>
