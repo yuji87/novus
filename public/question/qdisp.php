@@ -87,9 +87,10 @@ if(isset($_POST['like_regist'])) {
 </head>
 
 <body>
-    <!--メニュー-->
+	<!--メニュー-->
     <header>
-    <div class="navbar bg-dark text-white">
+	    <?php if($result): // ログインしていれば下記の表示 ?>
+        <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
@@ -99,47 +100,47 @@ if(isset($_POST['like_regist'])) {
                 </li>
 			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../../public/myPage/qHistory.php">【履歴】質問</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../../public/myPage/aHistory.php">【履歴】記事</a></li>
                 <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
             </ul>
 		</div>
+		<?php else: // 未ログインであれば下記の表示 ?>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="headerlogo">novus</div>
+            <ul class="nav justify-content-center">
+			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../article/index.php">記事ページ</a></li>      
+            </ul>
+		</div>
+		<?php endif; ?>
     </header>
 
     <!--コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                    <?php if(!$question_id): ?>
-                        <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
-                    <?php else: ?>
-                    <!--質問の詳細表示-->
-                    <?php if(isset($err['question'])):  ?>
-                        <?php echo $err['question']; ?>
+                <?php if(!$question_id): ?>
+                    <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
+                <?php else: ?>
+                <!--質問の詳細表示-->
+                <?php if(isset($err['question'])):  ?>
+                    <?php echo $err['question']; ?>
                 <?php endif; ?>
                 <p class="h4 pb-3 pt-4">詳細表示</p>
                 <?php if($question['best_select_flg'] == 1): ?>
                     <div class="text-danger">解決済み</div>
                 <?php endif; ?>
-                <!--アイコン-->
                 <div class="pb-1 small">
-                    <?php if(!isset($question['icon'])): ?>
-                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
-                    <?php else: ?>
-                        <img src="../top/img/<?php echo $question['icon']; ?>">
-                    <?php endif; ?>
-                    <p class="h4 pb-3 pt-4">詳細表示</p>
-                    <?php if($question['best_select_flg'] == 1): ?>
-                        <div class="text-danger">解決済み</div>
-                    <?php endif; ?>
                     <!--アイコン-->
-                    <div class="pb-1 small">
-                        <?php if(!isset($question['icon'])): ?>
-                            <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
-                        <?php else: ?>
-                            <img src="../user/img/<?php echo $question['icon']; ?>">
-                        <?php endif; ?>
-                    </div>
+                    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
+                        <img src="../top/img/<?php echo $question['icon']; ?>">
+                    <?php else: ?>
+                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
+                    <?php endif; ?>
                     <!--投稿者-->
-                    <div class="pb-4 small">投稿者：
+                    <div class="pb-4 pt-2 small">投稿者：
                         <?php echo $question['name']; ?>
                     </div>
                     <!--題名-->
@@ -173,24 +174,23 @@ if(isset($_POST['like_regist'])) {
                             </form>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <br>
+                    <br><hr size="4">
                     
                     <!-- 返答表示部分 -->
                     <?php if(!empty($answer)): ?>
                         <h4>返信一覧</h4>
                         <?php if(isset($err['answer'])):  ?>
                             <?php echo $err['answer']; ?>
-
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
                             <!--ユーザー名-->
                             <div>名前：<?php echo $value['name']; ?></div>
                             <!--アイコン-->
                             <div class="pb-1 small">
-                                <?php if(!isset($question['icon'])): ?>
-                                    <?php echo "<img src="."../user/img/sample_icon.png".">"; ?>
+                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+                                    <img src="../top/img/<?php echo $value['icon']; ?>">
                                 <?php else: ?>
-                                    <img src="../user/img/<?php echo $question['icon']; ?>">
+                                    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                                 <?php endif; ?>
                             </div>
                             <!--本文-->
@@ -206,11 +206,11 @@ if(isset($_POST['like_regist'])) {
                             </div>
                             <!-- フラグがONになっているいいねの数を表示 -->
                             <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                            <div>いいね数：<?php echo count($likes); ?></div>
+                            <div class="mb-3">いいね数：<?php echo count($likes); ?></div>
                             <!-- ベストアンサー選択された返答の目印 -->
                             <?php if($value['best_flg']): ?>
-                                <div class="text-danger">ベストアンサー</div>
-                            <?php endif; ?>
+                                <div class="text-danger mb-3">ベストアンサー</div>
+                            <?php endif; ?><hr id="dot">
 
                             <!-- いいねボタンの表示部分 -->
                             <?php if($result): ?>
