@@ -2,41 +2,287 @@
 namespace Novus;
 
 require_once "Action.php";
+require_once "Log.php";
+require_once "Token.php";
 require_once "Utils.php";
-
-
-// データ更新系
-define("INSERT_CONTACT", "INSERT INTO contacts(name, email, title, contents) VALUES(:name, :email, :title, :contents)");
 
 class ContactAct extends Action
 {
-  function __construct($mode = -1) {
-    if ($mode >= 0) {
+  public function __construct($mode = 1)
+  {
+    try {
       $this->begin($mode);
+    } catch (\Exception $e) {
+      Log::error($e);
+      throw $e;
     }
   }
 
-  // 入力内容送信
-  function create($name, $email, $title, $contents)
+  // 問い合わせフォームトップページ画面処理
+  public function index(): array
   {
-    // 登録
-    $stmt = $this->conn->prepare(INSERT_CONTACT);
-    $stmt->bindValue("name", $name, \PDO::PARAM_STR);
-    $stmt->bindValue("email", $email, \PDO::PARAM_STR);
-    $stmt->bindValue("title", $title, \PDO::PARAM_STR);
-    $stmt->bindValue("contents", $contents, \PDO::PARAM_STR);
-    $stmt->execute();
+    try {
+      // トークン生成
+      Token::regenerate();
+      // 書き直しデータ
+      [$oldInputs, $inputErrors] = $this->getOldInputWithError();
+      // ログイン時のデフォルト入力値設定
+      if (!isset($oldInputs['name']) && isset($_SESSION["login_user"])) {
+        $oldInputs['name'] = $this->getMemberName();
+      }
+      if (!isset($oldInputs['email']) && isset($_SESSION["login_user"])) {
+        $oldInputs['email'] = $this->getMemberEmail();
+      }
+      // 一度画面へ表示したら不要のためクリア
+      $this->clearOldInputWithError();
+    } catch (\Exception $e) {
+      Log::error($e);
+      throw $e;
+    }
+    return [
+      $oldInputs,
+      $inputErrors
+    ];
+  }
+
+  // 問い合わせフォーム確認ページ処理
+  public function confirm(): array
+  {
+    try {
+      // トークン生成
+      Token::validate();
+      // 書き直しデータ取得
+      [$inputs, $errors] = $this->validateInput();
+      // 入力内容にエラーがある場合、トップへリダイレクト
+      if (!empty($errors)) {
+          $this->storeOldInputWithError($inputs, $errors);
+          $this->redirectTop();
+      }
+    } catch (\Exception $e) {
+      Log::error($e);
+      throw $e;
+    }
+    return $inputs;
+  }
+
+  // 問い合わせフォーム完了ページ処理
+  public function complete(): bool
+  {
+    try {
+      Token::validate();
+      [$inputs, $errors] = $this->validateInput();
+      // 入力内容にエラーがある場合、トップへリダイレクト
+      if (!empty($errors)) {
+        $this->storeOldInputWithError($inputs, $errors);
+        $this->redirectTop();
+      }
+      // 戻るボタン処理の場合、トップへリダイレクト
+      $action = filter_input(INPUT_POST, 'action');
+      if ($action !== "send") {
+          $this->storeOldInput($inputs);
+          $this->redirectTop();
+      }
+      //DB登録
+      $this->postarticle($inputs['name'],$inputs['email'],$inputs['title'],$inputs['contents']);
+      // 二重送信防止
+      Token::regenerate();
+    } catch (\Exception $e) {
+      Log::error($e);
+      return false;
+    }
+    return true;
+  }
+
+  // セッショントークンの取得
+  public function getToken(): string
+  {
+    return $_SESSION["token"];
+  }
+  
+    // 入力値チェック
+    private function validateInput()
+    {
+      $_POST = Utils::checkInput($_POST);
+      $name = trim(filter_input(INPUT_POST, 'name'));
+      $email = trim(filter_input(INPUT_POST, 'email'));
+      $email_check = trim(filter_input(INPUT_POST, 'email_check'));
+      $title = trim(filter_input(INPUT_POST, 'title'));
+      $contents = trim(filter_input(INPUT_POST, 'contents'));
+
+      $error = [];
+
+      //値の検証（入力内容が条件を満たさない場合はエラーメッセージを配列 $error に設定）
+      if ($name == trim('')) {
+          $error['name'] = '*お名前は必須項目です。';
+      //制御文字でないことと文字数をチェック
+      } elseif (preg_match('/\A[[:^cntrl:]]{1,30}\z/u', $name) == 0) {
+          $error['name'] = '*お名前は30文字以内でお願いします。';
+      }
+
+      if ($email == '') {
+          $error['email'] = '*メールアドレスは必須です。';
+      } elseif (preg_match('/\A[[:^cntrl:]]{1,200}\z/u', $email) == 0) {
+          $error['email'] = '*メールアドレスは200文字以内でお願いします。';
+      }
+      //メールアドレスを正規表現でチェック
+      $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/uiD';
+      if (!preg_match($pattern, $email)) {
+          $error['email'] = '*メールアドレスの形式が正しくありません。';
+      }
+
+      if ($email_check == '') {
+          $error['email_check'] = '*確認用メールアドレスは必須です。';
+      } else { //メールアドレスを正規表現でチェック
+          if ($email_check !== $email) {
+              $error['email_check'] = '*メールアドレスが一致しません。';
+          }
+      }
+
+      if ($title == '') {
+          $error['title'] = '*タイトルは必須項目です。';
+      //制御文字でないことと文字数をチェック
+      } elseif (preg_match('/\A[[:^cntrl:]]{1,150}\z/u', $title) == 0) {
+          $error['title'] = '*タイトルは150文字以内でお願いします。';
+      }
+
+        if ($contents == '') {
+            $error['contents'] = '*内容は必須項目です。';
+        //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
+        } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1000}\z/u', $contents) == 0) {
+            $error['contents'] = '*内容は1000文字以内でお願いします。';
+        }
+
+        return [
+            [
+                'name' => $name,
+                'email' => $email,
+                'email_check' => $email_check,
+                'title' => $title,
+                'contents' => $contents,
+            ],
+            $error
+        ];
+    }
+
+    // 入力内容送信
+    private function postarticle($name, $email, $title, $contents)
+    {
+      $query = "INSERT INTO contacts(name, email, title, contents) VALUES(:name, :email, :title, :contents)";
+      // 登録
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindValue("name", $name, \PDO::PARAM_STR);
+      $stmt->bindValue("email", $email, \PDO::PARAM_STR);
+      $stmt->bindValue("title", $title, \PDO::PARAM_STR);
+      $stmt->bindValue("contents", $contents, \PDO::PARAM_STR);
+      $stmt->execute();
+    }
+
+    private function redirectTop()
+    {
+        //エラーがある場合
+        $dirname = dirname($_SERVER['SCRIPT_NAME']);
+        $dirname = $dirname == DIRECTORY_SEPARATOR ? '' : $dirname;
+        //サーバー変数 $_SERVER['HTTPS'] が取得出来ない環境用（オプション）
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO'] === "https") {
+            $_SERVER['HTTPS'] = 'on';
+        }
+        //入力画面（index.php）の URL
+        $serverName = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'];
+        $url = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $serverName . $dirname . '/index.php';
+        header('HTTP/1.1 303 See Other');
+        header('location: ' . $url);
+        exit;
+    }
+
+    private function storeOldInput($inputs)
+    {
+      $_SESSION['old_input'] = [
+        'name' => $inputs['name'],
+        'email' => $inputs['email'],
+        'email_check' => $inputs['email_check'],
+        'title' => $inputs['title'],
+        'contents' => $inputs['contents'],
+      ];
+    }
+    private function storeOldInputWithError($inputs, $errors)
+    {
+      $this->storeOldInput($inputs);
+      $_SESSION['input_error'] = $errors;
+    }
+    private function getOldInputWithError(): array
+    {
+      return [
+        $_SESSION['old_input'] ?? [], 
+        $_SESSION['input_error'] ?? [], //合体演算子⇒nullの時[]を返す
+      ];
+    }
+    private function clearOldInputWithError()
+    {
+      unset($_SESSION['old_input']);
+      unset($_SESSION['input_error']);
+    }
+
+  // head,body開始タグ
+  public function printHeader()
+  {
+    echo '<!DOCTYPE html>';
+    echo '<html lang="ja">';
+    echo '<head>';
+    echo '<meta charset=UTF-8" http-equiv="Content-Type">';
+    echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+    echo '<meta name="format-detection" content="telephone=no">';
+    echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
+    echo '<link href="' . DOMAIN . '/public/css/contact.css" rel="stylesheet">';
+    echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
+    echo '<script src="' . DOMAIN . '/public/js/jquery-3.1.1.js" defer></script>';
+    echo '<script src="' . DOMAIN . '/public/contact/js/script.js" defer></script>';
+    echo '<title>' . SYSTITLE . '</title>';
+    echo '</head>';
+    echo '<body>';
+    echo '<header>';
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<div class="navtext h2">novus</div>';
+    if(isset($_SESSION["login_user"])):
+    echo '<ul class="nav justify-content-center">';
+    echo '<li class="nav-item">';
+    echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
+    echo '<a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/index.php">マイページ</a>';
+    echo '<input type="hidden">';
+    echo '</form>';
+    echo '</li>';
+    echo '<li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/userLogin/home.php">TOPページ</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user["user_id"]; ?>ログアウト</a></li>';
+    echo '</ul>';
+    echo '</div>';
+    else:
+    echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
+    echo '<ul class="nav justify-content-center">';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/question/index.php">質問ページ</a></li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/article/index.php">記事ページ</a></li>';
+    echo '</ul>';
+    echo '</div>';
+    endif;
+    echo '</header>';
+    echo '<main><div class="container">';
   }
 
   // ページ表示がないファイルは、mode=1で呼ぶ
   //footer
-  function end($mode = 0) {
+  public function printFooter($mode = 0)
+  {
     if ($mode == 0) {
-      echo '<hr/>';
+      // echo '<hr/>';
       echo '<div class="row m-2">';
         if(isset($_SESSION['login_user'])){
-          echo '<div class="col-sm-8">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
+          echo '<div class="col-sm-1"></div>';
+          echo '<div class="col-sm-11">';
+          echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
           echo '</div>';
         }else{
           echo '<div class="col-sm-8">';
@@ -45,22 +291,22 @@ class ContactAct extends Action
         }
       echo '</div>';
     }
-    echo '</div>';
-    echo '<footer class="h-10">';
+    echo '</div></main>';
+    echo '<hr><footer class="h-10">';
     echo '<div class="footer-item text-center">';
     echo '<h4>novus</h4>';
     echo '<ul class="nav nav-pills nav-fill">';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../article/index.php">記事</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/article/index.php">記事</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../question/index.php">質問</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/question/index.php">質問</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../bookApi/index.php">本検索</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/bookApi/index.php">本検索</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/contact/index.php">お問い合わせ</a>';
     echo '</li>';
     echo '</ul>';
     echo '</div>';
@@ -68,23 +314,5 @@ class ContactAct extends Action
     echo '</footer>';
     echo '</body>';
     echo '</html>';
-  }
-
-  // head,bodyまで出力する
-  function printHeader() {
-    echo '<!DOCTYPE html>';
-    echo '<html lang="ja">';
-    echo '<head>';
-    echo '<meta charset=UTF-8" http-equiv="Content-Type">';
-    echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-    echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-    echo '<meta name="format-detection" content="telephone=no">';
-    echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">';
-    echo '<link href="' . DOMAIN . '/public/css/contact.css" rel="stylesheet">';
-    echo '<link href="' . DOMAIN . '/public/css/novus.css" rel="stylesheet">';
-    echo '<script src="' . DOMAIN . '/public/contact/js/script.js" defer></script>';
-    echo '<title>' . SYSTITLE . '</title>';
-    echo '</head>';
-    echo '<body><div class="container">';
   }
 }

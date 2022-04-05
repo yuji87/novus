@@ -173,3 +173,23 @@ input:-webkit-autofill, textarea:-webkit-autofill {
   pointer-events: none;
   cursor: default;
 }
+header {
+  margin-top: 0;
+  width: 100%;
+}
+li {
+  font-size: 10px;
+  height: 60px;
+  float: right;
+}
+/* #li {
+  padding-top: 20px;
+} */
+#title {
+  padding-left: 20px;
+}
+@media(max-width:700px) {
+  a.nav-link {
+      padding: 0 8px 0 0;
+  }
+}

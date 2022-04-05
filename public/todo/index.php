@@ -23,13 +23,15 @@ $remainddt = Utils::addDay(7, 1);
 
 // エラーコード
 $errid = filter_input(INPUT_GET, 'errid');
+
+$icon = $act->getMemberIcon();
 ?>
 
 <div class="row m-2">
   <div class="col-sm-8"></div>
   <?php if (isset($_SESSION['login_user'])): ?>
     <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-4 text-dark">
-      <?php echo (isset($icon) ? '<img src="' . DOMAIN . '/public/user/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/user/img/sample_icon.png" class="mr-1">') ?>
+      <?php echo (isset($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
   <?php endif; ?>
