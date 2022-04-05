@@ -213,5 +213,5 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
 </script>
 
 <?php
-$act->end(1);
+$act->printFooter(1);
 ?>

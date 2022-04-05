@@ -3,6 +3,7 @@
 namespace Novus;
 
 require_once 'Action.php';
+require_once "Log.php";
 require_once 'Utils.php';
 
 // ToDo取得系
@@ -20,15 +21,20 @@ define("TITLE_LENGTH", 128);
 // ToDO関連のクラス
 class TodoAct extends Action
 {
-  // コンストラクタ($mode>=0の場合、明示的にbeginを呼び出す
-  function __construct($mode = -1) {
-    if ($mode >= 0) {
-      $this->begin($mode);
+  // $mode>=0の場合、明示的にbeginを呼び出す
+  public function __construct($mode = -1) {
+    try {
+      if ($mode >= 0) {
+        $this->begin($mode);
+      }
+    }catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
   }
 
   // ToDo一覧取得
-  function get()
+  public function get()
   {
     $retInfo = array();
 
@@ -56,7 +62,7 @@ class TodoAct extends Action
   }
 
   // ToDo登録
-  function add($title, $remind_date)
+  public function add($title, $remind_date)
   {
     if (!$title || !$remind_date) {
       return;
@@ -70,7 +76,7 @@ class TodoAct extends Action
   }
 
   // ToDo編集
-  function edit($todo_id, $title, $remind_date)
+  public function edit($todo_id, $title, $remind_date)
   {
     if (!$todo_id || !$title || !$remind_date ) {
       return;
@@ -85,7 +91,7 @@ class TodoAct extends Action
   }
 
   // ToDo 状態変更
-  function toggle($todo_id, $state)
+  public function toggle($todo_id, $state)
   {
     if (!$todo_id) {
       return;
@@ -101,7 +107,7 @@ class TodoAct extends Action
   }
   
   // ToDo削除
-  function delete($todo_id)
+  public function delete($todo_id)
   {
     if (!$todo_id) {
       return;
@@ -112,11 +118,10 @@ class TodoAct extends Action
     return $stmt->execute();
   }
 
-    // ページ表示がないファイルは、mode=1で呼ぶ
-  //footer
-  function end($mode = 0) {
+  // ページ表示がないファイルは、mode=1で呼ぶ
+  public function printFooter($mode = 0) {
     if ($mode === 0) {
-      echo '<hr/>';
+      // echo '<hr/>';
       echo '<div class="row m-2">';
       echo '<div class="col-sm-8">';
       echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
@@ -125,21 +130,21 @@ class TodoAct extends Action
       echo '</div>';
     }
     echo '</div>';
-    echo '<footer class="h-10">';
+    echo '<hr><footer class="h-10">';
     echo '<div class="footer-item text-center">';
     echo '<h4>novus</h4>';
     echo '<ul class="nav nav-pills nav-fill">';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../article/index.php">記事</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/article/index.php">記事</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../question/index.php">質問</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/question/index.php">質問</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../bookApi/index.php">本検索</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/bookApi/index.php">本検索</a>';
     echo '</li>';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="../contact/index.php">お問い合わせ</a>';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/contact/index.php">お問い合わせ</a>';
     echo '</li>';
     echo '</ul>';
     echo '</div>';

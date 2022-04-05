@@ -182,5 +182,5 @@ if (count($retInfo['articleList']) === 0) {
 </script>
 
 <?php
-$act->end(0);
+$act->printFooter(0);
 ?>

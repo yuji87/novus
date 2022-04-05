@@ -46,5 +46,5 @@ Token::create();
 <div class="lists"></div>
 
 <?php
-$act->end(0);
+$act->printFooter(0);
 ?>

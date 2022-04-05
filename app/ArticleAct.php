@@ -2,6 +2,7 @@
 namespace Novus;
 
 require_once "Action.php";
+require_once "Log.php";
 require_once "Utils.php";
 
 // 記事取得
@@ -45,126 +46,153 @@ define("MESSAGE_LENGTH", 1500);
 // 記事/いいね関連クラス
 class ArticleAct extends Action
 {
-  function __construct($mode = -1) {
-    if ($mode >= 0) {
+  public function __construct($mode = 1)
+  {
+    try {
       $this->begin($mode);
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
   }
 
   // 記事一覧
-  function articleList($page, $searchText = "")
+  public function articleList($page, $searchText = "")
   {
-    // retrieve:取得
-    $retInfo = array(); {
-      // 検索指定時、where句を追加する
-      $retList = array();
-      $inWhere = "";
+    try{
+      // retrieve:取得
+      $retInfo = array(); 
+      {
+        // 検索指定時、where句を追加する
+        $retList = array();
+        $inWhere = "";
 
-      // 検索指定時
-      if ($searchText != "") {
-      // 検索文字指定不可の文字をエスケープ
-        $searchText = Utils::convertSQL($searchText);
-        $inWhere = "WHERE title LIKE '%" . $searchText . "%' ESCAPE '#'";
-      }
-
-      // 記事リスト(指定されたpage 20件)
-      $offset = $page * LISTCOUNT;
-      $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_LIST, $inWhere));
-      $stmt->bindValue(":limit", (int)LISTCOUNT, \PDO::PARAM_INT);
-      $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
-      $result = $stmt->execute();
-      if ($result) {
-        while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
-          $retList[] = $rec;
+        // 検索指定時
+        if ($searchText != "") {
+          // 検索文字指定不可の文字をエスケープ
+          $searchText = Utils::convertSQL($searchText);
+          $inWhere = "WHERE title LIKE '%" . $searchText . "%' ESCAPE '#'";
         }
+
+        // 記事リスト(指定されたpage 20件)
+        $offset = $page * LISTCOUNT;
+        $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_LIST, $inWhere));
+        $stmt->bindValue(":limit", (int)LISTCOUNT, \PDO::PARAM_INT);
+        $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
+        $result = $stmt->execute();
+        if ($result) {
+          while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $retList[] = $rec;
+          }
+        }
+        $retInfo["articleList"] = $retList;
+
+        // ユーザ情報
+        $retInfo["userMap"] = $this->memberMap($retList, "user_id");
+
+        // いいね数
+        $retInfo["postLikeMap"] = $this->likeCountMap($retList);
       }
-      $retInfo["articleList"] = $retList;
 
-      // ユーザ情報
-      $retInfo["userMap"] = $this->memberMap($retList, "user_id");
+      // 記事全体の数
+      {
+        $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_COUNT, $inWhere));
+        $result = $stmt->execute();
+        $cntrec = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
+        $cnt = $cntrec == NULL ? 0 : $cntrec["cnt"]; //三項演算子
+        $retInfo["cnt"] = $cnt;
+        $maxPage = floor(($cnt - 1) / LISTCOUNT);
+        $retInfo["maxPage"] = $maxPage;
+      }
 
-      // いいね数
-      $retInfo["postLikeMap"] = $this->likeCountMap($retList);
+      // カテゴリ
+      $retInfo['category'] = $this->categoryMap();
+      return $retInfo;
+
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-
-    // 記事全体の数
-    {
-      $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_COUNT, $inWhere));
-      $result = $stmt->execute();
-      $cntrec = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
-      $cnt = $cntrec == NULL ? 0 : $cntrec["cnt"];
-      $retInfo["cnt"] = $cnt;
-      $maxPage = floor(($cnt - 1) / LISTCOUNT);
-      $retInfo["maxPage"] = $maxPage;
-    }
-
-    // カテゴリ
-    $retInfo['category'] = $this->categoryMap();
-    return $retInfo;
   }
 
   // 記事単独
-  function article($article_id)
+  public function article($article_id)
   {
-    $retInfo = array();
-    // 記事
-    {
-      $stmt = $this->conn->prepare(QUERY_ARTICLE);
-      $stmt->bindValue(':article_id', $article_id);
-      $result = $stmt->execute();
-      $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL; //三項演算子
-      $retInfo['article'] = $article;
-
-      // ユーザ情報
-      $retInfo['user'] = $this->memberRef($article['user_id']);
+    try{
+      $retInfo = array();
+      // 記事
+      {
+          $stmt = $this->conn->prepare(QUERY_ARTICLE);
+          $stmt->bindValue(':article_id', $article_id);
+          $result = $stmt->execute();
+          $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL; //三項演算子
+        $retInfo['article'] = $article;
+      
+        // ユーザ情報
+        $retInfo['user'] = $this->memberRef($article['user_id']);
+      }
+    
+      // いいねした?
+      $retInfo['postLike'] = $this->postLike($article_id);
+    
+      // いいね数取得
+      {
+        $stmt = $this->conn->query(sprintf(QUERY_POSTLIKE_COUNTLIST, $article_id));
+        $postLikeCnt = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $retInfo['postLikeCnt'] = $postLikeCnt == NULL ? 0 : $postLikeCnt['like_cnt'];
+      }
+    
+      // カテゴリ
+      $retInfo['category'] = $this->categoryMap();
+    
+      return $retInfo;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-
-    // いいねした?
-    $retInfo['postLike'] = $this->postLike($article_id);
-
-    // いいね数取得
-    {
-      $stmt = $this->conn->query(sprintf(QUERY_POSTLIKE_COUNTLIST, $article_id));
-      $postLikeCnt = $stmt->fetch(\PDO::FETCH_ASSOC);
-      $retInfo['postLikeCnt'] = $postLikeCnt == NULL ? 0 : $postLikeCnt['like_cnt'];
-    }
-
-    // カテゴリ
-    $retInfo['category'] = $this->categoryMap();
-
-    return $retInfo;
   }
 
   // 記事投稿
-  function create($title, $message, $cate_id)
+  public function create($title, $message, $cate_id)
   {
-    // 登録
-    $stmt = $this->conn->prepare(INSERT_ARTICLE);
-    $stmt->bindValue(':user_id', $this->member['user_id']);
-    $stmt->bindValue(':title', $title);
-    $stmt->bindValue(':message', $message);
-    $stmt->bindValue(':cate_id', $cate_id);
-    $stmt->execute();
+    try{
+      // 登録
+      $stmt = $this->conn->prepare(INSERT_ARTICLE);
+      $stmt->bindValue(':user_id', $this->member['user_id']);
+      $stmt->bindValue(':title', $title);
+      $stmt->bindValue(':message', $message);
+      $stmt->bindValue(':cate_id', $cate_id);
+      $stmt->execute();
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
+    }
   }
 
   // 記事更新
-  function update($article_id, $title, $message, $cate_id)
+  public function update($article_id, $title, $message, $cate_id)
   {
-    // 更新
-    $stmt = $this->conn->prepare(UPDATE_ARTICLE);
-    $stmt->bindValue(':article_id', $article_id);
-    $stmt->bindValue(':user_id', $this->member['user_id']);
-    $stmt->bindValue(':title', $title);
-    $stmt->bindValue(':message', $message);
-    $stmt->bindValue(':cate_id', $cate_id);
-    $stmt->execute();
+    try{
+      // 更新
+      $stmt = $this->conn->prepare(UPDATE_ARTICLE);
+      $stmt->bindValue(':article_id', $article_id);
+      $stmt->bindValue(':user_id', $this->member['user_id']);
+      $stmt->bindValue(':title', $title);
+      $stmt->bindValue(':message', $message);
+      $stmt->bindValue(':cate_id', $cate_id);
+      $stmt->execute();
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
+    }
   }
 
   // 記事削除
-  function delete($article_id)
+  public function delete($article_id)
   {
     try {
-      $this->conn->beginTransaction(); {
+      $this->conn->beginTransaction(); 
+      {
         $stmt = $this->conn->prepare(DELETE_ARTICLE);
         $stmt->bindValue(':user_id', $this->member['user_id']);
         $stmt->bindValue(':article_id', $article_id);
@@ -175,16 +203,16 @@ class ArticleAct extends Action
         $stmt->bindValue(':article_id', $article_id);
         $stmt->execute();
       }
-
       $this->conn->commit();
     } catch (\Exception $e) {
       $this->conn->rollback();
+      Log::error($e);
       echo $e;
     }
   }
 
   // いいね押下/解除時の処理
-  function postLikeArticle($article_id)
+  public function postLikeArticle($article_id)
   {
     $retcode = 'error';
     try {
@@ -212,111 +240,122 @@ class ArticleAct extends Action
       $this->conn->commit();
     } catch (\Exception $e) {
       $this->conn->rollback();
+      Log::error($e);
+      echo $e;
+      return false;
     }
     return $retcode;
   }
 
   //経験値付与処理
-  function addEXP($user_id, $plus_exp)
+  public function addEXP($user_id, $plus_exp)
   {
     try{
-        $stmt = $this->conn->prepare(QUERY_LEVEL);
+      $stmt = $this->conn->prepare(QUERY_LEVEL);
+      $stmt->bindValue(':user_id', $user_id);
+      $data = $stmt->execute();
+      if (! $data) {
+        return NULL;
+      }
+      $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+      // QUERY_LEVELで取得した経験値とレベルを定義
+      $exp = $data['exp'];
+      $level = $data['level'];
+
+      $new_exp = $exp + $plus_exp; // 合算経験値
+      $new_level = floor($new_exp / 100) + 1; //合算レベル
+
+      // 取得レベルと合算レベルの比較
+      if($level < $new_level){ 
+        // レベルに変化有
+        $stmt = $this->conn->prepare(UPDATE_LEVEL);// 経験値とレベルを更新
         $stmt->bindValue(':user_id', $user_id);
-        $data = $stmt->execute();
-        if (! $data) {
-          return NULL;
-        }
-        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
-    } catch(\Exception $e) {
-        echo $e;
-    }
-    // QUERY_LEVELで取得した経験値とレベルを定義
-    $exp = $data['exp'];
-    $level = $data['level'];
-
-    $new_exp = $exp + $plus_exp; // 合算経験値
-    $new_level = floor($new_exp / 100) + 1; //合算レベル
-
-    // 取得レベルと合算レベルの比較
-    if($level < $new_level){ 
-        try{
-          $stmt = $this->conn->prepare(UPDATE_LEVEL);// 経験値とレベルを更新
-          $stmt->bindValue(':user_id', $user_id);
-          $stmt->bindValue(':exp', $new_exp);
-          $stmt->bindValue(':level', $new_level);
-          $data = $stmt-> execute();
-          $_SESSION['login_user']['level'] = $new_level;
-          $_SESSION['login_user']['exp'] = $new_exp;
-          return $data;
-      } catch(\Exception $e) {
-          echo $e;
-      }
-    }else{
+        $stmt->bindValue(':exp', $new_exp);
+        $stmt->bindValue(':level', $new_level);
+        $data = $stmt-> execute();
+        $_SESSION['login_user']['level'] = $new_level;
+        $_SESSION['login_user']['exp'] = $new_exp;
+        return $data;
+      }else{
         // レベルに変化なし
-        try{
-          $stmt = $this->conn->prepare(UPDATE_EXP);// 経験値のみ付与
-          $stmt->bindValue(':user_id', $user_id);
-          $stmt->bindValue(':exp', $new_exp);
-          $data = $stmt-> execute();
-          $_SESSION['login_user']['level'] = $new_level;
-          $_SESSION['login_user']['exp'] = $new_exp;
-          return $data;
-      } catch(\Exception $e) {
-          echo $e;
+        $stmt = $this->conn->prepare(UPDATE_EXP);// 経験値のみ付与
+        $stmt->bindValue(':user_id', $user_id);
+        $stmt->bindValue(':exp', $new_exp);
+        $data = $stmt-> execute();
+        $_SESSION['login_user']['level'] = $new_level;
+        $_SESSION['login_user']['exp'] = $new_exp;
+        return $data;
       }
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-
   }
 
 
   // カテゴリマップ。戻り値は cate_id とカテゴリ名の連想配列。
-  function categoryMap()
+  public function categoryMap()
   {
-    $keymap = array();
-    $result = $this->conn->query(QUERY_CATEGORY_LIST);
-    if ($result) {
-      while ($rec =  $result->fetch(\PDO::FETCH_ASSOC)) {
-        $keymap[$rec['cate_id']] = $rec['CATEGORY_NAME'];
+    try{
+      $keymap = array();
+      $result = $this->conn->query(QUERY_CATEGORY_LIST);
+      if ($result) {
+        while ($rec =  $result->fetch(\PDO::FETCH_ASSOC)) {
+          $keymap[$rec['cate_id']] = $rec['CATEGORY_NAME'];
+        }
       }
+      return $keymap;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-    return $keymap;
   }
 
   // カテゴリIdチェック
-  function isCategory($cate_id)
+  public function isCategory($cate_id)
   {
     $catmap = $this->categoryMap();
     return isset($catmap[$cate_id]);
   }
 
   // いいね情報取得
-  function postLike($article_id)
+  public function postLike($article_id)
   {
-    if (isset($_SESSION['login_user'])){
-      $stmt = $this->conn->prepare(QUERY_POSTLIKE);
-      $stmt->bindValue(':article_id', $article_id);
-      $stmt->bindValue(':user_id', $this->member['user_id']);
-      $result = $stmt->execute();
-      $postLike = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
-      return $postLike;
+    try{
+      if (isset($_SESSION['login_user'])){
+        $stmt = $this->conn->prepare(QUERY_POSTLIKE);
+        $stmt->bindValue(':article_id', $article_id);
+        $stmt->bindValue(':user_id', $this->member['user_id']);
+        $result = $stmt->execute();
+        $postLike = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL;
+        return $postLike;
+      }
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
   }
 
   // いいねした記事の一覧取得
-  function postlikeArticleList()
+  public function postlikeArticleList()
   {
     $retInfo = array();
 
     // 記事一覧
     $retList = array();
-    $stmt = $this->conn->prepare(QUERY_ARTICLE_LIKEME_LIST);
-    $stmt->bindValue(':user_id', $this->member['user_id']);
-    $stmt->bindValue(':limit', (int)LISTCOUNT_MYPAGE, \PDO::PARAM_INT);
-    $result = $stmt->execute();
-    if ($result) {
-      while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        $retList[] = $mem;
+    try{
+      $stmt = $this->conn->prepare(QUERY_ARTICLE_LIKEME_LIST);
+      $stmt->bindValue(':user_id', $this->member['user_id']);
+      $stmt->bindValue(':limit', (int)LISTCOUNT_MYPAGE, \PDO::PARAM_INT);
+      $result = $stmt->execute();
+      if ($result) {
+        while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+          $retList[] = $mem;
+        }
       }
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
     $retInfo['articleList'] = $retList;
 
@@ -330,28 +369,33 @@ class ArticleAct extends Action
   }
 
   // いいね数を返す。戻り値は article_id といいね数の連想配列。
-  function likeCountMap($articles)
+  public function likeCountMap($articles)
   {
-    $countmap = array();
-    if (count($articles) == 0) {
-      return $countmap;
-    }
-
-    // where句の作成
-    $ids = array();
-    foreach ($articles as $art) {
-      $ids[] = $art['article_id'];
-    }
-    $inClause = substr(str_repeat(',?', count($ids)), 1);
-
-    // いいね数取得
-    $stmt = $this->conn->prepare(sprintf(QUERY_POSTLIKE_COUNTLIST, $inClause));
-    $result = $stmt->execute($ids);
-    if ($result) {
-      while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        $countmap[$mem['article_id']] = $mem['like_cnt'];
+    try{
+      $countmap = array();
+      if (count($articles) == 0) {
+        return $countmap;
       }
+
+      // where句の作成
+      $ids = array();
+      foreach ($articles as $art) {
+        $ids[] = $art['article_id'];
+      }
+      $inClause = substr(str_repeat(',?', count($ids)), 1);
+
+      // いいね数取得
+      $stmt = $this->conn->prepare(sprintf(QUERY_POSTLIKE_COUNTLIST, $inClause));
+      $result = $stmt->execute($ids);
+      if ($result) {
+        while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+          $countmap[$mem['article_id']] = $mem['like_cnt'];
+        }
+      }
+      return $countmap;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-    return $countmap;
   }
 }

@@ -1,17 +1,14 @@
 <?php
 namespace Novus;
 
-require_once __DIR__ . '/../config/def.php';
-require_once __DIR__ . '/database.php';
+require_once __DIR__ . "/../config/def.php";
+require_once __DIR__ . "/database.php";
+require_once __DIR__ . "/Log.php";
 
 // ユーザー情報取得系
-define("QUERY_MEMBER", "SELECT user_id,name,tel,name,password,email,icon,q_disp_flg,level,exp,comment,pre_level,pre_exp FROM users WHERE user_id=:user_id");
 define("QUERY_MEMBER_REF", "SELECT user_id,name,tel,name,password,email,icon,q_disp_flg,level,exp,comment,pre_level,pre_exp FROM users WHERE user_id=:user_id");
 define("QUERY_MEMBER_TEL", "SELECT user_id,name,tel,name,password,email,icon,q_disp_flg,level,exp,comment,pre_level,pre_exp FROM users WHERE tel=:tel");
 define("QUERY_MEMBERLIST_IDS", "SELECT user_id,name,tel,name,password,email,icon,q_disp_flg,level,exp,comment,pre_level,pre_exp FROM users WHERE user_id IN (%s)");
-
-// ユーザー情報更新系
-define("INSERT_MEMBER", "INSERT INTO users (name,password,email) VALUES (:name, :password, :email)");
 
 // ベースクラス
 class Action 
@@ -19,16 +16,20 @@ class Action
   protected $member;
   protected $conn;
 
-  public function __construct($mode = -1) {
-    if ($mode >= 0) {
+  public function __construct($mode = 1)
+  {
+    try {
       $this->begin($mode);
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
   }
 
   // ページ読み出し処理(各ページの最初に呼び出す)
   // セッションがない場合は、トップページへ遷移させる
   // ページ表示不要のリクエストは,mode=1にして呼ぶ。
-  function begin($mode = 0) {
+  public function begin($mode = 0) {
     session_start();
 
     // DB接続
@@ -44,15 +45,14 @@ class Action
     header("X-FRAME-OPTIONS: DENY");
 
     if ($mode == 0) {
-    // headを出力
-        $this->printHeader();
+      $this->printHeader();
     }
   }
 
   // ページ読み出し処理(各ページの初期時に呼び出す)
   // セッション不要ページ用
   // ページ表示不要のリクエストは,mode=1にして呼ぶ。
-  function begin_free($mode = 0) {
+  public function begin_free($mode = 0) {
     // DB接続
     $this->conn = Database::getInstance();
 
@@ -60,13 +60,12 @@ class Action
     header("X-FRAME-OPTIONS: DENY");
 
     if ($mode == 0) {
-    // headを出力
       $this->printHeader();
     }
   }
 
   // ログイン中か判定
-  function checkLogin() {
+  public function checkLogin() {
     // Cookie
     if (isset($_SESSION["USER_ID"]) === false && isset($_SESSION["login_user"]) === false) {
       // ログインページへ
@@ -76,141 +75,113 @@ class Action
   }
 
   // メンバー情報全てを返す
-  function getMember() {
+  public function getMember() {
     return $this->member;
   }
   // メンバーのIDを返す
-  function getMemberId() {
+  public function getMemberId() {
     return $this->member['user_id'];
   }
   // メンバーの名前を返す
-  function getMemberIcon() {
+  public function getMemberIcon() {
     return $this->member['icon'];
   }
   // メンバーの名前を返す
-  function getMemberName() {
+  public function getMemberName() {
     return $this->member['name'];
   }
   // メンバーのメールアドレスを返す
-  function getMemberEmail() {
+  public function getMemberEmail() {
     return $this->member['email'];
   }
   // メンバーのレベルを返す
-  function getMemberLevel() {
+  public function getMemberLevel() {
     return $this->member['level'];
   }
   // メンバーの経験値を返す
-  function getMemberExp() {
+  public function getMemberExp() {
     return $this->member['exp'];
   }
 
 
   // userIdからユーザ情報を取得
-  function memberRef($userid) {
-    $stmt = $this->conn->prepare(QUERY_MEMBER_REF);
-    $stmt->bindValue(':user_id', $userid);
-    $result = $stmt->execute();
-    if (! $result) {
-      return NULL;
+  public function memberRef($userid) 
+  {
+    try{
+      $stmt = $this->conn->prepare(QUERY_MEMBER_REF);
+      $stmt->bindValue(':user_id', $userid);
+      $result = $stmt->execute();
+      if (! $result) {
+        return NULL;
+      }
+      $member = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $member;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-    $member = $stmt->fetch(\PDO::FETCH_ASSOC);
-    return $member;
   }
+
   // telからユーザ情報を取得
-  function memberRefTel($tel) {
-    $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
-    $stmt->bindValue(':tel', $tel);
-    $result = $stmt->execute();
-    if (! $result) {
-      return NULL;
+  public function memberRefTel($tel) 
+  {
+    try{
+      $stmt = $this->conn->prepare(QUERY_MEMBER_TEL);
+      $stmt->bindValue(':tel', $tel);
+      $result = $stmt->execute();
+      if (! $result) {
+        return NULL;
+      }
+      $member = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $member;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-    $member = $stmt->fetch(\PDO::FETCH_ASSOC);
-    return $member;
   }
+
   // 特定の連想配列$userから、IDを取り出して、ユーザ情報のマップを作成
   // 戻り値は user-id とユーザ情報の連想配列。
-  function memberMap($users, $idkey) {
-    $members = array();
-    if (count($users) === 0) {
-    // リストが 0件
+  public function memberMap($users, $idkey) 
+  {
+    try{
+      $members = array();
+      if (count($users) === 0) {
+      // リストが 0件
+        return $members;
+      }
+    
+      // where句の作成
+      // duplicate
+      $ids = array();
+      $dupMap = array();
+      foreach ($users as $user) {
+        if (isset($dupMap[$user[$idkey]])) {
+          // user_idが重複している時はスキップ
+          continue;
+        }
+        $dupMap[$user[$idkey]] = 1;
+        $ids[] = $user[$idkey];
+      }
+      $inClause = substr(str_repeat(',?', count($ids)), 1);
+    
+      // メンバー情報取得
+      $stmt = $this->conn->prepare(sprintf(QUERY_MEMBERLIST_IDS, $inClause));
+      $result = $stmt->execute($ids);
+      if ($result) {
+        while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+          $members[$mem['user_id']] = $mem;
+        }
+      }
       return $members;
+    } catch (\Exception $e) {
+      Log::error($e);
+      echo $e;
     }
-
-    // where句の作成
-    // duplicate
-    $ids = array();
-    $dupMap = array();
-    foreach ($users as $user) {
-      if (isset($dupMap[$user[$idkey]])) {
-        // user_idが重複している時はスキップ
-        continue;
-      }
-      $dupMap[$user[$idkey]] = 1;
-      $ids[] = $user[$idkey];
-    }
-    $inClause = substr(str_repeat(',?', count($ids)), 1);
-
-    // メンバー情報取得
-    $stmt = $this->conn->prepare(sprintf(QUERY_MEMBERLIST_IDS, $inClause));
-    $result = $stmt->execute($ids);
-    if ($result) {
-      while ($mem = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-        $members[$mem['user_id']] = $mem;
-      }
-    }
-
-    return $members;
   }
 
-  // ページ表示がないファイルは、mode=1で呼ぶ
-  //footer
-  function end($mode = 0) {
-    if ($mode === 0) {
-      echo '<hr/>';
-      echo '<div class="row m-2">';
-        if(isset($_SESSION['login_user'])){
-          echo '<div class="col-sm-10">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-          echo '</div>';
-        }else{
-          echo '<div class="col-sm-10">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
-          echo '</div>';
-        }
-        if (isset($_SESSION['login_user'])){
-          echo '<div class="col-sm-2">';
-            echo '<a class="btn btn-primary m-2" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
-          echo '</div>';
-        }
-      echo '</div>';
-    }
-    echo '</div></main>';
-    echo '<hr><footer class="h-10">';
-    echo '<div class="footer-item text-center">';
-    echo '<h4>novus</h4>';
-    echo '<ul class="nav nav-pills nav-fill">';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="' . DOMAIN . '/public/article/index.php">記事</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="' . DOMAIN . '/public/question/index.php">質問</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="' . DOMAIN . '/public/bookApi/index.php">本検索</a>';
-    echo '</li>';
-    echo '<li class="nav-item">';
-    echo '<a class="nav-link small" href="' . DOMAIN . '/public/contact/index.php">お問い合わせ</a>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</div>';
-    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
-    echo '</footer>';
-    echo '</body>';
-    echo '</html>';
-  }
-
-  // head,body開始タグ
-  function printHeader() {
+  // 開始タグ
+  public function printHeader() {
     echo '<!DOCTYPE html>';
     echo '<html lang="ja">';
     echo '<head>';
@@ -253,7 +224,7 @@ class Action
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user["user_id"]; ?>ログアウト</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
     echo '</ul>';
     echo '</div>';
     else:
@@ -267,5 +238,51 @@ class Action
     endif;
     echo '</header>';
     echo '<main><div class="container">';
+  }
+
+  // ページ表示がないファイルは、mode=1で呼ぶ
+  public function printFooter($mode = 0) {
+    if ($mode === 0) {
+      echo '<hr/>';
+      echo '<div class="row m-2">';
+        if(isset($_SESSION['login_user'])){
+          echo '<div class="col-sm-10">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
+          echo '</div>';
+        }else{
+          echo '<div class="col-sm-10">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/top/index.php">ホーム画面へ</a>';
+          echo '</div>';
+        }
+        if (isset($_SESSION['login_user'])){
+          echo '<div class="col-sm-2">';
+            echo '<a class="btn btn-primary m-2" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
+          echo '</div>';
+        }
+      echo '</div>';
+    }
+    echo '</div></main>';
+    echo '<hr><footer class="h-10">';
+    echo '<div class="footer-item text-center">';
+    echo '<h4>novus</h4>';
+    echo '<ul class="nav nav-pills nav-fill">';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/article/index.php">記事</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/question/index.php">質問</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/bookApi/index.php">本検索</a>';
+    echo '</li>';
+    echo '<li class="nav-item">';
+    echo '<a class="nav-link small" href="' . DOMAIN . '/public/contact/index.php">お問い合わせ</a>';
+    echo '</li>';
+    echo '</ul>';
+    echo '</div>';
+    echo '<p class="text-center small mt-2">Copyright (c) HTMQ All Rights Reserved.</p>';
+    echo '</footer>';
+    echo '</body>';
+    echo '</html>';
   }
 }
