@@ -61,7 +61,7 @@ if(isset($_GET['search'])) {
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
             <ul class="nav justify-content-center">
-			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../article/index.php">記事ページ</a></li>      
             </ul>
@@ -95,7 +95,7 @@ if(isset($_GET['search'])) {
                                 <?php endforeach; ?>
                             </select>
 	                	</div>
-	                	<button type="submit" class="btn btn-warning mt-4" name="search">検索</button>
+	                	<button type="submit" class="btn btn-primary mt-4" name="search">検索</button>
 	                </form>
                 </div>
 
@@ -105,23 +105,39 @@ if(isset($_GET['search'])) {
         			    <p class="alert alert-success"><?php echo count($searchQuestion); ?>件見つかりました。</p>
         			    <div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 					    <?php foreach($searchQuestion as $value): ?>
+							<!--題名-->
         			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-					        <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
-								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../top/img/<?php echo $value['icon']; ?>">
-								</a>
-							<?php else: ?>
-								<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									<div><img src="../top/img/sample_icon.png"></div>
-								</a>
+					        <!--アイコン-->
+							<?php if($result): // ログイン可否で違うユーザーページへ ?>
+								<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+								    <a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						    echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									    <img src="../top/img/<?php echo $value['icon']; ?>">
+								    </a>
+							    <?php else: ?>
+								    <a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						    echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+									    <div><img src="../top/img/sample_icon.png"></div>
+								    </a>
+								<?php endif; ?>
+							<? else: ?>
+								<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                                    <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+                                <?php else: ?>
+					    	    <!--アイコンをクリックするとユーザーページへ-->
+					    	    <a name="icon" href="<?php 
+					    	        //user_idをユーザーページに引き継ぐ
+					    	        echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+					    	    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                                <?php endif; ?>
 							<?php endif; ?>
+							<!--ユーザー名-->
 					        <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
-					        <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-							<!-- 本文が50文字以上なら省略 -->
+					        <!--カテゴリ-->
+							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
+							<!-- メッセージ：本文が50文字以上なら省略 -->
 							<?php if(mb_strlen($value['message']) > 50): ?>
 								<?php $limit_content = mb_substr($value['message'],0,50); ?>
 								<?php echo $limit_content; ?>…
@@ -147,23 +163,39 @@ if(isset($_GET['search'])) {
 		                <?php elseif(isset($newQuestion)): ?>
 		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		                	<?php foreach($newQuestion as $value): ?>
+								<!--題名-->
 		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-								<?php if($value['icon'] !== null && !empty($value['icon'])): ?>
-									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../top/img/<?php echo $value['icon']; ?>">
-									</a>
+								<!--アイコン-->
+								<?php if($result): // ログイン可否で違うユーザーページへ ?>
+								    <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    					    	echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								    	<img src="../top/img/<?php echo $value['icon']; ?>">
+								    	</a>
+								    <?php else: ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+								    	echo '../myPage/index.php'; } else {
+								    	echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								    	<img src="../top/img/sample_icon.png">
+								    	</a>
+								    <?php endif; ?>
 								<?php else: ?>
-									<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-									echo '../myPage/index.php'; } else {
-									echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									<img src="../top/img/sample_icon.png">
-									</a>
+									<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                                    <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+                                <?php else: ?>
+					    	    <!--アイコンをクリックするとユーザーページへ-->
+					    	    <a name="icon" href="<?php 
+					    	        //user_idをユーザーページに引き継ぐ
+					    	        echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+					    	        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                                    <?php endif; ?>
 								<?php endif; ?>
+								<!--ユーザー名-->
 					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
-					    		<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-								<!-- 本文が50文字以上なら省略 -->
+					    		<!--カテゴリ-->
+								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!-- メッセージ：本文が50文字以上なら省略 -->
 								<?php if(mb_strlen($value['message']) > 50): ?>
 									<?php $limit_content = mb_substr($value['message'],0,50); ?>
 									<?php echo $limit_content; ?>…

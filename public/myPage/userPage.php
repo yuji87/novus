@@ -84,7 +84,7 @@ $showicon = UserLogic::showIcon($_GET);
                                echo 'Let us introduce yourself!';
                             } ?>
                     </div>
-                    <a href="../userLogin/home.php" id="back">戻る</a>
+                    <p><a class="mb-2 btn btn-outline-dark mt-5" href="../userLogin/home.php" role="button">TOPに戻る</a></p>
                 </div>
             </div>
         </div>

@@ -15,8 +15,9 @@ if(!$tel = filter_input(INPUT_POST, 'tel')) {
     $err['tel'] = '電話番号を入力してください';
 }
 // 文字数チェック
-if(strlen($tel) > 12) {
-    $err_msg['tel'] = '12文字で入力してください';
+$limitTel = 12;
+if(strlen($tel) > $limitTel) {
+    $err['tel'] = '12文字以内で入力してください';
 }
 if(!$password = filter_input(INPUT_POST, 'password')) {
     $err['password'] = 'パスワードを入力してください';

@@ -47,7 +47,7 @@ $showicon = UserLogic::showIcon();
             <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
             <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
             <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>

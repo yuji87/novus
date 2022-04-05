@@ -31,9 +31,14 @@ if(!$data) {
 <body>
     <!--メニュー-->
     <header>
-        <div class="navtext-container">
-            <div class="navtext">novus</div>
-        </div>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="headerlogo">novus</div>
+            <ul class="nav justify-content-center">
+			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../article/index.php">記事ページ</a></li>      
+            </ul>
+		</div>
     </header>
 
     <!--コンテンツ-->
@@ -72,7 +77,7 @@ if(!$data) {
                                echo 'Let us introduce yourself!';
                             } ?>
                     </div>
-                    <a href="index.php" id="back">戻る</a>
+                    <p><a class="mb-2 btn btn-outline-dark mt-5" href="index.php" role="button">TOPに戻る</a></p>
                 </div>
             </div>
         </div>

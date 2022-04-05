@@ -19,6 +19,9 @@ if($result) {
 $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err'] : null;
 unset($_SESSION['login_err']);
 $err = $_SESSION;
+
+// セッション変数を全て解除する
+$_SESSION = array();
 ?>
 
 <!--ログインフォーム-->
