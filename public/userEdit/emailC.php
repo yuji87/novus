@@ -56,7 +56,7 @@ if(count($err) === 0 && (isset($_POST['check']))) {
     <!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="title">novus</div>
+            <div class="navtext h2" id="headerlogo">novus</div>
             <ul class="nav justify-content-center">
             <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
             <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
