@@ -57,11 +57,11 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     <div class="row m-2 form-group" style="height:55vh">
       <!-- 入力欄 -->
       <div class="col-sm-6">
-        <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%; overflow:scroll; overflow-x: hidden; height:450px"><?php echo $message; ?></textarea>
+        <textarea class="form-control preview" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%; overflow:scroll; overflow-x: hidden; height:450px"><?php echo $message; ?></textarea>
       </div>
       <!-- プレビュー表示欄 -->
       <div class="col-sm-6">
-        <div class="artpreview artContents" id="previewmsg" style="overflow:scroll; overflow-x: hidden; height:450px;"></div>
+        <div class="artpreview artContents preview" id="previewmsg" style="overflow:scroll; overflow-x: hidden; height:450px;"></div>
       </div>
     </div>
     <div class="row m-2 form-group">

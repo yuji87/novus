@@ -7,6 +7,20 @@
 /* body{
   background-color: #eee;
 } */
+  h1 {
+    border-bottom: 3px solid gray;
+    display: inline-block;
+  }
+
+li{
+  font-size: 10px;
+  height: 60px;
+}
+@media screen and (max-width:575px) { 
+.preview{
+  display: none;
+}
+}
 
 h5{
   font-size: 1.1rem;
@@ -148,11 +162,11 @@ header {
   margin-top: 0;
   width: 100%;
 }
-li {
+/* li {
   font-size: 10px;
   height: 60px;
   float: right;
-}
+} */
 /* #li {
   padding-top: 20px;
 } */

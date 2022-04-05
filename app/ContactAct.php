@@ -71,8 +71,8 @@ class ContactAct extends Action
     if ($contents == '') {
         $error['contents'] = '*内容は必須項目です。';
     //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
-    } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1000}\z/u', $contents) == 0) {
-        $error['contents'] = '*内容は1000文字以内でお願いします。';
+    } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1500}\z/u', $contents) == 0) {
+        $error['contents'] = '*内容は1500文字以内でお願いします。';
     }
   
     return [
