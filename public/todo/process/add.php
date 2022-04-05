@@ -23,13 +23,13 @@ $newTodoDt = filter_input(INPUT_POST, 'newTodoDt');
 $newTodoTitle = Utils::mbtrim($newTodoTitle);
 
 if (!Utils::isStrLen($newTodoTitle, 100)) {
-  // 範囲外
+  // 100文字以上を入力されたとき
   header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidtitle');
   exit;
 }
 
 if (!Utils::checkDatetimeFormat($newTodoDt)) {
-  // 日付フォーマットが違う
+  // 日付フォーマットが違うとき
   header('Location: ' . DOMAIN . '/public/todo/index.php?errid=invalidformatdt');
   exit;
 }
