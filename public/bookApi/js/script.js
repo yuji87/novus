@@ -103,7 +103,12 @@ $(function () {
     var error_code = err.status;
     // 400: リクエストエラー
     if (error_code === 400) {
-      $(".search").after("<p class='message' style='color:red; font-weight:bold;'>何も入力されていません</p>");
+      swal({
+        text: '何も入力されていません'
+      }).then(function () {
+        jumpapi('bookApi/index.php');
+      });
+      // $(".search").after("<p class='message' style='color:red; font-weight:bold;'>何も入力されていません</p>");
     }
   }
 

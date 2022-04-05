@@ -57,11 +57,11 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     <div class="row m-2 form-group" style="height:55vh">
       <!-- 入力欄 -->
       <div class="col-sm-6">
-        <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%;"><?php echo $message; ?></textarea>
+        <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%; overflow:scroll; overflow-x: hidden; height:450px"><?php echo $message; ?></textarea>
       </div>
       <!-- プレビュー表示欄 -->
       <div class="col-sm-6">
-        <div class="artpreview artContents" id="previewmsg"></div>
+        <div class="artpreview artContents" id="previewmsg" style="overflow:scroll; overflow-x: hidden; height:450px;"></div>
       </div>
     </div>
     <div class="row m-2 form-group">
@@ -85,7 +85,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
       <div class="col-sm-12 text-right">
         <?php
         if ($article_id > 0) {
-          echo('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
+          echo ('<div class="btn btn-warning" onClick="onDelete();">削除</div>');
         }
         ?>
         <a class="btn btn-primary" href="<?php echo DOMAIN; ?>/public/article/index.php">一覧に戻る</a>
@@ -124,10 +124,10 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     $('#category').val(<?php echo $catval; ?>);
     setupPreview();
   });
-  
+
   // プレビュー画面に文字列を反映
   function setupPreview() {
-//    var text = htmlspecialchars($('#message').val()); // タグ全部無効
+    //    var text = htmlspecialchars($('#message').val()); // タグ全部無効
     var text = $('#message').val();
     text = trimHtmlTag(text); // 一部タグを許容
     text = marked(text); // マークアップ文字置き換え
@@ -187,7 +187,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
       dangerMode: true
     }).then(function(isConfirm) {
       if (isConfirm) {
-        
+
         var $data = 'article_id=' + <?php echo $article_id; ?> +
           '&token=<?php echo $_SESSION["token"]; ?>';
 
@@ -199,14 +199,14 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     });
   }
 
-  $(function(){
-    $(".open").click(function(){
+  $(function() {
+    $(".open").click(function() {
       $(".modal").fadeIn();
     });
-    $(".close").click(function(){
+    $(".close").click(function() {
       $(".modal").fadeOut();
     });
-    $(".modal_bg").click(function(){
+    $(".modal_bg").click(function() {
       $(".modal").fadeOut();
     });
   });
