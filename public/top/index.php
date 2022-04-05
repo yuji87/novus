@@ -98,13 +98,13 @@ if(!$newQuestion) {
 			        <!--アイコン-->
 			        <div class="level-icon">
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+                            <img src="img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
 					    	<!--アイコンをクリックするとユーザーページへ-->
 					    	<a name="icon" href="<?php 
 					    	//user_idをユーザーページに引き継ぐ
 					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
-					    	<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+					    	<?php echo "<img src="."img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
 				    <!--ユーザー名-->
