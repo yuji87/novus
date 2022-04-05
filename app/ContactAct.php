@@ -6,6 +6,9 @@ require_once "Log.php";
 require_once "Token.php";
 require_once "Utils.php";
 
+// 入力データ登録
+define("QUERY_CONTACT", "INSERT INTO contacts(name, email, title, contents) VALUES(:name, :email, :title, :contents)");
+
 class ContactAct extends Action
 {
   public function __construct($mode = 1)
@@ -14,12 +17,78 @@ class ContactAct extends Action
       $this->begin($mode);
     } catch (\Exception $e) {
       Log::error($e);
-      throw $e;
+      echo $e;
     }
   }
 
+  // 入力値チェック
+  private function validateInput()
+  {
+    $_POST = Utils::checkInput($_POST);
+    $name = trim(filter_input(INPUT_POST, 'name'));
+    $email = trim(filter_input(INPUT_POST, 'email'));
+    $email_check = trim(filter_input(INPUT_POST, 'email_check'));
+    $title = trim(filter_input(INPUT_POST, 'title'));
+    $contents = trim(filter_input(INPUT_POST, 'contents'));
+  
+    $error = [];
+  
+    //値の検証（入力内容が条件を満たさない場合はエラーメッセージを配列 $error に設定）
+    if ($name == trim('')) {
+        $error['name'] = '*お名前は必須項目です。';
+    //制御文字でないことと文字数をチェック
+    } elseif (preg_match('/\A[[:^cntrl:]]{1,30}\z/u', $name) == 0) {
+        $error['name'] = '*お名前は30文字以内でお願いします。';
+    }
+  
+    if ($email == '') {
+        $error['email'] = '*メールアドレスは必須です。';
+    } elseif (preg_match('/\A[[:^cntrl:]]{1,200}\z/u', $email) == 0) {
+        $error['email'] = '*メールアドレスは200文字以内でお願いします。';
+    }
+  
+    //メールアドレスを正規表現でチェック
+    $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/uiD';
+    if (!preg_match($pattern, $email)) {
+        $error['email'] = '*メールアドレスの形式が正しくありません。';
+    }
+  
+    if ($email_check == '') {
+        $error['email_check'] = '*確認用メールアドレスは必須です。';
+    } else { //メールアドレスを正規表現でチェック
+        if ($email_check !== $email) {
+            $error['email_check'] = '*メールアドレスが一致しません。';
+        }
+    }
+  
+    if ($title == '') {
+        $error['title'] = '*タイトルは必須項目です。';
+    //制御文字でないことと文字数をチェック
+    } elseif (preg_match('/\A[[:^cntrl:]]{1,150}\z/u', $title) == 0) {
+        $error['title'] = '*タイトルは150文字以内でお願いします。';
+    }
+  
+    if ($contents == '') {
+        $error['contents'] = '*内容は必須項目です。';
+    //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
+    } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1000}\z/u', $contents) == 0) {
+        $error['contents'] = '*内容は1000文字以内でお願いします。';
+    }
+  
+    return [
+      [
+        'name' => $name,
+        'email' => $email,
+        'email_check' => $email_check,
+        'title' => $title,
+        'contents' => $contents,
+      ],
+      $error
+    ];
+  }
+
   // 問い合わせフォームトップページ画面処理
-  public function index(): array
+  public function index()
   {
     try {
       // トークン生成
@@ -37,7 +106,7 @@ class ContactAct extends Action
       $this->clearOldInputWithError();
     } catch (\Exception $e) {
       Log::error($e);
-      throw $e;
+      echo $e;
     }
     return [
       $oldInputs,
@@ -46,12 +115,12 @@ class ContactAct extends Action
   }
 
   // 問い合わせフォーム確認ページ処理
-  public function confirm(): array
+  public function confirm()
   {
     try {
       // トークン生成
       Token::validate();
-      // 書き直しデータ取得
+      // 入力データ取得
       [$inputs, $errors] = $this->validateInput();
       // 入力内容にエラーがある場合、トップへリダイレクト
       if (!empty($errors)) {
@@ -60,13 +129,13 @@ class ContactAct extends Action
       }
     } catch (\Exception $e) {
       Log::error($e);
-      throw $e;
+      echo $e;
     }
     return $inputs;
   }
 
   // 問い合わせフォーム完了ページ処理
-  public function complete(): bool
+  public function complete()
   {
     try {
       Token::validate();
@@ -94,82 +163,15 @@ class ContactAct extends Action
   }
 
   // セッショントークンの取得
-  public function getToken(): string
+  public function getToken()
   {
     return $_SESSION["token"];
   }
-  
-    // 入力値チェック
-    private function validateInput()
-    {
-      $_POST = Utils::checkInput($_POST);
-      $name = trim(filter_input(INPUT_POST, 'name'));
-      $email = trim(filter_input(INPUT_POST, 'email'));
-      $email_check = trim(filter_input(INPUT_POST, 'email_check'));
-      $title = trim(filter_input(INPUT_POST, 'title'));
-      $contents = trim(filter_input(INPUT_POST, 'contents'));
-
-      $error = [];
-
-      //値の検証（入力内容が条件を満たさない場合はエラーメッセージを配列 $error に設定）
-      if ($name == trim('')) {
-          $error['name'] = '*お名前は必須項目です。';
-      //制御文字でないことと文字数をチェック
-      } elseif (preg_match('/\A[[:^cntrl:]]{1,30}\z/u', $name) == 0) {
-          $error['name'] = '*お名前は30文字以内でお願いします。';
-      }
-
-      if ($email == '') {
-          $error['email'] = '*メールアドレスは必須です。';
-      } elseif (preg_match('/\A[[:^cntrl:]]{1,200}\z/u', $email) == 0) {
-          $error['email'] = '*メールアドレスは200文字以内でお願いします。';
-      }
-      //メールアドレスを正規表現でチェック
-      $pattern = '/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/uiD';
-      if (!preg_match($pattern, $email)) {
-          $error['email'] = '*メールアドレスの形式が正しくありません。';
-      }
-
-      if ($email_check == '') {
-          $error['email_check'] = '*確認用メールアドレスは必須です。';
-      } else { //メールアドレスを正規表現でチェック
-          if ($email_check !== $email) {
-              $error['email_check'] = '*メールアドレスが一致しません。';
-          }
-      }
-
-      if ($title == '') {
-          $error['title'] = '*タイトルは必須項目です。';
-      //制御文字でないことと文字数をチェック
-      } elseif (preg_match('/\A[[:^cntrl:]]{1,150}\z/u', $title) == 0) {
-          $error['title'] = '*タイトルは150文字以内でお願いします。';
-      }
-
-        if ($contents == '') {
-            $error['contents'] = '*内容は必須項目です。';
-        //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
-        } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1000}\z/u', $contents) == 0) {
-            $error['contents'] = '*内容は1000文字以内でお願いします。';
-        }
-
-        return [
-            [
-                'name' => $name,
-                'email' => $email,
-                'email_check' => $email_check,
-                'title' => $title,
-                'contents' => $contents,
-            ],
-            $error
-        ];
-    }
 
     // 入力内容送信
     private function postarticle($name, $email, $title, $contents)
     {
-      $query = "INSERT INTO contacts(name, email, title, contents) VALUES(:name, :email, :title, :contents)";
-      // 登録
-      $stmt = $this->conn->prepare($query);
+      $stmt = $this->conn->prepare(QUERY_CONTACT);
       $stmt->bindValue("name", $name, \PDO::PARAM_STR);
       $stmt->bindValue("email", $email, \PDO::PARAM_STR);
       $stmt->bindValue("title", $title, \PDO::PARAM_STR);
@@ -179,19 +181,19 @@ class ContactAct extends Action
 
     private function redirectTop()
     {
-        //エラーがある場合
-        $dirname = dirname($_SERVER['SCRIPT_NAME']);
-        $dirname = $dirname == DIRECTORY_SEPARATOR ? '' : $dirname;
-        //サーバー変数 $_SERVER['HTTPS'] が取得出来ない環境用（オプション）
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO'] === "https") {
-            $_SERVER['HTTPS'] = 'on';
-        }
-        //入力画面（index.php）の URL
-        $serverName = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'];
-        $url = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $serverName . $dirname . '/index.php';
-        header('HTTP/1.1 303 See Other');
-        header('location: ' . $url);
-        exit;
+      //エラーがある場合
+      $dirname = dirname($_SERVER['SCRIPT_NAME']);
+      $dirname = $dirname == DIRECTORY_SEPARATOR ? '' : $dirname;
+      //サーバー変数 $_SERVER['HTTPS'] が取得出来ない環境用（オプション）
+      if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO'] === "https") {
+          $_SERVER['HTTPS'] = 'on';
+      }
+      //入力画面（index.php）の URL
+      $serverName = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'];
+      $url = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $serverName . $dirname . '/index.php';
+      header('HTTP/1.1 303 See Other');
+      header('location: ' . $url);
+      exit;
     }
 
     private function storeOldInput($inputs)
@@ -209,7 +211,7 @@ class ContactAct extends Action
       $this->storeOldInput($inputs);
       $_SESSION['input_error'] = $errors;
     }
-    private function getOldInputWithError(): array
+    private function getOldInputWithError()
     {
       return [
         $_SESSION['old_input'] ?? [], 
@@ -256,7 +258,7 @@ class ContactAct extends Action
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user["user_id"]; ?>ログアウト</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
     echo '</ul>';
     echo '</div>';
     else:
@@ -273,20 +275,20 @@ class ContactAct extends Action
   }
 
   // ページ表示がないファイルは、mode=1で呼ぶ
-  //footer
   public function printFooter($mode = 0)
   {
     if ($mode == 0) {
       // echo '<hr/>';
       echo '<div class="row m-2">';
         if(isset($_SESSION['login_user'])){
-          echo '<div class="col-sm-1"></div>';
-          echo '<div class="col-sm-11">';
+          echo '<div class="col-sm-9"></div>';
+          echo '<div class="col-sm-3">';
           echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
           echo '</div>';
         }else{
-          echo '<div class="col-sm-8">';
-            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/user/top.php">ホーム画面へ</a>';
+          echo '<div class="col-sm-9"></div>';
+          echo '<div class="col-sm-3">';
+            echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/top/index.php">ホーム画面へ</a>';
           echo '</div>';
         }
       echo '</div>';
