@@ -35,6 +35,7 @@ if(!$newQuestion) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
+	<link rel="stylesheet" type="text/css" href="../css/mypage.css">
 	<link rel="stylesheet" type="text/css" href="../css/question.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <title>トップ画面</title>
@@ -42,28 +43,19 @@ if(!$newQuestion) {
 
 <body class="p-3">
 	<!-- ヘッダ -->
-	<header>
-	  <nav class="navbar navbar-expand-lg" style="background-color:rgba(55, 55, 55, 0.98);">
-		<div class="container-fluid">
-			<a class="avbar-brand font-weight-bold h3 text-white" href="../top/index.php">novus</a>
-			<span class="navbar-text">
-			    <a href="../userLogin/form.php"><i class="fa-solid fa-arrow-right-to-bracket text-white" style="padding-right:10px;"></i></a>
-			    <a href="../userRegister/form.php"><i class="fa-solid fa-user-plus text-white"></i></a>
-			</span>
-		</div>
-
-		<ul class="nav">
-			<li class="nav-item">
-				<a class="nav-link active small text-white" href="../question/index.php">質問ページ</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link small text-white" href="../article/index.php">記事ページ</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a>
-			</li>
-		</ul>
-	</header>
+	<!--メニュー-->
+    <header>
+        <div class="navbar bg-dark text-white">
+            <div class="navtext h2" id="headerlogo">novus</div>
+			<ul class="nav justify-content-center">
+                <li id="li"><a class="nav-link small text-white" href="../question/index.php">質問ページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../article/index.php">記事ページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a></li>
+				<li><a href="../userLogin/form.php" class="nav-link small text-white" id="logo"><i class="fa-solid fa-arrow-right-to-bracket text-white" style="padding-right:10px;"></i></a></li>
+			    <li><a href="../userRegister/form.php" class="nav-link small text-white" id="logo"><i class="fa-solid fa-user-plus text-white"></i></a></li>
+            </ul>
+        </div>
+    </header>
 
     <!-- コンテンツ -->
 	<div id="content" class="text-center mt-2"  style="background-color:rgba(236, 235, 235, 0.945);">

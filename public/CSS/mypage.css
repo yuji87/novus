@@ -27,6 +27,11 @@ li {
     height: 60px;
     float: right;
 }
+a#logo {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 15px;
+}
 #li {
     padding-top: 20px;
 }
@@ -36,6 +41,9 @@ li {
 @media(max-width:700px) {
     a.nav-link {
         padding: 0 8px 0 0;
+    }
+    a#logo {
+        font-size: smaller;
     }
 }
 /* ここまでヘッダメニュー */

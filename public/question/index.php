@@ -60,8 +60,6 @@ if(isset($_GET['search'])) {
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
-			<input type="checkbox" class="menu-btn" id="menu-btn">
-            <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="nav justify-content-center">
 			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
