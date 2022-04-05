@@ -43,7 +43,7 @@ if(isset($_GET['search'])) {
     <header>
 	    <?php if($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="title">novus</div>
+            <div class="navtext h2" id="headerlogo">novus</div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -59,7 +59,7 @@ if(isset($_GET['search'])) {
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="title">novus</div>
+            <div class="navtext h2" id="headerlogo">novus</div>
 			<input type="checkbox" class="menu-btn" id="menu-btn">
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="nav justify-content-center">

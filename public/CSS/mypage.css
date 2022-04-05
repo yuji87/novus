@@ -17,7 +17,7 @@ a #mypage {
     text-align:right;
 }
 
-/*ヘッダ*/
+/*ヘッダメニュー*/
 header {
     margin-top: 0;
     width: 100%;
@@ -30,7 +30,7 @@ li {
 #li {
     padding-top: 20px;
 }
-#title {
+#headerlogo {
     padding-left: 20px;
 }
 @media(max-width:700px) {
@@ -38,7 +38,7 @@ li {
         padding: 0 8px 0 0;
     }
 }
-/* ここまでHumburgerメニュー */
+/* ここまでヘッダメニュー */
 
 /*ここから中央コンテンツ*/
 .wrapper .container{
