@@ -49,7 +49,7 @@ if(empty($dlt)) {
                 </li>
 			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-                <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$_SESSION['login_user']['user_id']; ?>">ログアウト</a></li>
             </ul>
 		</div>
     </header>

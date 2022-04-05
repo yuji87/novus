@@ -102,7 +102,7 @@ if(isset($_POST['like_regist'])) {
                 <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../../public/myPage/qHistory.php">【履歴】質問</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../../public/myPage/aHistory.php">【履歴】記事</a></li>
-                <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$_SESSION['login_user']['user_id']; ?>">ログアウト</a></li>
             </ul>
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
