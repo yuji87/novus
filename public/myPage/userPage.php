@@ -44,7 +44,7 @@ $showicon = UserLogic::showIcon($_GET);
     <!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
         </div>
     </header>
 

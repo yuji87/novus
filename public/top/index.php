@@ -19,14 +19,16 @@ if($result) {
 // カテゴリ処理
 $categories = CategoryLogic::getCategory();
 
-//質問を引っ張る処理
+// 検索ボタン押下時、条件に合った質問を表示
 if(isset($_GET['search'])) {
-    $searchQuestion = QuestionLogic::searchQuestion($_GET);
+	$keyword = filter_input(INPUT_GET, 'keyword', FILTER_SANITIZE_SPECIAL_CHARS);
+	$category = filter_input(INPUT_GET, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
+    $searchQuestion = QuestionLogic::searchQuestion($keyword, $category);
     if(!$searchQuestion) {
-      $err['question'] = '質問の読み込みに失敗しました';
-    } else {
-  	$newQuestion = QuestionLogic::newQuestion();
-    }
+        $err['question'] = '質問の読み込みに失敗しました';
+	}
+} else {  // 通常時は、新着の質問を表示する
+	$newQuestion = QuestionLogic::newQuestion();
 }
 
 // 最新の質問を表示
@@ -54,7 +56,7 @@ if(!$newQuestion) {
 	<!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a style="color: white;" href="<?php ($result) ? '../userLogin/home.php' : '../top/index.php'; ?>">novus</a></div>
+			<div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li id="li"><a class="nav-link small text-white" href="../question/index.php">質問ページ</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../article/index.php">記事ページ</a></li>

@@ -91,7 +91,7 @@ if(isset($_POST['like_regist'])) {
     <header>
 	    <?php if($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -107,7 +107,7 @@ if(isset($_POST['like_regist'])) {
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
 			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>

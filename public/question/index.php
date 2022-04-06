@@ -19,8 +19,6 @@ $categories = CategoryLogic::getCategory();
 if(isset($_GET['search'])) {
 	$keyword = filter_input(INPUT_GET, 'keyword', FILTER_SANITIZE_SPECIAL_CHARS);
 	$category = filter_input(INPUT_GET, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
-	var_dump($_GET);
-	var_dump($keyword);
     $searchQuestion = QuestionLogic::searchQuestion($keyword, $category);
     if(!$searchQuestion) {
         $err['question'] = '質問の読み込みに失敗しました';
@@ -47,7 +45,7 @@ if(isset($_GET['search'])) {
     <header>
 	    <?php if($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+		<div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -63,7 +61,7 @@ if(isset($_GET['search'])) {
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+		<div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
 			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
