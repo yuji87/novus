@@ -12,14 +12,19 @@
     color: #494949;
     font-weight: bold;
     background-color: #f8f6f2;
-    border-bottom: 3px dashed #000;
+    border-bottom: 3px dashed #494949;
     display: inline-block;
   }
 
 li{
   font-size: 10px;
-  height: 60px;
 }
+
+.navbar{
+  text-decoration: none;
+  color: #f8f6f2 !important;
+}
+
 @media screen and (max-width:575px) { 
 .preview{
   display: none;

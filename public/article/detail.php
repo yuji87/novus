@@ -53,8 +53,13 @@ $icon = $retInfo["user"]["icon"];
       <?php echo ((isset($icon) && !empty($icon)) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
-  <?php else : ?>
+  <?php elseif(isset($_SESSION['login_user']['user_id'])) : ?>
     <a href="<?php echo DOMAIN ?>/public/myPage/userPage.php?user_id=<?php echo $retInfo["article"]["user_id"] ?>" class="d-flex align-items-center col-sm-9 text-dark">
+      <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">'); ?>
+      <?php echo $retInfo["user"]["name"]; ?>さんの投稿
+    </a>
+  <?php else: ?>
+    <a href="<?php echo DOMAIN ?>/public/top/userPage.php?user_id=<?php echo $retInfo["article"]["user_id"] ?>" class="d-flex align-items-center col-sm-9 text-dark">
       <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">'); ?>
       <?php echo $retInfo["user"]["name"]; ?>さんの投稿
     </a>

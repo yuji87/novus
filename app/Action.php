@@ -79,31 +79,6 @@ class Action
     }
   }
 
-  // ログアウト処理
-  public function logout() {
-    session_start();
-
-    if (isset($_SESSION['USER_ID']) == TRUE) {
-      $errorMessage = "ログアウトしました。";
-    } else {
-      $errorMessage = "セッションがタイムアウトしました。";
-    }
-
-    // セッション変数のクリア
-    $_SESSION = array();
-
-    // クッキーの破棄
-    if (ini_get("session.use_cookies")) {
-      $params = session_get_cookie_params();
-      setcookie(session_name(), '', time() - 42000, $params["path"],$params["domain"], $params["secure"], $params["httponly"]);
-    }
-
-    // セッションクリア
-    @session_destroy(); //制御演算子
-
-    return $errorMessage;
-  }
-
   // メンバー情報全てを返す
   public function getMember() {
     return $this->member;
@@ -132,7 +107,6 @@ class Action
   public function getMemberExp() {
     return $this->member['exp'];
   }
-
 
   // userIdからユーザ情報を取得
   public function memberRef($userid) 
