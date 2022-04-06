@@ -13,12 +13,6 @@ if(!$result) {
 }
 $login_user = $_SESSION['login_user'];
 
-//モーダル処理
-if(isset($_POST['mypage'])) {
-    $user_data = UserLogic::levelModal();
-    return;
-}
-
 //画像情報の取得
 $showicon = UserLogic::showIcon();
 ?>

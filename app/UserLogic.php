@@ -412,27 +412,31 @@ class UserLogic
     }
     }
 
+    
     /**
-     * モーダルレベルの表示
+     * pre_level,pre_exp更新処理
      * @param string $level
      * @return bool $result
      */
-    public static function levelModal()
+    public static function levelUpdate()
     {
     $result = false; 
     // SQLの準備・実行・結果を返す
-    $sql = 'SELECT level, exp, pre_level, pre_exp FROM users WHERE user_id=?';
+    $sql = 'UPDATE users SET pre_level=?, pre_exp=? WHERE user_id = ?';
     // 配列に入れる
     $arr = [];
+    $arr[] = $_SESSION['login_user']['level']; 
+    $arr[] = $_SESSION['login_user']['exp']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
     
     try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        $user = $stmt->fetch();
-        return $user;
-        // return $result??='default value';
+        // セッション変数を更新し、リロード時に再度のレベルモーダル発動を防ぐ
+        $_SESSION['login_user']['pre_level'] = $_SESSION['login_user']['level']; 
+        $_SESSION['login_user']['pre_exp'] = $_SESSION['login_user']['exp']; 
+        return $result;
     } catch(\Exception $e) {
         // エラーの出力
         echo $e;
@@ -441,6 +445,7 @@ class UserLogic
         return $result;
     }
     }
+
 
     /**
      * 経験値取得処理
