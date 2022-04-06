@@ -44,13 +44,13 @@ if (!$question) {
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
             <ul class="nav justify-content-center">
-			<li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
-			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="../question/index.php">質問ページ</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
-            <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
-        </ul>
+			    <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../question/index.php">質問ページ</a></li>
+                <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            </ul>
         </div>
     </header>
 
@@ -70,9 +70,14 @@ if (!$question) {
                             <!--カテゴリ-->
                             <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                             <div><?php echo $value['category_name']; ?></div>
-                            <!--本文-->
+                            <!--本文：50文字以上だと省略-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
-                            <div><?php echo $value['message']; ?></div>
+                            <?php if(mb_strlen($value['message']) > 50): ?>
+							    <?php $limit_content = mb_substr($value['message'],0,50); ?>
+							    <?php echo $limit_content; ?>…
+						    <?php else: ?>
+							    <?php echo $value['message']; ?>
+						    <?php endif; ?>
                             <!--日付-->
                             <?php if(!isset($value['upd_date']) && isset($value['post_date'])): ?>
                             <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>

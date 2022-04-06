@@ -96,11 +96,9 @@ if(!$newQuestion) {
                             <?php endif; ?>
                         </div>
 						<!--名前-->
-                        <div class="text">
-		        			<?php echo $value['name']; ?>さん
-						</div>
-						<div class="text">
-                            Lv.<?php echo $value['level']; ?>
+                        <div class="text-center">
+		        			<p><?php echo $value['name']; ?>さん</p>
+                            <p>Lv.<?php echo $value['level']; ?></p>
                         </div>
                         <?php endforeach ?>
 		        		<a class="small mb-5" href="../level/list.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a><hr size="5">

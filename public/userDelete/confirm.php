@@ -46,7 +46,7 @@ if(count($err) === 0 && (isset($_POST['check']))) {
         <h1 class="my-3 h1" style="text-align:center;">会員登録削除の確認</h1>
         <p class="my-2" style="text-align:center;">本当に削除をしてよろしいですか？</p>
         <?php if(!empty($err) && $err === "err"): ?>
-            <p class="err">＊会員登録に失敗しました。</p>
+            <p class="err">＊会員削除に失敗しました。</p>
         <?php endif; ?>
         <hr>
         <div class="text-center">
