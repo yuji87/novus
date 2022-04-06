@@ -32,19 +32,20 @@ $act = new ArticleAct(0);
 $retInfo = $act->articleList($page, $searchText);
 $category = $act->categoryMap();
 
-// ログインユーザーのアイコン
+// ログインユーザーのアイコンと名前
 if (isset($_SESSION['login_user'])) {
   $icon = $act->getMemberIcon();
+  $name = $act->getMemberName();
 }
+
 // Token生成
 Token::create();
 ?>
-
 <div class="row m-2 pt-4 pb-2 align-items-center">
   <?php if (isset($_SESSION['login_user'])) : ?>
     <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
       <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
-      <?php echo $act->getMemberName(); ?> さん
+      <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $name ?> さん</span>
     </a>
   <?php else : ?>
     <div class="col-sm-2"></div>
