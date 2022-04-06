@@ -8,28 +8,43 @@ use Novus\ArticleAct;
 use Novus\Token;
 use Novus\Utils;
 
-$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
-if (!$page) {
-  $page = 0;
+$currentPage = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+if ($currentPage !== '') {
+    $currentPage = (int)$currentPage;
+    if ($currentPage <= 0) {
+      $currentPage = 1;
+    }
+} else {
+    $currentPage = 1;
 }
 
 // 初期は、全体一覧
 $title = SYSTITLE;
 $headertitle = '';
 $searchTextrow = '';
-$searchText = filter_input(INPUT_GET, 'searchText');
+$searchCategoryrow = '';
 
-if ($searchText != '') {
+$searchText = filter_input(INPUT_GET, 'searchText') ?? '';
+$searchCategory = filter_input(INPUT_GET, 'searchCategory') ?? '';
+
+if ($searchText !== '') {
   // 検索指定時
   $searchText =  rawurldecode($searchText); // urldecodeをしておく
   $title = Utils::h($searchText) . 'の検索結果';
   $headertitle = ' (' . $title . ')';
   $searchTextrow = rawurlencode(Utils::h($searchText)); // 特殊文字を変換しておく
 }
+if ($searchCategory !== '') {
+  $searchCategoryrow = rawurlencode(Utils::h($searchCategory)); // 特殊文字を変換しておく
+}
 
 // 記事一覧
 $act = new ArticleAct(0);
-$retInfo = $act->articleList($page, $searchText);
+$retInfo = $act->articleList($currentPage, $searchText, $searchCategory);
+
+// ぺージ数が不正だった場合を考慮し、書き換える
+$currentPage = $retInfo['page'];
+
 $category = $act->categoryMap();
 
 // ログインユーザーのアイコンと名前
@@ -40,7 +55,17 @@ if (isset($_SESSION['login_user'])) {
 
 // Token生成
 Token::create();
+
+$params = [];
+if ($searchTextrow !== '') {
+    $params[] = "searchText=$searchTextrow";
+}
+if ($searchCategoryrow !== '') {
+    $params[] = "searchCategory=$searchCategoryrow";
+}
+$query = !empty($params) ? '&' . implode('&', $params) : '';
 ?>
+
 <div class="row m-2 pt-4 pb-2 align-items-center">
   <?php if (isset($_SESSION['login_user'])) : ?>
     <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
@@ -51,13 +76,14 @@ Token::create();
     <div class="col-sm-2"></div>
   <?php endif; ?>
   <div class="col-sm-7 text-center">
-    <input type="search" style="width:100%;" id="searcharticle" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
+    <input type="search" style="width:100%;" class="search-text" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
   </div>
   <div class="d-flex col-sm-3">
-    <select class="" id="searcharticle" name="category" placeholder="カテゴリ">
+    <select class="search-category" name="category" placeholder="カテゴリ">
       <?php
+      echo "<option value=''></option>";
       foreach ($category as $key => $val) {
-        printf('<option value="%s">%s</option>', $key, $val);
+        printf('<option value="%s"%s>%s</option>', $key, $key == $searchCategory ? ' selected' : '', $val);
       }
       ?>
     </select>
@@ -103,56 +129,64 @@ if (count($retInfo['articleList']) === 0) {
 
 <!-- ページネーション -->
 <?php if (count($retInfo['articleList']) > 0) : ?>
-  <div class="row offset-sm-3 col-sm-9">
-    <?php
-    // 一番最初に戻る(page=0)
-    if ($page <= 0) {
-      echo '<div class="col-sm-1 text-right"><span class="btn btn-link disabled ">&lt;&lt;</span></div>';
-    } else {
-      $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN . "/public/", 0);
-      printf('<div class="col-sm-1 text-right"><a class="btn btn-link" href="%s">&lt;&lt;</a></div>', $urlstr);
-    }
-    // ひとつ前に戻る(page)
-    if ($page <= 0) {
-      echo '<div class="col-sm-1 text-right"><span class="btn btn-link disabled ">&lt;</span></div>';
-    } else {
-      $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN . "/public/", $page - 1);
-      printf('<div class="col-sm-1 text-right"><a class="btn btn-link" href="%s">&lt;</a></div>', $urlstr);
-    }
-    // ページボタン
-    $start = $page - 3;
-    if ($start < 0) {
-      $start = 0;
-    }
-    $end = $page + 3;
-    if ($end > $retInfo['maxPage']) {
-      $end = $retInfo['maxPage'];
-    }
-    for ($i = $start; $i <= $end; $i++) {
-      if ($i == $page) {
-        printf('<div class="col-sm-1 cur"><a class="btn btn-primary  disabled">%d</a></span></div>', $i + 1); //表示
-      } else {
-        $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN . "/public/", $i);
-        printf('<div class="col-sm-1"><a class="btn btn-light" href="%s">%d</a></span></div>', $urlstr, $i + 1); //表示
-      }
-    }
-    // 次送り 一つ先
-    if ($page >= $retInfo['maxPage']) {
-      echo '<div class="col-sm-1 text-left"><span class="btn btn-link disabled">&gt;</span></div>';
-    } else {
-      $nextpage = ($page + 1) >= $retInfo['maxPage'] ? $retInfo['maxPage'] : $page + 1;
-      $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN . "/public/", $nextpage);
-      printf('<div class="col-sm-1 text-left"><a class="btn btn-link" href="%s">&gt;</a></div>', $urlstr);
-    }
-    // 次送り page=maxPage
-    if ($page >= $retInfo['maxPage']) {
-      echo '<div class="col-sm-1 text-left"><span class="btn btn-link disabled">&gt;&gt;</span></div>';
-    } else {
-      $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN . "/public/", $retInfo['maxPage']);
-      printf('<div class="col-sm-1 text-left"><a class="btn btn-link" href="%s">&gt;&gt;</a></div>', $urlstr);
-    }
-    ?>
-  </div>
+    <div>
+        <ul class="pagination justify-content-center">
+        <?php
+        // 一番最初に戻る(page=0)
+        if ($currentPage <= 1) {
+            echo '<li class="page-item page-item-nav"><span class="btn btn-link disabled">&lt;&lt;</span></li>';
+        } else {
+            $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN."/public/", 1, $query);
+            printf('<li class="page-item page-item-nav"><a class="btn btn-link" href="%s">&lt;&lt;</a></li>', $urlstr);
+        }
+        // ひとつ前に戻る(page)
+        if ($currentPage <= 1) {
+            echo '<li class="page-item page-item-nav" style="width: 36px;"><span class="btn btn-link disabled ">&lt;</span></li>';
+        } else {
+            $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN."/public/", $currentPage - 1, $query);
+            printf('<li class="page-item page-item-nav"><a class="btn btn-link" href="%s">&lt;</a></li>', $urlstr);
+        }
+        // ページボタン
+        if ($currentPage <= 3) {
+            $start = 1;
+        } elseif ($currentPage > $retInfo['maxPage'] - 2) {
+            $start = $retInfo['maxPage'] - 4;
+        } else {
+            $start = $currentPage - 2;
+        }
+
+        if ($start + 4 <= $retInfo['maxPage']) {
+            $end = $start + 4;
+        } else {
+            $end = $retInfo['maxPage'];
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            if ($i == $currentPage) {
+                printf('<li class="page-item page-item-page"><a class="btn btn-primary disabled">%d</a></span></li>', $i); //表示
+            } else {
+                $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN."/public/", $i, $query);
+                printf('<li class="page-item page-item-page"><a class="btn btn-light" href="%s">%d</a></span></li>', $urlstr, $i); //表示
+            }
+        }
+        // 次送り 一つ先
+        if ($currentPage >= $retInfo['maxPage']) {
+            echo '<li class="page-item page-item-nav"><span class="btn btn-link disabled">&gt;</span></li>';
+        } else {
+            $nextpage = ($currentPage + 1) >= $retInfo['maxPage'] ? $retInfo['maxPage'] : $currentPage + 1;
+            $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN."/public/", $nextpage, $query);
+            printf('<li class="page-item page-item-nav"><a class="btn btn-link" href="%s">&gt;</a></li>', $urlstr);
+        }
+        // 次送り page=maxPage
+        if ($currentPage >= $retInfo['maxPage']) {
+            echo '<li class="page-item page-item-nav"><span class="btn btn-link disabled">&gt;&gt;</span></li>';
+        } else {
+            $urlstr = sprintf("%sarticle/index.php?page=%d", DOMAIN."/public/", $retInfo['maxPage'], $query);
+            printf('<li class="page-item page-item-nav"><a class="btn btn-link" href="%s">&gt;&gt;</a></li>', $urlstr);
+        }
+        ?>
+        </ul>
+    </div>
 <?php endif ?>
 
 
@@ -175,9 +209,18 @@ if (count($retInfo['articleList']) === 0) {
   $('#searcharticle').change(function() {
     // 検索フィールド利用
 
+    $('.search-text, .search-category').change(function() {
+    // 検索フィールド利用
+
     // 検索キーワード指定で、本ページ再読み込み
-    var txtdata = $(this).val();
-    jumpapi('article/index.php?page=' + <?php echo $page; ?> + '&searchText=' + encodeURIComponent(txtdata));
+    var searchText = $('.search-text').val();
+    var searchCategory = $('.search-category').val();
+
+    var params = [];
+    if (searchText !== '') params.push('searchText=' + encodeURIComponent(searchText));
+    if (searchCategory !== '') params.push('searchCategory=' + encodeURIComponent(searchCategory));
+    var url = params.length ? '&' + params.join('&') : '';
+    jumpapi('article/index.php?page=' + <?php echo $currentPage; ?> + url);
   });
 </script>
 

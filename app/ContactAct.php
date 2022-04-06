@@ -243,9 +243,9 @@ class ContactAct extends Action
     echo '</head>';
     echo '<body>';
     echo '<header>';
-    echo '<div class="navbar bg-dark text-white">';
-    echo '<div class="navtext h2">novus</div>';
     if(isset($_SESSION["login_user"])):
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<ul class="nav justify-content-center">';
     echo '<li class="nav-item">';
     echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
@@ -262,6 +262,8 @@ class ContactAct extends Action
     echo '</ul>';
     echo '</div>';
     else:
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
     echo '<ul class="nav justify-content-center">';
     echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
