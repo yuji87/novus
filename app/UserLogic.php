@@ -19,7 +19,7 @@ class UserLogic
         $arr[] = $_SESSION['signUp']['1'];                                      // tel
         $arr[] = $_SESSION['signUp']['2'];                                      // email
         $arr[] = password_hash($_SESSION['signUp']['3'], PASSWORD_DEFAULT);     // password
-        try{
+        try {
             $stmt = connect()->prepare($sql);
             // SQL実行
             $result = $stmt-> execute($arr);
@@ -76,18 +76,18 @@ class UserLogic
     // ユーザをtelから検索して取得
     $user = self::getUserByTel($tel);
     // バリデーション
-    if(!$user){
-      $_SESSION['msg'] = '電話番号が一致しません。';
-      return $result;
+    if(!$user) {
+        $_SESSION['msg'] = '電話番号が一致しません。';
+        return $result;
     }
     //　パスワードの照会
     if(password_verify($password, $user['password'])) {
-      // ログイン成功
-      // ハイジャック対策
-      session_regenerate_id(true);
-      $_SESSION['login_user'] = $user;
-      $result = true;
-      return $result;
+        // ログイン成功
+        // ハイジャック対策
+        session_regenerate_id(true);
+        $_SESSION['login_user'] = $user;
+        $result = true;
+        return $result;
     }
     $_SESSION['msg'] = 'パスワードが一致しません。';
     return $result;
@@ -130,7 +130,7 @@ class UserLogic
     $result = false;
     // セッションにログインユーザが入っていなかったらfalse
     if(isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
-      return $result = true;
+        return $result = true;
     }
     return $result;
     } 
@@ -161,7 +161,7 @@ class UserLogic
     $arr[] = $_SESSION['nameEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -195,7 +195,7 @@ class UserLogic
     $arr[] = $_SESSION['telEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -264,7 +264,7 @@ class UserLogic
     $arr[] = password_hash($_SESSION['passwordEdit'], PASSWORD_DEFAULT);
     $arr[] = $_SESSION['login_user']['user_id']; 
     
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -299,7 +299,7 @@ class UserLogic
     $arr[] = $_SESSION['iconEdit']['name']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -333,7 +333,7 @@ class UserLogic
     $arr[] = $_SESSION['commentEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
     
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -350,7 +350,7 @@ class UserLogic
     }
     }
 
-     /**
+    /**
      * アイコン表示
      * @param string $icon
      * @return bool $result
@@ -366,7 +366,7 @@ class UserLogic
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -398,7 +398,7 @@ class UserLogic
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -426,7 +426,7 @@ class UserLogic
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
     
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -459,7 +459,7 @@ class UserLogic
     $arr = [];
     $arr[] = $user_id;
 
-    try{
+    try {
         $stmt = connect()->prepare($sql_sel);
         // SQL実行
         $data = $stmt-> execute($arr);
@@ -479,14 +479,14 @@ class UserLogic
     $new_level = floor($new_exp / 100) + 1;
 
     // 取得したレベルと新しいレベルの比較
-    if($level < $new_level){ // 新しいレベルが取得レベルより高い場合
+    if($level < $new_level) { // 新しいレベルが取得レベルより高い場合
         // 経験値とレベルを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
         $arr = [];
         $arr[] = $new_exp;
         $arr[] = $new_level;
         $arr[] = $user_id;
-    }else{// 新しいレベルが取得レベルと同じ場合
+    } else {// 新しいレベルが取得レベルと同じ場合
     // 経験値だけを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
         $arr = [];
@@ -494,7 +494,7 @@ class UserLogic
         $arr[] = $user_id;
     }
 
-        try{
+        try {
             $stmt = connect()->prepare($sql_upd);
             // SQL実行
             $data = $stmt-> execute($arr);

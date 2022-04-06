@@ -9,6 +9,13 @@ require_once '../../app/Functions.php';
 $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err']: null;
 unset($_SESSION['login_err']);
 
+//ログインしているか判定して、していたらログイン画面へ移す
+$result = UserLogic::checkLogin();
+if($result) {
+    header('Location: ../userLogin/home.php');
+    return;
+}
+
 //セッションに保存データがあるかを確認
 if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
     //セッションから情報を取得

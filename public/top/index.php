@@ -2,11 +2,19 @@
 session_start();
 
 // ファイルの読み込み
+require_once '../../app/UserLogic.php';
 require_once '../../app/CategoryLogic.php';
 require_once '../../app/QuestionLogic.php';
 
 // エラーメッセージ
 $err = [];
+
+//ログインしているか判定して、していたらログイン画面へ移す
+$result = UserLogic::checkLogin();
+if($result) {
+    header('Location: ../userLogin/home.php');
+    return;
+}
 
 // カテゴリ処理
 $categories = CategoryLogic::getCategory();
