@@ -87,12 +87,33 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p class="fw-bold">レベル</p>
                         Lv.<?php
-                           if(isset($login_user['level'])) {
-                               echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
-                           } else {
-                               echo '1';
-                           } ?>
+                            if(isset($login_user['level'])) {
+                                echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
+                            } else {
+                                echo '1';
+                            } ?>
                     </div>
+                    <!-- ユーザーの現経験値と、次のレベルまでの経験値を表示 -->
+                    <div class="text">
+                    <p class="fw-bold">EXP</p>
+                        <?php 
+                            if(isset($login_user['exp'])) {
+                                echo htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8'); 
+                            } else {
+                                echo '0';
+                            }
+                        ?>
+                        ・・・次のレベルまで、
+                        <?php 
+                            if(isset($login_user['exp'])) {
+                                $current_exp = htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8') % 100; 
+                                echo 100 - $current_exp;
+                            } else {
+                                echo '100';
+                            }
+                        ?>
+                        EXP です。
+                        </div>
                     <div class="text">
                         <p class="fw-bold">コメント</p>
                         <p class="text-break small"><?php

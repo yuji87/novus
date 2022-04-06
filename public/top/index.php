@@ -141,8 +141,8 @@ if(!$newQuestion) {
 			<?php endif; ?>
 
 		    <!-- 通常時、新着の質問を表示 -->
-			<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		    <?php if(!isset($searchQuestion) && isset($newQuestion)): ?>
+				<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 			    <?php foreach($newQuestion as $value): ?>
 				    <!--題名-->
 				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
