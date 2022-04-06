@@ -41,7 +41,7 @@ $icon = $act->getMemberIcon();
 <form method="POST" class="form-horizontal" name="addForm" action="<?php echo DOMAIN . '/public/todo/process/add.php'; ?>">
   <div class="row m-2">
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="newTodoTitle" name="newTodoTitle" value="" maxlength="64">
+      <input type="text" class="form-control" id="newTodoTitle" name="newTodoTitle" value="" maxlength="200">
     </div>
     <div class="col-sm-3">
       <input type="text" class="form-control dateTimePickerForm" id="newTodoDt" name="newTodoDt" maxlength="16" value="<?php echo $remainddt; ?>">
@@ -122,7 +122,7 @@ $icon = $act->getMemberIcon();
         <div class="modal-body">
           <div class="row m-2">
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="edittodotitle" name="edittodotitle" value="" maxlength="64">
+              <input type="text" class="form-control" id="edittodotitle" name="edittodotitle" value="" maxlength="200">
             </div>
             <div class="col-sm-4">
               <input type="text" class="form-control dateTimePickerForm" id="edittododt" name="edittododt" maxlength="16" value="">
@@ -165,7 +165,7 @@ $icon = $act->getMemberIcon();
     $('#edittododt').val(tododt);
     $('#edittodoid').val(todoid);
 
-    // 編集モーダル表示(ブートストラップ)
+    // 編集モーダル表示
     $('#demoNormalModal').modal('show');
 
     // 編集が確定したとき

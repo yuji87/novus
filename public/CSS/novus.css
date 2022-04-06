@@ -8,7 +8,11 @@
   background-color: #eee;
 } */
   h1 {
-    border-bottom: 3px solid gray;
+    font-size: 0.5em;
+    color: #494949;
+    font-weight: bold;
+    background-color: #f8f6f2;
+    border-bottom: 3px dashed #000;
     display: inline-block;
   }
 

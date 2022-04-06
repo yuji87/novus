@@ -51,7 +51,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
   <form method="POST" class="form-horizontal" name="NovusForm">
     <div class="row m-2 form-group">
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>">
+        <input type="text" class="form-control" id="title" name="title" placeholder="タイトル" value="<?php echo $title; ?>">
       </div>
     </div>
     <div class="row m-2 form-group" style="height:55vh">
@@ -127,21 +127,20 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
 
   // プレビュー画面に文字列を反映
   function setupPreview() {
-    //    var text = htmlspecialchars($('#message').val()); // タグ全部無効
     var text = $('#message').val();
-    text = trimHtmlTag(text); // 一部タグを許容
-    text = marked(text); // マークアップ文字置き換え
-    text = text.replace(/\n/g, '<br>'); // 改行
+    var text = trimHtmlTag(text); // 一部タグを許容
+    var text = marked(text); // マークアップ文字置き換え
+    var text = text.replace(/\n/g, '<br>'); // 改行
     $('#previewmsg').html(text);
   }
   // 投稿 or 編集反映ボタンを押した
   function onPostArticle() {
-    if (!isStrLen(document.getElementById('title').value, 1, <?php echo TITLE_LENGTH; ?>)) {
-      onShow('タイトルを見直してください');
+    if (!isStrLen(document.getElementById('title').value, 1, 150)) {
+      onShow('タイトルは150文字以内にしてください');
       return;
     }
-    if (!isStrLen(document.getElementById('message').value, 1, <?php echo MESSAGE_LENGTH; ?>)) {
-      onShow('本文を見直してください');
+    if (!isStrLen(document.getElementById('message').value, 1, 1500)) {
+      onShow('本文は1500文字以内にしてください');
       return;
     }
 

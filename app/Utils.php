@@ -18,23 +18,6 @@ class Utils
     }
     return date($format, strtotime($date));
   }
-  // 現在、期間内の時間か？★
-  public static function isSpanOver($tgtstrdt, $spanhour)
-  {
-    if ($tgtstrdt == NULL) {
-      return TRUE;
-    }
-    $tgtdt = strtotime($tgtstrdt);
-    $nowdt = strtotime("now");
-    $spandiff = $nowdt - $tgtdt;
-    $daydiff = $spanhour * 60 * 60;
-    //echo $spandiff . ':' . $daydiff;
-    if ($spandiff >= $daydiff) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
-  }
   // 現在の時刻から $addday日後の日時の文字列を作成
   public static function addDay($addday, $format = 0)
   {
@@ -56,10 +39,6 @@ class Utils
   public static function mbtrim($str) {
     return preg_replace("/(^\s+)|(\s+$)/u", "", $str);
   }
-  // 特殊文字指定除去
-  public static function trimSQL($str) {
-    return trim($str, " \n\r\t\v\x");
-  }
   // 特殊文字指定変換
   public static function convertSQL($str) {
     $str = mb_ereg_replace('(["_%#])', '#\1', $str); // % や _ を #% #_ にする
@@ -71,7 +50,8 @@ class Utils
   {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
   }
-  // 特殊タグ除去(一部タグとして許容する)
+
+  // 特殊タグ除去(一部タグとして許容する。article/datail.php用)
   static $stable = array(
     '&lt;h1&gt;' => '<h1>',
     '&lt;/h1&gt;' =>'</h1>',
@@ -100,6 +80,7 @@ class Utils
     '&lt;'=> '<',
     '&gt;'=> '>'
    );
+   
   static $btable = array(
    '/&lt;img(.*)&gt;/' => '<img$1>'
   );
@@ -135,17 +116,11 @@ class Utils
   // 文字列チェック
   public static function isStrLen($str, $len)
   {
-    if ($str && strlen($str) <= $len) {
+    if ($str && mb_strlen($str) <= $len) { // $len以下ならtrue
       return true;
     } else {
       return false;
     }
-  }
-
-  public static function dump($text) {
-    $h = fopen('./sql.txt', 'w');
-    fwrite($h, $text);
-    fclose($h);
   }
 
   //入力値に不正なデータがないかなどをチェックする関数
