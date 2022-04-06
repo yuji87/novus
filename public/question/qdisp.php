@@ -140,8 +140,9 @@ if(isset($_POST['like_regist'])) {
                         <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                     <?php endif; ?>
                     <!--投稿者-->
-                    <div class="pb-4 pt-2 small">投稿者：
+                    <div class="pb-4 pt-2 small">
                         <?php echo $question['name']; ?>
+                        さん
                     </div>
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>

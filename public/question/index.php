@@ -103,61 +103,63 @@ if(isset($_GET['search'])) {
         		    <!-- 検索ボタン押下時、取得データを表示する -->
         		    <?php if(isset($searchQuestion) && count($searchQuestion)): ?>
         			    <p class="alert alert-success"><?php echo count($searchQuestion); ?>件見つかりました。</p>
-        			    <div class="fw-bold mt-2 mb-2 h5">検索結果</div>
-					    <?php foreach($searchQuestion as $value): ?>
-							<!--題名-->
-        			        <div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
-					        <!--アイコン-->
-							<?php if($result): // ログイン可否で違うユーザーページへ ?>
-								<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-								    <a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						    echo '../myPage/index.php'; } else {
+        			    <!-- 検索結果の表示 -->
+						<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
+						<?php foreach($searchQuestion as $value): ?>
+								<!--題名-->
+		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<!--アイコン-->
+								<?php if($result): // ログイン可否で違うユーザーページへ ?>
+								    <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    					    	echo '../myPage/index.php'; } else {
                                         echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									    <img src="../top/img/<?php echo $value['icon']; ?>">
-								    </a>
-							    <?php else: ?>
-								    <a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						    echo '../myPage/index.php'; } else {
-                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-									    <div><img src="../top/img/sample_icon.png"></div>
-								    </a>
-								<?php endif; ?>
-							<? else: ?>
-								<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+								    	<img src="../top/img/<?php echo $value['icon']; ?>">
+								    	</a>
+								    <?php else: ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+								    	echo '../myPage/index.php'; } else {
+								    	echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								    	<img src="../top/img/sample_icon.png">
+								    	</a>
+								    <?php endif; ?>
+								<?php else: ?>
+									<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
                                     <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                                 <?php else: ?>
 					    	    <!--アイコンをクリックするとユーザーページへ-->
 					    	    <a name="icon" href="<?php 
 					    	        //user_idをユーザーページに引き継ぐ
 					    	        echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
-					    	    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
-                                <?php endif; ?>
-							<?php endif; ?>
-							<!--ユーザー名-->
-					        <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
-					        <!--カテゴリ-->
-							<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-							<!-- メッセージ：本文が50文字以上なら省略 -->
-							<?php if(mb_strlen($value['message']) > 50): ?>
-								<?php $limit_content = mb_substr($value['message'],0,50); ?>
-								<?php echo $limit_content; ?>…
-							<?php else: ?>
-								<?php echo $value['message']; ?>
-							<?php endif; ?>
-        			        <!-- 更新されていた場合、その日付を優先表示 -->
-				            <div class="small pb-4">
-					            <?php if (!isset($value['upd_date'])): ?>
-					            	投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
-					            <?php else: ?>
-					            	更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-					            <?php endif; ?>
-                            </div>
+					    	        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                                    <?php endif; ?>
+								<?php endif; ?>
+								<!--ユーザー名-->
+					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+					    		<!--カテゴリ-->
+								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!-- メッセージ：本文が50文字以上なら省略 -->
+								<?php if(mb_strlen($value['message']) > 50): ?>
+									<?php $limit_content = mb_substr($value['message'],0,50); ?>
+									<?php echo $limit_content; ?>…
+								<?php else: ?>
+									<?php echo $value['message']; ?>
+								<?php endif; ?>
+								<!--投稿日時-->
+								<div class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
 							<hr>
-			            <?php endforeach; ?>
+		                	<?php endforeach; ?>
 						
                     <!--検索結果が見つからなかった時-->
 		            <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
-			        <p class="alert alert-danger">検索対象は見つかりませんでした。</p>
+			        	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
 		    
 			            <!-- 通常時、新着の質問を表示 -->
 		                <?php elseif(isset($newQuestion)): ?>
