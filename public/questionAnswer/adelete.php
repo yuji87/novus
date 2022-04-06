@@ -100,10 +100,12 @@ if(isset($_POST['a_dlt_conf'])) {
                         <?php endif; ?>
                     </div>
                     <!-- 質問内容表示 -->
-                    <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                    <div>本文
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                    </div>
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
-                    <input type="submit" name="a_dlt_conf" value="削除">
+                    <input type="submit" name="a_dlt_conf" class="btn btn-warning mt-5 mb-5" value="削除">
                 </form>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="location.href='../userLogin/home.php'">TOP</button>
                 <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
@@ -120,7 +122,7 @@ if(isset($_POST['a_dlt_conf'])) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

@@ -78,15 +78,18 @@ $showicon = UserLogic::showIcon();
                             <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                         <?php endif; ?>
                     </div>
+                    <br>
                     <!--ユーザーが登録した名前を表示-->
                     <div class="text">
-                        <p class="fw-bold">名前</p>
-                        <?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>
+                        <p style="display: inline-block;" class="fw-bold">名前　</p>
+                        <p style="display: inline-block;">
+                            <?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
                     </div>
                     <!--ユーザーの現レベルを表示-->
                     <div class="text">
-                        <p class="fw-bold">レベル</p>
-                        Lv.<?php
+                        <p style="display: inline-block;" class="fw-bold">レベル　</p>
+                        <p style="display: inline-block;">Lv.</p><?php
                             if(isset($login_user['level'])) {
                                 echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
                             } else {
@@ -95,25 +98,24 @@ $showicon = UserLogic::showIcon();
                     </div>
                     <!-- ユーザーの現経験値と、次のレベルまでの経験値を表示 -->
                     <div class="text">
-                    <p class="fw-bold">EXP</p>
-                        <?php 
+                        <p style="display: inline-block;" class="fw-bold">EXP　</p>
+                        <p style="display: inline-block;"><?php 
                             if(isset($login_user['exp'])) {
                                 echo htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                 echo '0';
                             }
                         ?>
-                        ・・・次のレベルまで、
-                        <?php 
+                        </p>
+                        <!-- 次のレベルまでの経験値表示 -->
+                        <p class="small">次のレベルまで、<?php 
                             if(isset($login_user['exp'])) {
                                 $current_exp = htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8') % 100; 
                                 echo 100 - $current_exp;
                             } else {
                                 echo '100';
-                            }
-                        ?>
-                        EXP です。
-                        </div>
+                            }?>EXP です。</p>
+                    </div>
                     <div class="text">
                         <p class="fw-bold">コメント</p>
                         <p class="text-break small"><?php

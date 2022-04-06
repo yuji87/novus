@@ -58,20 +58,23 @@ if(!$data) {
                                 <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                             <?php endif; ?>
                         </div>
+                        <br>
                         <!--ユーザーが登録した名前を表示-->
                         <div class="text">
-                            <p class="fw-bold">名前</p>
-                            <?php echo $data['name']; ?>さん
+                            <p style="display: inline-block;" class="fw-bold">名前　</p>
+                            <p style="display: inline-block;">
+                                <?php echo $data['name']; ?>さん
+                            </p>
                         </div>
                         <!--ユーザーの現レベルを表示-->
                         <div class="text">
-                            <p class="fw-bold">レベル</p>
-                            Lv.<?php
-                               if(isset($data['level'])) {
-                                   echo htmlspecialchars($data['level'], ENT_QUOTES, 'UTF-8'); 
-                               } else {
-                                   echo '1';
-                               } ?>
+                            <p style="display: inline-block;" class="fw-bold">レベル　</p>
+                            <p style="display: inline-block;">Lv.</p><?php
+                                if(isset($data['level'])) {
+                                    echo htmlspecialchars($data['level'], ENT_QUOTES, 'UTF-8'); 
+                                } else {
+                                    echo '1';
+                                } ?>
                         </div>
                         <!--ユーザーのコメントを表示-->
                         <div class="text">

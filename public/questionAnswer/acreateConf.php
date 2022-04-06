@@ -111,7 +111,7 @@ if(isset($_POST['a_comp'])) {
                 <!--回答内容の確認-->
                 <div class="fw-bold pb-1">内容</div>
                 <form method="POST" action="">
-                    <textarea name="a_message"><?php echo $a_message; ?></textarea>
+                    <textarea name="a_message" rows="5" class="w-100"><?php echo $a_message; ?></textarea>
                     <input type="hidden" name="a_user_id" value="<?php echo $a_user_id; ?>">
                     <input type="hidden" name="q_user_id" value="<?php echo $q_user_id; ?>">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">

@@ -116,11 +116,12 @@ if(isset($_POST['a_best_comp'])) {
                             <?php echo $err['message']; ?>
                             <?php endif; ?>
                         </div>
-                        <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div class="fw-bold pt-3 pb-1">本文</div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                         <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
                         <input type="hidden" name="answer_user_id" value="<?php echo $answer_user_id; ?>">
-                        <input type="submit" name="a_best_comp">
+                        <input type="submit" name="a_best_comp" class="btn btn-warning mt-5 mb-5" value="選択">
                     </form>
                     <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
                 <!-- ボタン押下時の処理 -->

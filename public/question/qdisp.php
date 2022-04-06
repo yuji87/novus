@@ -146,13 +146,13 @@ if(isset($_POST['like_regist'])) {
                     </div>
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
-                        <div><?php echo $question['title']; ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                         <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                        <div><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                     <!--日付-->
                     <div class="pt-4 pb-1 small">
                         <?php if (!isset($question['upd_date'])): ?>
@@ -195,7 +195,8 @@ if(isset($_POST['like_regist'])) {
                                 <?php endif; ?>
                             </div>
                             <!--本文-->
-                            <div>本文：<?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
+                            <div class="fw-bold pt-3 pb-1">本文</div>
+                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
                             <!--投稿日時-->
                             <div>
                                 <!-- 更新されていた場合、その日付を優先表示 -->

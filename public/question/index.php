@@ -109,7 +109,7 @@ if(isset($_GET['search'])) {
 						<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 						<?php foreach($searchQuestion as $value): ?>
 								<!--題名-->
-		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<div style="overflow: hidden; overflow-wrap: break-word;"><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 								<!--アイコン-->
 								<?php if($result): // ログイン可否で違うユーザーページへ ?>
 								    <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
@@ -140,13 +140,15 @@ if(isset($_GET['search'])) {
 					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
 					    		<!--カテゴリ-->
 								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-								<!-- メッセージ：本文が50文字以上なら省略 -->
-								<?php if(mb_strlen($value['message']) > 50): ?>
-									<?php $limit_content = mb_substr($value['message'],0,50); ?>
-									<?php echo $limit_content; ?>…
-								<?php else: ?>
-									<?php echo $value['message']; ?>
-								<?php endif; ?>
+								<div style="overflow: hidden; overflow-wrap: break-word;">
+									<!-- メッセージ：本文が50文字以上なら省略 -->
+									<?php if(mb_strlen($value['message']) > 50): ?>
+										<?php $limit_content = mb_substr($value['message'],0,50); ?>
+										<?php echo $limit_content; ?>…
+									<?php else: ?>
+										<?php echo $value['message']; ?>
+									<?php endif; ?>
+								</div>
 								<!--投稿日時-->
 								<div class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
@@ -168,7 +170,7 @@ if(isset($_GET['search'])) {
 		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		                	<?php foreach($newQuestion as $value): ?>
 								<!--題名-->
-		                		<div><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<div style="overflow: hidden; overflow-wrap: break-word;"><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 								<!--アイコン-->
 								<?php if($result): // ログイン可否で違うユーザーページへ ?>
 								    <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
@@ -186,13 +188,13 @@ if(isset($_GET['search'])) {
 								    <?php endif; ?>
 								<?php else: ?>
 									<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-                                    <img src="../top/img/<?php echo $value['icon']; ?>"></a>
-                                <?php else: ?>
-					    	    <!--アイコンをクリックするとユーザーページへ-->
-					    	    <a name="icon" href="<?php 
-					    	        //user_idをユーザーページに引き継ぐ
-					    	        echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
-					    	        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                                    	<img src="../top/img/<?php echo $value['icon']; ?>"></a>
+									<?php else: ?>
+										<!--アイコンをクリックするとユーザーページへ-->
+										<a name="icon" href="<?php 
+											//user_idをユーザーページに引き継ぐ
+											echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+											<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                                     <?php endif; ?>
 								<?php endif; ?>
 								<!--ユーザー名-->
@@ -200,12 +202,14 @@ if(isset($_GET['search'])) {
 					    		<!--カテゴリ-->
 								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 								<!-- メッセージ：本文が50文字以上なら省略 -->
-								<?php if(mb_strlen($value['message']) > 50): ?>
-									<?php $limit_content = mb_substr($value['message'],0,50); ?>
-									<?php echo $limit_content; ?>…
-								<?php else: ?>
-									<?php echo $value['message']; ?>
-								<?php endif; ?>
+								<div style="overflow: hidden; overflow-wrap: break-word;">
+									<?php if(mb_strlen($value['message']) > 50): ?>
+										<?php $limit_content = mb_substr($value['message'],0,50); ?>
+										<?php echo $limit_content; ?>…
+									<?php else: ?>
+										<?php echo $value['message']; ?>
+									<?php endif; ?>
+								</div>
 								<!--投稿日時-->
 								<div class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->

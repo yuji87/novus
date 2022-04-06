@@ -97,7 +97,7 @@ if(isset($_POST['q_dlt'])) {
                     <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                    <div><?php echo $question['message']; ?></div>
+                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['message']; ?></div>
                     <div>添付</div>
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
                     <i class="fa-solid fa-trash-can mt-3"><input class="fw-bold " type="submit" name="q_dlt" id="delete" value="削除"></i>

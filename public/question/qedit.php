@@ -155,10 +155,10 @@ if(isset($_POST['q_edit_conf'])) {
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
                     <div>
-                        <textarea name="message"><?php echo $question['message']; ?></textarea>
+                        <textarea name="message" rows="5" class="w-100"><?php echo $question['message']; ?></textarea>
                     </div>
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
-                    <input type="submit" name="q_edit_conf" class="btn btn-warning mt-5 mb-5" value="投稿する">
+                    <input type="submit" name="q_edit_conf" class="btn btn-warning mt-5 mb-5" value="修正する">
                 </form>
                 <button type="button" class="btn btn-outline-dark fw-bold" onclick="history.back()">戻る</button>
             </div>

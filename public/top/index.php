@@ -105,7 +105,7 @@ if(!$newQuestion) {
 	            <!--質問表示-->
 		        <?php foreach($searchQuestion as $value): ?>
 			        <!--題名-->
-			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+			        <div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
 						<!--アイコンをクリックするとユーザーページへ-->
@@ -126,13 +126,15 @@ if(!$newQuestion) {
 				    <!--カテゴリ-->
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 				    <!-- メッセージ：本文が50文字以上なら省略 -->
-					<div class="text-center fw-bold mt-2 pb-2">本文</div>
-				    <?php if(mb_strlen($value['message']) > 50): ?>
-						<?php $limit_content = mb_substr($value['message'],0,50); ?>
-						<?php echo $limit_content; ?>…
-					<?php else: ?>
-						<?php echo $value['message']; ?>
-					<?php endif; ?>
+					<div class="text-center fw-bold mt-2 pb-2" style="overflow: hidden; overflow-wrap: break-word;">本文</div>
+					<div style="overflow: hidden; overflow-wrap: break-word;">
+						<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php $limit_content = mb_substr($value['message'],0,50); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
+					</div>
 				    <!--投稿日時-->
 			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div><hr id="dot">
 		    	<?php endforeach; ?>
@@ -145,7 +147,7 @@ if(!$newQuestion) {
 				<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 			    <?php foreach($newQuestion as $value): ?>
 				    <!--題名-->
-				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+				    <div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
 						<!--アイコンをクリックするとユーザーページへ-->
@@ -167,12 +169,14 @@ if(!$newQuestion) {
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 				    <!--本文-->
 				    <div class="text-center fw-bold mt-2 pb-2">本文</div>
-					<?php if(mb_strlen($value['message']) > 50): ?>
-						<?php $limit_content = mb_substr($value['message'],0,50); ?>
-						<?php echo $limit_content; ?>…
-					<?php else: ?>
-						<?php echo $value['message']; ?>
-					<?php endif; ?>
+					<div style="overflow: hidden; overflow-wrap: break-word;">
+						<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php $limit_content = mb_substr($value['message'],0,50); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
+					</div>
 				    <!--投稿日時-->
 			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
 			    <?php endforeach; ?>

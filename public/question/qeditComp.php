@@ -85,7 +85,7 @@ $question_id = $_SESSION['q_data']['question_id'];
                 <div><?php echo $category; ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div><?php echo $message; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $message; ?></div>
                 <form method="GET" action="qdisp.php">
                     <input type="hidden" name= "question_id" value="<?php echo $question_id; ?>">
                     <input type="submit" value="質問へ">
