@@ -23,7 +23,7 @@ if(!empty($_POST['formcheck'])) {
     $password_conf = filter_input(INPUT_POST, 'password_conf');
     //バリデーション
     //正規表現
-    if(!$_SESSION['passwordEdit']['0']) {
+    if(!$_SESSION['passwordEdit']) {
         $err['password'] = 'パスワードを入力してください';
     }
     if(!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)) {
@@ -35,8 +35,7 @@ if(!empty($_POST['formcheck'])) {
 }
 
 //エラーがなかった場合の処処理
-if(count($err) === 0 && (isset($_POST['check']))) {
-    
+if(count($err) === 0 && (isset($_POST['check']))) {  
     //ユーザーを登録する
     $userEdit = UserLogic::editUserPassword($_SESSION);
     header('Location: complete.php');
@@ -64,16 +63,17 @@ if(count($err) === 0 && (isset($_POST['check']))) {
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
             <ul class="nav justify-content-center">
-            <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
-            <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
-			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
-        </ul>
+                <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
+                <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
+			    <li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../myPage/qHistory.php">【履歴】質問</a></li>
+                <li id="li"><a class="nav-link small text-white" href="../myPage/aHistory.php">【履歴】記事</a></li>
+                <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            </ul>
         </div>
     </header>
-
+    
+    <!--中央コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">

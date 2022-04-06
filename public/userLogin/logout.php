@@ -29,6 +29,7 @@ UserLogic::logout($_GET);
     <title>ログアウト画面</title>
 </head>
 
+<!--中央コンテンツ-->
 <body class="h-100 bg-secondary p-4 p-md-5 text-center">
     <div class = "container bg-white p-5">
         <div class="row align-items-start">

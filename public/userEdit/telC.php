@@ -21,13 +21,13 @@ if(!empty($_POST['formcheck'])) {
     $_SESSION['telEdit'] = $_POST['tel'];
     $tel = filter_input(INPUT_POST, 'tel');
     //バリデーション
-    $limit = 15;
+    $limitTel = 12;
     if(empty($_SESSION['telEdit'])) {
         $err['tel'] = '電話番号を入力してください';
     }
     // 文字数チェック
-    if(mb_strlen($tel) > $limit) {
-        $err['tel'] = '15文字で入力してください';
+    if(mb_strlen($tel) > $limitTel) {
+        $err['tel'] = '12文字で入力してください';
     }
     //電話で重複チェック
     $checkDuplicate = UserLogic::checkDuplicateByTel($_SESSION['telEdit']);
@@ -104,9 +104,9 @@ if(count($err) === 0 && (isset($_POST['check']))) {
                             <a href="../userEdit/tel.php" class="p-2 text-white bg-secondary">再入力する</a>
                         </div>
                         <?php else: ?>
-                        <div class="col-4 bg-secondary">
+                        <div class="text-center">
                             <a href="../userEdit/tel.php" class="p-2 text-white bg-secondary">戻る</a>
-                            <p><button type="submit" class="btn-edit-check">変更</button></p>
+                            <p><button type="submit" class="mt-4">変更</button></p>
                         </div>
                         <?php endif; ?>
                     </div>

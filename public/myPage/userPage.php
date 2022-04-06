@@ -48,11 +48,11 @@ $showicon = UserLogic::showIcon($_GET);
         </div>
     </header>
 
-    <!--コンテンツ-->
+    <!--中央コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <h2 class="heading mt-5">MY ACCOUNT</h2>
+                <h2 class="heading mt-5">USER ACCOUNT</h2>
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
@@ -64,10 +64,12 @@ $showicon = UserLogic::showIcon($_GET);
                     </div>
                     <!--ユーザーが登録した名前を表示-->
                     <div class="text">
-                        名前：<?php echo $data['name']; ?>
+                        <p class="fw-bold">名前</p>
+                        <?php echo $data['name']; ?>さん
                     </div>
                     <!--ユーザーの現レベルを表示-->
                     <div class="text">
+                        <p class="fw-bold">レベル</p>
                         Lv.<?php
                            if(isset($data['level'])) {
                                echo htmlspecialchars($data['level'], ENT_QUOTES, 'UTF-8'); 
@@ -77,7 +79,8 @@ $showicon = UserLogic::showIcon($_GET);
                     </div>
                     <!--ユーザーのコメントを表示-->
                     <div class="text">
-                        コメント：<?php
+                        <p class="fw-bold">コメント</p>
+                        <?php
                             if(isset($data['comment'])) {
                                echo htmlspecialchars($data['comment'], ENT_QUOTES, 'UTF-8'); 
                             } else {
