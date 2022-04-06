@@ -260,6 +260,7 @@ if(isset($_POST['like_regist'])) {
                                     <form method="POST" action="bestAnswer.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                         <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
+                                        <input type="hidden" name="answer_user_id" value="<?php echo $value['user_id']; ?>">
                                         <input type="submit" value="ベストアンサー">
                                     </form>
                                 <?php endif; ?>

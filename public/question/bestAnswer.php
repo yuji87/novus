@@ -22,10 +22,11 @@ $categories = CategoryLogic::getCategory();
 // ボタン押下時の処理（成功でベストアンサー登録）
 if(isset($_POST['a_best_comp'])) {
     // エラーチェック
-    if(!$_POST['question_id'] || !$_POST['answer_id']) {
+    if(!$_POST['question_id'] || !$_POST['answer_id'] || !$_POST['answer_user_id']) {
         $err['a_id'] = '返答が選択されていません';
     } else {
         $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $_SESSION['a_data']['answer_user_id'] = filter_input(INPUT_POST, 'answer_user_id', FILTER_SANITIZE_SPECIAL_CHARS);
         $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
     }
     // ページ読み込み処理
@@ -37,7 +38,7 @@ if(isset($_POST['a_best_comp'])) {
             $err[] = 'ベストアンサー登録に失敗しました';
         }
     // 経験値を加算する処理
-    $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 40);
+    $plusEXP = UserLogic::plusEXP($_SESSION['a_data']['answer_user_id'], 40);
         if(!$plusEXP) {
             $err['plusEXP'] = '経験値加算処理に失敗しました';
         }
@@ -50,6 +51,10 @@ if(isset($_POST['a_best_comp'])) {
     if(empty($answer_id)) {
         $err[] = '返答を選択し直してください';
     }
+    $answer_user_id = filter_input(INPUT_POST, 'answer_user_id');
+    if(empty($answer_user_id)) {
+        $err[] = 'ユーザーを選択し直してください';
+    }
     if (count($err) === 0) {
         // 質問取得の処理
         $answer = QuestionLogic::displayOneAnswer($answer_id);
@@ -58,6 +63,7 @@ if(isset($_POST['a_best_comp'])) {
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -113,12 +119,19 @@ if(isset($_POST['a_best_comp'])) {
                         <div>本文：<?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                         <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">
+                        <input type="hidden" name="answer_user_id" value="<?php echo $answer_user_id; ?>">
                         <input type="submit" name="a_best_comp">
                     </form>
                     <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
                 <!-- ボタン押下時の処理 -->
                 <?php elseif(isset($_POST['a_best_comp']) && count($err) === 0): ?>
-                    <div>ベストアンサー登録が完了しました</div>
+                    <?php if(empty($err)): ?>
+                        <div>ベストアンサー登録が完了しました</div>
+                    <?php else: ?>
+                        <?php foreach($err as $row): ?>
+                            <?php echo $row ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                     <button type="button" onclick="location.href='../../userLogin/home.php'">TOP</button>
                     <button type="button" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ</button>
                 <?php endif; ?>
