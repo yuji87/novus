@@ -21,7 +21,7 @@ if ($article_id) {
   // 記事詳細情報取得
   $retInfo = $act->article($article_id);
 }
-if ($retInfo == NULL) {
+if ($retInfo === NULL || $retInfo['user'] === false) {
   // 記事がない場合は、記事一覧へリダイレクト
   header("Location: " . DOMAIN . "/public/article/index.php");
   exit;

@@ -118,10 +118,10 @@ class ArticleAct extends Action
       $retInfo = array();
       // 記事
       {
-          $stmt = $this->conn->prepare(QUERY_ARTICLE);
-          $stmt->bindValue(':article_id', $article_id);
-          $result = $stmt->execute();
-          $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL; //三項演算子
+        $stmt = $this->conn->prepare(QUERY_ARTICLE);
+        $stmt->bindValue(':article_id', $article_id);
+        $result = $stmt->execute();
+        $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : NULL; //三項演算子
         $retInfo['article'] = $article;
       
         // ユーザ情報
