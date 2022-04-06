@@ -17,7 +17,11 @@ $categories = CategoryLogic::getCategory();
 
 // 検索ボタン押下時、条件に合った質問を表示
 if(isset($_GET['search'])) {
-    $searchQuestion = QuestionLogic::searchQuestion($_GET);
+	$keyword = filter_input(INPUT_GET, 'keyword', FILTER_SANITIZE_SPECIAL_CHARS);
+	$category = filter_input(INPUT_GET, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
+	var_dump($_GET);
+	var_dump($keyword);
+    $searchQuestion = QuestionLogic::searchQuestion($keyword, $category);
     if(!$searchQuestion) {
         $err['question'] = '質問の読み込みに失敗しました';
 	}
@@ -79,7 +83,7 @@ if(isset($_GET['search'])) {
 	                <!-- ②検索フォーム  -->
 	                <form method="get">
 	                	<div class="form-group">
-	                		<input name="keyword" class="form-control mb-3" value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']): '' ?>">
+	                		<input name="keyword" class="form-control mb-3" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']): '' ?>">
 	                	</div>
 	                	<div class="form-group">
                             <select name="category">

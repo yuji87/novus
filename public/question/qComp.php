@@ -8,6 +8,14 @@ require_once '../../app/UserLogic.php';
 // エラーメッセージ
 $err = [];
 
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/home.php');
+    return;
+}
+
 // データ受け渡しチェック
 if (isset($_SESSION['q_data']['user_id']) &&
     isset($_SESSION['q_data']['title']) &&

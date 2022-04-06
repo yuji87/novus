@@ -75,20 +75,20 @@ class QuestionLogic
      * @param array $questionData
      * @return bool $result
      */
-    public static function searchQuestion($questionData)
+    public static function searchQuestion($keyword, $category)
     {
       $result = false;
 
       $where = [];
       // categoryが選択されている場合、検索条件に追加する
-      if(!empty($questionData['category'])){
-        $where[] = "question_posts.cate_id = ".$questionData['category'];
+      if(!empty($category)){
+        $where[] = "question_posts.cate_id = ".$category;
       }
       // keywordが入力されている場合、検索条件に追加する
-      if(!empty($questionData['keyword'])){
-        $where[] = "(title LIKE '%{$questionData['keyword']}%'
-                    OR message LIKE '%{$questionData['keyword']}%'
-                    OR category_name LIKE '%{$questionData['keyword']}%')";
+      if(!empty($keyword)){
+        $where[] = "(title LIKE '%{$keyword}%'
+                    OR message LIKE '%{$keyword}%'
+                    OR category_name LIKE '%{$keyword}%')";
       }
       if($where){
         $whereSql = implode(' AND ', $where);

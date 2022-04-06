@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 

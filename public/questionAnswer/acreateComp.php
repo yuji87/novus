@@ -5,6 +5,14 @@ session_start();
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/UserLogic.php';
 
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/home.php');
+    return;
+}
+
 // エラーメッセージ
 $err = [];
 
