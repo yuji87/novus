@@ -125,7 +125,7 @@ class TodoAct extends Action
       echo '<div class="row m-2">';
       echo '<div class="col-sm-8">';
       echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-      echo '<a href="'. DOMAIN.'/public/userLogin/mypage.php" class="btn btn-primary m-2">マイページへ</a>';
+      echo '<a href="'. DOMAIN.'/public/mypage/index.php" class="btn btn-primary m-2">マイページへ</a>';
       echo '</div>';
       echo '</div>';
     }

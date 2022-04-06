@@ -37,12 +37,6 @@ define("UPDATE_LEVEL","UPDATE users SET exp=:exp, level=:level WHERE user_id=:us
 //経験値更新
 define("UPDATE_EXP","UPDATE users SET exp=:exp WHERE user_id=:user_id");
 
-// タイトルの長さ
-define("TITLE_LENGTH", 150);
-
-// 記事の長さ
-define("MESSAGE_LENGTH", 1500);
-
 // 記事/いいね関連クラス
 class ArticleAct extends Action
 {

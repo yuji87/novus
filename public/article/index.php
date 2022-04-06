@@ -40,9 +40,9 @@ if (isset($_SESSION['login_user'])) {
 Token::create();
 ?>
 
-<div class="row m-2 pt-4 pb-2">
+<div class="row m-2 pt-4 pb-2 align-items-center">
   <?php if (isset($_SESSION['login_user'])) : ?>
-    <a href="<?php echo DOMAIN ?>/public/userLogin/mypage.php" class="d-flex align-items-center col-sm-2 text-dark">
+    <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
       <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
@@ -52,10 +52,9 @@ Token::create();
   <div class="col-sm-7 text-center">
     <input type="search" style="width:100%;" id="searcharticle" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
   </div>
-  <div class="d-flex align-items-center col-sm-3">
+  <div class="d-flex col-sm-3">
     <select class="" id="searcharticle" name="category" placeholder="カテゴリ">
       <?php
-      // echo '<option></option>';
       foreach ($category as $key => $val) {
         printf('<option value="%s">%s</option>', $key, $val);
       }

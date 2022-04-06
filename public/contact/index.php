@@ -29,7 +29,7 @@ $act->printHeader();
                 <label for="email_check">*Email（確認用）
                     <span class="error-php"><?php echo Utils::h($errors['email_check'] ?? ''); ?></span>
                 </label>
-                <input type="email" class="form-control equal-to required" data-equal-to="email" data-error-equal-to="メールアドレスが異なります" data-error-required="入力は必須です" id="email_check" name="email_check" placeholder="Email（確認用）" value="<?php echo Utils::h($inputs['email_check'] ?? ''); ?>">
+                <input type="email" class="form-control equal-to required" data-equal-to="email" data-error-equal-to="メールアドレスが異なります<br>" data-error-required="入力は必須です" id="email_check" name="email_check" placeholder="Email（確認用）" value="<?php echo Utils::h($inputs['email_check'] ?? ''); ?>">
             </div>
             <div class="form-group">
                 <label for="title">*タイトル
