@@ -47,13 +47,14 @@ if(!$article) {
 			<li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
             <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../article/index.php">記事ページ</a></li>
             <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>
 
+    <!--中央コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -65,8 +66,7 @@ if(!$article) {
                         <?php if(isset($article)): ?>
                             <?php foreach($article as $value): ?>
                             <!--題名-->
-                            <div class="fw-bold pb-1">題名</div>
-                            <div><?php echo $value['title']; ?></div>
+                            <div class="fw-bold pb-1 h5">「<?php echo $value['title']; ?>」</div>
                             <!--カテゴリ-->
                             <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                             <div><?php echo $value['category_name']; ?></div>
@@ -75,11 +75,11 @@ if(!$article) {
                             <div><?php echo $value['message']; ?></div>
                             <!--日付-->
                             <?php if(!isset($value['upd_date']) && isset($value['post_date'])): ?>
-                            <div class="pt-4 pb-1 small">投稿日付：<?php date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>
+                            <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>
                             <?php elseif(isset($value['upd_date'])): ?>
-                            <div class="pt-4 pb-1 small">投稿日付：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?></div>
-                            <hr id="dot">
+                            <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?></div>
                             <?php endif; ?>
+                            <hr id="dot">
                             <?php endforeach; ?>
                             <?php endif; ?>
                         </div>

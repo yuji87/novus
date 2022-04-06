@@ -70,6 +70,7 @@ $showicon = UserLogic::showIcon();
         </script>
     <?php endif; ?>
 
+    <!--中央コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">

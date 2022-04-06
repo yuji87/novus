@@ -57,7 +57,7 @@ if(!$newQuestion) {
         </div>
     </header>
 
-    <!-- コンテンツ -->
+    <!--中央コンテンツ-->
 	<div id="content" class="text-center mt-2"  style="background-color:rgba(236, 235, 235, 0.945);">
 		<div class="text-center pt-5">
 			<h5>質問を検索</h5>
@@ -91,16 +91,20 @@ if(!$newQuestion) {
 		    <?php //③取得データを表示する ?>
 	        <?php if(isset($searchQuestion) && count($searchQuestion)): ?>
 		        <p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
+				<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 	            <!--質問表示-->
 		        <?php foreach($searchQuestion as $value): ?>
 			        <!--題名-->
 			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
+						<!--アイコンをクリックするとユーザーページへ-->
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+							<a name="icon" href="<?php 
+					    	//user_idをユーザーページに引き継ぐ
+					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
                             <img src="img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
-					    	<!--アイコンをクリックするとユーザーページへ-->
 					    	<a name="icon" href="<?php 
 					    	//user_idをユーザーページに引き継ぐ
 					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
@@ -111,10 +115,16 @@ if(!$newQuestion) {
 				    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
 				    <!--カテゴリ-->
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-				    <!--本文-->
-				    <div>本文：<?php echo htmlspecialchars($value['message']); ?></div>
+				    <!-- メッセージ：本文が50文字以上なら省略 -->
+					<div class="text-center fw-bold mt-2 pb-2">本文</div>
+				    <?php if(mb_strlen($value['message']) > 50): ?>
+						<?php $limit_content = mb_substr($value['message'],0,50); ?>
+						<?php echo $limit_content; ?>…
+					<?php else: ?>
+						<?php echo $value['message']; ?>
+					<?php endif; ?>
 				    <!--投稿日時-->
-			        <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div><hr id="dot">
 		    	<?php endforeach; ?>
 		    <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		    	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
@@ -128,14 +138,17 @@ if(!$newQuestion) {
 				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
-                        <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+						<!--アイコンをクリックするとユーザーページへ-->
+					    <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+							<a name="icon" href="<?php 
+					    	//user_idをユーザーページに引き継ぐ
+					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
+                            <img src="img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
-				    		<!--アイコンをクリックするとユーザーページへ-->
 				    		<a name="icon" href="<?php 
 				    			//user_idをユーザーページに引き継ぐ
 				    			echo "userPage.php?user_id=".$value['user_id']; ?>">
-				    			<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+				    			<?php echo "<img src="."img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
 				    <!--ユーザー名-->
@@ -143,9 +156,15 @@ if(!$newQuestion) {
 				    <!--カテゴリ-->
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 				    <!--本文-->
-				    <div>本文：<?php echo htmlspecialchars($value['message']); ?></div>
+				    <div class="text-center fw-bold mt-2 pb-2">本文</div>
+					<?php if(mb_strlen($value['message']) > 50): ?>
+						<?php $limit_content = mb_substr($value['message'],0,50); ?>
+						<?php echo $limit_content; ?>…
+					<?php else: ?>
+						<?php echo $value['message']; ?>
+					<?php endif; ?>
 				    <!--投稿日時-->
-			        <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
 			    <?php endforeach; ?>
 		    <?php endif; ?>
 		</div>

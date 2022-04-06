@@ -5,7 +5,7 @@ session_start();
 require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/LevelLogic.php';
-require_once '../../app/functions.php';
+require_once '../../app/Functions.php';
 
 //エラーメッセージ
 $err = [];
@@ -52,11 +52,12 @@ if(!$newQuestion) {
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo">novus</div>
             <ul class="nav justify-content-center">
-            <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
-				    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
-				    <input type="hidden">
-                </form>
-            </li>
+                <li class="nav-item">
+					<form type="hidden" action="mypage.php" method="POST" name="mypage">
+				        <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
+				        <input type="hidden">
+                    </form>
+                </li>
 			<li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
             <li id="li"><a class="nav-link small text-white" href="../article/index.php">記事ページ</a></li>
             <li id="li"><a class="nav-link small text-white" href="../bookApi/index.php">ライブラリ</a></li>
@@ -66,6 +67,7 @@ if(!$newQuestion) {
         </div>
     </header>
 
+	<!--中央コンテンツ-->
 	<div class="wrapper">
 	    <div class="container">
 	        <div class="text-center">
@@ -93,9 +95,11 @@ if(!$newQuestion) {
 		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
                             <?php endif; ?>
                         </div>
+						<!--名前-->
                         <div class="text">
-                            <!--名前とレベル-->
-		        			<?php echo $value['name']; ?>
+		        			<?php echo $value['name']; ?>さん
+						</div>
+						<div class="text">
                             Lv.<?php echo $value['level']; ?>
                         </div>
                         <?php endforeach ?>
@@ -119,13 +123,11 @@ if(!$newQuestion) {
                                 <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                             <?php else: ?>
 		    					<!--上記と同じ処理-->
-		    					<!-- <form type="hidden" name="userpage" action="-->
 		    					<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
 		    						echo '../myPage/index.php'; } else {
 									//user_idをユーザーページに引き継ぐ
 		    						echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
 		    						<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
-		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
                             <?php endif; ?>
                         </div>
 						<!--ユーザー名-->
@@ -133,14 +135,15 @@ if(!$newQuestion) {
 		        		<!--カテゴリ-->
 						<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
 		        		<!--本文：50文字以上だと省略-->
-						<?php if(mb_strlen($value['message']) > 10): ?>
-							<?php $limit_content = mb_substr($value['message'],0,10); ?>
+						<div class="text-center fw-bold mt-2 pb-2">本文</div>
+						<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php $limit_content = mb_substr($value['message'],0,50); ?>
 							<?php echo $limit_content; ?>…
 						<?php else: ?>
 							<?php echo $value['message']; ?>
 						<?php endif; ?>
 		        		<!--投稿日時-->
-		        	    <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']) ?></div><hr id="dot">
+		        	    <div class="mt-3 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
 		        	<?php endforeach; ?>
 		        <?php endif; ?>
 			</div>

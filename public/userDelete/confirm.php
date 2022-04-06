@@ -39,14 +39,15 @@ if(count($err) === 0 && (isset($_POST['check']))) {
     <title>会員削除確認画面</title>
 </head>
 
+<!--中央コンテンツ-->
 <body class="h-100 bg-secondary p-4 p-md-5">
     <form action="" method="POST" class="row g-3 bg-white p-2 p-md-5 shadow-sm">
         <input type="hidden" name="check" value="checked">
         <h1 class="my-3 h1" style="text-align:center;">会員登録削除の確認</h1>
         <p class="my-2" style="text-align:center;">本当に削除をしてよろしいですか？</p>
-        <?php if (!empty($err) && $err === "err"): ?>
+        <?php if(!empty($err) && $err === "err"): ?>
             <p class="err">＊会員登録に失敗しました。</p>
-        <?php endif ?>
+        <?php endif; ?>
         <hr>
         <div class="text-center">
             <a href="list.php" class="btn btn-secondary">戻る</a>

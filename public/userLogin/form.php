@@ -35,6 +35,7 @@ $_SESSION = array();
     <title>ログインフォーム</title>
 </head>
 
+<!--中央コンテンツ-->
 <body class="h-100 bg-secondary p-4 p-md-5">
     <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="complete.php" method="POST" name="login">
         <h1 class="my-3">ログインフォーム</h1>

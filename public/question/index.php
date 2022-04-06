@@ -208,7 +208,7 @@ if(isset($_GET['search'])) {
 								<div class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
 									<?php if (!isset($value['upd_date'])): ?>
-										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
 									<?php else: ?>
 										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
 									<?php endif; ?>
