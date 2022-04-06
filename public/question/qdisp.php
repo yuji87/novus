@@ -185,7 +185,7 @@ if(isset($_POST['like_regist'])) {
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
                             <!--ユーザー名-->
-                            <div>名前：<?php echo $value['name']; ?></div>
+                            <div><?php echo $value['name']; ?>さん</div>
                             <!--アイコン-->
                             <div class="pb-1 small">
                                 <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
