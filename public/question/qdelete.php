@@ -116,7 +116,7 @@ if(isset($_POST['q_dlt'])) {
                     <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
+                    <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link small" href="../bookApi/index.php">本検索</a>
