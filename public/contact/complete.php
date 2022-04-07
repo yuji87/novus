@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../app/ContactAct.php";
 
 use Novus\ContactAct;
 
-$act = new ContactAct();
+$act = new ContactAct(1);
 $result = $act->complete();
 $act->printHeader();
 ?>

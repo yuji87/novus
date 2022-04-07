@@ -17,8 +17,8 @@ $act->checkLogin();
 // トークンチェック
 Token::validate();
 
-$title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_SPECIAL_CHARS);
-$message = filter_input(INPUT_POST, "message", FILTER_SANITIZE_SPECIAL_CHARS);
+$title = filter_input(INPUT_POST, "title");
+$message = filter_input(INPUT_POST, "message");
 $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
 
 $title = Utils::mbTrim($title);
