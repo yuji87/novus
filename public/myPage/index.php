@@ -13,12 +13,6 @@ if(!$result) {
 }
 $login_user = $_SESSION['login_user'];
 
-//モーダル処理
-if(isset($_POST['mypage'])) {
-    $user_data = UserLogic::levelModal();
-    return;
-}
-
 //画像情報の取得
 $showicon = UserLogic::showIcon();
 ?>
@@ -40,7 +34,7 @@ $showicon = UserLogic::showIcon();
 	<!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
 			<li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
@@ -70,6 +64,7 @@ $showicon = UserLogic::showIcon();
         </script>
     <?php endif; ?>
 
+    <!--中央コンテンツ-->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -83,20 +78,43 @@ $showicon = UserLogic::showIcon();
                             <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                         <?php endif; ?>
                     </div>
+                    <br>
                     <!--ユーザーが登録した名前を表示-->
                     <div class="text">
-                        <p class="fw-bold">名前</p>
-                        <?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>
+                        <p style="display: inline-block;" class="fw-bold">名前　</p>
+                        <p style="display: inline-block;">
+                            <?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
                     </div>
                     <!--ユーザーの現レベルを表示-->
                     <div class="text">
-                        <p class="fw-bold">レベル</p>
-                        Lv.<?php
-                           if(isset($login_user['level'])) {
-                               echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
-                           } else {
-                               echo '1';
-                           } ?>
+                        <p style="display: inline-block;" class="fw-bold">レベル　</p>
+                        <p style="display: inline-block;">Lv.</p><?php
+                            if(isset($login_user['level'])) {
+                                echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
+                            } else {
+                                echo '1';
+                            } ?>
+                    </div>
+                    <!-- ユーザーの現経験値と、次のレベルまでの経験値を表示 -->
+                    <div class="text">
+                        <p style="display: inline-block;" class="fw-bold">EXP　</p>
+                        <p style="display: inline-block;"><?php 
+                            if(isset($login_user['exp'])) {
+                                echo htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8'); 
+                            } else {
+                                echo '0';
+                            }
+                        ?>
+                        </p>
+                        <!-- 次のレベルまでの経験値表示 -->
+                        <p class="small">次のレベルまで、<?php 
+                            if(isset($login_user['exp'])) {
+                                $current_exp = htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8') % 100; 
+                                echo 100 - $current_exp;
+                            } else {
+                                echo '100';
+                            }?>EXP です。</p>
                     </div>
                     <div class="text">
                         <p class="fw-bold">コメント</p>

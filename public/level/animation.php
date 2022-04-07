@@ -1,5 +1,12 @@
 <?php
-    $user_data = UserLogic::levelModal();
+    // モーダルウインドウ呼び出しのため、変数を定義
+    $cur_level = $_SESSION['login_user']['level'];
+    $cur_exp = $_SESSION['login_user']['exp'];
+    $pre_level = $_SESSION['login_user']['pre_level'];
+    $pre_exp = $_SESSION['login_user']['pre_exp'];
+
+    // 今のレベル　＞　以前のレベル の時、pre_level, pre_expを更新する
+    $update = UserLogic::levelUpdate();
 ?>
 
 <head>
@@ -12,9 +19,23 @@
   <div class="mx-auto" style="width: 200px;">
   <div class="cherry-blossom-container" style=" height: auto">
     <!-- レベルによる表示画像変更 -->
-    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto" src="../top/img/level/22338667.png" alt="ないよ">
+    <img id="hero" class="col-4 d-block" style="width: 100px; height: auto"
+      src="<?php switch ($pre_level) {
+          case $pre_level >= 20;
+              echo '../top/img/level/22493175.png';
+              break;
+          case $pre_level >= 10;
+              echo '../top/img/level/22350820.png';
+              break;
+          case $pre_level >= 5;
+              echo '../top/img/level/22503431.png';
+              break;
+          case $pre_level < 5;
+              echo '../top/img/level/22338667.png';
+              break;
+          }  ?>" alt="ないよ">
     <div id="lv" class="col-4 d-block">Lv.
-      <span id="level"><?php echo $user_data['pre_level'] ?></span>
+      <span id="level"><?php echo $pre_level ?></span>
       <progress class=" d-block mx-auto" id="lifeBar" value="0" max="100" min="0" optimum="100"></progress>
       <div class="col-4 d-block  element js-animation" id="ohome_word">Congratulation!</div>
     </div>
@@ -24,10 +45,10 @@
   
   <script type="text/javascript">
     // 前提条件の定義
-    let previousLevel = <?php echo $user_data['pre_level'] ?>;
-    let currentLevel = <?php echo $user_data['level'] ?>;
-    let previousExp = <?php echo $user_data['pre_exp'] ?>;
-    let currentExp = <?php echo $user_data['exp'] ?>;
+    let previousLevel = <?php echo $pre_level ?>;
+    let currentLevel = <?php echo $cur_level ?>;
+    let previousExp = <?php echo $pre_exp ?>;
+    let currentExp = <?php echo $cur_exp ?>;
     lifeBar.value = previousExp;
     let exExp = currentExp % 100;
     

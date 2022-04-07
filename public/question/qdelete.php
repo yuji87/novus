@@ -69,7 +69,7 @@ if(isset($_POST['q_dlt'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -97,7 +97,7 @@ if(isset($_POST['q_dlt'])) {
                     <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                    <div><?php echo $question['message']; ?></div>
+                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['message']; ?></div>
                     <div>添付</div>
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
                     <i class="fa-solid fa-trash-can mt-3"><input class="fw-bold " type="submit" name="q_dlt" id="delete" value="削除"></i>
@@ -116,7 +116,7 @@ if(isset($_POST['q_dlt'])) {
                     <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
+                    <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link small" href="../bookApi/index.php">本検索</a>

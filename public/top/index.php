@@ -2,23 +2,33 @@
 session_start();
 
 // ファイルの読み込み
+require_once '../../app/UserLogic.php';
 require_once '../../app/CategoryLogic.php';
 require_once '../../app/QuestionLogic.php';
 
 // エラーメッセージ
 $err = [];
 
+//ログインしているか判定して、していたらログイン画面へ移す
+$result = UserLogic::checkLogin();
+if($result) {
+    header('Location: ../userLogin/home.php');
+    return;
+}
+
 // カテゴリ処理
 $categories = CategoryLogic::getCategory();
 
-//質問を引っ張る処理
+// 検索ボタン押下時、条件に合った質問を表示
 if(isset($_GET['search'])) {
-    $searchQuestion = QuestionLogic::searchQuestion($_GET);
+	$keyword = filter_input(INPUT_GET, 'keyword', FILTER_SANITIZE_SPECIAL_CHARS);
+	$category = filter_input(INPUT_GET, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
+    $searchQuestion = QuestionLogic::searchQuestion($keyword, $category);
     if(!$searchQuestion) {
-      $err['question'] = '質問の読み込みに失敗しました';
-    } else {
-  	$newQuestion = QuestionLogic::newQuestion();
-    }
+        $err['question'] = '質問の読み込みに失敗しました';
+	}
+} else {  // 通常時は、新着の質問を表示する
+	$newQuestion = QuestionLogic::newQuestion();
 }
 
 // 最新の質問を表示
@@ -46,7 +56,7 @@ if(!$newQuestion) {
 	<!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+			<div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li id="li"><a class="nav-link small text-white" href="../question/index.php">質問ページ</a></li>
                 <li id="li"><a class="nav-link small text-white" href="../article/index.php">記事ページ</a></li>
@@ -57,7 +67,7 @@ if(!$newQuestion) {
         </div>
     </header>
 
-    <!-- コンテンツ -->
+    <!--中央コンテンツ-->
 	<div id="content" class="text-center mt-2"  style="background-color:rgba(236, 235, 235, 0.945);">
 		<div class="text-center pt-5">
 			<h5>質問を検索</h5>
@@ -91,16 +101,20 @@ if(!$newQuestion) {
 		    <?php //③取得データを表示する ?>
 	        <?php if(isset($searchQuestion) && count($searchQuestion)): ?>
 		        <p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
+				<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
 	            <!--質問表示-->
 		        <?php foreach($searchQuestion as $value): ?>
 			        <!--題名-->
-			        <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+			        <div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
+						<!--アイコンをクリックするとユーザーページへ-->
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+							<a name="icon" href="<?php 
+					    	//user_idをユーザーページに引き継ぐ
+					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
                             <img src="img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
-					    	<!--アイコンをクリックするとユーザーページへ-->
 					    	<a name="icon" href="<?php 
 					    	//user_idをユーザーページに引き継ぐ
 					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
@@ -111,31 +125,42 @@ if(!$newQuestion) {
 				    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
 				    <!--カテゴリ-->
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-				    <!--本文-->
-				    <div>本文：<?php echo htmlspecialchars($value['message']); ?></div>
+				    <!-- メッセージ：本文が50文字以上なら省略 -->
+					<div class="text-center fw-bold mt-2 pb-2" style="overflow: hidden; overflow-wrap: break-word;">本文</div>
+					<div style="overflow: hidden; overflow-wrap: break-word;">
+						<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php $limit_content = mb_substr($value['message'],0,50); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
+					</div>
 				    <!--投稿日時-->
-			        <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div><hr id="dot">
 		    	<?php endforeach; ?>
 		    <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		    	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
 			<?php endif; ?>
 
 		    <!-- 通常時、新着の質問を表示 -->
-			<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		    <?php if(!isset($searchQuestion) && isset($newQuestion)): ?>
+				<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 			    <?php foreach($newQuestion as $value): ?>
 				    <!--題名-->
-				    <div><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+				    <div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 			        <!--アイコン-->
 			        <div class="level-icon">
-                        <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-                            <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+						<!--アイコンをクリックするとユーザーページへ-->
+					    <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+							<a name="icon" href="<?php 
+					    	//user_idをユーザーページに引き継ぐ
+					    	echo "userPage.php?user_id=".$value['user_id']; ?>">
+                            <img src="img/<?php echo $value['icon']; ?>"></a>
                         <?php else: ?>
-				    		<!--アイコンをクリックするとユーザーページへ-->
 				    		<a name="icon" href="<?php 
 				    			//user_idをユーザーページに引き継ぐ
 				    			echo "userPage.php?user_id=".$value['user_id']; ?>">
-				    			<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+				    			<?php echo "<img src="."img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
 				    <!--ユーザー名-->
@@ -143,9 +168,17 @@ if(!$newQuestion) {
 				    <!--カテゴリ-->
 				    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 				    <!--本文-->
-				    <div>本文：<?php echo htmlspecialchars($value['message']); ?></div>
+				    <div class="text-center fw-bold mt-2 pb-2">本文</div>
+					<div style="overflow: hidden; overflow-wrap: break-word;">
+						<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php $limit_content = mb_substr($value['message'],0,50); ?>
+							<?php echo $limit_content; ?>…
+						<?php else: ?>
+							<?php echo $value['message']; ?>
+						<?php endif; ?>
+					</div>
 				    <!--投稿日時-->
-			        <div class="mt-1 mb-3 small"><?php echo htmlspecialchars($value['post_date']); ?></div><hr id="dot">
+			        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
 			    <?php endforeach; ?>
 		    <?php endif; ?>
 		</div>

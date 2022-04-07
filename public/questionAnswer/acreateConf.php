@@ -3,6 +3,16 @@ session_start();
 
 //ファイルの読み込み
 require_once '../../app/QuestionLogic.php';
+require_once '../../app/UserLogic.php';
+
+
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/home.php');
+    return;
+}
 
 //エラーメッセージ
 $err = [];
@@ -72,7 +82,7 @@ if(isset($_POST['a_comp'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -101,7 +111,7 @@ if(isset($_POST['a_comp'])) {
                 <!--回答内容の確認-->
                 <div class="fw-bold pb-1">内容</div>
                 <form method="POST" action="">
-                    <textarea name="a_message"><?php echo $a_message; ?></textarea>
+                    <textarea name="a_message" rows="5" class="w-100"><?php echo $a_message; ?></textarea>
                     <input type="hidden" name="a_user_id" value="<?php echo $a_user_id; ?>">
                     <input type="hidden" name="q_user_id" value="<?php echo $q_user_id; ?>">
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
@@ -122,7 +132,7 @@ if(isset($_POST['a_comp'])) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

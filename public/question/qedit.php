@@ -91,7 +91,7 @@ if(isset($_POST['q_edit_conf'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -155,10 +155,10 @@ if(isset($_POST['q_edit_conf'])) {
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
                     <div>
-                        <textarea name="message"><?php echo $question['message']; ?></textarea>
+                        <textarea name="message" rows="5" class="w-100"><?php echo $question['message']; ?></textarea>
                     </div>
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
-                    <input type="submit" name="q_edit_conf" class="btn btn-warning mt-5 mb-5" value="投稿する">
+                    <input type="submit" name="q_edit_conf" class="btn btn-warning mt-5 mb-5" value="修正する">
                 </form>
                 <button type="button" class="btn btn-outline-dark fw-bold" onclick="history.back()">戻る</button>
             </div>
@@ -174,7 +174,7 @@ if(isset($_POST['q_edit_conf'])) {
                     <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
+                    <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link small" href="../bookApi/index.php">本検索</a>

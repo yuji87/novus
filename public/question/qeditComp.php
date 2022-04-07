@@ -57,7 +57,7 @@ $question_id = $_SESSION['q_data']['question_id'];
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -85,7 +85,7 @@ $question_id = $_SESSION['q_data']['question_id'];
                 <div><?php echo $category; ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div><?php echo $message; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $message; ?></div>
                 <form method="GET" action="qdisp.php">
                     <input type="hidden" name= "question_id" value="<?php echo $question_id; ?>">
                     <input type="submit" value="質問へ">
@@ -104,7 +104,7 @@ $question_id = $_SESSION['q_data']['question_id'];
                             <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

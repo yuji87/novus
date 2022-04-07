@@ -5,6 +5,14 @@ session_start();
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/UserLogic.php';
 
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/home.php');
+    return;
+}
+
 // エラーメッセージ
 $err = [];
 
@@ -15,9 +23,6 @@ if(isset($_SESSION['a_data']['message']) &&
 ) {
     // 今までの返信を取得して、自分の返信があった場合カウントする
     $hasDisplayed = QuestionLogic::displayAnswer($_SESSION['a_data']['question_id']);
-    if(!$hasDisplayed) {
-        $err['answer'] = '返信の読み込みに失敗しました';
-    } 
     $count = 0;
     foreach($hasDisplayed as $value) {
         if($value['user_id'] == $_SESSION['a_data']['a_user_id']) {
@@ -60,7 +65,7 @@ if(isset($_SESSION['a_data']['message']) &&
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -81,9 +86,11 @@ if(isset($_SESSION['a_data']['message']) &&
                 <p class="h4">回答完了</p>
                 <?php if(count($err) == 0): ?>
                     <p>返答の投稿が完了しました</p>
+                <?php elseif($err['other']): ?>
+                    <p>リロードは無効です</p>
                 <?php else: ?>
                     <p>返信の登録に失敗しました</p>
-                <?php endif; ?>                
+                <?php endif; ?>            
                 <form method="GET" action="../question/qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $_SESSION['a_data']['question_id']; ?>">
                     <input type="submit" class="btn btn-warning mb-3" name="q_disp" value="質問表示へ戻る">

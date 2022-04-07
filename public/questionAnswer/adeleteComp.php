@@ -13,7 +13,7 @@ $err = [];
 $result = UserLogic::checkLogin();
 if(!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
-    header('Location: ../../userLogin/home.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -40,7 +40,7 @@ if(empty($dlt)) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -74,7 +74,7 @@ if(empty($dlt)) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

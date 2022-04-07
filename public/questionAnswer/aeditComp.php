@@ -3,6 +3,15 @@ session_start();
 
 // ファイルの読み込み
 require_once '../../app/QuestionLogic.php';
+require_once '../../app/UserLogic.php';
+
+// ログインチェック
+$result = UserLogic::checkLogin();
+if(!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
+    header('Location: ../userLogin/home.php');
+    return;
+}
 
 // エラーメッセージ
 $err = [];
@@ -40,7 +49,7 @@ if (isset($_SESSION['a_data']['answer_id']) &&
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -60,7 +69,8 @@ if (isset($_SESSION['a_data']['answer_id']) &&
             <div class="content">
                 <p class="h4">編集完了</p>
                 <p>以下の内容で編集が完了しました</p>
-                <div>本文：<?php echo $hasTaken['message']; ?></div>
+                <div class="text-center fw-bold mt-2 pb-2">本文</div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $hasTaken['message']; ?></div>
                 <form method="GET" name="form1" action="../question/qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken['question_id']; ?>">
                     <a href="javascript:form1.submit()">詳細画面へ</a>

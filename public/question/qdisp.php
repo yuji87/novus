@@ -28,7 +28,7 @@ if (count($err) === 0) {
     // 質問の取得
     $question = QuestionLogic::displayQuestion($_GET);
     if(!$question) {
-        $err['question'] = '質問の読み込みに失敗しました';
+        $err['q_id'] = '質問を選択し直してください';
     }
   // 質問返答の取得
     $answer = QuestionLogic::displayAnswer($_GET['question_id']);
@@ -91,7 +91,7 @@ if(isset($_POST['like_regist'])) {
     <header>
 	    <?php if($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -107,7 +107,7 @@ if(isset($_POST['like_regist'])) {
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
 			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
@@ -121,7 +121,7 @@ if(isset($_POST['like_regist'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <?php if(!$question_id): ?>
+                <?php if(!$question_id || !$question): ?>
                     <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
                 <?php else: ?>
                 <!--質問の詳細表示-->
@@ -140,18 +140,19 @@ if(isset($_POST['like_regist'])) {
                         <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                     <?php endif; ?>
                     <!--投稿者-->
-                    <div class="pb-4 pt-2 small">投稿者：
+                    <div class="pb-4 pt-2 small">
                         <?php echo $question['name']; ?>
+                        さん
                     </div>
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
-                        <div><?php echo $question['title']; ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                         <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                        <div><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
                     <!--日付-->
                     <div class="pt-4 pb-1 small">
                         <?php if (!isset($question['upd_date'])): ?>
@@ -184,7 +185,7 @@ if(isset($_POST['like_regist'])) {
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
                             <!--ユーザー名-->
-                            <div>名前：<?php echo $value['name']; ?></div>
+                            <div><?php echo $value['name']; ?>さん</div>
                             <!--アイコン-->
                             <div class="pb-1 small">
                                 <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
@@ -194,7 +195,8 @@ if(isset($_POST['like_regist'])) {
                                 <?php endif; ?>
                             </div>
                             <!--本文-->
-                            <div>本文：<?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
+                            <div class="fw-bold pt-3 pb-1">本文</div>
+                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
                             <!--投稿日時-->
                             <div>
                                 <!-- 更新されていた場合、その日付を優先表示 -->
@@ -259,6 +261,7 @@ if(isset($_POST['like_regist'])) {
                                     <form method="POST" action="bestAnswer.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                         <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
+                                        <input type="hidden" name="answer_user_id" value="<?php echo $value['user_id']; ?>">
                                         <input type="submit" value="ベストアンサー">
                                     </form>
                                 <?php endif; ?>
@@ -293,7 +296,7 @@ if(isset($_POST['like_regist'])) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link small" href="index.php">質問</a>
+                        <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                         <a class="nav-link small" href="../bookApi/index.php">本検索</a>

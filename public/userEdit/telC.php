@@ -21,13 +21,13 @@ if(!empty($_POST['formcheck'])) {
     $_SESSION['telEdit'] = $_POST['tel'];
     $tel = filter_input(INPUT_POST, 'tel');
     //バリデーション
-    $limit = 15;
+    $limitTel = 12;
     if(empty($_SESSION['telEdit'])) {
         $err['tel'] = '電話番号を入力してください';
     }
     // 文字数チェック
-    if(mb_strlen($tel) > $limit) {
-        $err['tel'] = '15文字で入力してください';
+    if(mb_strlen($tel) > $limitTel) {
+        $err['tel'] = '12文字で入力してください';
     }
     //電話で重複チェック
     $checkDuplicate = UserLogic::checkDuplicateByTel($_SESSION['telEdit']);
@@ -64,14 +64,14 @@ if(count($err) === 0 && (isset($_POST['check']))) {
     <!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo">novus</div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
             <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
             <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>
@@ -104,9 +104,9 @@ if(count($err) === 0 && (isset($_POST['check']))) {
                             <a href="../userEdit/tel.php" class="p-2 text-white bg-secondary">再入力する</a>
                         </div>
                         <?php else: ?>
-                        <div class="col-4 bg-secondary">
+                        <div class="text-center">
                             <a href="../userEdit/tel.php" class="p-2 text-white bg-secondary">戻る</a>
-                            <p><button type="submit" class="btn-edit-check">変更</button></p>
+                            <p><button type="submit" class="mt-4">変更</button></p>
                         </div>
                         <?php endif; ?>
                     </div>

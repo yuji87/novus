@@ -1,17 +1,15 @@
 <?php
 session_start();
 
-
 //ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Dbconnect.php';
 require_once '../../app/Functions.php';
 
-
-// ログインチェック処理
+//ログインしているか判定して、していたらログイン画面へ移す
 $result = UserLogic::checkLogin();
 if($result) {
-    header('location: ../userLogin/form.php');
+    header('Location: ../userLogin/home.php');
     return;
 }
 
@@ -35,6 +33,7 @@ $_SESSION = array();
     <title>ログインフォーム</title>
 </head>
 
+<!--中央コンテンツ-->
 <body class="h-100 bg-secondary p-4 p-md-5">
     <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="complete.php" method="POST" name="login">
         <h1 class="my-3">ログインフォーム</h1>
