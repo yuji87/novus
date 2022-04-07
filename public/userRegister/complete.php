@@ -28,7 +28,7 @@ $err = [];
             <h1 class="my-3 h1">会員登録が<br>完了しました</h1>
             <!--TOPページへ-->
             <div class="text-center">
-                <br><br><a class="btn btn-secondary" href="../userLogin/form.php" role="button">ログインする</a>
+                <br><br><a class="btn btn-secondary" href="../top/index.php" role="button">ログインする</a>
             </div>
         <?php endif; ?>
         </div>

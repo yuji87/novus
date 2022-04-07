@@ -25,19 +25,19 @@ $act->printHeader();
                 <caption>ご入力内容</caption>
                 <tr>
                 <th>お名前</th>
-                <td><?php echo Utils::h($inputs['name']); ?></td>
+                <td style="overflow: hidden; overflow-wrap: break-word;"><?php echo Utils::h($inputs['name']); ?></td>
                 </tr>
                 <tr>
                 <th>Email</th>
-                <td><?php echo Utils::h($inputs['email']); ?></td>
+                <td style="overflow: hidden; overflow-wrap: break-word;"><?php echo Utils::h($inputs['email']); ?></td>
                 </tr>
                 <tr>
                 <th>タイトル</th>
-                <td><?php echo Utils::h($inputs['title']); ?></td>
+                <td style="overflow: hidden; overflow-wrap: break-word;"><?php echo Utils::h($inputs['title']); ?></td>
                 </tr>
                 <tr>
                 <th>お問い合わせ内容</th>
-                <td class="text-break"><?php echo nl2br(Utils::h($inputs['contents'])); ?></td>
+                <td class="text-break" style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(Utils::h($inputs['contents'])); ?></td>
                 </tr>
             </table>
         </div>

@@ -16,9 +16,9 @@ $act->checkLogin();
 // トークンチェック
 Token::validate();
 
-$editTodoId = filter_input(INPUT_POST, 'editTodoId', FILTER_SANITIZE_NUMBER_INT);
-$editTodoTitle = filter_input(INPUT_POST, 'editTodoTitle', FILTER_SANITIZE_SPECIAL_CHARS);
-$editTodoDt = filter_input(INPUT_POST, 'editTodoDt', FILTER_SANITIZE_SPECIAL_CHARS);
+$editTodoId = filter_input(INPUT_POST, 'editTodoId');
+$editTodoTitle = filter_input(INPUT_POST, 'editTodoTitle');
+$editTodoDt = filter_input(INPUT_POST, 'editTodoDt');
 
 if (Utils::mbTrim($editTodoTitle) === "") {
   // 何も入力されていない時(スペース入力も)

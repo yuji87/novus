@@ -22,7 +22,7 @@ Token::create();
 $remindDt = Utils::addDay(7, 1);
 
 // エラー信号を代入
-$errSignal = filter_input(INPUT_GET, 'errSignal', FILTER_SANITIZE_SPECIAL_CHARS);
+$errSignal = filter_input(INPUT_GET, 'errSignal');
 
 // アイコンを取得
 $icon = $act->getMemberIcon();
