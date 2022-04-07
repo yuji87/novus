@@ -147,19 +147,22 @@ if(isset($_POST['like_regist'])) {
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
                         <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
-                    <!--カテゴリー-->
-                    <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                        <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
                         <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8')); ?></div>
-                    <!--日付-->
-                    <div class="pt-4 pb-1 small">
-                        <?php if (!isset($question['upd_date'])): ?>
-                            投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
-                        <?php else: ?>
-                            更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
-                        <?php endif; ?>
+                    <!-- カテゴリと投稿日時を横並びにする処理 -->
+                    <div class="block">
+                        <!--カテゴリ-->
+                        <div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($question['category_name']); ?></div>
+                        <!--投稿日時-->
+                        <div style="display: inline-block;" class="small pb-4">
+                            <!-- 更新されていた場合、その日付を優先表示 -->
+                            <?php if (!isset($value['upd_date'])): ?>
+                                投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
+                            <?php else: ?>
+                                更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <!-- 質問者本人の時、編集・削除ボタン表示 -->
@@ -200,18 +203,21 @@ if(isset($_POST['like_regist'])) {
                             <!--本文-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
                             <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
-                            <!--投稿日時-->
-                            <div>
-                                <!-- 更新されていた場合、その日付を優先表示 -->
-                                <?php if (!isset($value['upd_date'])): ?>
-                                    投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
-                                <?php else: ?>
-                                    更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-                                <?php endif; ?>
+                            <!-- いいね表示と投稿日時を横並びにする処理 -->
+                            <div class="block">
+                                <!-- フラグがONになっているいいねの数を表示 -->
+                                <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
+                                <div class="mb-3" style="display: inline-block;">&hearts;<?php echo count($likes); ?>　</div>
+                                <!--投稿日時-->
+                                <div style="display: inline-block;">
+                                    <!-- 更新されていた場合、その日付を優先表示 -->
+                                    <?php if (!isset($value['upd_date'])): ?>
+                                        投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
+                                    <?php else: ?>
+                                        更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <!-- フラグがONになっているいいねの数を表示 -->
-                            <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                            <div class="mb-3">&hearts;<?php echo count($likes); ?></div>
                             <!-- ベストアンサー選択された返答の目印 -->
                             <?php if($value['best_flg']): ?>
                                 <div class="alert alert-danger">ベストアンサー</div>
