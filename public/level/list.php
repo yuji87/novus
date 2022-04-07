@@ -75,9 +75,13 @@ if(!$data || !$paging) {
 								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
                     </div>
-                    <div class="text">
+                    <div class="text-center">
                         <!--名前の表示-->
-                        <?php echo $value['name']; ?>
+                        <!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    					echo '../myPage/index.php'; } else {
+                                echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                               <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
                         <!--レベルの表示-->
                         Lv.<?php echo $value['level']; ?>
                     </div>

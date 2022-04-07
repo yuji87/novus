@@ -137,7 +137,16 @@ if(isset($_GET['search'])) {
                                     <?php endif; ?>
 								<?php endif; ?>
 								<!--ユーザー名-->
-					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+								<!--名前をクリックするとユーザーページへ-->
+								<?php if($result): // ログイン可否で違うユーザーページへ ?>
+									<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                   <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+								<?php else: ?>
+									<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+								<?php endif; ?>
 					    		<!--カテゴリ-->
 								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 								<div style="overflow: hidden; overflow-wrap: break-word;">
@@ -198,7 +207,16 @@ if(isset($_GET['search'])) {
                                     <?php endif; ?>
 								<?php endif; ?>
 								<!--ユーザー名-->
-					    		<div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+								<!--名前をクリックするとユーザーページへ-->
+								<?php if($result): // ログイン可否で違うユーザーページへ ?>
+									<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                   <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+								<?php else: ?>
+									<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+								<?php endif; ?>
 					    		<!--カテゴリ-->
 								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 								<!-- メッセージ：本文が50文字以上なら省略 -->
