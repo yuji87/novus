@@ -20,16 +20,17 @@ $act->checkLogin();
 
 $retInfo = NULL;
 $article_id = filter_input(INPUT_GET, "article_id", FILTER_VALIDATE_INT);
-if ($article_id) {
+if (isset($article_id)) {
   // 記事詳細情報取得
   $retInfo = $act->article($article_id);
 }
 
-if ($retInfo['user'] === false || $retInfo['user'] === null) {
-  // 記事がない場合は、記事一覧へリダイレクト
-  header("Location: " . DOMAIN . "/public/article/index.php");
-  exit;
-}
+// if ($retInfo['user'] === false) {
+//   // 記事がない場合は、記事一覧へリダイレクト
+//   header("Location: " . DOMAIN . "/public/article/index.php");
+//   exit;
+// }
+
 
 $article_id = 0;
 $title = '';

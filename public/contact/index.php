@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../app/Utils.php';
 use Novus\ContactAct;
 use Novus\Utils;
 
-$act = new ContactAct();
+$act = new ContactAct(1);
 [$inputs, $errors] = $act->index();
 $act->printHeader();
 ?>

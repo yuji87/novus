@@ -8,7 +8,7 @@ class Utils
   // htmlで行表示対応の文字列作成
   public static function compatiStr($str)
   {
-    return str_replace("\n", "<br>", $str);
+    return str_replace("\r\n", "<br>", $str);
   }
   // 日時の文字列作成
   public static function compatiDate($date, $format = "Y-m-d H:i")
@@ -97,7 +97,7 @@ class Utils
     return $str;
   }
 
-  // 日付文字列チェック(todo)
+  // 日付文字列チェック
   public static function checkDatetimeFormat($dateTime)
   {
     $dateTime = str_replace('/', '-', $dateTime); // - に統一
