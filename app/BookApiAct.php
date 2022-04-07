@@ -29,7 +29,6 @@ class BookApiAct extends Action
     echo '<meta name="format-detection" content="telephone=no">';
     echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
     echo '<link rel="stylesheet" href="' . DOMAIN . '/public/css/bookApi.css">';
-    // echo '<link rel="stylesheet" href="' . DOMAIN . '/public/css/novus.css">';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
     echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>';
     echo '<script src="' . DOMAIN . '/public/bookApi/js/script.js" defer></script>';

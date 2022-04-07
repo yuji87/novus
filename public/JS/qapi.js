@@ -1,7 +1,4 @@
-
-
-var $domainurl = '/novus/public/';
-
+const $domainurl = '/novus/public/';
 
 // $urlへリダイレクト
 function jumpapi($url) {
@@ -12,6 +9,7 @@ function jumpapi($url) {
 function formapiCallback($url, $data, $callback) {
 console.log('url=' + $url);
 console.log($data);
+	console.log($callback);
 	$.ajax({
 		type: 'POST',
 		url: $domainurl + $url,
@@ -28,7 +26,7 @@ function onShow($text) {
 	swal($text);
 }
 
-// 文字長さチェック
+// 文字の長さチェック
 function isStrLen(value, minval, maxval) {
 	var $len = value.length;
 	if ($len < minval) {
@@ -39,57 +37,6 @@ function isStrLen(value, minval, maxval) {
 	}
 	return true;
 }
-
-const textareaInt = document.getElementById('textarea');
-var submitInt = document.getElementById('submit');
-var errorMessage = document.getElementById('error');
-
-textareaInt.addEventListener('input', (e) => {
-  if (e.target.value.length > 140) {
-    submitInt.disabled = true;
-    // errorMessage.classList.remove('errorOver');
-    submitInt.style.opacity = '0.1';
-  };
-  if (e.target.value.length <= 140) {
-    submitInt.disabled = false;
-    errorMessage.classList.add('errorOver');
-    submitInt.style.opacity = '0.5';
-  };
-});
-
-  //指定された最大文字数を満たしているかを検証する関数（満たしていない場合は true を返す）
-  var isTooLong = function ($elem) {
-    //対象のクラス名
-    var className = "maxlength";
-    //data-maxlength 属性から最大文字数を取得
-    var maxlength = Number($elem.data(className));
-    //エラーを表示する span 要素がすでに存在すれば取得（存在しなければ null が返る）
-    var $errorSpan = $elem
-      .parent()
-      .find("." + errorClassName + "." + className);
-
-    var val = $elem.val().trim();
-    if (val !== "") {
-      //サロゲートペアを考慮した文字数を取得
-      var valueLength = getValueLength($elem.val());
-      //値がdata-maxlengthで指定された最大文字数より大きい場合はエラーを表示してtrueを返す
-      if (valueLength > maxlength) {
-        if ($errorSpan.length === 0) {
-          addError($elem, className, maxlength + "文字以内で入力ください");
-        }
-        return true;
-      } else {
-        if ($errorSpan.length !== 0) {
-          $errorSpan.remove();
-        }
-        return false;
-      }
-    } else if (val === "" && $errorSpan.length !== 0) {
-      $errorSpan.remove();
-    }
-  };
-
-
 
 // 空文字チェック
 function isEmpty(value) {

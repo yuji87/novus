@@ -18,27 +18,24 @@ class Utils
     }
     return date($format, strtotime($date));
   }
-  // 現在の時刻から $addday日後の日時の文字列を作成
-  public static function addDay($addday, $format = 0)
+  // 現在の時刻から $addDay日後の日時の文字列を作成
+  public static function addDay($addDay, $format = 0)
   {
-    $tgtdt = strtotime($addday . 'day');
+    $targetDt = strtotime($addDay . 'day');
     if ($format == 0) {
-      return date('Y-m-d 00:00', $tgtdt);
+      return date('Y-m-d 00:00', $targetDt);
     } else if ($format == 1) {
-      return date('Y-m-d 17:00', $tgtdt);
+      return date('Y-m-d 17:00', $targetDt);
     } else {
-      return date('Y-m-d 23:59', $tgtdt);
+      return date('Y-m-d 23:59', $targetDt);
     }
   }
   // 日時整形
-  public static function dayFormat($datetime)
+  public static function dayFormat($dateTime)
   {
-    return date("Y-m-d H:i", strtotime($datetime));
+    return date("Y-m-d H:i", strtotime($dateTime));
   }
-  // 両端をトリミング
-  public static function mbtrim($str) {
-    return preg_replace("/(^\s+)|(\s+$)/u", "", $str);
-  }
+
   // 特殊文字指定変換
   public static function convertSQL($str) {
     $str = mb_ereg_replace('(["_%#])', '#\1', $str); // % や _ を #% #_ にする
@@ -101,16 +98,22 @@ class Utils
   }
 
   // 日付文字列チェック(todo)
-  public static function checkDatetimeFormat($datetime)
+  public static function checkDatetimeFormat($dateTime)
   {
-    $datetime = str_replace('/', '-', $datetime); // - に統一
+    $dateTime = str_replace('/', '-', $dateTime); // - に統一
     if (
-      $datetime === date("Y-m-d H:i", strtotime($datetime))
-      || $datetime === date("Y-m-d H:i:s", strtotime($datetime))
+      $dateTime === date("Y-m-d H:i", strtotime($dateTime))
+      || $dateTime === date("Y-m-d H:i:s", strtotime($dateTime))
     ) {
       return true;
     }
     return false;
+  }
+
+  // 両端をトリミング
+  public static function mbTrim($str)
+  {
+    return preg_replace("/(^\s+)|(\s+$)/u", "", $str);
   }
   
   // 文字列チェック
