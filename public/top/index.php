@@ -123,7 +123,11 @@ if(!$newQuestion) {
                                 <?php endif; ?>
                             </div>
 		        		    <!--ユーザー名-->
-		        		    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+		        		    <div class="pb-3 small">
+								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
+                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							</div>
 		        		    <!--カテゴリ-->
 		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 		        		    <!-- メッセージ：本文が50文字以上なら省略 -->
@@ -165,7 +169,11 @@ if(!$newQuestion) {
                                 <?php endif; ?>
                             </div>
 		        		    <!--ユーザー名-->
-		        		    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
+		        		    <div class="pb-3 small">
+								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
+                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							</div>
 		        		    <!--カテゴリ-->
 		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 		        		    <!--本文-->

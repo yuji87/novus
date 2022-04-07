@@ -134,16 +134,42 @@ if(isset($_POST['like_regist'])) {
                 <?php endif; ?>
                 <div class="pb-1 small">
                     <!--アイコン-->
-                    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
-                        <img src="../top/img/<?php echo $question['icon']; ?>">
-                    <?php else: ?>
-                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
-                    <?php endif; ?>
+                    <?php if($result): // ログイン可否で違うユーザーページへ ?>
+					    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
+					    	<a name="icon" href="<?php if ($result && $question['user_id'] === $_SESSION['login_user']['user_id']) {
+		    		    	echo '../myPage/index.php'; } else {
+                            echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
+					    	<img src="../top/img/<?php echo $question['icon']; ?>">
+					    	</a>
+					    <?php else: ?>
+					    	<a name="icon" href="<?php if ($result && $question['user_id'] === $_SESSION['login_user']['user_id']) {
+					    	echo '../myPage/index.php'; } else {
+					    	echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
+					    	<img src="../top/img/sample_icon.png">
+					    	</a>
+					    <?php endif; ?>
+					<?php else: ?>
+						<?php if($question['icon'] !== null && !empty($question['icon'])): ?> 
+                        	<img src="../top/img/<?php echo $question['icon']; ?>"></a>
+						<?php else: ?>
+							<!--アイコンをクリックするとユーザーページへ-->
+							<a name="icon" href="<?php 
+								//user_idをユーザーページに引き継ぐ
+								echo "../top/userPage.php?user_id=".$question['user_id']; ?>">
+								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                        <?php endif; ?>
+					<?php endif; ?>
                     <!--投稿者-->
-                    <div class="pb-4 pt-2 small">
-                        <?php echo $question['name']; ?>
-                        さん
-                    </div>
+					<!--名前をクリックするとユーザーページへ-->
+					<?php if($result): // ログイン可否で違うユーザーページへ ?>
+						<a name="name" class="text-dark" href="<?php if ($question['user_id'] === $_SESSION['login_user']['user_id']) {
+		    			echo '../myPage/index.php'; } else {
+                        echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
+                       <p><?php echo htmlspecialchars($question['name']) ?>さん</p></a>
+					<?php else: ?>
+						<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$question['user_id']; ?>">
+                        <p><?php echo htmlspecialchars($question['name']) ?>さん</p></a>
+					<?php endif; ?>
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
                         <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
@@ -185,15 +211,43 @@ if(isset($_POST['like_regist'])) {
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
                             <!--アイコン-->
-                            <div class="pb-1 small">
-                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
-                                    <img src="../top/img/<?php echo $value['icon']; ?>">
-                                <?php else: ?>
-                                    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
+                            <?php if($result): // ログイン可否で違うユーザーページへ ?>
+					            <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+					            	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    		            	echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+					            	<img src="../top/img/<?php echo $value['icon']; ?>">
+					            	</a>
+					            <?php else: ?>
+					            	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+					            	echo '../myPage/index.php'; } else {
+					            	echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+					            	<img src="../top/img/sample_icon.png">
+					            	</a>
+					            <?php endif; ?>
+					        <?php else: ?>
+					        	<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                                	<img src="../top/img/<?php echo $value['icon']; ?>"></a>
+					        	<?php else: ?>
+					        		<!--アイコンをクリックするとユーザーページへ-->
+					        		<a name="icon" href="<?php 
+					        			//user_idをユーザーページに引き継ぐ
+					        			echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+					        			<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                                 <?php endif; ?>
-                            </div>
-                            <!--ユーザー名-->
-                            <div><?php echo $value['name']; ?>さん</div>
+					        <?php endif; ?>
+                            <!--投稿者-->
+					        <!--名前をクリックするとユーザーページへ-->
+					        <?php if($result): // ログイン可否で違うユーザーページへ ?>
+					        	<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    		        	echo '../myPage/index.php'; } else {
+                                echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                               <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+					        <?php else: ?>
+					        	<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+					        <?php endif; ?>
+
                             <!--本文-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
                             <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
@@ -287,6 +341,7 @@ if(isset($_POST['like_regist'])) {
             </div>
         </div>
     <?php endif; ?>
+    
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">
