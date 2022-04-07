@@ -15,11 +15,11 @@ $act->checkLogin();
 // トークンチェック
 Token::validate();
 
-$todoid = filter_input(INPUT_POST, "todoid");
-$state = filter_input(INPUT_POST, "state");
+$todoId = filter_input(INPUT_POST, "todoId", FILTER_SANITIZE_NUMBER_INT);
+$state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_SPECIAL_CHARS);
 
 // ToDoステータス変更
-$act->toggle($todoid, $state);
+$act->toggle($todoId, $state);
 
 // ajax呼び出し。 戻り値を出力
 echo "success";
