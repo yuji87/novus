@@ -77,7 +77,7 @@ form {
 /*レベルランキング*/
 /*アイコン表示*/
 .level-icon {
-    margin: 15px;
+    margin: 0 15px;
     text-align: center;
 }
 .level-icon img{
@@ -85,6 +85,32 @@ form {
 	width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+#first {
+    font-size: 33px;
+    font-weight: bold;
+    color: #daa520;
+    margin: 0;
+    padding-top: 30px;
+}
+#second {
+    font-size: 27px;
+    font-weight: bold;
+    color: #a1a0a0;
+    margin: 0;
+    padding-top: 30px;
+}
+#third {
+    font-size: 24px;
+    font-weight: bold;
+    color: #CD7F32;
+    margin: 0;
+    padding-top: 30px;
+}
+p#rank {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
 }
 
 /*トップページのアイコン*/
