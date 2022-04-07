@@ -15,7 +15,7 @@ $err = [];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>会員登録完了画面</title>
+    <title>novus</title>
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5">

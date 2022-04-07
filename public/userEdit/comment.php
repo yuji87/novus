@@ -33,7 +33,7 @@ if (isset($_SESSION['commentEdit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>会員情報変更[comment]</title>
+    <title>novus</title>
 </head>
 
 <body>

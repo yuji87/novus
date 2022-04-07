@@ -35,7 +35,7 @@ if(!$article) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>過去の記事履歴</title>
+    <title>novus</title>
 </head>
 
 <body>

@@ -41,7 +41,7 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>新規会員登録</title>
+    <title>novus</title>
 </head>
 
 <body class="h-100 bg-secondary p-4 p-md-5">

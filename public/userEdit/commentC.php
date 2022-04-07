@@ -50,7 +50,7 @@ if(count($err) === 0 && (isset($_POST['check']))) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
-    <title>変更確認画面[comment]</title>
+    <title>novus</title>
 </head>
 
 <body>
