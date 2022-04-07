@@ -44,10 +44,10 @@ if(!$data || !$paging) {
             <ul class="nav justify-content-center">
 			<li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/aHistory.php">【履歴】記事</a></li>
             <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>
