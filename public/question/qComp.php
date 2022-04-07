@@ -85,7 +85,7 @@ if(!$hasTaken) {
                 <div><?php echo $hasTaken[0]['category_name']; ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div><?php echo $hasTaken[0]['message']; ?></div>
+                <div><?php echo nl2br(htmlspecialchars($hasTaken[0]['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
                 <form method="GET" name="form1" action="qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken[0]['question_id']; ?>">
                     <a href="javascript:form1.submit()" class="btn btn-warning mt-2">詳細画面へ</a>

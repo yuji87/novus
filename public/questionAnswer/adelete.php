@@ -101,7 +101,7 @@ if(isset($_POST['a_dlt_conf'])) {
                     </div>
                     <!-- 質問内容表示 -->
                     <div>本文
-                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($answer['message'], \ENT_QUOTES, 'UTF-8')); ?></div>
                     </div>
                     <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                     <input type="hidden" name="answer_id" value="<?php echo $answer_id; ?>">

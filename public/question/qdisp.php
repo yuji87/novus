@@ -134,42 +134,16 @@ if(isset($_POST['like_regist'])) {
                 <?php endif; ?>
                 <div class="pb-1 small">
                     <!--アイコン-->
-                    <?php if($result): // ログイン可否で違うユーザーページへ ?>
-					    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
-					    	<a name="icon" href="<?php if ($result && $question['user_id'] === $_SESSION['login_user']['user_id']) {
-		    		    	echo '../myPage/index.php'; } else {
-                            echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
-					    	<img src="../top/img/<?php echo $question['icon']; ?>">
-					    	</a>
-					    <?php else: ?>
-					    	<a name="icon" href="<?php if ($result && $question['user_id'] === $_SESSION['login_user']['user_id']) {
-					    	echo '../myPage/index.php'; } else {
-					    	echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
-					    	<img src="../top/img/sample_icon.png">
-					    	</a>
-					    <?php endif; ?>
-					<?php else: ?>
-						<?php if($question['icon'] !== null && !empty($question['icon'])): ?> 
-                        	<img src="../top/img/<?php echo $question['icon']; ?>"></a>
-						<?php else: ?>
-							<!--アイコンをクリックするとユーザーページへ-->
-							<a name="icon" href="<?php 
-								//user_idをユーザーページに引き継ぐ
-								echo "../top/userPage.php?user_id=".$question['user_id']; ?>">
-								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
-                        <?php endif; ?>
-					<?php endif; ?>
+                    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
+                        <img src="../top/img/<?php echo $question['icon']; ?>">
+                    <?php else: ?>
+                        <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
+                    <?php endif; ?>
                     <!--投稿者-->
-					<!--名前をクリックするとユーザーページへ-->
-					<?php if($result): // ログイン可否で違うユーザーページへ ?>
-						<a name="name" class="text-dark" href="<?php if ($question['user_id'] === $_SESSION['login_user']['user_id']) {
-		    			echo '../myPage/index.php'; } else {
-                        echo "../myPage/userPage.php?user_id=".$question['user_id'] ;} ?>">
-                       <p><?php echo htmlspecialchars($question['name']) ?>さん</p></a>
-					<?php else: ?>
-						<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$question['user_id']; ?>">
-                        <p><?php echo htmlspecialchars($question['name']) ?>さん</p></a>
-					<?php endif; ?>
+                    <div class="pb-4 pt-2 small">
+                        <?php echo $question['name']; ?>
+                        さん
+                    </div>
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
                         <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
@@ -178,7 +152,7 @@ if(isset($_POST['like_regist'])) {
                         <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8')); ?></div>
                     <!--日付-->
                     <div class="pt-4 pb-1 small">
                         <?php if (!isset($question['upd_date'])): ?>
@@ -201,7 +175,9 @@ if(isset($_POST['like_regist'])) {
                             </form>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <br><hr size="4">
+                    <br>
+                    <hr size="4">
+                    <br>
                     
                     <!-- 返答表示部分 -->
                     <?php if(!empty($answer)): ?>
@@ -210,47 +186,20 @@ if(isset($_POST['like_regist'])) {
                             <?php echo $err['answer']; ?>
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
+                            <hr id="dot">
                             <!--アイコン-->
-                            <?php if($result): // ログイン可否で違うユーザーページへ ?>
-					            <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
-					            	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    		            	echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-					            	<img src="../top/img/<?php echo $value['icon']; ?>">
-					            	</a>
-					            <?php else: ?>
-					            	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
-					            	echo '../myPage/index.php'; } else {
-					            	echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-					            	<img src="../top/img/sample_icon.png">
-					            	</a>
-					            <?php endif; ?>
-					        <?php else: ?>
-					        	<?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-                                	<img src="../top/img/<?php echo $value['icon']; ?>"></a>
-					        	<?php else: ?>
-					        		<!--アイコンをクリックするとユーザーページへ-->
-					        		<a name="icon" href="<?php 
-					        			//user_idをユーザーページに引き継ぐ
-					        			echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
-					        			<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                            <div class="pb-1 small">
+                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+                                    <img src="../top/img/<?php echo $value['icon']; ?>">
+                                <?php else: ?>
+                                    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                                 <?php endif; ?>
-					        <?php endif; ?>
-                            <!--投稿者-->
-					        <!--名前をクリックするとユーザーページへ-->
-					        <?php if($result): // ログイン可否で違うユーザーページへ ?>
-					        	<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    		        	echo '../myPage/index.php'; } else {
-                                echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-                               <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
-					        <?php else: ?>
-					        	<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
-                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
-					        <?php endif; ?>
-
+                            </div>
+                            <!--ユーザー名-->
+                            <div><?php echo $value['name']; ?>さん</div>
                             <!--本文-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
-                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
+                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
                             <!--投稿日時-->
                             <div>
                                 <!-- 更新されていた場合、その日付を優先表示 -->
@@ -262,11 +211,11 @@ if(isset($_POST['like_regist'])) {
                             </div>
                             <!-- フラグがONになっているいいねの数を表示 -->
                             <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                            <div class="mb-3">いいね数：<?php echo count($likes); ?></div>
+                            <div class="mb-3">&hearts;<?php echo count($likes); ?></div>
                             <!-- ベストアンサー選択された返答の目印 -->
                             <?php if($value['best_flg']): ?>
-                                <div class="text-danger mb-3">ベストアンサー</div>
-                            <?php endif; ?><hr id="dot">
+                                <div class="alert alert-danger">ベストアンサー</div>
+                            <?php endif; ?>
 
                             <!-- いいねボタンの表示部分 -->
                             <?php if($result): ?>
@@ -294,7 +243,7 @@ if(isset($_POST['like_regist'])) {
                                             <input type="submit" name="like_regist" value="いいね">
                                         <?php endif; ?>
                                     </form>
-                                <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
+                                    <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
                                 <?php else: ?>
                                     <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
                                         <form method="POST" action="../questionAnswer/aEdit.php" name="question" id="qedit">
@@ -307,7 +256,7 @@ if(isset($_POST['like_regist'])) {
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
                                             <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除" id="delete"></i>
                                         </form>
-                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 
                                 <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
@@ -320,7 +269,9 @@ if(isset($_POST['like_regist'])) {
                                     </form>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <hr>
+                            <br>
+                            <hr size="4">
+                            <br>
                         <?php endforeach; ?>
                     <?php endif; ?>
 
@@ -341,7 +292,6 @@ if(isset($_POST['like_regist'])) {
             </div>
         </div>
     <?php endif; ?>
-    
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">

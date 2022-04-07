@@ -128,10 +128,7 @@ if(!$newQuestion) {
 						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
                                 <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 							</div>
-		        		    <!--カテゴリ-->
-		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 		        		    <!-- メッセージ：本文が50文字以上なら省略 -->
-		        			<div class="text-center fw-bold mt-2 pb-2" style="overflow: hidden; overflow-wrap: break-word;">本文</div>
 		        			<div style="overflow: hidden; overflow-wrap: break-word;">
 		        				<?php if(mb_strlen($value['message']) > 50): ?>
 		        					<?php $limit_content = mb_substr($value['message'],0,50); ?>
@@ -140,8 +137,20 @@ if(!$newQuestion) {
 		        					<?php echo $value['message']; ?>
 		        				<?php endif; ?>
 		        			</div>
-		        		    <!--投稿日時-->
-		        	        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div><hr id="dot">
+							<!-- カテゴリと投稿日時を横並びにする処理 -->
+							<div class="block">
+								<!--カテゴリ-->
+								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!--投稿日時-->
+								<div style="display: inline-block;" class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							</div>
 		            	<?php endforeach; ?>
 		            <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		            	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
@@ -174,10 +183,7 @@ if(!$newQuestion) {
 						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
                                 <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 							</div>
-		        		    <!--カテゴリ-->
-		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-		        		    <!--本文-->
-		        		    <div class="text-center fw-bold mt-2 pb-2">本文</div>
+		        		    <!-- メッセージ：本文が50文字以上なら省略 -->
 		        			<div style="overflow: hidden; overflow-wrap: break-word;">
 		        				<?php if(mb_strlen($value['message']) > 50): ?>
 		        					<?php $limit_content = mb_substr($value['message'],0,50); ?>
@@ -186,8 +192,20 @@ if(!$newQuestion) {
 		        					<?php echo $value['message']; ?>
 		        				<?php endif; ?>
 		        			</div>
-		        		    <!--投稿日時-->
-		        	        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
+							<!-- カテゴリと投稿日時を横並びにする処理 -->
+							<div class="block">
+								<!--カテゴリ-->
+								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!--投稿日時-->
+								<div style="display: inline-block;" class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							</div>
 		        	    <?php endforeach; ?>
 		            <?php endif; ?>
 		        </div>

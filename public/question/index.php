@@ -84,6 +84,7 @@ if(isset($_GET['search'])) {
 	                		<input name="keyword" class="form-control mb-3" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']): '' ?>">
 	                	</div>
 	                	<div class="form-group">
+							<label class="small">カテゴリー</label>
                             <select name="category">
                                 <option></option>
                                 <?php foreach($categories as $category): ?>
@@ -147,8 +148,6 @@ if(isset($_GET['search'])) {
 									<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
                                     <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 								<?php endif; ?>
-					    		<!--カテゴリ-->
-								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 								<div style="overflow: hidden; overflow-wrap: break-word;">
 									<!-- メッセージ：本文が50文字以上なら省略 -->
 									<?php if(mb_strlen($value['message']) > 50): ?>
@@ -158,14 +157,19 @@ if(isset($_GET['search'])) {
 										<?php echo $value['message']; ?>
 									<?php endif; ?>
 								</div>
-								<!--投稿日時-->
-								<div class="small pb-4">
-									<!-- 更新されていた場合、その日付を優先表示 -->
-									<?php if (!isset($value['upd_date'])): ?>
-										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?>
-									<?php else: ?>
-										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-									<?php endif; ?>
+								<!-- カテゴリと投稿日時を横並びにする処理 -->
+								<div class="block">
+									<!--カテゴリ-->
+									<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+									<!--投稿日時-->
+									<div style="display: inline-block;" class="small pb-4">
+										<!-- 更新されていた場合、その日付を優先表示 -->
+										<?php if (!isset($value['upd_date'])): ?>
+											投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+										<?php else: ?>
+											更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+										<?php endif; ?>
+									</div>
 								</div>
 							<hr>
 		                	<?php endforeach; ?>
@@ -217,8 +221,6 @@ if(isset($_GET['search'])) {
 									<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
                                     <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 								<?php endif; ?>
-					    		<!--カテゴリ-->
-								<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
 								<!-- メッセージ：本文が50文字以上なら省略 -->
 								<div style="overflow: hidden; overflow-wrap: break-word;">
 									<?php if(mb_strlen($value['message']) > 50): ?>
@@ -228,14 +230,19 @@ if(isset($_GET['search'])) {
 										<?php echo $value['message']; ?>
 									<?php endif; ?>
 								</div>
-								<!--投稿日時-->
-								<div class="small pb-4">
-									<!-- 更新されていた場合、その日付を優先表示 -->
-									<?php if (!isset($value['upd_date'])): ?>
-										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
-									<?php else: ?>
-										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-									<?php endif; ?>
+								<!-- カテゴリと投稿日時を横並びにする処理 -->
+								<div class="block">
+									<!--カテゴリ-->
+									<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+									<!--投稿日時-->
+									<div style="display: inline-block;" class="small pb-4">
+										<!-- 更新されていた場合、その日付を優先表示 -->
+										<?php if (!isset($value['upd_date'])): ?>
+											投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+										<?php else: ?>
+											更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+										<?php endif; ?>
+									</div>
 								</div>
 							<hr>
 		                	<?php endforeach; ?>
