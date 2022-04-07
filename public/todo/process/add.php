@@ -17,8 +17,8 @@ $act->checkLogin();
 // トークンチェック
 Token::validate();
 
-$newTodoTitle = filter_input(INPUT_POST, 'newTodoTitle', FILTER_SANITIZE_SPECIAL_CHARS);
-$newTodoDt = filter_input(INPUT_POST, 'newTodoDt', FILTER_SANITIZE_SPECIAL_CHARS);
+$newTodoTitle = filter_input(INPUT_POST, 'newTodoTitle');
+$newTodoDt = filter_input(INPUT_POST, 'newTodoDt');
 
 if (Utils::mbTrim($newTodoTitle) === "") {
   // 何も入力されていない時(スペース入力も)

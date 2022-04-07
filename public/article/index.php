@@ -19,21 +19,17 @@ if ($currentPage !== '') {
 }
 
 // 初期は、全体一覧
-$title = SYSTITLE;
-$headertitle = '';
 $searchTextrow = '';
 $searchCategoryrow = '';
-
 $searchText = filter_input(INPUT_GET, 'searchText') ?? '';
 $searchCategory = filter_input(INPUT_GET, 'searchCategory') ?? '';
 
 if ($searchText !== '') {
     // 検索指定時
-  $searchText =  rawurldecode($searchText); // urldecodeをしておく
-  $title = Utils::h($searchText) . 'の検索結果';
-    $headertitle = ' (' . $title . ')';
+    $searchText =  rawurldecode($searchText); // urldecodeをしておく
     $searchTextrow = rawurlencode(Utils::h($searchText)); // 特殊文字を変換しておく
 }
+
 if ($searchCategory !== '') {
     $searchCategoryrow = rawurlencode(Utils::h($searchCategory)); // 特殊文字を変換しておく
 }
@@ -64,6 +60,28 @@ if ($searchCategoryrow !== '') {
     $params[] = "searchCategory=$searchCategoryrow";
 }
 $query = !empty($params) ? '&' . implode('&', $params) : '';
+
+$selectedCategoryName = '';
+if ($searchCategory !== '') {
+    foreach ($category as $key => $val) {
+        if ($key == (int)$searchCategory) {
+            $selectedCategoryName = $val;
+            break;
+        }
+    }
+}
+
+$pageTitle = SYSTITLE;
+$headerTitle = '';
+
+if ($searchText !== '' || $selectedCategoryName !== '') {
+    $pageTitle = sprintf(
+        '%s%sの検索結果',
+        $searchText !== '' ? $searchText : '',
+        $selectedCategoryName !== '' ? '（'.$selectedCategoryName.'）' : ''
+    );
+    $headerTitle = '（'.$pageTitle.'）';
+}
 ?>
 
 <div class="row m-2 pt-4 pb-2 align-items-center">
@@ -76,21 +94,24 @@ $query = !empty($params) ? '&' . implode('&', $params) : '';
     <div class="col-sm-2"></div>
   <?php endif; ?>
   <div class="col-sm-7 text-center">
-    <input type="search" style="width:100%;" class="search-text" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
-  </div>
-  <div class="d-flex col-sm-3">
-    <select class="search-category" name="category" placeholder="カテゴリ">
-      <?php
-      echo "<option value=''></option>";
-      foreach ($category as $key => $val) {
-          printf('<option value="%s"%s>%s</option>', $key, $key == $searchCategory ? ' selected' : '', $val);
-      }
-      ?>
-    </select>
+    <div class="input-group">
+        <input type="search" style="width:100%;" class="form-control search-text" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
+        <div class="input-group-append mr-2">
+            <select class="form-control search-category" name="category" placeholder="カテゴリ">
+            <?php
+            echo "<option value=''></option>";
+            foreach ($category as $key => $val) {
+                printf('<option value="%s"%s>%s</option>', $key, $key == $searchCategory ? ' selected' : '', $val);
+            }
+            ?>
+            </select>
+        </div>
+        <button class="btn btn-secondary btn-search" type="button">検索</button>
+    </div>
   </div>
 </div>
 
-<h5 class="artListTitle mt-3 font-weight-bold">記事一覧 <?php echo $headertitle; ?></h5>
+<h5 class="artListTitle mt-3 font-weight-bold">記事一覧 <?php echo Utils::h($headerTitle); ?></h5>
 
 <?php
 //全データを各投稿ごとに展開
@@ -192,37 +213,48 @@ if (count($retInfo['articleList']) === 0) {
 
 <script type="text/javascript">
   // 初期化処理
-  $(function() {
+$(function() {
     <?php
-    if ($searchTextrow != '' && $searchCategoryrow != '') {
-        // ブラウザのタイトルを変更 (javascript内で urldecodeする)
-        echo "$('title').html(decodeURIComponent('" . $searchTextrow . "') + ('" . $searchCategoryrow . "') + 'の検索結果');";
-    }elseif($searchTextrow != ''&& $searchCategoryrow == ''){
-        echo "$('title').html(decodeURIComponent('" . $searchTextrow . "') + 'の検索結果');";
-    }elseif($searchTextrow == '' && $searchCategoryrow != ''){
-        echo "$('title').html(decodeURIComponent('" . $searchCategoryrow . "') + 'の検索結果');";
-    }
+        // ブラウザのタイトルを変更 (javascriptないで urldecodeする)
+        echo "$('title').html(decodeURIComponent('" . Utils::h($pageTitle) . "'));";
     ?>
-  });
-  $('.artfrm').click(function() {
-    // 記事をクリックした
-    $article_id = $(this).attr('article_id');
-    // 記事詳細へ
-    jumpapi('article/detail.php?article_id=' + $article_id);
-  });
-  $('.search-text, .search-category').change(function() {
-    // 検索フィールド利用
 
-    // 検索キーワード指定で、本ページ再読み込み
-    var searchText = $('.search-text').val();
-    var searchCategory = $('.search-category').val();
+    $('.artfrm').click(function() {
+        // 記事をクリックした
+        $article_id = $(this).attr('article_id');
+        // 記事詳細へ
+        jumpapi('article/detail.php?article_id=' + $article_id);
+    });
 
-    var params = [];
-    if (searchText !== '') params.push('searchText=' + encodeURIComponent(searchText));
-    if (searchCategory !== '') params.push('searchCategory=' + encodeURIComponent(searchCategory));
-    var url = params.length ? '&' + params.join('&') : ''; // 三項演算子
-    jumpapi('article/index.php?page=1' + url);
-  });
+    function search () {
+        // 検索キーワード指定で、本ページ再読み込み
+        var searchText = $('.search-text').val();
+        var searchCategory = $('.search-category').val();
+
+        var params = [];
+        if (searchText !== '') params.push('searchText=' + encodeURIComponent(searchText));
+        if (searchCategory !== '') params.push('searchCategory=' + encodeURIComponent(searchCategory));
+        var url = params.length ? '&' + params.join('&') : '';
+        jumpapi('article/index.php?page=1' + url);
+    }
+
+    $('.search-text').change(function() {
+        // 検索実行
+        search();
+    });
+
+    $('.search-category').on("keydown", function(e) {
+        // カテゴリーがEnterされた場合に検索実行
+        if (e.which == 13) {
+            search();
+        }
+    });
+
+    $('.btn-search').click(function() {
+        // 検索実行
+        search();
+    });
+});
 </script>
 
 <?php

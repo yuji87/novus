@@ -264,6 +264,10 @@ class Action
           echo '<div class="col-sm-2">';
             echo '<a class="btn btn-primary m-2" href="' .DOMAIN. '/public/article/postedit.php">投稿する</a>';
           echo '</div>';
+        }else{
+          echo '<div class="col-sm-2">';
+            echo '<a class="btn btn-primary m-2" href="' .DOMAIN. '/public/userLogin/form.php">投稿する</a>';
+          echo '</div>';
         }
       echo '</div>';
     }
