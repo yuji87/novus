@@ -23,13 +23,13 @@ $act->printHeader();
                 <label for="email">*Email
                     <span class="error-php"><?php echo Utils::h($errors['email'] ?? ''); ?></span>
                 </label>
-                <input type="email" class="required pattern form-control" data-pattern="email" id="email" name="email" placeholder="Email" data-error-required="入力は必須です" data-error-pattern="形式が正しくありません" value="<?php echo Utils::h($inputs['email'] ?? ''); ?>">
+                <input type="email" class="required maxlength pattern form-control" data-maxlength="200" data-pattern="email" id="email" name="email" placeholder="Email" data-error-required="入力は必須です" data-error-pattern="形式が正しくありません" value="<?php echo Utils::h($inputs['email'] ?? ''); ?>">
             </div>
             <div class="form-group">
                 <label for="email_check">*Email（確認用）
                     <span class="error-php"><?php echo Utils::h($errors['email_check'] ?? ''); ?></span>
                 </label>
-                <input type="email" class="form-control equal-to required" data-equal-to="email" data-error-equal-to="メールアドレスが異なります<br>" data-error-required="入力は必須です" id="email_check" name="email_check" placeholder="Email（確認用）" value="<?php echo Utils::h($inputs['email_check'] ?? ''); ?>">
+                <input type="email" class="form-control maxlength equal-to required" data-maxlength="200" data-equal-to="email" data-error-equal-to="メールアドレスが異なります<br>" data-error-required="入力は必須です" id="email_check" name="email_check" placeholder="Email（確認用）" value="<?php echo Utils::h($inputs['email_check'] ?? ''); ?>">
             </div>
             <div class="form-group">
                 <label for="title">*タイトル
