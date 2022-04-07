@@ -1,33 +1,33 @@
 $(function () {
-
+// クリックした時
   $("#search-button").click(function () {
-    searchBooks();
+    searchBooks(); //関数searchBooksを呼び出す
   });
 
+  //関数searchBooks
   function searchBooks() {
-    const searchText = $(".search__text__input").val();
-    const num = $("#displayed-num option:selected").val();
-    const orderBy = $("#displayed-orderBy option:selected").val();
+    const searchText = $(".search__text__input").val(); //検索ワード
+    const num = $("#displayed-num option:selected").val(); //id="displayed-num"のoptionの選択したvalueを代入
+    const orderBy = $("#displayed-orderBy option:selected").val(); //並べ替え機能
     
     const displayedNum = "&maxResults=" + num;
     const displayedOrderBy = "&orderBy=" + orderBy;
 
     //lists__itemのclassがついた要素を消去
-    $(".lists__item").remove();
-    $(".message").remove();
+    $(".lists__item").remove(); //画面の初期化
 
     $.ajax({
       url: 'https://www.googleapis.com/books/v1/volumes?q=' + searchText + displayedNum + displayedOrderBy,
-      type: 'GET',// HTTP通信の種類を設定
+      type: 'GET',// HTTP通信の種類
       datatype: 'json',//サーバから返されるデータの型
     })
 
     //通信成功の場合の記述
     .done(function (data) {
-      displayBooks(data);
+      displayBooks(data); //引数にデータを持たせておく
     })
 
-    //通信失敗の場合の記述
+    //通信失敗の場合の記述(エラー発生)
     .fail(function (err) {
       displayError(err);
     });
@@ -35,46 +35,42 @@ $(function () {
 
   // 通信成功した場合の画面に表示するための処理
   function displayBooks(data) {
-    var hitsData = data.totalItems;
-    var itemsData = data.items;
+    var hitsData = data.totalItems; 
+    var itemsData = data.items; //変数itemsDataにdata{}内のitems{}を代入
     var template = '';
 
+    //検索結果がo件の時
     if (hitsData === 0) {
       swal({
         text: '検索結果が見つかりませんでした'
       }).then(function () {
         jumpapi('bookApi/index.php');
       });
-      // $(".search").after("<p class='message' style='color:red; font-weight:bold;'>検索結果が見つかりませんでした。</p>");
-    } else {
-      // $(".search").after("<p class='message'>" + hitsData + "件ヒットしました</p>");
     }
-
-
-    // title	    タイトル
-    // authors	  作者
-    // publisher	出版社
-    // infoLink	  URL
-    // thumbnail	画像
 
     $.each(itemsData, function (index, el) {
       var bookData = el;
 
-      var titleData = bookData.volumeInfo.title;
+      var titleData = bookData.volumeInfo.title; //本のタイトル
+
+      // 作者名が見つからない時
       if (bookData.volumeInfo.authors == undefined) {
-        var authorData = "不明";
+        var authorData = "不明"; //"不明"と表示する
       } else {
-        var authorData = bookData.volumeInfo.authors;
+        var authorData = bookData.volumeInfo.authors; //作者
       }
+
+      // 出版社名が見つからない時
       if (bookData.volumeInfo.publisher == undefined) {
-        var publisherNameData = "不明";
+        var publisherNameData = "不明"; //"不明"と表示する
       } else {
-        var publisherNameData = bookData.volumeInfo.publisher;
+        var publisherNameData = bookData.volumeInfo.publisher; //出版社
       }
-      var itemUrl = bookData.volumeInfo.infoLink;
+
+      var itemUrl = bookData.volumeInfo.infoLink; //本のURL
 
       if (bookData.volumeInfo.imageLinks) {
-        var imageData = bookData.volumeInfo.imageLinks.thumbnail;
+        var imageData = bookData.volumeInfo.imageLinks.thumbnail; //画像URL
       } else {
         //画像データがない時
         var imageData = src = "https://dummyimage.com/600x600/cbcbcb/ffffff&text=NO+IMAGE";
@@ -94,7 +90,7 @@ $(function () {
         "</div>" +
         "</li>";
     });
-    //↓"ulのlists"に変数templateを挿入
+    //↓変数templateを挿入
     $("div.lists").prepend(template);
   }
 

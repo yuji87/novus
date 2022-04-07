@@ -17,23 +17,31 @@ $act->checkLogin();
 // トークンチェック
 Token::validate();
 
-$title = filter_input(INPUT_POST, "title");
-$message = filter_input(INPUT_POST, "message");
+$title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_SPECIAL_CHARS);
+$message = filter_input(INPUT_POST, "message", FILTER_SANITIZE_SPECIAL_CHARS);
 $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
 
-$title = Utils::mbtrim($title);
-$message = Utils::mbtrim($message);
+$title = Utils::mbTrim($title);
+$message = Utils::mbTrim($message);
 
 // 各種チェック
-if (! Utils::isStrLen($title, 150)) {
-    echo "failed-title"; //failed-titleを持たせてjsで表示
+if (Utils::mbTrim($title) === "") {
+    // 何も入力されていない時(スペース入力も)
+    echo "no-title"; //no-titleを持たせてjsで表示
+  exit;
+} elseif (! Utils::isStrLen($title, 150)) {
+    echo "invalid-title"; //invalid-titleを持たせてjsで表示
     exit;
 }
-elseif (! Utils::isStrLen($message, 1500)) {
-    echo "failed-message"; //failed-messageを持たせてjsで表示
+if (Utils::mbTrim($message) === "") {
+    // 何も入力されていない時(スペース入力も)
+    echo "no-message"; //no-messageを持たせてjsで表示
+    exit;
+} elseif (! Utils::isStrLen($message, 1500)) {
+    echo "invalid-message"; //invalid-messageを持たせてjsで表示
     exit;
 }
-elseif (! $act->isCategory($category)) {
+if (! $act->isCategory($category)) {
     echo "failed-category"; //failed-categoryを持たせてjsで表示
     exit;
 }
