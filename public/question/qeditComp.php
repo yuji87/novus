@@ -32,7 +32,7 @@ if (isset($_SESSION['q_data']['title']) &&
 // 質問IDから質問内容を取り込む処理
 $data = QuestionLogic::displayQuestion($_SESSION['q_data']);
 if(!$data) {
-    $err[] = '変更の保存に失敗しました';
+    $err[] = '質問の取り込みに失敗しました';
 }
 $title = $data['title'];
 $category = $data['category_name'];

@@ -37,7 +37,7 @@ if (count($err) === 0) {
 if(isset($_POST['q_edit_conf'])) {
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category',FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message');
     $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id',FILTER_SANITIZE_NUMBER_INT);
     if(empty($_SESSION['q_data']['title'])) {
         $err['title'] = '質問タイトルを入力してください';
