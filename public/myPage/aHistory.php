@@ -66,7 +66,7 @@ if(!$article) {
                         <?php if(isset($article)): ?>
                             <?php foreach($article as $value): ?>
                             <!--題名-->
-                            <div class="fw-bold pb-1 h5"><a href="../article/detail.php? article_id=<?php echo $value['article_id']; ?>">「<?php echo $value['title']; ?>」</a></div>
+                            <div class="fw-bold pb-1 h5"><a href="../article/detail.php? article_id=<?php echo $value['article_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo $value['title']; ?>」</a></div>
                             <!--カテゴリ-->
                             <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                             <div><?php echo $value['category_name']; ?></div>
@@ -74,9 +74,9 @@ if(!$article) {
                             <div class="fw-bold pt-3 pb-1">本文</div>
                             <?php if(mb_strlen($value['message']) > 50): ?>
 							    <?php $limit_content = mb_substr($value['message'],0,50); ?>
-							    <?php echo $limit_content; ?>…
+							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $limit_content; ?>…</span>
 						    <?php else: ?>
-							    <?php echo $value['message']; ?>
+							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $value['message']; ?></span>
 						    <?php endif; ?>
                             <!--日付-->
                             <?php if(!isset($value['upd_date']) && isset($value['post_date'])): ?>
