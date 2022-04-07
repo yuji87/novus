@@ -43,7 +43,7 @@ if(!$newQuestion) {
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-    <title>トップ画面</title>
+    <title>novus</title>
 </head>
 
 <body>

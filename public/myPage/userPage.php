@@ -37,7 +37,7 @@ $showicon = UserLogic::showIcon($_GET);
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" href="../css/level_anime.css">
-    <title>User Page</title>
+    <title>novus</title>
 </head>
 
 <body>
