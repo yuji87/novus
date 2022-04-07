@@ -79,7 +79,7 @@ $question_id = $_SESSION['q_data']['question_id'];
                 <p>以下の内容で保存しました</p>
                 <!--題名-->
                 <div class="fw-bold pb-1">題名</div>
-                <div><?php echo $title; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $title; ?></div>
                 <!--カテゴリー-->
                 <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                 <div><?php echo $category; ?></div>

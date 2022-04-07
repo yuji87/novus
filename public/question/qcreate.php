@@ -132,10 +132,14 @@ if(isset($_POST['create_question'])) {
                             <p class="text-danger pt-2"><?php echo $err['message']; ?></p>
                         <?php endif; ?>
                     </div>
-                    <input type="submit" name="create_question" class="btn btn-warning mt-5 mb-5" value="投稿する">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <button style="display: inline-block;" type="button" class="col-sm-2 mb-4 mt-5 btn btn-outline-dark" onclick="history.back()">戻る</button>
+                        <div class="col-sm-2"></div>
+                        <input style="display: inline-block;" type="submit" name="create_question" class="col-sm-2 btn btn-warning mt-5 mb-5" value="投稿する">
+                        <div class="col-sm-3"></div>
+                    </div>
                 </form>
-                <br>
-                <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="history.back()">戻る</button>
             </div>
         </div>
     </div>

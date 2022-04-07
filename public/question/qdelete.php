@@ -91,7 +91,7 @@ if(isset($_POST['q_dlt'])) {
                 <form method="POST" action="">
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
-                    <div><?php echo $question['title']; ?></div>
+                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                     <div><?php echo $question['category_name']; ?></div>
