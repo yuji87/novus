@@ -26,6 +26,9 @@ if(count($err) === 0 && (isset($_POST['check']))) {
     $err[] = '削除に失敗しました';
     }
 }
+
+// セッション変数を全て解除する
+$_SESSION = array();
 ?>
 
 
