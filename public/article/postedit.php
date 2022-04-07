@@ -25,7 +25,7 @@ if ($article_id) {
   $retInfo = $act->article($article_id);
 }
 
-if ($retInfo['user'] === false) {
+if ($retInfo['user'] === false || $retInfo['user'] === null) {
   // 記事がない場合は、記事一覧へリダイレクト
   header("Location: " . DOMAIN . "/public/article/index.php");
   exit;
@@ -146,12 +146,27 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
   }
   // 投稿 or 編集反映ボタンを押した
   function onPostArticle() {
-    if (!isStrLen(document.getElementById('title').value, 1, 150)) {
+    const postTitle = document.getElementById('title').value;
+    const postMessage = document.getElementById('message').value;
+    const postCategory = document.getElementById('category').value;
+    if ($.trim(postTitle) === "") {
+      onShow('タイトルに何も入力されていません');
+      return;
+    }
+    if (!isStrLen(postTitle, 1, 150)) {
       onShow('タイトルは150文字以内にしてください');
       return;
     }
-    if (!isStrLen(document.getElementById('message').value, 1, 1500)) {
+    if ($.trim(postMessage) === "") {
+      onShow('本文に何も入力されていません');
+      return;
+    }
+    if (!isStrLen(postMessage, 1, 1500)) {
       onShow('本文は1500文字以内にしてください');
+      return;
+    }
+    if ($.trim(postCategory) === "") {
+      onShow('本文に何も入力されていません');
       return;
     }
 
@@ -174,10 +189,16 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
         });
       }
       switch ($retcode) {
-        case 'failed-title':
+        case 'no-title':
+          onShow('タイトルに何も入力されていません');
+          break;
+        case 'invalid-title':
           onShow('タイトルは150文字以内で入力してください');
           break;
-        case 'failed-message':
+        case 'no-message':
+          onShow('本文に何も入力されていません');
+          break;
+        case 'invalid-message':
           onShow('本文は1500文字以内で入力してください');
           break;
         case 'failed-category':

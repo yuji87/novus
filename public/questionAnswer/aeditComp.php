@@ -42,7 +42,7 @@ if (isset($_SESSION['a_data']['answer_id']) &&
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 編集</title>
+    <title>返信の編集</title>
 </head>
 
 <body>

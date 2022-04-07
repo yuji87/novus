@@ -69,9 +69,9 @@ if(count($err) === 0 && (isset($_POST['check']))) {
             <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
             <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>

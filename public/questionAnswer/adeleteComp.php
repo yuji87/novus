@@ -33,7 +33,7 @@ if(empty($dlt)) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 削除完了</title>
+    <title>返信の削除完了</title>
 </head>
 
 <body>
@@ -74,7 +74,7 @@ if(empty($dlt)) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

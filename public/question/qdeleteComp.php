@@ -33,7 +33,7 @@ if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPEC
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問削除</title>
+    <title>質問の削除完了</title>
 </head>
 
 <body>
@@ -75,7 +75,7 @@ if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPEC
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

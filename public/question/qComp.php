@@ -51,7 +51,7 @@ if(!$hasTaken) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問投稿完了</title>
+    <title>質問投稿の完了</title>
 </head>
 <body>
     <!--メニュー-->
@@ -104,7 +104,7 @@ if(!$hasTaken) {
                     <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
+                    <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link small" href="../bookApi/index.php">本検索</a>

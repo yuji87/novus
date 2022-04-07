@@ -83,7 +83,7 @@ if(isset($_SESSION['a_data']['message']) &&
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <p class="h4">回答完了</p>
+                <p class="h4">返信の投稿完了</p>
                 <?php if(count($err) == 0): ?>
                     <p>返答の投稿が完了しました</p>
                 <?php elseif($err['other']): ?>

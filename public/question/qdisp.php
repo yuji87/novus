@@ -83,7 +83,7 @@ if(isset($_POST['like_regist'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問表示</title>
+    <title>質問の表示</title>
 </head>
 
 <body>
@@ -247,6 +247,7 @@ if(isset($_POST['like_regist'])) {
 					        	<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
                                 <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 					        <?php endif; ?>
+
                             <!--本文-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
                             <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
@@ -296,15 +297,15 @@ if(isset($_POST['like_regist'])) {
                                 <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
                                 <?php else: ?>
                                     <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
-                                        <form method="POST" action="../questionAnswer/aEdit.php">
+                                        <form method="POST" action="../questionAnswer/aEdit.php" name="question" id="qedit">
                                             <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                            <i class="fa-solid fa-pen"><input type="submit" name="a_edit" value="編集"></i>
-                                        </form>
-                                        <form method="POST" action="../questionAnswer/aDelete.php">
+                                            <i class="fa-solid fa-pen"><input type="submit" name="a_edit"  id="edit" value="編集"></i>
+                                        </form>                                     
+                                        <form method="POST" action="../questionAnswer/aDelete.php" name="question" id="qDelete">
                                             <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                            <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除"></i>
+                                            <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除" id="delete"></i>
                                         </form>
                                         <?php endif; ?>
                                 <?php endif; ?>
@@ -318,8 +319,8 @@ if(isset($_POST['like_regist'])) {
                                         <input type="submit" value="ベストアンサー">
                                     </form>
                                 <?php endif; ?>
-                            <hr>
                             <?php endif; ?>
+                            <hr>
                         <?php endforeach; ?>
                     <?php endif; ?>
 
@@ -350,7 +351,7 @@ if(isset($_POST['like_regist'])) {
                         <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link small" href="index.php">質問</a>
+                        <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                         <a class="nav-link small" href="../bookApi/index.php">本検索</a>

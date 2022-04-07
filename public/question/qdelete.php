@@ -62,7 +62,7 @@ if(isset($_POST['q_dlt'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問削除</title>
+    <title>質問の削除</title>
 </head>
 
 <body>
@@ -116,7 +116,7 @@ if(isset($_POST['q_dlt'])) {
                     <a class="nav-link small" href="../article/index.php">記事</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link small" href="index.php">質問</a>
+                    <a class="nav-link small" href="../question/index.php">質問</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link small" href="../bookApi/index.php">本検索</a>

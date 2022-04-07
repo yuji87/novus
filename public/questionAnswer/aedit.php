@@ -72,7 +72,7 @@ if(isset($_POST['a_edit_conf'])) {
     <link rel="stylesheet" type="text/css" href="../../public/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/question.css">
-    <title>質問回答 編集</title>
+    <title>返信の編集</title>
 </head>
 
 <body>

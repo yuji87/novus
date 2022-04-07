@@ -45,7 +45,7 @@ $question_id = $_SESSION['q_data']['question_id'];
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>質問</title>
+<title>質問の編集完了</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../css/mypage.css">
@@ -104,7 +104,7 @@ $question_id = $_SESSION['q_data']['question_id'];
                             <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="index.php">質問</a>
+                            <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link small" href="../bookApi/index.php">本検索</a>

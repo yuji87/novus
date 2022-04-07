@@ -33,7 +33,7 @@ if(isset($_GET['search'])) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>質問</title>
+    <title>質問Page</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
