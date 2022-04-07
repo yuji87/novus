@@ -84,7 +84,7 @@ if(isset($_POST['q_edit_conf'])) {
     <link rel="stylesheet" type="text/css" href="../../public/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/question.css">
-    <title>質問編集</title>
+    <title>質問の編集</title>
 </head>
 
 <body>

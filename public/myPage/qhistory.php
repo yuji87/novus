@@ -66,18 +66,20 @@ if (!$question) {
                         <?php if(isset($question)): ?>
                             <?php foreach($question as $value): ?>
                             <!--題名-->
-                            <div class="fw-bold pb-1 h5"><a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo $value['title']; ?>」</a></div>
+                            <div class="fw-bold pb-1 h5"><a style="overflow: hidden; overflow-wrap: break-word;" href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo $value['title']; ?>」</a></div>
                             <!--カテゴリ-->
                             <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                             <div><?php echo $value['category_name']; ?></div>
                             <!--本文：50文字以上だと省略-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
-                            <?php if(mb_strlen($value['message']) > 50): ?>
-							    <?php $limit_content = mb_substr($value['message'],0,50); ?>
-							    <?php echo $limit_content; ?>…
-						    <?php else: ?>
-							    <?php echo $value['message']; ?>
-						    <?php endif; ?>
+                            <span style="overflow: hidden; overflow-wrap: break-word;">
+                                <?php if(mb_strlen($value['message']) > 50): ?>
+                                    <?php $limit_content = mb_substr($value['message'],0,50); ?>
+                                    <?php echo $limit_content; ?>…
+                                <?php else: ?>
+                                    <?php echo $value['message']; ?>
+                                <?php endif; ?>
+                            </span>
                             <!--日付-->
                             <?php if(!isset($value['upd_date']) && isset($value['post_date'])): ?>
                             <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>

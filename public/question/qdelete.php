@@ -62,7 +62,7 @@ if(isset($_POST['q_dlt'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問削除</title>
+    <title>質問の削除</title>
 </head>
 
 <body>

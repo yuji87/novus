@@ -100,7 +100,7 @@ if(isset($_POST['a_comp'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <p class="h4">投稿内容の確認</p>
+                <p class="h4">返信の内容確認</p>
                 <?php if(empty($err)): ?>
                     <p>以下の内容でよろしいですか？</p>
                 <?php else: ?>

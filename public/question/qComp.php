@@ -51,7 +51,7 @@ if(!$hasTaken) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問投稿完了</title>
+    <title>質問投稿の完了</title>
 </head>
 <body>
     <!--メニュー-->

@@ -33,7 +33,7 @@ if(empty($dlt)) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 削除完了</title>
+    <title>返信の削除完了</title>
 </head>
 
 <body>
