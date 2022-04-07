@@ -35,9 +35,9 @@ if (count($err) === 0) {
 
 // ボタン押下時の処理（成功でページ移動）
 if(isset($_POST['q_edit_conf'])) {
-    $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category',FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
     $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id',FILTER_SANITIZE_NUMBER_INT);
     if(empty($_SESSION['q_data']['title'])) {
         $err['title'] = '質問タイトルを入力してください';
@@ -84,7 +84,7 @@ if(isset($_POST['q_edit_conf'])) {
     <link rel="stylesheet" type="text/css" href="../../public/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/question.css">
-    <title>質問の編集</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -111,12 +111,12 @@ if(isset($_POST['q_edit_conf'])) {
             <div class="content">
                 <p class="h4 pb-3 mt-3">質問内容</p>
                 <form method="POST" action="">
-                    <div>
+                    <div class="text-danger pt-2">
                         <?php if(isset($err['q_id'])): ?>
                         <?php echo $err['q_id']; ?>
                         <?php endif; ?>
                     </div>
-                    <div>
+                    <div class="text-danger pt-2">
                         <?php if(isset($err['title'])): ?>
                         <?php echo $err['title']; ?>
                         <?php endif; ?>
@@ -147,7 +147,7 @@ if(isset($_POST['q_edit_conf'])) {
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div>
+                    <div class="text-danger pt-2">
                         <?php if(isset($err['message'])): ?>
                             <?php echo $err['message']; ?>
                         <?php endif; ?>

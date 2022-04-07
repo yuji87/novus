@@ -61,7 +61,7 @@ if(isset($_POST['a_dlt_conf'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>返信の削除</title>
+    <title>novus</title>
 </head>
 
 <body>

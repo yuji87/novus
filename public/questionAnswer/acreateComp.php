@@ -58,7 +58,7 @@ if(isset($_SESSION['a_data']['message']) &&
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>返信　投稿完了</title>
+    <title>novus</title>
 </head>
 
 <body>

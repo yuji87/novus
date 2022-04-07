@@ -75,7 +75,7 @@ if(isset($_POST['a_best_comp'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>ベストアンサー選択</title>
+    <title>novus</title>
 </head>
 
 <body>

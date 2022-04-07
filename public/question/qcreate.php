@@ -68,7 +68,7 @@ if(isset($_POST['create_question'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問投稿ページ</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -134,6 +134,8 @@ if(isset($_POST['create_question'])) {
                     </div>
                     <input type="submit" name="create_question" class="btn btn-warning mt-5 mb-5" value="投稿する">
                 </form>
+                <br>
+                <button type="button" class="mb-4 mt-5 btn btn-outline-dark" onclick="history.back()">戻る</button>
             </div>
         </div>
     </div>

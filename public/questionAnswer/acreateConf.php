@@ -75,7 +75,7 @@ if(isset($_POST['a_comp'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 投稿内容確認</title>
+    <title>novus</title>
 </head>
 
 <body>

@@ -18,7 +18,7 @@ if(!$result) {
 
 // ボタン押下時の処理（成功でページ移動）
 if(isset($_POST['a_edit_conf'])) {
-    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_STRING);
     $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_NUMBER_INT);
     // エラーチェック
     if(empty($_SESSION['a_data']['message'])) {
@@ -72,7 +72,7 @@ if(isset($_POST['a_edit_conf'])) {
     <link rel="stylesheet" type="text/css" href="../../public/css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/top.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/question.css">
-    <title>返信の編集</title>
+    <title>novus</title>
 </head>
 
 <body>

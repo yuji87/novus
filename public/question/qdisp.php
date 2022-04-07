@@ -83,7 +83,7 @@ if(isset($_POST['like_regist'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問の表示</title>
+    <title>novus</title>
 </head>
 
 <body>

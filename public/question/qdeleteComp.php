@@ -33,7 +33,7 @@ if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPEC
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問の削除完了</title>
+    <title>novus</title>
 </head>
 
 <body>

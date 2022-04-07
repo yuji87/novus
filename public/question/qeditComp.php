@@ -45,7 +45,7 @@ $question_id = $_SESSION['q_data']['question_id'];
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>質問の編集完了</title>
+<title>novus</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../css/mypage.css">
