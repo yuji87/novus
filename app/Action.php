@@ -70,6 +70,11 @@ class Action
     if (isset($_SESSION["USER_ID"]) === false && isset($_SESSION["login_user"]) === false) {
       // ログインページへ
       header('Location: '. DOMAIN .'/public/userLogin/form.php');
+      // クッキーの破棄
+      if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params["path"],$params["domain"], $params["secure"], $params["httponly"]);
+      }
       exit;
     }
   }
@@ -102,7 +107,6 @@ class Action
   public function getMemberExp() {
     return $this->member['exp'];
   }
-
 
   // userIdからユーザ情報を取得
   public function memberRef($userid) 
@@ -192,16 +196,16 @@ class Action
     echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/jquery.datetimepicker.css">';
     echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
     echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
-    echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';
-    echo '<link rel="stylesheet" href="https://unpkg.com/mavon-editor@2.7.4/dist/css/index.css">';//vue(マークダウン記法)
-    echo '<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>';
+    // echo '<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">';
+    // echo '<link rel="stylesheet" href="https://unpkg.com/mavon-editor@2.7.4/dist/css/index.css">';//vue(マークダウン記法)
+    // echo '<script src="https://unpkg.com/mavon-editor@2.7.4/dist/mavon-editor.js"></script>';//vue(マークダウン記法)
+    // echo '<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>';
     echo '<script src="https://kit.fontawesome.com/3f20c0ff36.js" crossorigin="anonymous"></script>';
     echo '<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>';//vue
-    echo '<script src="https://unpkg.com/mavon-editor@2.7.4/dist/mavon-editor.js"></script>';//vue(マークダウン記法)
     echo '<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
     echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';
-    echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>';
+    echo '<script src="' . DOMAIN . '/public/JS/jquery.datetimepicker.full.js"></script>'; 
     echo '<script src="' . DOMAIN . '/public/JS/qapi.js" defer></script>';
     echo '<script src="' . DOMAIN . '/public/JS/bootstrap-4.4.1.js"></script>';
     echo '<script src="' . DOMAIN . '/public/JS/marked.min.v1.js"></script>';
@@ -209,9 +213,9 @@ class Action
     echo '</head>';
     echo '<body>';
     echo '<header>';
-    echo '<div class="navbar bg-dark text-white">';
-    echo '<div class="navtext h2">novus</div>';
     if(isset($_SESSION["login_user"])):
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<ul class="nav justify-content-center">';
     echo '<li class="nav-item">';
     echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
@@ -224,10 +228,12 @@ class Action
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id='.$_SESSION["login_user"]["user_id"].'">ログアウト</a></li>';
     echo '</ul>';
     echo '</div>';
     else:
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
     echo '<ul class="nav justify-content-center">';
     echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';

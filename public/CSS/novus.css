@@ -7,6 +7,29 @@
 /* body{
   background-color: #eee;
 } */
+  h1 {
+    font-size: 0.5em;
+    color: #494949;
+    font-weight: bold;
+    background-color: #f8f6f2;
+    border-bottom: 3px dashed #494949;
+    display: inline-block;
+  }
+
+li{
+  font-size: 10px;
+}
+
+.navbar{
+  text-decoration: none;
+  color: #f8f6f2 !important;
+}
+
+@media screen and (max-width:575px) { 
+.preview{
+  display: none;
+}
+}
 
 h5{
   font-size: 1.1rem;
@@ -148,11 +171,11 @@ header {
   margin-top: 0;
   width: 100%;
 }
-li {
+/* li {
   font-size: 10px;
   height: 60px;
   float: right;
-}
+} */
 /* #li {
   padding-top: 20px;
 } */
@@ -163,4 +186,8 @@ li {
   a.nav-link {
       padding: 0 8px 0 0;
   }
+}
+
+.pagination .page-item-page {
+  margin: 0 2px;
 }

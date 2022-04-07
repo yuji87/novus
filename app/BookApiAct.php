@@ -29,7 +29,6 @@ class BookApiAct extends Action
     echo '<meta name="format-detection" content="telephone=no">';
     echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
     echo '<link rel="stylesheet" href="' . DOMAIN . '/public/css/bookApi.css">';
-    // echo '<link rel="stylesheet" href="' . DOMAIN . '/public/css/novus.css">';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
     echo '<script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>';
     echo '<script src="' . DOMAIN . '/public/bookApi/js/script.js" defer></script>';
@@ -37,32 +36,34 @@ class BookApiAct extends Action
     echo '<title>' . SYSTITLE . '</title>';
     echo '</head>';
     echo '<header>';
+    if(isset($_SESSION["login_user"])):
     echo '<div class="navbar bg-dark text-white">';
-    echo '<div class="navtext h2">novus</div>';
-    if (isset($_SESSION["login_user"])) :
-      echo '<ul class="nav justify-content-center">';
-      echo '<li class="nav-item">';
-      echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
-      echo '<a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/index.php">マイページ</a>';
-      echo '<input type="hidden">';
-      echo '</form>';
-      echo '</li>';
-      echo '<li>';
-      echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/userLogin/home.php">TOPページ</a></li>';
-      echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
-      echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
-      echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-      echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
-      echo '</ul>';
-      echo '</div>';
-    else :
-      echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
-      echo '<ul class="nav justify-content-center">';
-      echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
-      echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/question/index.php">質問ページ</a></li>';
-      echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/article/index.php">記事ページ</a></li>';
-      echo '</ul>';
-      echo '</div>';
+    echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
+    echo '<ul class="nav justify-content-center">';
+    echo '<li class="nav-item">';
+    echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
+    echo '<a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/index.php">マイページ</a>';
+    echo '<input type="hidden">';
+    echo '</form>';
+    echo '</li>';
+    echo '<li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/userLogin/home.php">TOPページ</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id='.$_SESSION["login_user"]["user_id"].'">ログアウト</a></li>';
+    echo '</ul>';
+    echo '</div>';
+    else:
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
+    echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
+    echo '<ul class="nav justify-content-center">';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/question/index.php">質問ページ</a></li>';
+    echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/article/index.php">記事ページ</a></li>';
+    echo '</ul>';
+    echo '</div>';
     endif;
     echo '</header>';
     echo '<main><div class="container">';

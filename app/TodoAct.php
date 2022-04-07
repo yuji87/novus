@@ -33,14 +33,13 @@ class TodoAct extends Action
     }
   }
 
-  // ToDo一覧取得
+  // todo一覧取得
   public function get()
   {
-    $retInfo = array();
-
-    // ToDo情報取得
-    $activeList = array();
-    $finList = array();
+    // todo情報取得
+    $retInfo = array(); 
+    $activeList = array(); //やることリスト
+    $finList = array(); //終わったことリスト
     $stmt = $this->conn->prepare(QUERY_TODO_LIST);
     $stmt->bindValue(':user_id', $this->member['user_id']);
     $result = $stmt->execute();
@@ -125,7 +124,7 @@ class TodoAct extends Action
       echo '<div class="row m-2">';
       echo '<div class="col-sm-8">';
       echo '<a class="btn btn-success m-2" href="' . DOMAIN . '/public/userLogin/home.php">ホーム画面へ</a>';
-      echo '<a href="'. DOMAIN.'/public/userLogin/mypage.php" class="btn btn-primary m-2">マイページへ</a>';
+      echo '<a href="'. DOMAIN.'/public/mypage/index.php" class="btn btn-primary m-2">マイページへ</a>';
       echo '</div>';
       echo '</div>';
     }

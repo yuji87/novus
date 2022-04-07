@@ -71,8 +71,8 @@ class ContactAct extends Action
     if ($contents == '') {
         $error['contents'] = '*内容は必須項目です。';
     //制御文字（タブ、復帰、改行を除く）でないことと文字数をチェック
-    } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1000}\z/u', $contents) == 0) {
-        $error['contents'] = '*内容は1000文字以内でお願いします。';
+    } elseif (preg_match('/\A[\r\n\t[:^cntrl:]]{1,1500}\z/u', $contents) == 0) {
+        $error['contents'] = '*内容は1500文字以内でお願いします。';
     }
   
     return [
@@ -243,9 +243,9 @@ class ContactAct extends Action
     echo '</head>';
     echo '<body>';
     echo '<header>';
-    echo '<div class="navbar bg-dark text-white">';
-    echo '<div class="navtext h2">novus</div>';
     if(isset($_SESSION["login_user"])):
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<ul class="nav justify-content-center">';
     echo '<li class="nav-item">';
     echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
@@ -258,10 +258,12 @@ class ContactAct extends Action
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
     echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-    echo '<li id="li"><a class="nav-link small text-white" href="<?php echo "' . DOMAIN . '/public/userLogin/logout.php?=user_id=".$_SESSION["login_user"]["user_id"]; ?>ログアウト</a></li>';
+    echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id='.$_SESSION["login_user"]["user_id"].'">ログアウト</a></li>';
     echo '</ul>';
     echo '</div>';
     else:
+    echo '<div class="navbar bg-dark text-white">';
+    echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
     echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
     echo '<ul class="nav justify-content-center">';
     echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';

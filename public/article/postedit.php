@@ -19,6 +19,17 @@ Token::create();
 $act->checkLogin();
 
 $retInfo = NULL;
+$article_id = filter_input(INPUT_GET, "article_id", FILTER_VALIDATE_INT);
+if ($article_id) {
+  // 記事詳細情報取得
+  $retInfo = $act->article($article_id);
+}
+
+if ($retInfo['user'] === false || $retInfo['user'] === null) {
+  // 記事がない場合は、記事一覧へリダイレクト
+  header("Location: " . DOMAIN . "/public/article/index.php");
+  exit;
+}
 
 $article_id = 0;
 $title = '';
@@ -51,17 +62,17 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
   <form method="POST" class="form-horizontal" name="NovusForm">
     <div class="row m-2 form-group">
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="title" name="title" maxlength="64" placeholder="タイトル" value="<?php echo $title; ?>">
+        <input type="text" class="form-control" id="title" name="title" placeholder="タイトル" value="<?php echo $title; ?>">
       </div>
     </div>
     <div class="row m-2 form-group" style="height:55vh">
       <!-- 入力欄 -->
       <div class="col-sm-6">
-        <textarea class="form-control" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%; overflow:scroll; overflow-x: hidden; height:450px"><?php echo $message; ?></textarea>
+        <textarea class="form-control preview" id="message" name="message" placeholder="本文" style="overflow: hidden; overflow-wrap: break-word; height: 100%; overflow:scroll; overflow-x: hidden; height:450px"><?php echo $message; ?></textarea>
       </div>
       <!-- プレビュー表示欄 -->
       <div class="col-sm-6">
-        <div class="artpreview artContents" id="previewmsg" style="overflow:scroll; overflow-x: hidden; height:450px;"></div>
+        <div class="artpreview artContents preview" id="previewmsg" style="overflow:scroll; overflow-x: hidden; height:450px;"></div>
       </div>
     </div>
     <div class="row m-2 form-group">
@@ -127,21 +138,35 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
 
   // プレビュー画面に文字列を反映
   function setupPreview() {
-    //    var text = htmlspecialchars($('#message').val()); // タグ全部無効
     var text = $('#message').val();
-    text = trimHtmlTag(text); // 一部タグを許容
-    text = marked(text); // マークアップ文字置き換え
-    text = text.replace(/\n/g, '<br>'); // 改行
+    var text = trimHtmlTag(text); // 一部タグを許容
+    var text = marked(text); // マークアップ文字置き換え
+    var text = text.replace(/\n/g, '<br>'); // 改行
     $('#previewmsg').html(text);
   }
   // 投稿 or 編集反映ボタンを押した
   function onPostArticle() {
-    if (!isStrLen(document.getElementById('title').value, 1, <?php echo TITLE_LENGTH; ?>)) {
-      onShow('タイトルを見直してください');
+    const postTitle = document.getElementById('title').value;
+    const postMessage = document.getElementById('message').value;
+    const postCategory = document.getElementById('category').value;
+    if ($.trim(postTitle) === "") {
+      onShow('タイトルに何も入力されていません');
       return;
     }
-    if (!isStrLen(document.getElementById('message').value, 1, <?php echo MESSAGE_LENGTH; ?>)) {
-      onShow('本文を見直してください');
+    if (!isStrLen(postTitle, 1, 150)) {
+      onShow('タイトルは150文字以内にしてください');
+      return;
+    }
+    if ($.trim(postMessage) === "") {
+      onShow('本文に何も入力されていません');
+      return;
+    }
+    if (!isStrLen(postMessage, 1, 1500)) {
+      onShow('本文は1500文字以内にしてください');
+      return;
+    }
+    if ($.trim(postCategory) === "") {
+      onShow('本文に何も入力されていません');
       return;
     }
 
@@ -164,10 +189,16 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
         });
       }
       switch ($retcode) {
-        case 'failed-title':
+        case 'no-title':
+          onShow('タイトルに何も入力されていません');
+          break;
+        case 'invalid-title':
           onShow('タイトルは150文字以内で入力してください');
           break;
-        case 'failed-message':
+        case 'no-message':
+          onShow('本文に何も入力されていません');
+          break;
+        case 'invalid-message':
           onShow('本文は1500文字以内で入力してください');
           break;
         case 'failed-category':
