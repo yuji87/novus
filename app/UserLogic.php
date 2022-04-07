@@ -2,6 +2,9 @@
 //ファイル読み込み
 require_once '../../app/Dbconnect.php';
 
+//タイムゾーン設定
+date_default_timezone_set('Asia/Tokyo');
+
 class UserLogic
 {
     /**
