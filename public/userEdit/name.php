@@ -10,7 +10,7 @@ $err = [];
 
 // ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -18,7 +18,7 @@ if(!$result) {
 $login_user = $_SESSION['login_user'];
 
 // セッションに保存データがあるかを確認
-if(isset($_SESSION['nameEdit'])) {
+if (isset($_SESSION['nameEdit'])) {
     // セッションから情報を取得
     $name = $_SESSION['nameEdit'];
 } else {

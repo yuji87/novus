@@ -6,7 +6,7 @@ require_once '../../app/UserLogic.php';
 
 //ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -47,7 +47,7 @@ $showicon = UserLogic::showIcon();
     </header>
     
     <!--前回のレベルと変化があった際にのみレベルモーダルを表示させる-->
-    <?php if($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
+    <?php if ($_SESSION['login_user']['level'] !== $_SESSION['login_user']['pre_level']): ?>
         <!--モーダル-->
         <div id="modal-content">
             <p style="text-align:center;"><?php require_once '../level/animation.php'; ?></p>
@@ -57,7 +57,8 @@ $showicon = UserLogic::showIcon();
         <div id="modal-overlay"></div>
         <!-- JavaScript -->
         <script type="text/javascript">
-            function modal_onclick_close(){
+            function modal_onclick_close()
+            {
             document.getElementById("modal-content").style.display = "none";
             document.getElementById("modal-overlay").style.display = "none";
             }
@@ -72,7 +73,7 @@ $showicon = UserLogic::showIcon();
                 <div class="list">
                     <!--ユーザーが登録した画像を表示-->
                     <div class="list-item">
-                        <?php if($login_user['icon'] !== null && !empty($login_user['icon'])): ?> 
+                        <?php if ($login_user['icon'] !== null && !empty($login_user['icon'])): ?> 
                             <img src="../top/img/<?php echo $login_user['icon']; ?>">
                         <?php else: ?>
                             <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
@@ -90,7 +91,7 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p style="display: inline-block;" class="fw-bold">レベル　</p>
                         <p style="display: inline-block;">Lv.</p><?php
-                            if(isset($login_user['level'])) {
+                            if (isset($login_user['level'])) {
                                 echo htmlspecialchars($login_user['level'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                 echo '1';
@@ -100,7 +101,7 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p style="display: inline-block;" class="fw-bold">EXP　</p>
                         <p style="display: inline-block;"><?php 
-                            if(isset($login_user['exp'])) {
+                            if (isset($login_user['exp'])) {
                                 echo htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                 echo '0';
@@ -109,7 +110,7 @@ $showicon = UserLogic::showIcon();
                         </p>
                         <!-- 次のレベルまでの経験値表示 -->
                         <p class="small">次のレベルまで、<?php 
-                            if(isset($login_user['exp'])) {
+                            if (isset($login_user['exp'])) {
                                 $current_exp = htmlspecialchars($login_user['exp'], ENT_QUOTES, 'UTF-8') % 100; 
                                 echo 100 - $current_exp;
                             } else {
@@ -119,7 +120,7 @@ $showicon = UserLogic::showIcon();
                     <div class="text">
                         <p class="fw-bold">コメント</p>
                         <p class="text-break small"><?php
-                            if(isset($login_user['comment'])) {
+                            if (isset($login_user['comment'])) {
                                echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); 
                             } else {
                                echo 'Let us introduce yourself!';

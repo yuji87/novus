@@ -11,7 +11,7 @@ $user_id = filter_input(INPUT_GET, 'user_id');
 
 // レベル表示処理
 $data = LevelLogic::displayUsers($_GET);
-if(!$data) {
+if (!$data) {
 	$err['u_id'] = '表示する情報がありません';
 }
 ?>
@@ -46,13 +46,13 @@ if(!$data) {
         <div class="container">
             <div class="content">
                 <h2 class="heading mt-5">USER ACCOUNT</h2>
-                <?php if(!$user_id || !$data): ?>
+                <?php if (!$user_id || !$data): ?>
                     <div class="alert alert-danger"><?php echo $err['u_id']; ?></div>
                 <?php else: ?>
                     <div class="list">
                         <!--ユーザーが登録した画像を表示-->
                         <div class="list-item">
-                            <?php if($data['icon'] !== null && !empty($data['icon'])): ?> 
+                            <?php if ($data['icon'] !== null && !empty($data['icon'])): ?> 
                                 <img src="../top/img/<?php echo $data['icon']; ?>">
                             <?php else: ?>
                                 <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
@@ -70,7 +70,7 @@ if(!$data) {
                         <div class="text">
                             <p style="display: inline-block;" class="fw-bold">レベル　</p>
                             <p style="display: inline-block;">Lv.</p><?php
-                                if(isset($data['level'])) {
+                                if (isset($data['level'])) {
                                     echo htmlspecialchars($data['level'], ENT_QUOTES, 'UTF-8'); 
                                 } else {
                                     echo '1';
@@ -80,7 +80,7 @@ if(!$data) {
                         <div class="text">
                             <p class="fw-bold">コメント</p>
                             <?php
-                                if(isset($data['comment'])) {
+                                if (isset($data['comment'])) {
                                    echo htmlspecialchars($data['comment'], ENT_QUOTES, 'UTF-8'); 
                                 } else {
                                    echo 'Let us introduce yourself!';

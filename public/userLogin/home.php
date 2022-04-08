@@ -1,34 +1,34 @@
 <?php
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/LevelLogic.php';
 require_once '../../app/Functions.php';
 
-//エラーメッセージ
+// エラーメッセージ
 $err = [];
 
-//ログインしているか判定して、していなかったらログイン画面へ移す
+// ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
 }
 $login_user = $_SESSION['login_user'];
 
-//上位３位のレベルを表示
+// 上位３位のレベルを表示
 $level = LevelLogic::levelTop3();
 $paging = LevelLogic::levelRanking();
-if(!$level) {
+if (!$level) {
 	$err[] = '表示するレベルがありません';
 }
 
-//最新の質問を表示
+// 最新の質問を表示
 $newQuestion = QuestionLogic::newQuestion();
-if(!$newQuestion) {
+if (!$newQuestion) {
 	$err['question'] = '質問の読み込みに失敗しました';
 }
 ?>
@@ -50,7 +50,7 @@ if(!$newQuestion) {
 	<!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
 					<form type="hidden" action="mypage.php" method="POST" name="mypage">
@@ -77,9 +77,9 @@ if(!$newQuestion) {
 		    		    <h2 class="heading" id="rankingtitle">レベルランキング TOP3</h2>
 						<!--順位表示-->
                         <?php $i = 1; ?>
-		    			<?php foreach($level as $value): ?>
+		    			<?php foreach ($level as $value): ?>
 							<?php
-                            switch($i) {
+                            switch ($i) {
                             case 1: ?>
                                 <?php echo "<p id='first'>1位</p>";
                                 break;
@@ -92,16 +92,16 @@ if(!$newQuestion) {
                             } ?>
                             <!--ユーザーが登録した画像を表示-->
                             <div class="level-icon"><br>
-                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                                <?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    				    	<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
-		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    				    	<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    				    		echo '../myPage/index.php'; } else {
                                         echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                     <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                                 <?php else: ?>
 		    				    	<!--上記と同じ処理-->
 		    				    	<!-- <form type="hidden" name="userpage" action="-->
-		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+		    				    	<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
 		    				    		echo '../myPage/index.php'; } else {
 							    		//user_idをユーザーページに引き継ぐ
 		    				    		echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
@@ -126,22 +126,24 @@ if(!$newQuestion) {
                 </div>
 
 			    <!-- 通常時、新着の質問を表示 -->
-		        <?php if(isset($newQuestion)): ?>
+		        <?php if (isset($newQuestion)): ?>
 		        	<div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
-		        	<?php foreach($newQuestion as $value): ?>
+		        	<?php foreach ($newQuestion as $value): ?>
 						<!--題名-->
-						<div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qdisp.php? question_id=<?php echo $value['question_id']?>">「<?php echo htmlspecialchars($value['title']) ?>」</a></div>
+						<div style="overflow: hidden; overflow-wrap: break-word;"><a href="../question/qdisp.php? question_id=<?php echo $value['question_id']?>">
+						    「<?php echo htmlspecialchars($value['title']) ?>」</a>
+						</div>
 					    <!--アイコン-->
 					    <div class="level-icon">
-                            <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+                            <?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
-		    					<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    						echo '../myPage/index.php'; } else {
                                     echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                 <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                             <?php else: ?>
 		    					<!--上記と同じ処理-->
-		    					<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
 		    						echo '../myPage/index.php'; } else {
 									//user_idをユーザーページに引き継ぐ
 		    						echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
@@ -157,7 +159,7 @@ if(!$newQuestion) {
                                    <?php echo htmlspecialchars($value['name']) ?>さん</a></div>
 		        		<!--本文：50文字以上だと省略-->
 						<div style="overflow: hidden; overflow-wrap: break-word;">
-							<?php if(mb_strlen($value['message']) > 50): ?>
+							<?php if (mb_strlen($value['message']) > 50): ?>
 								<?php $limit_content = mb_substr($value['message'],0,50); ?>
 								<?php echo htmlspecialchars($limit_content); ?>…
 							<?php else: ?>
@@ -167,7 +169,9 @@ if(!$newQuestion) {
 						<!-- カテゴリと投稿日時を横並びにする処理 -->
 						<div class="block">
 							<!--カテゴリ-->
-							<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+							<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3">
+							    <?php echo htmlspecialchars($value['category_name']); ?>
+							</div>
 							<!--投稿日時-->
 							<div style="display: inline-block;" class="small pb-4">
 								<!-- 更新されていた場合、その日付を優先表示 -->

@@ -16,8 +16,8 @@ $err = [];
 <body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5 text-center small">
         <!--エラーが発生した場合、メッセージと戻る画面を作成-->
-        <?php if(count($err) > 0): ?>
-            <?php foreach($err as $e): ?>
+        <?php if (count($err) > 0): ?>
+            <?php foreach ($err as $e): ?>
                 <p><?php echo $e; ?></p>
                 <?php endforeach; ?>
                 <div class="text-center">

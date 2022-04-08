@@ -7,15 +7,15 @@ require_once '../../app/UserLogic.php';
 $data = $_GET;
 $logout = filter_input(INPUT_GET, 'user_id');
 
-//ログイン可否を判定、セッションが切れていたらログインを促すメッセージ
+// ログイン可否を判定、セッションが切れていたらログインを促すメッセージ
 $data = UserLogic::checkLogin();
-if(!$data) {
+if (!$data) {
     exit ('セッションが切れているので、再ログインをして下さい');
     header('Location: ../userLogin/form.php');
     return;
 }
 
-//ログアウトをする
+// ログアウトをする
 UserLogic::logout($_GET);
 ?>
 

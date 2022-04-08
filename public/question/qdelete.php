@@ -11,7 +11,7 @@ $err = [];
 
 // ログインチェック処理
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -22,7 +22,7 @@ $categories = CategoryLogic::getCategory();
 
 // バリデーション
 $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
-if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
+if (!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS)) {
     $err[] = '質問を選択し直してください';
 }
 
@@ -30,22 +30,22 @@ if(!$question_id == filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPEC
 if (count($err) === 0) {
     // 質問を引っ張る処理
     $question = QuestionLogic::displayQuestion($_POST);
-    if(!$question) {
+    if (!$question) {
         $err[] = '質問の読み込みに失敗しました';
     }
 }
 
 // 削除処理
-if(isset($_POST['q_dlt'])) {
+if (isset($_POST['q_dlt'])) {
     $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_SPECIAL_CHARS);
-    if(!$_SESSION['q_data']['question_id']) {
+    if (!$_SESSION['q_data']['question_id']) {
         $err['q_id'] = '質問IDが選択されていません';
     }
     $dlt = QuestionLogic::deleteQuestion($_SESSION['q_data']['question_id']);
-    if(!$dlt) {
+    if (!$dlt) {
         $err[] = '質問の削除に失敗しました';
     }
-    if(count($err) === 0) {
+    if (count($err) === 0) {
         header('Location: qDeleteComp.php');
     }
 }
@@ -69,7 +69,7 @@ if(isset($_POST['q_dlt'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>

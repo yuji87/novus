@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';
 
-//ログインしているか判定して、していなかったらログインへ移す
+// ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
@@ -15,12 +15,12 @@ if (!$result) {
 
 $login_user = $_SESSION['login_user'];
 
-//セッションに保存データがあるかを確認
+// セッションに保存データがあるかを確認
 if (isset($_SESSION['commentEdit'])) {
-    //セッションから情報を取得
+    // セッションから情報を取得
     $comment = $_SESSION['commentEdit'];
 } else {
-    //セッションがなかった場合
+    // セッションがなかった場合
     $comment = array();
 }
 ?>
@@ -40,7 +40,7 @@ if (isset($_SESSION['commentEdit'])) {
     <!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
                 <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
                 <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
@@ -60,10 +60,12 @@ if (isset($_SESSION['commentEdit'])) {
                 <form action="../userEdit/commentC.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した名前を表示-->
+                        <!--ユーザーが登録したコメントを表示-->
                         <div class="text">
                             <label for="comment" style="text-align:center">[comment]</label>
-                            <p><input id="editdetail" type="text" name="comment" class="w-100" value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>"></p>
+                            <p><input id="editdetail" type="text" name="comment" class="w-100" 
+                                value="<?php echo htmlspecialchars($login_user['comment'], ENT_QUOTES, 'UTF-8'); ?>">
+                            </p>
                         </div>
                         <br><br>
                         <a href="index.php" id="back">戻る</a>

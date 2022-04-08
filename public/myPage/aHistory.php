@@ -11,7 +11,7 @@ $err = [];
 
 // ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: userLogin/form.php');
     return;
@@ -21,7 +21,7 @@ $question_id = filter_input(INPUT_GET, 'question_id');
 
 // 自身が投稿した記事を表示
 $article = ArticleLogic::userArticle();
-if(!$article) {
+if (!$article) {
     $err[] = 'まだ投稿した記事はありません';
 }
 ?>
@@ -63,8 +63,8 @@ if(!$article) {
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
                         <div class="fw-bold mb-4">記事履歴</div>
-                        <?php if(isset($article)): ?>
-                            <?php foreach($article as $value): ?>
+                        <?php if (isset($article)): ?>
+                            <?php foreach ($article as $value): ?>
                             <!--題名-->
                             <div class="fw-bold pb-1 h5"><a href="../article/detail.php? article_id=<?php echo $value['article_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo $value['title']; ?>」</a></div>
                             <!--カテゴリ-->
@@ -72,16 +72,16 @@ if(!$article) {
                             <div><?php echo $value['category_name']; ?></div>
                             <!--本文：50文字以上だと省略-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
-                            <?php if(mb_strlen($value['message']) > 50): ?>
+                            <?php if (mb_strlen($value['message']) > 50): ?>
 							    <?php $limit_content = mb_substr($value['message'],0,50); ?>
 							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $limit_content; ?>…</span>
 						    <?php else: ?>
 							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $value['message']; ?></span>
 						    <?php endif; ?>
                             <!--日付-->
-                            <?php if(!isset($value['upd_date']) && isset($value['post_date'])): ?>
+                            <?php if (!isset($value['upd_date']) && isset($value['post_date'])): ?>
                             <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>
-                            <?php elseif(isset($value['upd_date'])): ?>
+                            <?php elseif (isset($value['upd_date'])): ?>
                             <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?></div>
                             <?php endif; ?>
                             <hr id="dot">

@@ -1,30 +1,30 @@
 <?php
 session_start();
 
-//ファイルの読み込み
+// ファイルの読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';
 
-//ログインチェック
+// ログインチェック
 $login_err = isset($_SESSION['login_err']) ? $_SESSION['login_err']: null;
 unset($_SESSION['login_err']);
 
-//ログインしているか判定して、していたらログイン画面へ移す
+// ログインしているか判定して、していたらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if($result) {
+if ($result) {
     header('Location: ../userLogin/home.php');
     return;
 }
 
-//セッションに保存データがあるかを確認
-if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
-    //セッションから情報を取得
+// セッションに保存データがあるかを確認
+if (isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || isset($_SESSION['signUp']['email']) || isset($_SESSION['signUp']['password'])) {
+    // セッションから情報を取得
     $name = $_SESSION['signUp']['name'];
     $tel = $_SESSION['signUp']['tel'];
     $email = $_SESSION['signUp']['email'];
     $password = $_SESSION['signUp']['password'];
 } else {
-    //セッションがなかった場合
+    // セッションがなかった場合
     $name = '';
     $tel = '';
     $email = '';
@@ -49,7 +49,7 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
     <form enctype="multipart/form-data" action="confirm.php" method="POST" name="create">
     <input type="hidden" name="formcheck" value="checked">
     <h1 class="my-3" style="text-align:center;">アカウント作成</h1>
-            <?php if(isset($login_err)): ?>
+            <?php if (isset($login_err)): ?>
                 <p><?php echo $login_err; ?></p>
             <?php endif; ?>
         <p class="my-3" style="text-align:center;">当サービスを利用するために、次のフォームに必要事項をご記入ください。</p>
@@ -61,7 +61,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
                 <input type="text" class="form-control col-6" name="name" value="<?php $name; ?>">
             </div>
         </div>
-
         <!--電話番号を記入-->
         <div class="row my-3">
             <label for="tel" class="form-label font-weight-bold">*Phone</label>
@@ -72,7 +71,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
                 class="form-control col-6" name="tel" value="<?php if(!empty($tel)) {echo htmlspecialchars($tel, ENT_QUOTES, 'UTF-8');}?>">
             </div>
         </div>
-
         <!--メアドを記入-->
         <div class="row my-3">
             <label for="email" class="form-label font-weight-bold">Email</label>
@@ -81,7 +79,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
                 <input type="email" class="form-control col-6" name="email" value="<?php $email; ?>">
             </div>
         </div>
-
         <!--パスワードを記入-->
         <div class="row my-3">
             <label for="password" class="form-label font-weight-bold">*Password</label>
@@ -90,7 +87,6 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
                 <input type="password" class="form-control col-4" id="inputPassword8" name="password" value="<?php if (isset($password)) {echo htmlspecialchars($password, ENT_QUOTES, 'UTF-8');} ?>">
             </div>
         </div>
-        
         <!--確認パスワードを記入-->
         <div class="row my-3">
             <label for="password_conf" class="form-label small font-weight-bold">確認：passwordを再入力してください</label>
