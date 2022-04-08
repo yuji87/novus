@@ -179,7 +179,7 @@ if(isset($_POST['like_regist'])) {
                     <br>
                     <hr size="4">
                     <br>
-                    
+
                     <!-- 返答表示部分 -->
                     <?php if(!empty($answer)): ?>
                         <h4>返信一覧</h4>
@@ -262,7 +262,7 @@ if(isset($_POST['like_regist'])) {
                                         </form>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                
+
                                 <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
                                     <!-- 質問者本人 ＆ 返答が質問者以外の場合、ベストアンサーボタンの表示 -->
                                     <form method="POST" action="bestAnswer.php">
