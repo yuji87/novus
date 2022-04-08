@@ -68,8 +68,8 @@ if(isset($_SESSION['signUp']['name']) || isset($_SESSION['signUp']['tel']) || is
             <p class="small text-muted">（ハイフンなし・半角数字で12文字以下）</p>
             <div class="md-3">
                 <input type="tel" oninput="value = value.replace(/[０-９]/g,s => 
-                    String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
-                    class="form-control col-6" name="tel" value="<?php if (!empty($tel)) {echo htmlspecialchars($tel, ENT_QUOTES, 'UTF-8');}?>">
+                String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
+                class="form-control col-6" name="tel" value="<?php if(!empty($tel)) {echo htmlspecialchars($tel, ENT_QUOTES, 'UTF-8');}?>">
             </div>
         </div>
 

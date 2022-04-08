@@ -37,7 +37,7 @@ $_SESSION = array();
 <body class="h-100 bg-secondary p-4 p-md-5">
     <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" action="complete.php" method="POST" name="login">
         <h1 class="my-3">ログインフォーム</h1>
-            <?php if (isset($err['msg'])): ?>
+            <?php if(isset($err['msg'])): ?>
                 <p><?php echo $err['msg']; ?></p>
             <?php endif; ?>
         <p class="my-2">下記項目を記入して下さい。</p>
@@ -45,7 +45,9 @@ $_SESSION = array();
         <div class="row my-4">
             <label for="tel" class="form-label font-weight-bold">Phone</label>
             <div class="md-3">
-                <input type="tel" oninput="value = value.replace(/[０-９]/g,s => String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" class="form-control col-10" name="tel">
+                <input type="tel" oninput="value = value.replace(/[０-９]/g,s => 
+                String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');" 
+                class="form-control col-10" name="tel">
                 <!--欄の下に未記入時のエラーメッセージ表示-->
                 <?php if(isset($err['tel'])): ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
