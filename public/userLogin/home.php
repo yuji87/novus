@@ -43,7 +43,7 @@ if(!$newQuestion) {
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-    <title>トップ画面</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -75,32 +75,52 @@ if(!$newQuestion) {
                 <div class="form-row text-center">
                     <div id="title">
 		    		    <h2 class="heading" id="rankingtitle">レベルランキング TOP3</h2>
+						<!--順位表示-->
+                        <?php $i = 1; ?>
 		    			<?php foreach($level as $value): ?>
-                        <!--ユーザーが登録した画像を表示-->
-                        <div class="level-icon"><br>
-                            <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-		    					<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
-		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
-		    						echo '../myPage/index.php'; } else {
-                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-                                <img src="../top/img/<?php echo $value['icon']; ?>"></a>
-                            <?php else: ?>
-		    					<!--上記と同じ処理-->
-		    					<!-- <form type="hidden" name="userpage" action="-->
-		    					<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
-		    						echo '../myPage/index.php'; } else {
-									//user_idをユーザーページに引き継ぐ
-		    						echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
-		    						<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
-		    					    <!-- <input id="imginput" type="submit" value=""></form> -->
-                            <?php endif; ?>
-                        </div>
-						<!--名前-->
-                        <div class="text-center">
-		        			<p><?php echo $value['name']; ?>さん</p>
-                            <p>Lv.<?php echo $value['level']; ?></p>
-                        </div>
-                        <?php endforeach ?>
+							<?php
+                            switch($i) {
+                            case 1: ?>
+                                <?php echo "<p id='first'>1位</p>";
+                                break;
+                            case 2:
+                                echo "<p id='second'>2位</p>";
+                                break;
+                            case 3:
+                                echo "<p id='third'>3位</p>";
+                                break;
+                            } ?>
+                            <!--ユーザーが登録した画像を表示-->
+                            <div class="level-icon"><br>
+                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
+		    				    	<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
+		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    				    		echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                    <img src="../top/img/<?php echo $value['icon']; ?>"></a>
+                                <?php else: ?>
+		    				    	<!--上記と同じ処理-->
+		    				    	<!-- <form type="hidden" name="userpage" action="-->
+		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+		    				    		echo '../myPage/index.php'; } else {
+							    		//user_idをユーザーページに引き継ぐ
+		    				    		echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+		    				    		<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+		    				    	    <!-- <input id="imginput" type="submit" value=""></form> -->
+                                <?php endif; ?>
+                            </div>
+						    <!--名前-->
+                            <div class="text-center">
+							    <!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						        <a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    				    		echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                       <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							    <!--レベル-->
+                                <p>Lv.<?php echo $value['level']; ?></p>
+                            </div>
+                            <?php $i++ ;?>
+                        <?php endforeach; ?>
 		        		<a class="small mb-5" href="../level/list.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a><hr size="5">
 		        	</div>
                 </div>
@@ -129,21 +149,35 @@ if(!$newQuestion) {
                             <?php endif; ?>
                         </div>
 						<!--ユーザー名-->
-						<div class="pb-3 small"><?php echo htmlspecialchars($value['name']) ?>さん</div>
-		        		<!--カテゴリ-->
-						<div>カテゴリ：<?php echo htmlspecialchars($value['category_name']) ?></div>
+						<div class="pb-3 small">
+							<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						    <a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    						echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                   <?php echo htmlspecialchars($value['name']) ?>さん</a></div>
 		        		<!--本文：50文字以上だと省略-->
-						<div class="text-center fw-bold mt-2 pb-2">本文</div>
 						<div style="overflow: hidden; overflow-wrap: break-word;">
 							<?php if(mb_strlen($value['message']) > 50): ?>
 								<?php $limit_content = mb_substr($value['message'],0,50); ?>
-								<?php echo $limit_content; ?>…
+								<?php echo htmlspecialchars($limit_content); ?>…
 							<?php else: ?>
-								<?php echo $value['message']; ?>
+								<?php echo htmlspecialchars($value['message']); ?>
 							<?php endif; ?>
 						</div>
-		        		<!--投稿日時-->
-		        	    <div class="mt-3 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
+						<!-- カテゴリと投稿日時を横並びにする処理 -->
+						<div class="block">
+							<!--カテゴリ-->
+							<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+							<!--投稿日時-->
+							<div style="display: inline-block;" class="small pb-4">
+								<!-- 更新されていた場合、その日付を優先表示 -->
+								<?php if (!isset($value['upd_date'])): ?>
+									投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+								<?php else: ?>
+									更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+								<?php endif; ?>
+							</div>
+						</div>
 		        	<?php endforeach; ?>
 		        <?php endif; ?>
 			</div>

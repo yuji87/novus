@@ -20,6 +20,8 @@ $login_user = $_SESSION['login_user'];
 if(count($err) === 0 && (isset($_POST['check']))) {
     //ユーザーを登録する
     $userDelete = UserLogic::deleteUser($_SESSION);
+    //ログアウトをする
+    UserLogic::logout($_SESSION);
     header('Location: complete.php');
     //失敗した場合
     if(!$userDelete){

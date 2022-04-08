@@ -405,6 +405,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
+        $_SESSION['login_user']['user_id'] = null;
         return $result;
     } catch(\Exception $e) {
         // エラーの出力

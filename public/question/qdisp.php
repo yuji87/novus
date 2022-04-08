@@ -1,5 +1,4 @@
 <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-<script src="/qandasite/public/question/js/like.js" defer></script>
 
 <?php
 session_start();
@@ -75,7 +74,6 @@ if(isset($_POST['like_regist'])) {
 <head>
     <meta charset="UTF-8">
     <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-    <script src="/qandasite/public/question/js/like.js" defer></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +81,7 @@ if(isset($_POST['like_regist'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問表示</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -147,19 +145,22 @@ if(isset($_POST['like_regist'])) {
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
                         <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
-                    <!--カテゴリー-->
-                    <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                        <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8'); ?></div>
-                    <!--日付-->
-                    <div class="pt-4 pb-1 small">
-                        <?php if (!isset($question['upd_date'])): ?>
-                            投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
-                        <?php else: ?>
-                            更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
-                        <?php endif; ?>
+                        <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($question['message'], \ENT_QUOTES, 'UTF-8')); ?></div>
+                    <!-- カテゴリと投稿日時を横並びにする処理 -->
+                    <div class="block">
+                        <!--カテゴリ-->
+                        <div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($question['category_name']); ?></div>
+                        <!--投稿日時-->
+                        <div style="display: inline-block;" class="small pb-4">
+                            <!-- 更新されていた場合、その日付を優先表示 -->
+                            <?php if (!isset($value['upd_date'])): ?>
+                                投稿：<?php echo date('Y/m/d H:i', strtotime($question['post_date'])); ?>
+                            <?php else: ?>
+                                更新：<?php echo date('Y/m/d H:i', strtotime($question['upd_date'])); ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <!-- 質問者本人の時、編集・削除ボタン表示 -->
@@ -175,7 +176,9 @@ if(isset($_POST['like_regist'])) {
                             </form>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <br><hr size="4">
+                    <br>
+                    <hr size="4">
+                    <br>
                     
                     <!-- 返答表示部分 -->
                     <?php if(!empty($answer)): ?>
@@ -184,8 +187,7 @@ if(isset($_POST['like_regist'])) {
                             <?php echo $err['answer']; ?>
                         <?php endif; ?>
                         <?php foreach($answer as $value): ?>
-                            <!--ユーザー名-->
-                            <div><?php echo $value['name']; ?>さん</div>
+                            <hr id="dot">
                             <!--アイコン-->
                             <div class="pb-1 small">
                                 <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
@@ -194,25 +196,30 @@ if(isset($_POST['like_regist'])) {
                                     <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
                                 <?php endif; ?>
                             </div>
+                            <!--ユーザー名-->
+                            <div><?php echo $value['name']; ?>さん</div>
                             <!--本文-->
                             <div class="fw-bold pt-3 pb-1">本文</div>
-                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8'); ?></div>
-                            <!--投稿日時-->
-                            <div>
-                                <!-- 更新されていた場合、その日付を優先表示 -->
-                                <?php if (!isset($value['upd_date'])): ?>
-                                    投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
-                                <?php else: ?>
-                                    更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-                                <?php endif; ?>
+                            <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($value['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
+                            <!-- いいね表示と投稿日時を横並びにする処理 -->
+                            <div class="block">
+                                <!-- フラグがONになっているいいねの数を表示 -->
+                                <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
+                                <div class="mb-3" style="color: red; display: inline-block;">&hearts;<?php echo count($likes); ?>　</div>
+                                <!--投稿日時-->
+                                <div style="display: inline-block;">
+                                    <!-- 更新されていた場合、その日付を優先表示 -->
+                                    <?php if (!isset($value['upd_date'])): ?>
+                                        投稿：<?php echo date('Y/m/d H:i', strtotime($value['answer_date']));  ?>
+                                    <?php else: ?>
+                                        更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <!-- フラグがONになっているいいねの数を表示 -->
-                            <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                            <div class="mb-3">いいね数：<?php echo count($likes); ?></div>
                             <!-- ベストアンサー選択された返答の目印 -->
                             <?php if($value['best_flg']): ?>
-                                <div class="text-danger mb-3">ベストアンサー</div>
-                            <?php endif; ?><hr id="dot">
+                                <div class="alert alert-danger">ベストアンサー</div>
+                            <?php endif; ?>
 
                             <!-- いいねボタンの表示部分 -->
                             <?php if($result): ?>
@@ -240,20 +247,20 @@ if(isset($_POST['like_regist'])) {
                                             <input type="submit" name="like_regist" value="いいね">
                                         <?php endif; ?>
                                     </form>
-                                <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
+                                    <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
                                 <?php else: ?>
                                     <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
-                                        <form method="POST" action="../questionAnswer/aEdit.php">
+                                        <form method="POST" action="../questionAnswer/aEdit.php" name="question" id="qedit">
                                             <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                            <i class="fa-solid fa-pen"><input type="submit" name="a_edit" value="編集"></i>
-                                        </form>
-                                        <form method="POST" action="../questionAnswer/aDelete.php">
+                                            <i class="fa-solid fa-pen"><input type="submit" name="a_edit"  id="edit" value="編集"></i>
+                                        </form>                                     
+                                        <form method="POST" action="../questionAnswer/aDelete.php" name="question" id="qDelete">
                                             <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
-                                            <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除"></i>
+                                            <i class="fa-solid fa-trash-can"><input type="submit" name="a_edit" value="削除" id="delete"></i>
                                         </form>
-                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 
                                 <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
@@ -265,8 +272,10 @@ if(isset($_POST['like_regist'])) {
                                         <input type="submit" value="ベストアンサー">
                                     </form>
                                 <?php endif; ?>
-                            <hr>
                             <?php endif; ?>
+                            <br>
+                            <hr size="4">
+                            <br>
                         <?php endforeach; ?>
                     <?php endif; ?>
 

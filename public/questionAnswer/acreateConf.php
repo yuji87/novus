@@ -17,7 +17,7 @@ if(!$result) {
 //エラーメッセージ
 $err = [];
 
-$a_message = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+$a_message = filter_input(INPUT_POST, 'a_message');
 $a_user_id = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
 $q_user_id = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
 $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
@@ -45,7 +45,7 @@ if(!empty($a_message)) {
 
 // 投稿ボタン押下時の内部処理（成功でページ移動）
 if(isset($_POST['a_comp'])) {
-    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
     $_SESSION['a_data']['a_user_id'] = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
     $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
     $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
@@ -75,7 +75,7 @@ if(isset($_POST['a_comp'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 投稿内容確認</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -100,7 +100,7 @@ if(isset($_POST['a_comp'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <p class="h4">投稿内容の確認</p>
+                <p class="h4">返信の内容確認</p>
                 <?php if(empty($err)): ?>
                     <p>以下の内容でよろしいですか？</p>
                 <?php else: ?>

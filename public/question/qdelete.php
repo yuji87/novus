@@ -62,7 +62,7 @@ if(isset($_POST['q_dlt'])) {
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
     <link rel="stylesheet" type="text/css" href="../css/question.css">
-    <title>質問削除</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -91,13 +91,13 @@ if(isset($_POST['q_dlt'])) {
                 <form method="POST" action="">
                     <!--題名-->
                     <div class="fw-bold pb-1">題名</div>
-                    <div><?php echo $question['title']; ?></div>
+                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['title']; ?></div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                     <div><?php echo $question['category_name']; ?></div>
                     <!--本文-->
                     <div class="fw-bold pt-3 pb-1">本文</div>
-                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $question['message']; ?></div>
+                    <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($question['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
                     <div>添付</div>
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
                     <i class="fa-solid fa-trash-can mt-3"><input class="fw-bold " type="submit" name="q_dlt" id="delete" value="削除"></i>

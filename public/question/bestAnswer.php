@@ -75,7 +75,7 @@ if(isset($_POST['a_best_comp'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>ベストアンサー選択</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -100,7 +100,7 @@ if(isset($_POST['a_best_comp'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <p class="h4">返答内容</p>
+                <p class="h4 mt-4">返答内容</p>
                 <!-- 通常時処理 -->
                 <?php if(!isset($_POST['a_best_comp'])): ?>
                     <div>以下の返答をベストアンサーに選択しますか？</div>
@@ -133,8 +133,8 @@ if(isset($_POST['a_best_comp'])) {
                             <?php echo $row ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <button type="button" onclick="location.href='../../userLogin/home.php'">TOP</button>
-                    <button type="button" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ</button>
+                    <button type="button" class="mt-4" onclick="location.href='../../userLogin/home.php'">TOP</button>
+                    <button type="button" class="mb-5" onclick="location.href='qDisp.php?question_id=<?php echo $_SESSION['a_data']['question_id']; ?>'">質問へ</button>
                 <?php endif; ?>
             </div>
         </div>

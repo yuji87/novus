@@ -48,7 +48,7 @@ if(!$newQuestion) {
 	<link rel="stylesheet" type="text/css" href="../css/mypage.css">
 	<link rel="stylesheet" type="text/css" href="../css/question.css">
     <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
-    <title>トップ画面</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -66,8 +66,6 @@ if(!$newQuestion) {
         </div>
     </header>
 
-
-
 	<!--中央コンテンツ-->
 	<div class="wrapper">
 	    <div class="container">
@@ -77,8 +75,7 @@ if(!$newQuestion) {
                     <div class="form-row text-center">
                         <div id="keyword" class="form-group col-row">
                             <input name="keyword" type="text" class="form-control" id="question" placeholder="キーワード" value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']): '' ?>">
-                        </div>
-                        <br>
+                        </div><br>
                         <div class="form-group col-row">
                             <label class="small">カテゴリー</label>
                             <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="category">
@@ -93,8 +90,7 @@ if(!$newQuestion) {
 			    			    <?php endforeach; ?>
                             </select>
                         </div>
-                    </div>
-                    <br>
+                    </div><br>
                     <button type="submit" class="btn btn-primary mt-3 mb-3" name="search">検索</button>
 			    </form>
 
@@ -123,21 +119,35 @@ if(!$newQuestion) {
                                 <?php endif; ?>
                             </div>
 		        		    <!--ユーザー名-->
-		        		    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
-		        		    <!--カテゴリ-->
-		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
+		        		    <div class="pb-3 small">
+								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
+                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							</div>
 		        		    <!-- メッセージ：本文が50文字以上なら省略 -->
-		        			<div class="text-center fw-bold mt-2 pb-2" style="overflow: hidden; overflow-wrap: break-word;">本文</div>
 		        			<div style="overflow: hidden; overflow-wrap: break-word;">
 		        				<?php if(mb_strlen($value['message']) > 50): ?>
 		        					<?php $limit_content = mb_substr($value['message'],0,50); ?>
-		        					<?php echo $limit_content; ?>…
+		        					<?php echo htmlspecialchars($limit_content); ?>…
 		        				<?php else: ?>
-		        					<?php echo $value['message']; ?>
+		        					<?php echo htmlspecialchars($value['message']); ?>
 		        				<?php endif; ?>
 		        			</div>
-		        		    <!--投稿日時-->
-		        	        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div><hr id="dot">
+							<!-- カテゴリと投稿日時を横並びにする処理 -->
+							<div class="block">
+								<!--カテゴリ-->
+								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!--投稿日時-->
+								<div style="display: inline-block;" class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							</div>
+							<hr id="dot">
 		            	<?php endforeach; ?>
 		            <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		            	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
@@ -165,21 +175,35 @@ if(!$newQuestion) {
                                 <?php endif; ?>
                             </div>
 		        		    <!--ユーザー名-->
-		        		    <div class="pb-3 small"><?php echo htmlspecialchars($value['name']); ?>さん</div>
-		        		    <!--カテゴリ-->
-		        		    <div>カテゴリ：<?php echo htmlspecialchars($value['category_name']); ?></div>
-		        		    <!--本文-->
-		        		    <div class="text-center fw-bold mt-2 pb-2">本文</div>
+		        		    <div class="pb-3 small">
+								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
+                                <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							</div>
+		        		    <!-- メッセージ：本文が50文字以上なら省略 -->
 		        			<div style="overflow: hidden; overflow-wrap: break-word;">
 		        				<?php if(mb_strlen($value['message']) > 50): ?>
 		        					<?php $limit_content = mb_substr($value['message'],0,50); ?>
-		        					<?php echo $limit_content; ?>…
+		        					<?php echo htmlspecialchars($limit_content); ?>…
 		        				<?php else: ?>
-		        					<?php echo $value['message']; ?>
+		        					<?php echo htmlspecialchars($value['message']); ?>
 		        				<?php endif; ?>
 		        			</div>
-		        		    <!--投稿日時-->
-		        	        <div class="mt-2 mb-3 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?></div><hr id="dot">
+							<!-- カテゴリと投稿日時を横並びにする処理 -->
+							<div class="block">
+								<!--カテゴリ-->
+								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!--投稿日時-->
+								<div style="display: inline-block;" class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
+									<?php else: ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
+									<?php endif; ?>
+								</div>
+							</div>
+							<hr id="dot">
 		        	    <?php endforeach; ?>
 		            <?php endif; ?>
 		        </div>

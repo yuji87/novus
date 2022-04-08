@@ -228,7 +228,6 @@ class ContactAct extends Action
         unset($_SESSION['input_error']);
     }
 
-    // head,body開始タグ
     public function printHeader()
     {
         echo '<!DOCTYPE html>';
@@ -247,34 +246,35 @@ class ContactAct extends Action
         echo '</head>';
         echo '<body>';
         echo '<header>';
-        if (isset($_SESSION["login_user"])):
-    echo '<div class="navbar bg-dark text-white">';
-        echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
-        echo '<ul class="nav justify-content-center">';
-        echo '<li class="nav-item">';
-        echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
-        echo '<a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/index.php">マイページ</a>';
-        echo '<input type="hidden">';
-        echo '</form>';
-        echo '</li>';
-        echo '<li>';
-        echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/userLogin/home.php">TOPページ</a></li>';
-        echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
-        echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
-        echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
-        echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id='.$_SESSION["login_user"]["user_id"].'">ログアウト</a></li>';
-        echo '</ul>';
-        echo '</div>'; else:
-    echo '<div class="navbar bg-dark text-white">';
-        echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
-        echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
-        echo '<ul class="nav justify-content-center">';
-        echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
-        echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/question/index.php">質問ページ</a></li>';
-        echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/article/index.php">記事ページ</a></li>';
-        echo '</ul>';
-        echo '</div>';
-        endif;
+        if (isset($_SESSION["login_user"])) {
+            echo '<div class="navbar bg-dark text-white">';
+            echo '<a href="' . DOMAIN . '/public/userLogin/home.php" class="navtext h2 text-white text-decoration-none">novus</a>';
+            echo '<ul class="nav justify-content-center">';
+            echo '<li class="nav-item">';
+            echo '<form type="hidden" action="mypage.php" method="POST" name="mypage">';
+            echo '<a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/index.php">マイページ</a>';
+            echo '<input type="hidden">';
+            echo '</form>';
+            echo '</li>';
+            echo '<li>';
+            echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/userLogin/home.php">TOPページ</a></li>';
+            echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/todo/index.php">TO DO LIST</a></li>';
+            echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/qHistory.php">【履歴】質問</a></li>';
+            echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/myPage/aHistory.php">【履歴】記事</a></li>';
+            echo '<li id="li"><a class="nav-link small text-white" href="' . DOMAIN . '/public/userLogin/logout.php?user_id=' . $_SESSION["login_user"]["user_id"] . '">ログアウト</a></li>';
+            echo '</ul>';
+            echo '</div>'; 
+        } else {
+            echo '<div class="navbar bg-dark text-white">';
+            echo '<a href="' . DOMAIN . '/public/top/index.php" class="navtext h2 text-white text-decoration-none">novus</a>';
+            echo '<label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>';
+            echo '<ul class="nav justify-content-center">';
+            echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/top/index.php">TOPページ</a></li>';
+            echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/question/index.php">質問ページ</a></li>';
+            echo '<li id="li"><a class="nav-link active small text-white" href="' . DOMAIN . '/public/article/index.php">記事ページ</a></li>';
+            echo '</ul>';
+            echo '</div>';
+        }
         echo '</header>';
         echo '<main><div class="container">';
     }

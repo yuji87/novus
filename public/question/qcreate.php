@@ -25,7 +25,7 @@ if(isset($_POST['create_question'])) {
     $_SESSION['q_data']['user_id'] = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
-    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message');
     
     // 必須部分チェック
     if(!$_SESSION['q_data']['title']) {
@@ -68,7 +68,7 @@ if(isset($_POST['create_question'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問投稿ページ</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -132,7 +132,13 @@ if(isset($_POST['create_question'])) {
                             <p class="text-danger pt-2"><?php echo $err['message']; ?></p>
                         <?php endif; ?>
                     </div>
-                    <input type="submit" name="create_question" class="btn btn-warning mt-5 mb-5" value="投稿する">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <button style="display: inline-block;" type="button" class="col-sm-2 mb-4 mt-5 btn btn-outline-dark" onclick="history.back()">戻る</button>
+                        <div class="col-sm-2"></div>
+                        <input style="display: inline-block;" type="submit" name="create_question" class="col-sm-2 btn btn-warning mt-5 mb-5" value="投稿する">
+                        <div class="col-sm-3"></div>
+                    </div>
                 </form>
             </div>
         </div>

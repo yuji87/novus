@@ -33,7 +33,7 @@ if(!$data || !$paging) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>レベルランキング詳細</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -44,10 +44,10 @@ if(!$data || !$paging) {
             <ul class="nav justify-content-center">
 			<li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
 			<li id="li"><a class="nav-link active small text-white" href="../userEdit/index.php">【編集】会員情報</a></li>
-            <li id="li"><a class="nav-link small text-white" href="qHistory.php">【履歴】質問</a></li>
-            <li id="li"><a class="nav-link small text-white" href="aHistory.php">【履歴】記事</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/qHistory.php">【履歴】質問</a></li>
+            <li id="li"><a class="nav-link small text-white" href="../myPage/aHistory.php">【履歴】記事</a></li>
             <li id="li"><a class="nav-link small text-white" href="../todo/index.php">TO DO LIST</a></li>
-            <li id="li"><a class="nav-link small text-white" href="<?php echo "logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
+            <li id="li"><a class="nav-link small text-white" href="<?php echo "../userLogin/logout.php?=user_id=".$login_user['user_id']; ?>">ログアウト</a></li>
         </ul>
         </div>
     </header>
@@ -58,9 +58,27 @@ if(!$data || !$paging) {
             <div class="content">
                 <h2 class="heading mt-5">レベルランキング</h2>
                 <div class="level-list">
+                    <!--順位表示-->
+                    <?php $i = 1; 
+                        if(isset($_GET['page'])) {
+                        $i += ($_GET['page'] - 1) * 10; } ?>
                     <?php foreach($data as $value): ?>
-                    <!--ユーザー登録画像の表示-->
-                    <div class="level-icon"><br>
+                        <?php
+                        switch($i) {
+                            case 1:
+                                echo "<p id='first'>1位</p>";
+                                break;
+                            case 2:
+                                echo "<p id='second'>2位</p>";
+                                break;
+                            case 3:
+                                echo "<p id='third'>3位</p>";
+                                break;
+                            default:
+                               echo "<p id='rank'>".$i."位"."</p>";
+                        } ?>
+                        <!--ユーザー登録画像の表示-->
+                        <div class="level-icon">
                         <!--画像をクリック、自分ならmypageに遷移-->
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
@@ -74,13 +92,18 @@ if(!$data || !$paging) {
 								echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
 								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
                         <?php endif; ?>
-                    </div>
-                    <div class="text">
-                        <!--名前の表示-->
-                        <?php echo $value['name']; ?>
-                        <!--レベルの表示-->
-                        Lv.<?php echo $value['level']; ?>
-                    </div>
+                        </div>
+                        <div class="text-center">
+                            <!--名前の表示-->
+                            <!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+					    	<a name="name" class="text-dark" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    		    			echo '../myPage/index.php'; } else {
+                                    echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+                                   <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+                            <!--レベルの表示-->
+                            Lv.<?php echo $value['level']; ?>
+                        </div><br>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -89,6 +112,7 @@ if(!$data || !$paging) {
 
 	<!-- フッタ -->
     <footer> 
+        <!--ページネーション-->
         <ul class="pagination">
             <li class="page">
                 <?php for($x=1; $x <= $paging ; $x++) { ?>

@@ -40,169 +40,170 @@ define("UPDATE_EXP", "UPDATE users SET exp=:exp WHERE user_id=:user_id");
 // 記事/いいね関連クラス
 class ArticleAct extends Action
 {
-  // $mode>=0の場合、明示的にbeginを呼び出す
-  public function __construct($mode = -1) {
-    try {
-      if ($mode >= 0) {
-        $this->begin($mode);
-      }
-    }catch (\Exception $e) {
-      Log::error($e);
-      echo $e;
-    }
-  }
-
-  // 記事一覧
-  public function articleList($page, $searchText = "", $searchCategory = "")
-  {
-    try{
-      $inWhere = "";
-      // 検索指定時
-      if ($searchText !== "" || $searchCategory !== "") {
-          $inWhere .= "WHERE ";
-      }
-    
-      if ($searchText !== "") {
-          // 検索文字指定不可の文字をエスケープ
-          $searchText = Utils::convertSQL($searchText);
-          $inWhere .= "title LIKE :title ESCAPE '#' ";
-      }
-    
-      if ($searchCategory !== "") {
-          if ($searchText !== "") {
-              $inWhere .= "AND ";
-          }
-          $inWhere .= "cate_id = :category";
-      }
-    
-      // retrieve:取得
-      $retInfo = [
-        'category' => $this->categoryMap(),
-        'page' => $page,
-        'total' => 0,
-        'maxPage' => 0,
-        'articleList' => [],
-        'userMap' => [],
-        'postLikeMap' => [],
-      ];
-      $retInfo['category'] = $this->categoryMap();
-    
-      // 記事全体の数
-      $retInfo["total"] = $this->countArticleListTotal($inWhere, $searchText, $searchCategory);
-      if ($retInfo["total"] <= 0) {
-          return $retInfo;
-      }
-      $retInfo["maxPage"] = ceil(($retInfo["total"]) / LISTCOUNT);
-    
-      if ($page > $retInfo["maxPage"]) {
-          $retInfo["page"] = $retInfo["maxPage"];
-      } else {
-          $retInfo["page"] = $page;
-      }
-    
-      // 記事リスト(指定されたpage 20件)
-      $retInfo["articleList"] = $this->searchArticleList($inWhere, $searchText, $searchCategory, $retInfo["page"]);
-    
-      // ユーザ情報
-      $retInfo["userMap"] = $this->memberMap($retInfo["articleList"], "user_id");
-    
-      // いいね数
-      $retInfo["postLikeMap"] = $this->likeCountMap($retInfo["articleList"]);
-    
-      return $retInfo;
-    } catch (\Exception $e) {
-      Log::error($e);
-      echo $e;
-    }
-  }
-
-  private function searchArticleList($inWhere, $searchText, $searchCategory, $page)
-  {
-    // 記事リスト(指定されたpage 20件)
-    $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_LIST, $inWhere));
-
-    if ($searchText != "") {
-        $stmt->bindValue(":title", "%$searchText%", \PDO::PARAM_STR);
-    }
-
-    if ($searchCategory != "") {
-        $stmt->bindValue(":category", (int)$searchCategory, \PDO::PARAM_INT);
-    }
-
-    $offset = ($page - 1) * LISTCOUNT;
-    $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
-    $stmt->bindValue(":limit", (int)LISTCOUNT, \PDO::PARAM_INT);
-    Log::sql($stmt->queryString, [
-        ':title' => "%$searchText%",
-        ':category' => (int)$searchCategory,
-        ':limit' => (int)LISTCOUNT,
-        ':offset' => (int)$offset,
-    ]);
-
-    $result = $stmt->execute();
-    
-    if ($result) {
-        $retList = [];
-        while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $retList[] = $rec;
+    // $mode>=0の場合、明示的にbeginを呼び出す
+    public function __construct($mode = -1) {
+        try {
+            if ($mode >= 0) {
+                $this->begin($mode);
+            }
+        }catch (\Exception $e) {
+            Log::error($e);
+            echo $e;
         }
-        return $retList;
     }
-    return [];
-  }
+
+    // 記事一覧
+    public function articleList($page, $searchText = "", $searchCategory = "")
+    {
+        try {
+            $inWhere = "";
+            // 検索指定時
+            if ($searchText !== "" || $searchCategory !== "") {
+                $inWhere .= "WHERE ";
+            }
+        
+            if ($searchText !== "") {
+                // 検索文字指定不可の文字をエスケープ
+                $searchText = Utils::convertSQL($searchText);
+                $inWhere .= "title LIKE :title ESCAPE '#' ";
+            }
+        
+            if ($searchCategory !== "") {
+                if ($searchText !== "") {
+                    $inWhere .= "AND ";
+                }
+                $inWhere .= "cate_id = :category";
+            }
+        
+            // retrieve:取得
+            $retInfo = [
+                'category' => $this->categoryMap(),
+                'page' => $page,
+                'total' => 0,
+                'maxPage' => 0,
+                'articleList' => [],
+                'userMap' => [],
+                'postLikeMap' => [],
+            ];
+            $retInfo['category'] = $this->categoryMap();
+        
+            // 記事全体の数
+            $retInfo["total"] = $this->countArticleListTotal($inWhere, $searchText, $searchCategory);
+            if ($retInfo["total"] <= 0) {
+                return $retInfo;
+            }
+            $retInfo["maxPage"] = ceil(($retInfo["total"]) / LISTCOUNT);
+        
+            if ($page > $retInfo["maxPage"]) {
+                $retInfo["page"] = $retInfo["maxPage"];
+            } else {
+                $retInfo["page"] = $page;
+            }
+        
+            // 記事リスト(指定されたpage 20件)
+            $retInfo["articleList"] = $this->searchArticleList($inWhere, $searchText, $searchCategory, $retInfo["page"]);
+        
+            // ユーザ情報
+            $retInfo["userMap"] = $this->memberMap($retInfo["articleList"], "user_id");
+        
+            // いいね数
+            $retInfo["postLikeMap"] = $this->likeCountMap($retInfo["articleList"]);
+        
+            return $retInfo;
+        } catch (\Exception $e) {
+            Log::error($e);
+            echo $e;
+        }
+    }
+
+    private function searchArticleList($inWhere, $searchText, $searchCategory, $page)
+    {
+        // 記事リスト(指定されたpage 20件)
+        $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_LIST, $inWhere));
+
+        if ($searchText != "") {
+            $stmt->bindValue(":title", "%$searchText%", \PDO::PARAM_STR);
+        }
+    
+        if ($searchCategory != "") {
+            $stmt->bindValue(":category", (int)$searchCategory, \PDO::PARAM_INT);
+        }
+
+        $offset = ($page - 1) * LISTCOUNT;
+        $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
+        $stmt->bindValue(":limit", (int)LISTCOUNT, \PDO::PARAM_INT);
+        Log::sql($stmt->queryString, [
+            ':title' => "%$searchText%",
+            ':category' => (int)$searchCategory,
+            ':limit' => (int)LISTCOUNT,
+            ':offset' => (int)$offset,
+        ]);
+
+        $result = $stmt->execute();
+
+        if ($result) {
+            $retList = [];
+            while ($rec =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $retList[] = $rec;
+            }
+            return $retList;
+        }
+        return [];
+    }
 
     private function countArticleListTotal($inWhere, $searchText, $searchCategory)
     {
-      // 記事全体の数
-      $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_COUNT, $inWhere));
-      if ($searchText !== "") {
-          $stmt->bindValue(":title", "%$searchText%", \PDO::PARAM_STR);
-      }
-
-      if ($searchCategory !== "") {
-          $stmt->bindValue(":category", (int)$searchCategory, \PDO::PARAM_INT);
-      }
-
-      Log::sql($stmt->queryString, [
-          ':title' => "%$searchText%",
-          ':category' => (int)$searchCategory,
-      ]);
-
-      $result = $stmt->execute();
-      $cntrec = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : null;
-      return $cntrec == null ? 0 : $cntrec["cnt"];
+        // 記事全体の数
+        $stmt = $this->conn->prepare(sprintf(QUERY_ARTICLE_COUNT, $inWhere));
+        if ($searchText !== "") {
+            $stmt->bindValue(":title", "%$searchText%", \PDO::PARAM_STR);
+        }
+    
+        if ($searchCategory !== "") {
+            $stmt->bindValue(":category", (int)$searchCategory, \PDO::PARAM_INT);
+        }
+    
+        Log::sql($stmt->queryString, [
+            ':title' => "%$searchText%",
+            ':category' => (int)$searchCategory,
+        ]);
+    
+        $result = $stmt->execute();
+        $cntrec = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : null;
+        return $cntrec == null ? 0 : $cntrec["cnt"];
     }
 
     // 記事単独
     public function article($article_id)
     {
-      $retInfo = array();
-      // 記事
-      {
-        $stmt = $this->conn->prepare(QUERY_ARTICLE);
-        $stmt->bindValue(':article_id', $article_id);
-        $result = $stmt->execute();
-        $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : null; //三項演算子
-        $retInfo['article'] = $article;
+        $retInfo = array();
 
-        // ユーザ情報
-        $retInfo['user'] = $this->memberRef($article['user_id']);
-      }
+        // 記事
+        {
+            $stmt = $this->conn->prepare(QUERY_ARTICLE);
+            $stmt->bindValue(':article_id', $article_id);
+            $result = $stmt->execute();
+            $article = $result ? $stmt->fetch(\PDO::FETCH_ASSOC) : null; //三項演算子
+            $retInfo['article'] = $article;
 
-      // いいねした?
-      $retInfo['postLike'] = $this->postLike($article_id);
+            // ユーザ情報
+            $retInfo['user'] = $this->memberRef($article['user_id']);
+        }
 
-      // いいね数取得
-      {
-        $stmt = $this->conn->query(sprintf(QUERY_POSTLIKE_COUNTLIST, $article_id));
-        $postLikeCnt = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $retInfo['postLikeCnt'] = $postLikeCnt == null ? 0 : $postLikeCnt['like_cnt'];
-      }
+            // いいねした?
+            $retInfo['postLike'] = $this->postLike($article_id);
 
-      // カテゴリ
-      $retInfo['category'] = $this->categoryMap();
+        // いいね数取得
+        {
+            $stmt = $this->conn->query(sprintf(QUERY_POSTLIKE_COUNTLIST, $article_id));
+            $postLikeCnt = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $retInfo['postLikeCnt'] = $postLikeCnt == null ? 0 : $postLikeCnt['like_cnt'];
+        }
 
-      return $retInfo;
+        // カテゴリ
+        $retInfo['category'] = $this->categoryMap();
+
+        return $retInfo;
     }
 
     // 記事投稿
@@ -233,26 +234,26 @@ class ArticleAct extends Action
     // 記事削除
     public function delete($article_id)
     {
-      try {
-        $this->conn->beginTransaction();
-        {
-          $stmt = $this->conn->prepare(DELETE_ARTICLE);
-          $stmt->bindValue(':user_id', $this->member['user_id']);
-          $stmt->bindValue(':article_id', $article_id);
-          $stmt->execute();
+        try {
+            $this->conn->beginTransaction();
+            {
+                $stmt = $this->conn->prepare(DELETE_ARTICLE);
+                $stmt->bindValue(':user_id', $this->member['user_id']);
+                $stmt->bindValue(':article_id', $article_id);
+                $stmt->execute();
+            }
+        
+            {
+            $stmt = $this->conn->prepare(DELETE_POSTLIKE);
+            $stmt->bindValue(':article_id', $article_id);
+            $stmt->execute();
+            }
+        
+            $this->conn->commit();
+        } catch (\Exception $e) {
+            $this->conn->rollback();
+            echo $e;
         }
-
-        {
-        $stmt = $this->conn->prepare(DELETE_POSTLIKE);
-        $stmt->bindValue(':article_id', $article_id);
-        $stmt->execute();
-        }
-
-        $this->conn->commit();
-      } catch (\Exception $e) {
-        $this->conn->rollback();
-        echo $e;
-      }
     }
 
     // いいね押下/解除時の処理

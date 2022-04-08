@@ -27,22 +27,24 @@ $message = Utils::mbTrim($message);
 // 各種チェック
 if (Utils::mbTrim($title) === "") {
     // 何も入力されていない時(スペース入力も)
-    echo "no-title"; //no-titleを持たせてjsで表示
-  exit;
+    echo "no-title";
+    exit;
 } elseif (! Utils::isStrLen($title, 150)) {
-    echo "invalid-title"; //invalid-titleを持たせてjsで表示
+    echo "invalid-title";
     exit;
 }
+
 if (Utils::mbTrim($message) === "") {
     // 何も入力されていない時(スペース入力も)
-    echo "no-message"; //no-messageを持たせてjsで表示
+    echo "no-message";
     exit;
 } elseif (! Utils::isStrLen($message, 1500)) {
-    echo "invalid-message"; //invalid-messageを持たせてjsで表示
+    echo "invalid-message";
     exit;
 }
+
 if (! $act->isCategory($category)) {
-    echo "failed-category"; //failed-categoryを持たせてjsで表示
+    echo "failed-category";
     exit;
 }
 

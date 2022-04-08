@@ -42,7 +42,7 @@ if (isset($_SESSION['a_data']['answer_id']) &&
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>質問回答 編集</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -70,7 +70,7 @@ if (isset($_SESSION['a_data']['answer_id']) &&
                 <p class="h4">編集完了</p>
                 <p>以下の内容で編集が完了しました</p>
                 <div class="text-center fw-bold mt-2 pb-2">本文</div>
-                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $hasTaken['message']; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($hasTaken['message'], FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
                 <form method="GET" name="form1" action="../question/qDisp.php">
                     <input type="hidden" name="question_id" value="<?php echo $hasTaken['question_id']; ?>">
                     <a href="javascript:form1.submit()">詳細画面へ</a>

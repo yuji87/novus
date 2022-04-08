@@ -32,7 +32,7 @@ if (isset($_SESSION['q_data']['title']) &&
 // 質問IDから質問内容を取り込む処理
 $data = QuestionLogic::displayQuestion($_SESSION['q_data']);
 if(!$data) {
-    $err[] = '変更の保存に失敗しました';
+    $err[] = '質問の取り込みに失敗しました';
 }
 $title = $data['title'];
 $category = $data['category_name'];
@@ -45,7 +45,7 @@ $question_id = $_SESSION['q_data']['question_id'];
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>質問</title>
+<title>novus</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://kit.fontawesome.com/7bf203e5c7.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../css/mypage.css">
@@ -79,13 +79,13 @@ $question_id = $_SESSION['q_data']['question_id'];
                 <p>以下の内容で保存しました</p>
                 <!--題名-->
                 <div class="fw-bold pb-1">題名</div>
-                <div><?php echo $title; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $title; ?></div>
                 <!--カテゴリー-->
                 <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                 <div><?php echo $category; ?></div>
                 <!--本文-->
                 <div class="fw-bold pt-3 pb-1">本文</div>
-                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo $message; ?></div>
+                <div style="overflow: hidden; overflow-wrap: break-word;"><?php echo nl2br(htmlspecialchars($message, FILTER_SANITIZE_SPECIAL_CHARS, 'UTF-8')); ?></div>
                 <form method="GET" action="qdisp.php">
                     <input type="hidden" name= "question_id" value="<?php echo $question_id; ?>">
                     <input type="submit" value="質問へ">

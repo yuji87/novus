@@ -32,7 +32,7 @@ if(isset($_SESSION['telEdit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>会員情報変更[tel]</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -62,7 +62,8 @@ if(isset($_SESSION['telEdit'])) {
                         <!--ユーザーが登録した電話番号を表示-->
                         <div class="text">
                             <label for="tel" style="text-align:center">[Tel]</label>
-                            <p><input id="editdetail" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>"></p>
+                            <p><input id="editdetail" oninput="value = value.replace(/[０-９]/g,s => 
+                            String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');"  type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                             <p class="small text-muted">（ハイフンなし・半角数字で12文字以下）</p>
                         </div>
                         <br><br>
