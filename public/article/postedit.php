@@ -114,7 +114,8 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
               ### おはよう → <span style="font-size:1.75rem; font-weight:500; line-height:1.2;">おはよう</span><br><br>
               - おはよう → <span>・おはよう</span><br><br>
               ~~おはよう~~ → <del>おはよう</del><br><br>
-              `おはよう` → <span style="color:red;">おはよう</span>
+              `おはよう` → <span style="color:red;">おはよう</span><br><br>
+              ※各記号は半角のみ有効
             </div>
             <div class="close btn btn-danger mt-3 mr-3">CLOSE</div>
           </div>
@@ -158,7 +159,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     var text = text.replace(/\n/g, '<br>'); // 改行
     $('#previewmsg').html(text);
   }
-  // 投稿 or 編集反映ボタンを押した
+  // 投稿 or 編集反映ボタンを押した(jsバリデーション)
   function onPostArticle() {
     const postTitle = document.getElementById('title').value;
     const postMessage = document.getElementById('message').value;
@@ -180,7 +181,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
       return;
     }
     if ($.trim(postCategory) === "") {
-      onShow('本文に何も入力されていません');
+      onShow('カテゴリに何も入力されていません');
       return;
     }
 
@@ -190,7 +191,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
       '&article_id=' + document.getElementById('article_id').value +
       '&token=<?php echo $_SESSION["token"]; ?>';
 
-    // 送信(ajax)
+    // 送信(ajax, phpバリデーション)
     formapiCallback('article/process/post.php', $data, function($retcode) { //ファイルの中身を読み込む
       // 送信完了後の処理
       if ($retcode == 'success') {
@@ -216,7 +217,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
           onShow('本文は1500文字以内で入力してください');
           break;
         case 'failed-category':
-          onShow('カテゴリが入力されていません');
+          onShow('カテゴリに何も入力されていません');
           break;
         default:
           break;

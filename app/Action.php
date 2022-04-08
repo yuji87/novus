@@ -197,7 +197,6 @@ class Action
     echo '<link rel="stylesheet" href="' . DOMAIN . '/public/CSS/bootstrap-4.4.1.css">';
     echo '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">';
     echo '<script src="https://kit.fontawesome.com/3f20c0ff36.js" crossorigin="anonymous"></script>';
-    echo '<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>';
     echo '<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>';
     echo '<script src="' . DOMAIN . '/public/JS/jquery-3.1.1.js"></script>';

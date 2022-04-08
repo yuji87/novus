@@ -81,7 +81,7 @@ $icon = $act->getMemberIcon();
 </table>
 
 <h5>終わったこと:</h5>
-<table class="table table-striped">
+<table class="table table-striped" style="overflow: hidden; overflow-wrap: break-word;">
   <tr>
     <th style="width: 5%">#</th>
     <th style="width: 45%">Task</th>
@@ -93,7 +93,7 @@ $icon = $act->getMemberIcon();
   $idx = 1;
   foreach ($retInfo['finList'] as $fin) {
     $escapeTitle = Utils::h($fin['title']); //タイトルだけ取得
-    echo '<tr><td>' . $idx . '</td><td>' . $escapeTitle
+    echo '<tr><td>' . $idx . '</td><td style="word-break: break-all;">' . $escapeTitle
       . '</td><td>' . Utils::dayFormat($fin['remind_date']) . '</td><td>';
     echo '<span class="btn btn-link return" todoId="' . $fin['todo_id'] . '">Return</span>';
     echo '<span class="btn btn-link edit" todoId="' . $fin['todo_id'] . '" todoTitle="' . $escapeTitle
