@@ -20,6 +20,8 @@ if (!$result) {
 // カテゴリ処理
 $categories = CategoryLogic::getCategory();
 
+$cate_id = $question['cate_id'];
+
 // 質問選択処理
 $question_id = filter_input(INPUT_POST, 'question_id');
 if (!$question_id == filter_input(INPUT_POST, 'question_id')) {
@@ -132,8 +134,7 @@ if (isset($_POST['q_edit_conf'])) {
                         <?php endif; ?>
                     </div>
                     <div>
-                        <select name="category"  required>
-                            <option></option>
+                        <select id="category" name="category"  required>
                             <?php foreach ($categories as $value): ?>
                             <option 
                                 value="<?php echo $value['cate_id']; ?>"
@@ -186,3 +187,10 @@ if (isset($_POST['q_edit_conf'])) {
     </footer>
 </body>
 </html>
+
+<script type="text/javascript">
+$(function() {
+    $('#category').val(<?php echo $cate_id ?>);
+    setupPreview();
+});
+</script>
