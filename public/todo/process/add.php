@@ -21,19 +21,19 @@ $newTodoTitle = filter_input(INPUT_POST, 'newTodoTitle');
 $newTodoDt = filter_input(INPUT_POST, 'newTodoDt');
 
 if (Utils::mbTrim($newTodoTitle) === "") {
-  // 何も入力されていない時(スペース入力も)
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=noTitle');
-  exit;
+    // 何も入力されていない時(スペース入力も)
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=noTitle');
+    exit;
 } elseif (!Utils::isStrLen($newTodoTitle, 100)) {
-  // 101文字以上を入力されたとき
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidTitle');
-  exit;
+    // 101文字以上を入力されたとき
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidTitle');
+    exit;
 }
 
 if (!Utils::checkDatetimeFormat($newTodoDt)) {
-  // 日付フォーマットが違うとき
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidformatdt');
-  exit;
+    // 日付フォーマットが違うとき
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidformatdt');
+    exit;
 }
 
 // ToDo追加
@@ -41,4 +41,3 @@ $act->add($newTodoTitle, $newTodoDt);
 
 // ToDo一覧へリダイレクト
 header('Location: ' . DOMAIN . '/public/todo/index.php');
-

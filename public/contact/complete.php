@@ -7,6 +7,7 @@ $act = new ContactAct(1);
 $result = $act->complete();
 $act->printHeader();
 ?>
+
 <div class="offset-sm-2">
     <div class="d-flex align-items-center justify-content-center mt-5 fs-3 font-weight-bold">
         <?php if ($result) : ?>

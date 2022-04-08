@@ -1,5 +1,5 @@
+
 <?php
-// ToDo編集
 require_once "../../../app/TodoAct.php";
 require_once '../../../app/Token.php';
 
@@ -21,23 +21,22 @@ $editTodoTitle = filter_input(INPUT_POST, 'editTodoTitle');
 $editTodoDt = filter_input(INPUT_POST, 'editTodoDt');
 
 if (Utils::mbTrim($editTodoTitle) === "") {
-  // 何も入力されていない時(スペース入力も)
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=noTitle');
-  exit;
+    // 何も入力されていない時(スペース入力も)
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=noTitle');
+    exit;
 } elseif (!Utils::isStrLen($editTodoTitle, 100)) {
-  // 範囲外
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidTitle');
-  exit;
+    // 範囲外
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidTitle');
+    exit;
 }
 
 if (!Utils::checkDatetimeFormat($editTodoDt)) {
-  // 日付フォーマットが違う
-  header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidformatdt');
-  exit;
+    // 日付フォーマットが違う
+    header('Location: ' . DOMAIN . '/public/todo/index.php?errSignal=invalidformatdt');
+    exit;
 }
 
-// ToDo編集
 $act->edit($editTodoId, $editTodoTitle, $editTodoDt);
 
-// ToDo一覧へリダイレクト
+// todo一覧へリダイレクト
 header('Location: ' . DOMAIN . '/public/todo/index.php');

@@ -308,9 +308,9 @@ class ArticleAct extends Action
         $level = $data['level'];
 
         $new_exp = $exp + $plus_exp; // 合算経験値
-    $new_level = floor($new_exp / 100) + 1; //合算レベル
+        $new_level = floor($new_exp / 100) + 1; //合算レベル
 
-    // 取得レベルと合算レベルの比較
+        // 取得レベルと合算レベルの比較
         if ($level < $new_level) {
             try {
                 $stmt = $this->conn->prepare(UPDATE_LEVEL);// 経験値とレベルを更新
@@ -439,6 +439,4 @@ class ArticleAct extends Action
         }
         return $countmap;
     }
-
-
 }

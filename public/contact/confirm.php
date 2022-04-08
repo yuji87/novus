@@ -9,6 +9,7 @@ $act = new ContactAct(1);
 $inputs = $act->confirm();
 $act->printHeader();
 ?>
+
 <div>
     <div class="mt-5">
         <h2 class="text-center font-weight-bold fs-2">入力内容の確認</h2>
