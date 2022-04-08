@@ -1,5 +1,4 @@
 <?php
-// ToDo削除
 require_once "../../../app/TodoAct.php";
 require_once '../../../app/Token.php';
 
@@ -17,7 +16,6 @@ Token::validate();
 
 $todoId = filter_input(INPUT_POST, 'todoId', FILTER_SANITIZE_NUMBER_INT);
 
-// ToDo削除
 $act->delete($todoId);
 
 // ajax呼び出し。 戻り値を出力

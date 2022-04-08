@@ -9,6 +9,7 @@ $act = new ContactAct(1);
 [$inputs, $errors] = $act->index();
 $act->printHeader();
 ?>
+
 <div class="m-2">
     <h1 class="mt-5 text-center font-weight-bold fs-2">お問い合わせフォーム</h1>
     <form id="form" class="validationForm mt-4" method="post" action="confirm.php" novalidate>

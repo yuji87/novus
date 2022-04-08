@@ -18,7 +18,7 @@ Token::validate();
 $todoId = filter_input(INPUT_POST, "todoId", FILTER_SANITIZE_NUMBER_INT);
 $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_SPECIAL_CHARS);
 
-// ToDoステータス変更
+// ステータス変更
 $act->toggle($todoId, $state);
 
 // ajax呼び出し。 戻り値を出力

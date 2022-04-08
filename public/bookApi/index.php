@@ -10,7 +10,7 @@ Token::create();
 ?>
 
 <div class="header col-sm-8 offset-sm-2">
-    <p class="text-center mt-5 p-2" id="title">GoogleBook Api</p>
+    <p class="text-center mt-5 p-2" id="title">GoogleBooks Api</p>
 </div>
 
 <div class="search col-sm-8 offset-sm-2">
