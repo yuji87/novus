@@ -48,6 +48,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
     $title = Utils::h($retInfo['article']['title']);
     $message = Utils::h($retInfo['article']['message']);
     $catval = Utils::h($retInfo['article']['cate_id']);
+    var_dump($retInfo['article']['cate_id']);
 }
 ?>
 
