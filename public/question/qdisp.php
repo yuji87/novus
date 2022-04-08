@@ -1,5 +1,4 @@
 <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-<script src="/qandasite/public/question/js/like.js" defer></script>
 
 <?php
 session_start();
@@ -75,7 +74,6 @@ if(isset($_POST['like_regist'])) {
 <head>
     <meta charset="UTF-8">
     <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-    <script src="/qandasite/public/question/js/like.js" defer></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -207,7 +205,7 @@ if(isset($_POST['like_regist'])) {
                             <div class="block">
                                 <!-- フラグがONになっているいいねの数を表示 -->
                                 <?php $likes = QuestionLogic::displayLike($value['answer_id']); ?>
-                                <div class="mb-3" style="display: inline-block;">&hearts;<?php echo count($likes); ?>　</div>
+                                <div class="mb-3" style="color: red; display: inline-block;">&hearts;<?php echo count($likes); ?>　</div>
                                 <!--投稿日時-->
                                 <div style="display: inline-block;">
                                     <!-- 更新されていた場合、その日付を優先表示 -->

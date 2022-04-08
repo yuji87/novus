@@ -152,9 +152,9 @@ if(isset($_GET['search'])) {
 								<!-- メッセージ：本文が50文字以上なら省略 -->
 								<?php if(mb_strlen($value['message']) > 50): ?>
 									<?php $limit_content = mb_substr($value['message'],0,50); ?>
-									<?php echo $limit_content; ?>…
+									<?php echo htmlspecialchars($limit_content); ?>…
 								<?php else: ?>
-									<?php echo $value['message']; ?>
+									<?php echo htmlspecialchars($value['message']); ?>
 								<?php endif; ?>
 							</div>
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
@@ -183,7 +183,7 @@ if(isset($_GET['search'])) {
 		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
 		                	<?php foreach($newQuestion as $value): ?>
 								<!--題名-->
-								<div style="overflow: hidden; overflow-wrap: break-word;"><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<div style="overflow: hidden; overflow-wrap: break-word;"><a href="qDisp.php? question_id=<?php echo htmlspecialchars($value['question_id']); ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
 								<!--アイコン-->
 								<?php if($result): // ログイン可否で違うユーザーページへ ?>
 								    <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
@@ -225,9 +225,9 @@ if(isset($_GET['search'])) {
 								<div style="overflow: hidden; overflow-wrap: break-word;">
 									<?php if(mb_strlen($value['message']) > 50): ?>
 										<?php $limit_content = mb_substr($value['message'],0,50); ?>
-										<?php echo $limit_content; ?>…
+										<?php echo htmlspecialchars($limit_content); ?>…
 									<?php else: ?>
-										<?php echo $value['message']; ?>
+										<?php echo htmlspecialchars($value['message']); ?>
 									<?php endif; ?>
 								</div>
 								<!-- カテゴリと投稿日時を横並びにする処理 -->
