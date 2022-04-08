@@ -18,7 +18,7 @@ class QuestionLogic
         $arr = [];
         $arr[] = $_SESSION['login_user']['user_id'];
   
-        $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon, category_name
+        $sql = 'SELECT question_id, title, message, post_date, upd_date, name, icon, category_name, color
                 FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id 
                 INNER JOIN categories ON categories.cate_id = question_posts.cate_id
@@ -47,12 +47,12 @@ class QuestionLogic
     public static function newQuestion()
     {
         $result = false;
-  
-        $sql = 'SELECT question_id, question_posts.user_id, title, message, post_date, upd_date, name, icon, category_name FROM question_posts
+
+        $sql = 'SELECT question_id, question_posts.user_id, title, message, post_date, upd_date, name, icon, category_name, color FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON categories.cate_id = question_posts.cate_id
                 ORDER BY question_posts.question_id DESC LIMIT 10';
-  
+
         try {
             $stmt = connect()->prepare($sql);
             // SQL実行
@@ -76,7 +76,7 @@ class QuestionLogic
     public static function searchQuestion($keyword, $category)
     {
         $result = false;
-  
+
         $where = [];
         // categoryが選択されている場合、検索条件に追加する
         if (!empty($category)) {
@@ -90,17 +90,17 @@ class QuestionLogic
         }
         if ($where) {
             $whereSql = implode(' AND ', $where);
-            $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
+            $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name, color FROM question_posts
                     INNER JOIN users ON users.user_id = question_posts.user_id
                     INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                     WHERE ' . $whereSql ;
         } else {
-            $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name FROM question_posts
+            $sql = 'SELECT DISTINCT question_id, title, question_posts.user_id, message, post_date, upd_date, name, icon, category_name, color FROM question_posts
                     INNER JOIN users ON users.user_id = question_posts.user_id
                     INNER JOIN categories ON question_posts.cate_id = categories.cate_id
                     ORDER BY question_posts.question_id DESC';
         }
-  
+
         try {
             $stmt = connect()->prepare($sql);
             // SQL実行
@@ -125,7 +125,7 @@ class QuestionLogic
     {
         $result = false;
   
-        $sql = 'SELECT question_id, title, message, post_date, upd_date, best_select_flg, users.user_id, name, icon, categories.cate_id, category_name
+        $sql = 'SELECT question_id, title, message, post_date, upd_date, best_select_flg, users.user_id, name, icon, categories.cate_id, category_name, color
                 FROM question_posts
                 INNER JOIN users ON users.user_id = question_posts.user_id
                 INNER JOIN categories ON question_posts.cate_id = categories.cate_id
