@@ -36,7 +36,7 @@ if (isset($_SESSION['passwordEdit']['password'])) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -51,7 +51,7 @@ if (isset($_SESSION['passwordEdit']['password'])) {
         </div>
     </header>
 
-    <!--中央コンテンツ-->
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -59,12 +59,12 @@ if (isset($_SESSION['passwordEdit']['password'])) {
                 <form action="../userEdit/passwordC.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した名前を表示-->
+                        <!-- ユーザーが登録した名前を表示 -->
                         <div class="text">
                             <label for="password" style="text-align:center">[password]</label>
                             <p><input id="editdetail" type="text" name="password" value="<?php $password; ?>"></p>
                             <p class="small text-muted">（半角英数字・4文字以上20文字以下）</p>
-                            <!--確認用-->
+                            <!-- 確認用 -->
                             <br><p for="password" style="text-align:center">[確認のため再度記入して下さい]</p>
                             <p><input id="editdetail" type="text" name="password_conf"></p>
                         </div>

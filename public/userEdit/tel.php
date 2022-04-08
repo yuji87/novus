@@ -36,7 +36,7 @@ if (isset($_SESSION['telEdit'])) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -51,7 +51,7 @@ if (isset($_SESSION['telEdit'])) {
         </div>
     </header>
 
-    <!--中央コンテンツ-->
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -59,7 +59,7 @@ if (isset($_SESSION['telEdit'])) {
                 <form action="../userEdit/telC.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した電話番号を表示-->
+                        <!-- ユーザーが登録した電話番号を表示 -->
                         <div class="text">
                             <label for="tel" style="text-align:center">[Tel]</label>
                             <p><input id="editdetail" oninput="value = value.replace(/[０-９]/g,s => String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g,'');"  

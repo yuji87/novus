@@ -53,7 +53,7 @@ if (!$result) {
     <title>novus</title>
 </head>
 
-<!--中央コンテンツ-->
+<!-- 中央コンテンツ -->
 <body class="h-100 bg-secondary p-4 p-md-5 text-center">
     <form class="row g-3 bg-white p-2 p-md-5 shadow-sm" enctype="multipart/form-data" action="confirm.php" method="POST" name="login">
         <div class = "container bg-white p-5">
