@@ -79,12 +79,12 @@ class UserLogic
     // ユーザをtelから検索して取得
     $user = self::getUserByTel($tel);
     // バリデーション
-    if(!$user) {
+    if (!$user) {
         $_SESSION['msg'] = '電話番号が一致しません。';
         return $result;
     }
     //　パスワードの照会
-    if(password_verify($password, $user['password'])) {
+    if (password_verify($password, $user['password'])) {
         // ログイン成功
         // ハイジャック対策
         session_regenerate_id(true);
@@ -132,7 +132,7 @@ class UserLogic
     {
     $result = false;
     // セッションにログインユーザが入っていなかったらfalse
-    if(isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
+    if (isset($_SESSION['login_user']) && $_SESSION['login_user']['user_id'] > 0) {
         return $result = true;
     }
     return $result;
@@ -233,7 +233,7 @@ class UserLogic
     $arr[] = $_SESSION['emailEdit']; 
     $arr[] = $_SESSION['login_user']['user_id']; 
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
@@ -488,7 +488,7 @@ class UserLogic
     $new_level = floor($new_exp / 100) + 1;
 
     // 取得したレベルと新しいレベルの比較
-    if($level < $new_level) { // 新しいレベルが取得レベルより高い場合
+    if ($level < $new_level) { // 新しいレベルが取得レベルより高い場合
         // 経験値とレベルを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
         $arr = [];

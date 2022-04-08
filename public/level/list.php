@@ -10,7 +10,7 @@ $err = [];
 
 //ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -20,7 +20,7 @@ $login_user = $_SESSION['login_user'];
 //レベル情報の取得
 $data = LevelLogic::getLevel();
 $paging = LevelLogic::levelRanking();
-if(!$data || !$paging) {
+if (!$data || !$paging) {
     $err[] = 'レベルの取り込みに失敗しました';
 }
 ?>
@@ -60,7 +60,7 @@ if(!$data || !$paging) {
                 <div class="level-list">
                     <!--順位表示-->
                     <?php $i = 1; 
-                        if(isset($_GET['page'])) {
+                        if (isset($_GET['page'])) {
                         $i += ($_GET['page'] - 1) * 10; } ?>
                     <?php foreach($data as $value): ?>
                         <?php
@@ -80,14 +80,14 @@ if(!$data || !$paging) {
                         <!--ユーザー登録画像の表示-->
                         <div class="level-icon">
                         <!--画像をクリック、自分ならmypageに遷移-->
-                        <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
-							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+                        <?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
+							<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
 								echo '../myPage/index.php'; } else {
                                 echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                             <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                         <!--画像をクリック、他人ならuserpageに遷移-->
                         <?php else: ?>
-							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+							<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
 								echo '../myPage/index.php'; } else {
 								echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
 								<?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
@@ -96,7 +96,7 @@ if(!$data || !$paging) {
                         <div class="text-center">
                             <!--名前の表示-->
                             <!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
-					    	<a name="name" class="text-dark" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
+					    	<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    		    			echo '../myPage/index.php'; } else {
                                     echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>

@@ -91,7 +91,7 @@
                 document.getElementById("ohome_word").classList.add("is-show");
 
                 // レベルが上がった場合、桜の花びらを表示
-                if(previousLevel != currentLevel){
+                if (previousLevel != currentLevel) {
                     // コンテナを指定
                     const section = document.querySelector('#modal-overlay');
                     // 花びらを生成する関数

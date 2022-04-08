@@ -10,7 +10,7 @@ $err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;

@@ -22,7 +22,7 @@ $categories = CategoryLogic::getCategory();
 // ボタン押下時の処理（成功でベストアンサー登録）
 if (isset($_POST['a_best_comp'])) {
     // エラーチェック
-    if(!$_POST['question_id'] || !$_POST['answer_id'] || !$_POST['answer_user_id']) {
+    if (!$_POST['question_id'] || !$_POST['answer_id'] || !$_POST['answer_user_id']) {
         $err['a_id'] = '返答が選択されていません';
     } else {
         $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);

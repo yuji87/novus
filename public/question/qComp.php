@@ -26,7 +26,7 @@ if (isset($_SESSION['q_data']['user_id']) &&
     $hasCreated = QuestionLogic::createQuestion();
     if (!$hasCreated) {
         $err[] = '登録に失敗しました';
-    } elseif($hasCreated) {
+    } elseif ($hasCreated) {
         // 経験値を加算する処理
         $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
     }

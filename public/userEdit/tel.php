@@ -7,7 +7,7 @@ require_once '../../app/Functions.php';
 
 // ログインしているか判定して、していなかったらログインへ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -15,7 +15,7 @@ if(!$result) {
 $login_user = $_SESSION['login_user'];
 
 // セッションに保存データがあるかを確認
-if(isset($_SESSION['telEdit'])) {
+if (isset($_SESSION['telEdit'])) {
     // セッションから情報を取得
     $name = $_SESSION['telEdit'];
 } else {
