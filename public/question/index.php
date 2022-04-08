@@ -269,7 +269,7 @@ if (isset($_GET['search'])) {
 								        <div style="overflow: hidden; overflow-wrap: break-word;">
 								        	<?php if (mb_strlen($value['message']) > 50): ?>
 								        		<?php $limit_content = mb_substr($value['message'],0,50); ?>
-								        		<?php echo $limit_content; ?>…
+								        		<?php echo htmlspecialchars($limit_content); ?>…
 								            <?php else: ?>
 								        	    <?php echo htmlspecialchars($value['message']); ?>
 								            <?php endif; ?>
