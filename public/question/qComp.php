@@ -10,7 +10,7 @@ $err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;
@@ -24,20 +24,20 @@ if (isset($_SESSION['q_data']['user_id']) &&
 ) {
     // 質問を登録する処理
     $hasCreated = QuestionLogic::createQuestion();
-    if(!$hasCreated){
+    if (!$hasCreated) {
         $err[] = '登録に失敗しました';
     } elseif($hasCreated) {
         // 経験値を加算する処理
         $plusEXP = UserLogic::plusEXP($_SESSION['login_user']['user_id'], 10);
     }
-    if(!$plusEXP) {
+    if (!$plusEXP) {
         $err['plusEXP'] = '経験値加算処理に失敗しました';
     }
 }
 
 // 最新の質問を取得する処理
 $hasTaken = QuestionLogic::newQuestion();
-if(!$hasTaken) {
+if (!$hasTaken) {
     $err[] = '質問の取り込みに失敗しました';
 }
 ?>
@@ -58,7 +58,7 @@ if(!$hasTaken) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>

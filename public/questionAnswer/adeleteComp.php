@@ -11,15 +11,15 @@ $err = [];
 
 // ログインチェック処理
 $result = UserLogic::checkLogin();
-if(!$result) {
-    $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
+if (!$result) {
+    $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;
 }
 
 // 返答の削除処理
 $dlt = QuestionLogic::deleteOneAnswer($_SESSION['a_data']['answer_id']);
-if(empty($dlt)) {
+if (empty($dlt)) {
     $err[] = '返答の削除に失敗しました';
 }
 ?>
@@ -40,7 +40,7 @@ if(empty($dlt)) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>

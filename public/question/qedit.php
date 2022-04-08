@@ -11,7 +11,7 @@ $err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;
@@ -22,51 +22,49 @@ $categories = CategoryLogic::getCategory();
 
 // 質問選択処理
 $question_id = filter_input(INPUT_POST, 'question_id');
-if(!$question_id == filter_input(INPUT_POST, 'question_id')) {
+if (!$question_id == filter_input(INPUT_POST, 'question_id')) {
     $err[] = '質問を選択し直してください';
 }
 if (count($err) === 0) {
-    //質問を引っ張る処理
+    // 質問を引っ張る処理
     $question = QuestionLogic::displayQuestion($_POST);
-    if(!$question) {
+    if (!$question) {
         $err[] = '質問の読み込みに失敗しました';
     }
 }
 
 // ボタン押下時の処理（成功でページ移動）
-if(isset($_POST['q_edit_conf'])) {
+if (isset($_POST['q_edit_conf'])) {
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category',FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message');
     $_SESSION['q_data']['question_id'] = filter_input(INPUT_POST, 'question_id',FILTER_SANITIZE_NUMBER_INT);
-    if(empty($_SESSION['q_data']['title'])) {
+    if (empty($_SESSION['q_data']['title'])) {
         $err['title'] = '質問タイトルを入力してください';
     }
-    if(empty($_SESSION['q_data']['category'])) {
+    if (empty($_SESSION['q_data']['category'])) {
         $err['category'] = 'カテゴリを選択してください';
     }
-    if(empty($_SESSION['q_data']['message'])) {
+    if (empty($_SESSION['q_data']['message'])) {
         $err['message'] = '本文を入力してください';
     }
-    if(empty($_SESSION['q_data']['question_id'])) {
+    if (empty($_SESSION['q_data']['question_id'])) {
         $err['q_id'] = '質問IDが選択されていません';
     }
-
-    if(!empty($_SESSION['q_data']['title'])) {
+    if (!empty($_SESSION['q_data']['title'])) {
         $limitTitle = 150;
         // 文字数チェック
-        if(mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
+        if (mb_strlen($_SESSION['q_data']['title']) > $limitTitle) {
         $err['title'] = '150文字以内で入力してください';
         }
     }
-    if(!empty($_SESSION['q_data']['message'])) {
+    if (!empty($_SESSION['q_data']['message'])) {
         $limitMessage = 1500;
         // 文字数チェック
-        if(mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
+        if (mb_strlen($_SESSION['q_data']['message']) > $limitMessage) {
         $err['message'] = '1500文字以内で入力してください';
         }
     }
-
     if (count($err) === 0) {
         header('Location: qEditComp.php');
     }
@@ -91,7 +89,7 @@ if(isset($_POST['q_edit_conf'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -112,12 +110,12 @@ if(isset($_POST['q_edit_conf'])) {
                 <p class="h4 pb-3 mt-3">質問内容</p>
                 <form method="POST" action="">
                     <div class="text-danger pt-2">
-                        <?php if(isset($err['q_id'])): ?>
+                        <?php if (isset($err['q_id'])): ?>
                         <?php echo $err['q_id']; ?>
                         <?php endif; ?>
                     </div>
                     <div class="text-danger pt-2">
-                        <?php if(isset($err['title'])): ?>
+                        <?php if (isset($err['title'])): ?>
                         <?php echo $err['title']; ?>
                         <?php endif; ?>
                     </div>
@@ -129,17 +127,17 @@ if(isset($_POST['q_edit_conf'])) {
                     <!--カテゴリー-->
                     <div class="fw-bold pt-3 pb-1">カテゴリ</div>
                     <div>
-                        <?php if(isset($err['category'])): ?>
+                        <?php if (isset($err['category'])): ?>
                         <?php echo $err['category']; ?>
                         <?php endif; ?>
                     </div>
                     <div>
                         <select name="category"  required>
                             <option></option>
-                            <?php foreach($categories as $value): ?>
+                            <?php foreach ($categories as $value): ?>
                             <option 
                                 value="<?php echo $value['cate_id']; ?>"
-                                <?php if($value['cate_id'] == $question['cate_id']): ?>
+                                <?php if ($value['cate_id'] == $question['cate_id']): ?>
                                 selected
                                 <?php endif; ?>> 
                                 <?php echo $value['category_name']; ?>
@@ -148,7 +146,7 @@ if(isset($_POST['q_edit_conf'])) {
                         </select>
                     </div>
                     <div class="text-danger pt-2">
-                        <?php if(isset($err['message'])): ?>
+                        <?php if (isset($err['message'])): ?>
                             <?php echo $err['message']; ?>
                         <?php endif; ?>
                     </div>

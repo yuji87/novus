@@ -5,56 +5,55 @@ session_start();
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/UserLogic.php';
 
-//エラーメッセージ
+// エラーメッセージ
 $err = [];
 
 // ログインチェック処理
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
 }
 
 // ボタン押下時の処理（成功でページ移動）
-if(isset($_POST['a_edit_conf'])) {
+if (isset($_POST['a_edit_conf'])) {
     $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
     $_SESSION['a_data']['answer_id'] = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_NUMBER_INT);
     // エラーチェック
-    if(empty($_SESSION['a_data']['message'])) {
+    if (empty($_SESSION['a_data']['message'])) {
         $err['message'] = '本文を入力してください';
     }
-    if(empty($_SESSION['a_data']['answer_id'])) {
+    if (empty($_SESSION['a_data']['answer_id'])) {
         $err['a_id'] = '返答が選択されていません';
     }
-
-    if(!empty($_SESSION['a_data']['message'])) {
+    if (!empty($_SESSION['a_data']['message'])) {
         $limitMessage = 1500;
         // 文字数チェック
-        if(mb_strlen($_SESSION['a_data']['message']) > $limitMessage) {
+        if (mb_strlen($_SESSION['a_data']['message']) > $limitMessage) {
         $err['message'] = '1500文字以内で入力してください';
         }
     }
-
-    if(count($err) === 0) {
+    // エラーがなければ完了画面へ
+    if (count($err) === 0) {
         header('Location: aEditComp.php');
     }
     //質問を引っ張る処理
     $answer = QuestionLogic::displayOneAnswer($_SESSION['a_data']['answer_id']);
-    if(!$answer){
+    if (!$answer) {
         $err[] = '返答の読み込みに失敗しました';
     }
     $answer_id = filter_input(INPUT_POST, 'answer_id', FILTER_SANITIZE_SPECIAL_CHARS);
 } else {
     // 非ボタン押下時（通常時）の処理
     $answer_id = filter_input(INPUT_POST, 'answer_id');
-    if(empty($answer_id)) {
+    if (empty($answer_id)) {
         $err[] = '質問を選択し直してください';
     }
     if (count($err) === 0) {
         //質問を引っ張る処理
         $answer = QuestionLogic::displayOneAnswer($answer_id);
-        if(!$answer){
+        if (!$answer) {
             $err[] = '返答の読み込みに失敗しました';
         }
     }
@@ -79,7 +78,7 @@ if(isset($_POST['a_edit_conf'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -100,11 +99,11 @@ if(isset($_POST['a_edit_conf'])) {
                 <p class="h4 pb-3 mt-3">編集内容の確認</p>
                 <form method="POST" action="">
                     <div>
-                        <?php if(isset($err['a_id'])): ?>
+                        <?php if (isset($err['a_id'])): ?>
                         <?php echo $err['a_id']; ?>
                         <?php endif; ?>
                     </div>
-                        <div><?php if(isset($err['message'])): ?>
+                        <div><?php if (isset($err['message'])): ?>
                         <?php echo $err['message']; ?>
                         <?php endif; ?>
                     </div>

@@ -11,7 +11,7 @@ $err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = 'ユーザーを登録してログインして下さい';
     header('Location: ../userLogin/form.php');
     return;
@@ -20,7 +20,7 @@ if(!$result) {
 $categories = CategoryLogic::getCategory();
 
 // ボタン押下時の処理（成功でベストアンサー登録）
-if(isset($_POST['a_best_comp'])) {
+if (isset($_POST['a_best_comp'])) {
     // エラーチェック
     if(!$_POST['question_id'] || !$_POST['answer_id'] || !$_POST['answer_user_id']) {
         $err['a_id'] = '返答が選択されていません';
@@ -34,31 +34,31 @@ if(isset($_POST['a_best_comp'])) {
     $answer = QuestionLogic::displayOneAnswer($_SESSION['a_data']['answer_id']);
     // ベストアンサー登録
     $best = QuestionLogic::bestAnswer();
-        if(empty($best)) {
+        if (empty($best)) {
             $err[] = 'ベストアンサー登録に失敗しました';
         }
     // 経験値を加算する処理
     $plusEXP = UserLogic::plusEXP($_SESSION['a_data']['answer_user_id'], 40);
-        if(!$plusEXP) {
+        if (!$plusEXP) {
             $err['plusEXP'] = '経験値加算処理に失敗しました';
         }
 } else { // 通常時処理
     $question_id = filter_input(INPUT_POST, 'question_id');
-    if(empty($question_id)) {
+    if (empty($question_id)) {
         $err[] = '質問を選択し直してください';
     }
     $answer_id = filter_input(INPUT_POST, 'answer_id');
-    if(empty($answer_id)) {
+    if (empty($answer_id)) {
         $err[] = '返答を選択し直してください';
     }
     $answer_user_id = filter_input(INPUT_POST, 'answer_user_id');
-    if(empty($answer_user_id)) {
+    if (empty($answer_user_id)) {
         $err[] = 'ユーザーを選択し直してください';
     }
     if (count($err) === 0) {
         // 質問取得の処理
         $answer = QuestionLogic::displayOneAnswer($answer_id);
-        if(empty($answer)){
+        if (empty($answer)) {
             $err[] = '返答の読み込みに失敗しました';
         }
     }
@@ -82,7 +82,7 @@ if(isset($_POST['a_best_comp'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -102,17 +102,17 @@ if(isset($_POST['a_best_comp'])) {
             <div class="content">
                 <p class="h4 mt-4">返答内容</p>
                 <!-- 通常時処理 -->
-                <?php if(!isset($_POST['a_best_comp'])): ?>
+                <?php if (!isset($_POST['a_best_comp'])): ?>
                     <div>以下の返答をベストアンサーに選択しますか？</div>
                     <div>※一度選択すると、変更できません</div>
                     <form method="POST" action="">
                         <div>
-                            <?php if(isset($err['a_id'])): ?>
+                            <?php if (isset($err['a_id'])): ?>
                             <?php echo $err['a_id']; ?>
                             <?php endif; ?>
                         </div>
                         <div>
-                            <?php if(isset($err['message'])): ?>
+                            <?php if (isset($err['message'])): ?>
                             <?php echo $err['message']; ?>
                             <?php endif; ?>
                         </div>
@@ -125,11 +125,11 @@ if(isset($_POST['a_best_comp'])) {
                     </form>
                     <button type="button" class="btn btn-outline-dark fw-bold mb-5" onclick="history.back()">戻る</button>
                 <!-- ボタン押下時の処理 -->
-                <?php elseif(isset($_POST['a_best_comp']) && count($err) === 0): ?>
-                    <?php if(empty($err)): ?>
+                <?php elseif (isset($_POST['a_best_comp']) && count($err) === 0): ?>
+                    <?php if (empty($err)): ?>
                         <div>ベストアンサー登録が完了しました</div>
                     <?php else: ?>
-                        <?php foreach($err as $row): ?>
+                        <?php foreach ($err as $row): ?>
                             <?php echo $row ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
