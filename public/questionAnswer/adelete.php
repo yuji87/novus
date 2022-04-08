@@ -69,7 +69,8 @@ if (isset($_POST['a_dlt_conf'])) {
     <div class="navbar bg-dark text-white">
         <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
-                <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
+                <li class="nav-item">
+                    <form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
 			    	    <input type="hidden">
                     </form>
@@ -117,17 +118,17 @@ if (isset($_POST['a_dlt_conf'])) {
         <div class="footer-item text-center">
                 <h4>novus</h4>
                 <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../question/index.php">質問</a>
+                        <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                        <a class="nav-link small" href="../bookApi/index.php">本検索</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                        <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
                     </li>
                 </ul>
         </div>

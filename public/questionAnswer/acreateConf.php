@@ -126,17 +126,17 @@ if (isset($_POST['a_comp'])) {
         <div class="footer-item text-center">
                 <h4>novus</h4>
                 <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link small" href="../article/index.php">記事</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../question/index.php">質問</a>
+                        <a class="nav-link small" href="../question/index.php">質問</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../bookApi/index.php">本検索</a>
+                        <a class="nav-link small" href="../bookApi/index.php">本検索</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
+                        <a class="nav-link small" href="../contact/index.php">お問い合わせ</a>
                     </li>
                 </ul>
         </div>

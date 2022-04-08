@@ -139,7 +139,7 @@ if (isset($_POST['a_best_comp'])) {
             </div>
         </div>
     </div>
-    
+
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">

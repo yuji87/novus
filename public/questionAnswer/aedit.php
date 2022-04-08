@@ -117,7 +117,7 @@ if (isset($_POST['a_edit_conf'])) {
             </div>
         </div>
     </div>
-    
+
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">

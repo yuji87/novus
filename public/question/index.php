@@ -152,9 +152,9 @@ if (isset($_GET['search'])) {
 								<!-- メッセージ：本文が50文字以上なら省略 -->
 								<?php if(mb_strlen($value['message']) > 50): ?>
 									<?php $limit_content = mb_substr($value['message'],0,50); ?>
-									<?php echo $limit_content; ?>…
+									<?php echo htmlspecialchars($limit_content); ?>…
 								<?php else: ?>
-									<?php echo $value['message']; ?>
+									<?php echo htmlspecialchars($value['message']); ?>
 								<?php endif; ?>
 							</div>
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
@@ -217,35 +217,75 @@ if (isset($_GET['search'])) {
 		    						echo '../myPage/index.php'; } else {
                                     echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+					 <!-- 通常時、新着の質問を表示 -->
+		                <?php elseif (isset($newQuestion)): ?>
+		                	<hr size="5"><div class="fw-bold mt-2 mb-2 h5">新着の質問</div>
+		                	<?php foreach ($newQuestion as $value): ?>
+								<!--題名-->
+								<div style="overflow: hidden; overflow-wrap: break-word;"><a href="qDisp.php? question_id=<?php echo $value['question_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo htmlspecialchars($value['title']); ?>」</a></div>
+								<!--アイコン-->
+								<?php if ($result): // ログイン可否で違うユーザーページへ ?>
+								    <?php if ($value['icon'] !== null && !empty($value['icon'])): ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    					    	echo '../myPage/index.php'; } else {
+                                        echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								    	<img src="../top/img/<?php echo $value['icon']; ?>">
+								    	</a>
+								    <?php else: ?>
+								    	<a name="icon" href="<?php if ($result && $value['user_id'] === $_SESSION['login_user']['user_id']) {
+								    	echo '../myPage/index.php'; } else {
+								    	echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								    	<img src="../top/img/sample_icon.png">
+								    	</a>
+								    <?php endif; ?>
 								<?php else: ?>
-									<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
-                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
-								<?php endif; ?>
-								<!-- メッセージ：本文が50文字以上なら省略 -->
+									<?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
+                                    	<img src="../top/img/<?php echo $value['icon']; ?>"></a>
+              <?php else: ?>
+                  <!--アイコンをクリックするとユーザーページへ-->
+                  <a name="icon" href="<?php 
+                    //user_idをユーザーページに引き継ぐ
+                    echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+                    <?php echo "<img src="."../top/img/sample_icon.png".">"; ?></a>
+                                  <?php endif; ?>
+
+							<?php endif; ?>
+							<!--ユーザー名-->
+							<!--名前をクリックするとユーザーページへ-->
+							<?php if ($result): // ログイン可否で違うユーザーページへ ?>
+								<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+								echo '../myPage/index.php'; } else {
+								echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
+								<p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							<?php else: ?>
+								<a name="name" class="text-dark" href="<?php echo "../top/userPage.php?user_id=".$value['user_id']; ?>">
+								<p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
+							<?php endif; ?>
+                <!-- メッセージ：本文が50文字以上なら省略 -->
 								<div style="overflow: hidden; overflow-wrap: break-word;">
 									<?php if (mb_strlen($value['message']) > 50): ?>
 										<?php $limit_content = mb_substr($value['message'],0,50); ?>
 										<?php echo $limit_content; ?>…
+								<?php else: ?>
+									<?php echo htmlspecialchars($value['message']); ?>
+								<?php endif; ?>
+							</div>
+							<!-- カテゴリと投稿日時を横並びにする処理 -->
+							<div class="block">
+								<!--カテゴリ-->
+								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<!--投稿日時-->
+								<div style="display: inline-block;" class="small pb-4">
+									<!-- 更新されていた場合、その日付を優先表示 -->
+									<?php if (!isset($value['upd_date'])): ?>
+										投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
 									<?php else: ?>
-										<?php echo $value['message']; ?>
+										更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
 									<?php endif; ?>
 								</div>
-								<!-- カテゴリと投稿日時を横並びにする処理 -->
-								<div class="block">
-									<!--カテゴリ-->
-									<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
-									<!--投稿日時-->
-									<div style="display: inline-block;" class="small pb-4">
-										<!-- 更新されていた場合、その日付を優先表示 -->
-										<?php if (!isset($value['upd_date'])): ?>
-											投稿：<?php echo date('Y/m/d H:i', strtotime($value['post_date'])); ?>
-										<?php else: ?>
-											更新：<?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?>
-										<?php endif; ?>
-									</div>
-								</div>
-							<hr>
-		                	<?php endforeach; ?>
+							</div>
+						<hr>
+						<?php endforeach; ?>
 		            <?php endif; ?>
 	            </div>
 				<?php if ($result): // ログインの有無でリンクの変化 ?>
