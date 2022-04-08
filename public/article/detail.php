@@ -28,17 +28,21 @@ if ($retInfo === NULL || $retInfo['user'] === false) {
 }
 
 $category = $act->categoryMap();
+$categoryColor = $act->categoryColorMap();
 
 // カテゴリ名
-$catename = $retInfo["category"][$retInfo["article"]["cate_id"]];
+$catename = Utils::h($retInfo["category"][$retInfo["article"]["cate_id"]]);
+$catcolor = Utils::h($categoryColor[$retInfo["article"]["cate_id"]]);
 
 // 投稿日時
 $postdt = Utils::compatiDate($retInfo["article"]["upd_date"], "Y/m/d H:i");
 
 // 投稿内容
 $message = $retInfo['article']['message'];
+$message = htmlentities($message); // 出力内容をエンティティ化
 $message = VendorUtils::markDown($message); // マークダウンの変換
 $message = Utils::trimHtmlTag($message); // 一部タグを許容、他は変換
+$message = html_entity_decode($message); // エンティティデコード
 $message = Utils::compatiStr($message); // 改行を <br/>
 
 $icon = $retInfo["user"]["icon"];
@@ -53,12 +57,12 @@ $icon = $retInfo["user"]["icon"];
       <?php echo ((isset($icon) && !empty($icon)) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
       <?php echo $act->getMemberName(); ?> さん
     </a>
-  <?php elseif(isset($_SESSION['login_user']['user_id'])) : ?>
+  <?php elseif (isset($_SESSION['login_user']['user_id'])) : ?>
     <a href="<?php echo DOMAIN ?>/public/myPage/userPage.php?user_id=<?php echo $retInfo["article"]["user_id"] ?>" class="d-flex align-items-center col-sm-9 text-dark">
       <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">'); ?>
       <?php echo $retInfo["user"]["name"]; ?>さんの投稿
     </a>
-  <?php else: ?>
+  <?php else : ?>
     <a href="<?php echo DOMAIN ?>/public/top/userPage.php?user_id=<?php echo $retInfo["article"]["user_id"] ?>" class="d-flex align-items-center col-sm-9 text-dark">
       <?php echo (isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">'); ?>
       <?php echo $retInfo["user"]["name"]; ?>さんの投稿
@@ -93,7 +97,7 @@ $icon = $retInfo["user"]["icon"];
     <!-- カテゴリバッジ -->
     <div class="row m-2 form-group">
       <div class="catename col-sm-1">
-        <div class="badge rounded-pill bg-danger p-2">
+        <div class="badge rounded-pill p-2" style="background:<?php echo $catcolor; ?>; color:#fff;">
           <?php echo $catename; ?>
         </div>
       </div>

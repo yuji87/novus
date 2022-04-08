@@ -17,7 +17,7 @@ define("UPDATE_ARTICLE", "UPDATE article_posts SET title=:title,message=:message
 define("DELETE_ARTICLE", "DELETE FROM article_posts WHERE article_id=:article_id AND user_id=:user_id");
 
 // カテゴリ一覧
-define("QUERY_CATEGORY_LIST", "SELECT cate_id,CATEGORY_NAME FROM categories");
+define("QUERY_CATEGORY_LIST", "SELECT cate_id, category_name, color FROM categories");
 
 // いいね取得
 define("QUERY_POSTLIKE", "SELECT a_like_id,user_id,article_id,like_flg FROM article_likes WHERE article_id=:article_id AND user_id=:user_id");
@@ -347,7 +347,20 @@ class ArticleAct extends Action
         $result = $this->conn->query(QUERY_CATEGORY_LIST);
         if ($result) {
             while ($rec =  $result->fetch(\PDO::FETCH_ASSOC)) {
-                $keymap[$rec['cate_id']] = $rec['CATEGORY_NAME'];
+                $keymap[$rec['cate_id']] = $rec['category_name'];
+            }
+        }
+        return $keymap;
+    }
+
+    // カテゴリカラーマップ。戻り値は cate_id とカテゴリカラーの連想配列。
+    function categoryColorMap()
+    {
+        $keymap = array();
+        $result = $this->conn->query(QUERY_CATEGORY_LIST);
+        if ($result) {
+            while ($rec =  $result->fetch(\PDO::FETCH_ASSOC)) {
+                $keymap[$rec['cate_id']] = $rec['color'];
             }
         }
         return $keymap;
