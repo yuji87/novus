@@ -33,7 +33,7 @@ if(!$data || !$paging) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
     <link rel="stylesheet" type="text/css" href="../css/top.css">
-    <title>レベルランキング詳細</title>
+    <title>novus</title>
 </head>
 
 <body>
@@ -58,12 +58,13 @@ if(!$data || !$paging) {
             <div class="content">
                 <h2 class="heading mt-5">レベルランキング</h2>
                 <div class="level-list">
+                    <!--順位表示-->
                     <?php $i = 1; 
                         if(isset($_GET['page'])) {
-                        $i += ($_GET['page'] - 1) * 10; }?>
+                        $i += ($_GET['page'] - 1) * 10; } ?>
                     <?php foreach($data as $value): ?>
                         <?php
-                        switch ($i) {
+                        switch($i) {
                             case 1:
                                 echo "<p id='first'>1位</p>";
                                 break;
@@ -77,7 +78,7 @@ if(!$data || !$paging) {
                                echo "<p id='rank'>".$i."位"."</p>";
                         } ?>
                         <!--ユーザー登録画像の表示-->
-                        <div class="level-icon"><br>
+                        <div class="level-icon">
                         <!--画像をクリック、自分ならmypageに遷移-->
                         <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 							<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
@@ -95,7 +96,7 @@ if(!$data || !$paging) {
                         <div class="text-center">
                             <!--名前の表示-->
                             <!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
-					    	<a name="name" class="text-dark" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+					    	<a name="name" class="text-dark" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    		    			echo '../myPage/index.php'; } else {
                                     echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                    <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
@@ -111,6 +112,7 @@ if(!$data || !$paging) {
 
 	<!-- フッタ -->
     <footer> 
+        <!--ページネーション-->
         <ul class="pagination">
             <li class="page">
                 <?php for($x=1; $x <= $paging ; $x++) { ?>

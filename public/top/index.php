@@ -66,8 +66,6 @@ if(!$newQuestion) {
         </div>
     </header>
 
-
-
 	<!--中央コンテンツ-->
 	<div class="wrapper">
 	    <div class="container">
