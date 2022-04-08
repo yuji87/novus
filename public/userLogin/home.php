@@ -75,10 +75,11 @@ if(!$newQuestion) {
                 <div class="form-row text-center">
                     <div id="title">
 		    		    <h2 class="heading" id="rankingtitle">レベルランキング TOP3</h2>
+						<!--順位表示-->
                         <?php $i = 1; ?>
 		    			<?php foreach($level as $value): ?>
 							<?php
-                            switch ($i) {
+                            switch($i) {
                             case 1: ?>
                                 <?php echo "<p id='first'>1位</p>";
                                 break;
@@ -88,20 +89,19 @@ if(!$newQuestion) {
                             case 3:
                                 echo "<p id='third'>3位</p>";
                                 break;
-                            }
-                            ?>
+                            } ?>
                             <!--ユーザーが登録した画像を表示-->
                             <div class="level-icon"><br>
                                 <?php if($value['icon'] !== null && !empty($value['icon'])): ?> 
 		    				    	<!--画像をクリックすると、自分のアイコンならmypage,他人ならuserpageに遷移-->
-		    				    	<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) {
+		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) {
 		    				    		echo '../myPage/index.php'; } else {
                                         echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
                                     <img src="../top/img/<?php echo $value['icon']; ?>"></a>
                                 <?php else: ?>
 		    				    	<!--上記と同じ処理-->
 		    				    	<!-- <form type="hidden" name="userpage" action="-->
-		    				    	<a name="icon" href="<?php if ($value['user_id'] === $_SESSION['login_user']['user_id']) { 
+		    				    	<a name="icon" href="<?php if($value['user_id'] === $_SESSION['login_user']['user_id']) { 
 		    				    		echo '../myPage/index.php'; } else {
 							    		//user_idをユーザーページに引き継ぐ
 		    				    		echo "../myPage/userPage.php?user_id=".$value['user_id'] ;} ?>">
@@ -118,11 +118,9 @@ if(!$newQuestion) {
                                        <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 							    <!--レベル-->
                                 <p>Lv.<?php echo $value['level']; ?></p>
-
                             </div>
                             <?php $i++ ;?>
                         <?php endforeach; ?>
-
 		        		<a class="small mb-5" href="../level/list.php">ランキング詳細<i class="fa-solid fa-arrow-right"></i></a><hr size="5">
 		        	</div>
                 </div>
