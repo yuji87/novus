@@ -26,7 +26,6 @@ if (isset($_POST['create_question'])) {
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['category'] = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
     $_SESSION['q_data']['message'] = filter_input(INPUT_POST, 'message');
-
     // 必須部分チェック
     if (!$_SESSION['q_data']['title']) {
         $err['title'] = '質問タイトルを入力してください';

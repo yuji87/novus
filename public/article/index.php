@@ -1,5 +1,4 @@
 <?php
-// 記事一覧表示
 require_once "../../app/ArticleAct.php";
 require_once '../../app/Token.php';
 require_once '../../app/Utils.php';
@@ -86,30 +85,30 @@ if ($searchText !== '' || $selectedCategoryName !== '') {
 ?>
 
 <div class="row m-2 pt-4 pb-2 align-items-center">
-  <?php if (isset($_SESSION['login_user'])) : ?>
-    <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
-      <?php echo(isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
-      <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $name ?> さん</span>
-    </a>
-  <?php else : ?>
-    <div class="col-sm-2"></div>
-  <?php endif; ?>
-  <div class="col-sm-7 text-center">
-    <div class="input-group">
-        <input type="search" style="width:100%;" class="form-control search-text" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
-        <div class="input-group-append mr-2">
-            <select class="form-control search-category" name="category" placeholder="カテゴリ">
-            <?php
-            echo "<option value=''></option>";
-            foreach ($category as $key => $val) {
-                printf('<option value="%s"%s>%s</option>', $key, $key == $searchCategory ? ' selected' : '', $val);
-            }
-            ?>
-            </select>
+    <?php if (isset($_SESSION['login_user'])) : ?>
+        <a href="<?php echo DOMAIN ?>/public/myPage/index.php" class="d-flex align-items-center col-sm-2 text-dark">
+            <?php echo(isset($icon) && !empty($icon) ? '<img src="' . DOMAIN . '/public/top/img/' . $icon . '" class="mr-1">' : '<img src="' . DOMAIN . '/public/top/img/sample_icon.png" class="mr-1">') ?>
+            <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $name ?> さん</span>
+        </a>
+    <?php else : ?>
+        <div class="col-sm-2"></div>
+    <?php endif; ?>
+    <div class="col-sm-7 text-center">
+        <div class="input-group">
+            <input type="search" style="width:100%;" class="form-control search-text" placeholder="キーワードを入力" value="<?php echo Utils::h($searchText); ?>">
+            <div class="input-group-append mr-2">
+                <select class="form-control search-category" name="category" placeholder="カテゴリ">
+                <?php
+                echo "<option value=''></option>";
+                foreach ($category as $key => $val) {
+                    printf('<option value="%s"%s>%s</option>', $key, $key == $searchCategory ? ' selected' : '', $val);
+                }
+                ?>
+                </select>
+            </div>
+            <button class="btn btn-secondary btn-search" type="button">検索</button>
         </div>
-        <button class="btn btn-secondary btn-search" type="button">検索</button>
     </div>
-  </div>
 </div>
 
 <h5 class="artListTitle mt-3 font-weight-bold">記事一覧 <?php echo Utils::h($headerTitle); ?></h5>
@@ -215,49 +214,49 @@ if (count($retInfo['articleList']) === 0) {
 
 
 <script type="text/javascript">
-  // 初期化処理
-$(function() {
-    <?php
-        // ブラウザのタイトルを変更 (javascriptないで urldecodeする)
-        echo "$('title').html(decodeURIComponent('" . Utils::h($pageTitle) . "'));";
-    ?>
-
-    $('.artfrm').click(function() {
-        // 記事をクリックした
-        $article_id = $(this).attr('article_id');
-        // 記事詳細へ
-        jumpapi('article/detail.php?article_id=' + $article_id);
-    });
-
-    function search () {
-        // 検索キーワード指定で、本ページ再読み込み
-        var searchText = $('.search-text').val();
-        var searchCategory = $('.search-category').val();
-
-        var params = [];
-        if (searchText !== '') params.push('searchText=' + encodeURIComponent(searchText));
-        if (searchCategory !== '') params.push('searchCategory=' + encodeURIComponent(searchCategory));
-        var url = params.length ? '&' + params.join('&') : '';
-        jumpapi('article/index.php?page=1' + url);
-    }
-
-    $('.search-text').change(function() {
-        // 検索実行
-        search();
-    });
-
-    $('.search-category').on("keydown", function(e) {
-        // カテゴリーがEnterされた場合に検索実行
-        if (e.which == 13) {
-            search();
+    // 初期化処理
+    $(function() {
+        <?php
+            // ブラウザのタイトルを変更 (javascriptないで urldecodeする)
+            echo "$('title').html(decodeURIComponent('" . Utils::h($pageTitle) . "'));";
+        ?>
+    
+        $('.artfrm').click(function() {
+            // 記事をクリックした
+            $article_id = $(this).attr('article_id');
+            // 記事詳細へ
+            jumpapi('article/detail.php?article_id=' + $article_id);
+        });
+    
+        function search () {
+            // 検索キーワード指定で、本ページ再読み込み
+            var searchText = $('.search-text').val();
+            var searchCategory = $('.search-category').val();
+        
+            var params = [];
+            if (searchText !== '') params.push('searchText=' + encodeURIComponent(searchText));
+            if (searchCategory !== '') params.push('searchCategory=' + encodeURIComponent(searchCategory));
+            var url = params.length ? '&' + params.join('&') : '';
+            jumpapi('article/index.php?page=1' + url);
         }
+    
+        $('.search-text').change(function() {
+            // 検索実行
+            search();
+        });
+    
+        $('.search-category').on("keydown", function(e) {
+            // カテゴリーがEnterされた場合に検索実行
+            if (e.which == 13) {
+                search();
+            }
+        });
+    
+        $('.btn-search').click(function() {
+            // 検索実行
+            search();
+        });
     });
-
-    $('.btn-search').click(function() {
-        // 検索実行
-        search();
-    });
-});
 </script>
 
 <?php

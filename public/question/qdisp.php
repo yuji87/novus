@@ -179,7 +179,6 @@ if (isset($_POST['like_regist'])) {
                     <br>
                     <hr size="4">
                     <br>
-
                     <!-- 返答表示部分 -->
                     <?php if (!empty($answer)): ?>
                         <h4>返信一覧</h4>

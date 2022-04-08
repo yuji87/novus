@@ -63,29 +63,31 @@ if (!$article) {
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
                         <div class="fw-bold mb-4">記事履歴</div>
-                        <?php if (isset($article)): ?>
-                            <?php foreach ($article as $value): ?>
-                            <!--題名-->
-                            <div class="fw-bold pb-1 h5"><a href="../article/detail.php? article_id=<?php echo $value['article_id']; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo $value['title']; ?>」</a></div>
-                            <!--カテゴリ-->
-                            <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                            <div><?php echo $value['category_name']; ?></div>
-                            <!--本文：50文字以上だと省略-->
-                            <div class="fw-bold pt-3 pb-1">本文</div>
-                            <?php if (mb_strlen($value['message']) > 50): ?>
-							    <?php $limit_content = mb_substr($value['message'],0,50); ?>
-							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $limit_content; ?>…</span>
-						    <?php else: ?>
-							    <span style="overflow: hidden; overflow-wrap: break-word;"><?php echo $value['message']; ?></span>
-						    <?php endif; ?>
-                            <!--日付-->
-                            <?php if (!isset($value['upd_date']) && isset($value['post_date'])): ?>
-                            <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>
-                            <?php elseif (isset($value['upd_date'])): ?>
-                            <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?></div>
-                            <?php endif; ?>
-                            <hr id="dot">
-                            <?php endforeach; ?>
+                            <?php if(isset($article)): ?>
+                                <?php foreach($article as $value): ?>
+                                    <?php 
+                                    $article_id = $value['article_id'];
+                                    $title = $value['title']; 
+                                    $category_name = $value['category_name'];
+                                    $upd_date = $value['upd_date'];
+                                    $post_date = $value['post_date'];
+                                    ?>
+                                    <!--題名-->
+                                    <div class="fw-bold pt-3 pb-1">タイトル</div>
+                                    <div class="fw-bold pb-1 h5">
+                                        <a href="../article/detail.php? article_id=<?php echo $article_id; ?>" style="overflow: hidden; overflow-wrap: break-word;">「<?php echo h($title); ?>」</a>
+                                    </div>
+                                    <!--カテゴリ-->
+                                    <div class="fw-bold pt-3 pb-1">カテゴリ</div>
+                                    <div><?php echo $category_name; ?></div>
+                                    <!--日付-->
+                                    <?php if(!isset($upd_date) && isset($post_date)): ?>
+                                    <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($post_date));  ?></div>
+                                    <?php elseif(isset($upd_date)): ?>
+                                    <div class="pt-4 pb-2 small"><?php echo date('Y/m/d H:i', strtotime($upd_date)); ?></div>
+                                    <?php endif; ?>
+                                    <hr id="dot">
+                                <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                     </div>

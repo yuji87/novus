@@ -22,10 +22,10 @@ use cebe\markdown\MarkdownExtra;
 
 class VendorUtils
 {
-  public static function markDown($message)
-  {
-    $converter = new \cebe\markdown\MarkdownExtra();
-    $message = $converter->parse($message);
-    return $message;
-  }
+    public static function markDown($message)
+    {
+        $converter = new \cebe\markdown\MarkdownExtra();
+        $message = $converter->parse($message);
+        return $message;
+    }
 }

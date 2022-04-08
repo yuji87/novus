@@ -63,31 +63,31 @@ if (!$question) {
                     <!--ユーザーが投稿した質問を表示-->
                     <div class="text">
                         <div class="fw-bold mb-4">質問履歴</div>
-                        <?php if (isset($question)): ?>
-                            <?php foreach ($question as $value): ?>
-                            <!--題名-->
-                            <div class="fw-bold pb-1 h5"><a style="overflow: hidden; overflow-wrap: break-word;" href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo $value['title']; ?>」</a></div>
-                            <!--カテゴリ-->
-                            <div class="fw-bold pt-3 pb-1">カテゴリ</div>
-                            <div><?php echo $value['category_name']; ?></div>
-                            <!--本文：50文字以上だと省略-->
-                            <div class="fw-bold pt-3 pb-1">本文</div>
-                            <span style="overflow: hidden; overflow-wrap: break-word;">
-                                <?php if (mb_strlen($value['message']) > 50): ?>
-                                    <?php $limit_content = mb_substr($value['message'],0,50); ?>
-                                    <?php echo $limit_content; ?>…
-                                <?php else: ?>
-                                    <?php echo $value['message']; ?>
-                                <?php endif; ?>
-                            </span>
-                            <!--日付-->
-                            <?php if (!isset($value['upd_date']) && isset($value['post_date'])): ?>
-                            <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($value['post_date']));  ?></div>
-                            <?php elseif (isset($value['upd_date'])): ?>
-                            <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($value['upd_date'])); ?></div>
-                            <?php endif; ?>
-                            <hr id="dot">
-                            <?php endforeach; ?>
+                            <?php if(isset($question)): ?>
+                                <?php foreach($question as $value): ?>
+                                    <?php 
+                                    $question_id = $value['question_id'];
+                                    $title = $value['title']; 
+                                    $category_name = $value['category_name'];
+                                    $upd_date = $value['upd_date'];
+                                    $post_date = $value['post_date'];
+                                    ?>
+                                    <!--題名-->
+                                    <div class="fw-bold pt-3 pb-1">タイトル</div>
+                                    <div class="fw-bold pb-1 h5">
+                                        <a style="overflow: hidden; overflow-wrap: break-word;" href="../question/qDisp.php? question_id=<?php echo $question_id; ?>">「<?php echo h($title); ?>」</a>
+                                    </div>
+                                    <!--カテゴリ-->
+                                    <div class="fw-bold pt-3 pb-1">カテゴリ</div>
+                                    <div><?php echo $category_name; ?></div>
+                                    <!--日付-->
+                                    <?php if(!isset($upd_date) && isset($post_date)): ?>
+                                    <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($post_date));  ?></div>
+                                    <?php elseif(isset($upd_date)): ?>
+                                    <div class="pt-4 pb-1 small"><?php echo date('Y/m/d H:i', strtotime($upd_date)); ?></div>
+                                    <?php endif; ?>
+                                    <hr id="dot">
+                                <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                     </div>
