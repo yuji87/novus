@@ -20,7 +20,7 @@ $err = [];
 
 <body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5 text-center small">
-        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+        <!-- エラーが発生した場合、メッセージと戻る画面を作成 -->
         <?php if (count($err) > 0): ?>
             <?php foreach ($err as $e): ?>
                 <p><?php echo $e; ?></p>
@@ -31,7 +31,7 @@ $err = [];
         <?php else: ?>
         <div class="row align-items-start">
             <h1 class="my-3 h1">情報更新が<br>完了しました</h1>
-            <!--TOPページへ-->
+            <!-- TOPページへ -->
             <form action="../myPage/index.php" method="POST" name="editDone">
                 <div class="text-center">
                     <input type="submit" class="btn btn-secondary mt-4" value="MyPageに戻る">

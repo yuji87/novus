@@ -29,7 +29,7 @@ if (!$data) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a style="color: white;" href="<?php ($result) ? '../userLogin/home.php' : '../top/index.php'; ?>">novus</a></div>
@@ -41,7 +41,7 @@ if (!$data) {
 		</div>
     </header>
 
-    <!--中央コンテンツ-->
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -50,7 +50,7 @@ if (!$data) {
                     <div class="alert alert-danger"><?php echo $err['u_id']; ?></div>
                 <?php else: ?>
                     <div class="list">
-                        <!--ユーザーが登録した画像を表示-->
+                        <!-- ユーザーが登録した画像を表示 -->
                         <div class="list-item">
                             <?php if ($data['icon'] !== null && !empty($data['icon'])): ?> 
                                 <img src="../top/img/<?php echo $data['icon']; ?>">
@@ -59,14 +59,14 @@ if (!$data) {
                             <?php endif; ?>
                         </div>
                         <br>
-                        <!--ユーザーが登録した名前を表示-->
+                        <!-- ユーザーが登録した名前を表示 -->
                         <div class="text">
                             <p style="display: inline-block;" class="fw-bold">名前　</p>
                             <p style="display: inline-block;">
                                 <?php echo $data['name']; ?>さん
                             </p>
                         </div>
-                        <!--ユーザーの現レベルを表示-->
+                        <!-- ユーザーの現レベルを表示 -->
                         <div class="text">
                             <p style="display: inline-block;" class="fw-bold">レベル　</p>
                             <p style="display: inline-block;">Lv.</p><?php
@@ -76,7 +76,7 @@ if (!$data) {
                                     echo '1';
                                 } ?>
                         </div>
-                        <!--ユーザーのコメントを表示-->
+                        <!-- ユーザーのコメントを表示 -->
                         <div class="text">
                             <p class="fw-bold">コメント</p>
                             <?php

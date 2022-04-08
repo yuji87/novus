@@ -84,7 +84,7 @@
                     document.getElementById("hero").src='../top/img/level/22493175.png';
                 }
             }
-            //規定レベルに達したらループ終了
+            // 規定レベルに達したらループ終了
             if (level.innerHTML >= currentLevel && lifeBar.value >= exExp) {
                 clearTimeout(gameTimer);        
                 // お褒めの言葉を表示

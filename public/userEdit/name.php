@@ -39,10 +39,10 @@ if (isset($_SESSION['nameEdit'])) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
                 <li id="li"><a class="nav-link active small text-white" href="../userLogin/home.php">TOPページ</a></li>
                 <li id="li"><a class="nav-link active small text-white" href="../myPage/index.php">MyPageに戻る</a></li>
@@ -54,6 +54,7 @@ if (isset($_SESSION['nameEdit'])) {
         </div>
     </header>
 
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -61,7 +62,7 @@ if (isset($_SESSION['nameEdit'])) {
                 <form action="nameC.php" method="POST" name="confirm">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録した名前を表示-->
+                        <!-- ユーザーが登録した名前を表示 -->
                         <div class="text">
                             <label for="name" style="text-align:center">[Name]</label>
                             <p><input id="editdetail" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>"></p>

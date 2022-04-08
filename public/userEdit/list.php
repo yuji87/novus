@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
+// ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
@@ -29,7 +29,7 @@ $_SESSION['edit'] = $_POST;
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -44,24 +44,25 @@ $_SESSION['edit'] = $_POST;
         </div>
     </header>
 
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
                 <h2 class="heading mt-5">アカウント編集画面</h2><br>
                     <div class="list">
-                        <!--ユーザーが登録した名前を表示-->
+                        <!-- ユーザーが登録した名前を表示 -->
                         <div class="text">
                             <label id="editdisp" for="name" style="padding-bottom:10px;">Name:&ensp;</label>
                             <input id="name" type="text" name="name" value="<?php echo htmlspecialchars($login_user['name'], ENT_QUOTES, 'UTF-8'); ?>" disabled>
                             <a class="edit" href="name.php" role="button" id="edit">&ensp;編集</a>
                         </div>
-                        <!--ユーザーが登録した電話番号を表示-->
+                        <!-- ユーザーが登録した電話番号を表示 -->
                         <div class="text">
                             <label id="editdisp"  for="tel" style="padding-bottom:10px;">Tel:&ensp;</label>
                             <input id="tel" type="text" name="tel" value="<?php echo htmlspecialchars($login_user['tel'], ENT_QUOTES, 'UTF-8'); ?>" disabled>
                             <a class="edit" href="tel.php" role="button" id="edit">&ensp;編集</a>
                         </div>
-                        <!--ユーザーが登録したメールアドレスを表示-->
+                        <!-- ユーザーが登録したメールアドレスを表示 -->
                         <div class="text">
                             <label id="editdisp"  for="email" style="padding-bottom:10px;">Email:&ensp;</label>
                             <input id="email" type="email" name="email" value="<?php 
@@ -69,27 +70,27 @@ $_SESSION['edit'] = $_POST;
                                     echo htmlspecialchars($login_user['email'], ENT_QUOTES,'UTF-8'); }?>" disabled>
                             <a class="edit" href="email.php" role="button" id="edit">&ensp;編集</a>
                         </div>   
-                        <!--パスワード入力（非表示）--> 
+                        <!-- パスワード入力（非表示）--> 
                         <div class="text">
                             <label id="editdisp"  for="password" style="padding-bottom:10px;">Password:&ensp;</label>
                             <input id="password" type="text" name="password" value="＊＊＊＊＊＊" disabled>
                             <a class="edit" href="password.php" role="button" id="edit">&ensp;編集</a>
                             <p style="color:#dc3545; font-size:9px;">セキュリティ保護のため表示していません</p>
                         </div>
-                        <!--アイコン用の画像を選択-->
+                        <!-- アイコン用の画像を選択 -->
                         <div class="text">
                             <label id="editdisp"  for="password" style="padding-bottom:10px;">Icon:&ensp;</label>
                             <input id="icon" type="text" name="icon" value="<?php 
                                 if (isset($login_user['icon'])) { echo $login_user['icon']; }?>" disabled>
                             <a class="edit" href="icon.php" role="button" id="edit">&ensp;編集</a>
                         </div>
-                        <!--コメント入力--> 
+                        <!-- コメント入力 --> 
                         <div class="text">
                             <label id="editdisp"  for="comment" style="padding-bottom:10px;">comment:&ensp;</label>
                             <input id="comment" type="text" name="comment" value="<?php 
-                                if (isset($login_user['comment'])) {
-                                    echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8'); }?>" disabled>
-                                <a class="edit" href="comment.php" role="button" id="edit">&ensp;編集</a>
+                            if (isset($login_user['comment'])) {
+                                echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8'); }?>" disabled>
+                            <a class="edit" href="comment.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <br><br>
                         <a class="edit" href="../userDelete/confirm.php" role="button">ユーザー削除</a>
