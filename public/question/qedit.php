@@ -33,6 +33,8 @@ if (count($err) === 0) {
     }
 }
 
+$cate_id = $question['cate_id'];
+
 // ボタン押下時の処理（成功でページ移動）
 if(isset($_POST['q_edit_conf'])) {
     $_SESSION['q_data']['title'] = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -134,8 +136,8 @@ if(isset($_POST['q_edit_conf'])) {
                         <?php endif; ?>
                     </div>
                     <div>
-                        <select name="category"  required>
-                            <option></option>
+                        <select id="categpry" name="category"  required>
+                            <!-- <option></option> -->
                             <?php foreach($categories as $value): ?>
                             <option 
                                 value="<?php echo $value['cate_id']; ?>"
@@ -188,3 +190,10 @@ if(isset($_POST['q_edit_conf'])) {
     </footer>
 </body>
 </html>
+
+<script type="text/javascript">
+  $(function() {
+    $('#category').val(<?php echo $cate_id; ?>);
+    setupPreview();
+  });
+</script>

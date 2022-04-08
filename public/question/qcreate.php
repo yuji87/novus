@@ -109,8 +109,8 @@ if(isset($_POST['create_question'])) {
                     </div>
                     <!--カテゴリー-->
                     <div class="fw-bold pt-4 pb-1">カテゴリ</div>
-                    <select name="category">
-                        <option></option>
+                    <select id="category" name="category">
+                        <!-- <option></option> -->
                         <?php foreach($categories as $value): ?>
                             <option value="<?php echo $value['cate_id']; ?>"> 
                                 <?php echo $value['category_name']; ?>
@@ -161,3 +161,10 @@ if(isset($_POST['create_question'])) {
 	</footer>
 </body>
 </html>
+
+<script type="text/javascript">
+  $(function() {
+    $('#category').val(0);
+    setupPreview();
+  });
+</script>
