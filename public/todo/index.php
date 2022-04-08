@@ -246,14 +246,13 @@ $icon = $act->getMemberIcon();
 
     <?php
     if ($errSignal) {
-      // 更新に失敗したとき、リダイレクトして todo/index.phpに引数指定で呼び出されるので
-      // ダイアログ表示
+      // 更新に失敗したとき
       if ($errSignal == 'noTitle') {
-        echo 'swal("何も入力されていません");';
+        echo 'onShow("何も入力されていません");';
       } elseif ($errSignal == 'invalidTitle') {
-        echo 'swal("100文字以内で入力してください");';
+        echo 'onShow("100文字以内で入力してください");';
       } elseif ($errSignal == 'invalidformatdt') {
-        echo 'swal("リマインドの日付に誤りがあります");';
+        echo 'onShow("リマインドの日付に誤りがあります");';
       }
     }
     ?>

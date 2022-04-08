@@ -54,7 +54,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
   $article_id = $_GET['article_id'];
   $title = Utils::h($retInfo['article']['title']);
   $message = Utils::h($retInfo['article']['message']);
-  $catval = $retInfo['article']['cate_id'];
+  $catval = Utils::h($retInfo['article']['cate_id']);
 }
 ?>
 
@@ -77,8 +77,8 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
       </div>
     </div>
     <div class="row m-2 form-group">
-      <div class="col-sm-3 mt-4">カテゴリ</div>
-      <div class="col-sm-9 mt-4">
+      <div class="col-sm-3 mt-3">カテゴリ</div>
+      <div class="col-sm-9 mt-3">
         <select id="category" name="category" style="width:100%;" placeholder="カテゴリ">
           <?php
           foreach ($category as $key => $val) {
@@ -109,7 +109,7 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
               <h3 class="mt-4 mb-4" style="font-weight: bold;">利用方法</h3>
             </div>
             <div class="text-center">
-              # おはよう → <span style="font-size:2.5rem; font-weight:500; line-height:1.2;">おはよう</span><br>
+              # おはよう → <span style="font-size:2.5rem; font-weight:bold; line-height:1.2; border-bottom: 3px double #ccc; display: inline-block;">おはよう</span><br>
               ## おはよう → <span style="font-size:2rem; font-weight:500; line-height:1.2;">おはよう</span><br>
               ### おはよう → <span style="font-size:1.75rem; font-weight:500; line-height:1.2;">おはよう</span><br><br>
               - おはよう → <span>・おはよう</span><br><br>
@@ -125,19 +125,18 @@ if ($retInfo != NULL && $retInfo['article'] != NULL) {
 </div>
 
 <script type="text/javascript">
-
-// 投稿後のブラウザバック対策
-$(document).ready(function () {
+  // 投稿後のブラウザバック対策
+  $(document).ready(function() {
     if (window.performance.navigation.type == 2) {
-        //遷移後に動かす処理
-        swal({
-          text: '不正な処理が行われました'
-        }).then(function(isConfirm) {
-          // トップに戻す
-          jumpapi('article/index.php');
-        });
+      //遷移後に動かす処理
+      swal({
+        text: '不正な処理が行われました'
+      }).then(function(isConfirm) {
+        // トップに戻す
+        jumpapi('article/index.php');
+      });
     }
-});
+  });
 
   // 初期化
   $(function() {
@@ -256,15 +255,15 @@ $(document).ready(function () {
       $(".modal").fadeOut();
     });
   });
-    //サロゲートペアを考慮した文字数を返す関数
-    var getValueLength = function (value) {
+  //サロゲートペアを考慮した文字数を返す関数
+  var getValueLength = function(value) {
     return (value.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[\s\S]/g) || []).length;
   };
 
   var $maxlengthElems = $(".maxlength");
   var $showCountElems = $(".showCount");
-    //data-maxlength属性を指定した要素でshowCountクラスが指定されていれば入力文字数を表示
-    $showCountElems.each(function () {
+  //data-maxlength属性を指定した要素でshowCountクラスが指定されていれば入力文字数を表示
+  $showCountElems.each(function() {
     //data-maxlength 属性の値を取得
     const dataMaxlength = $(this).data("maxlength");
     //data-maxlength 属性の値が存在し数値であれば
@@ -280,7 +279,7 @@ $(document).ready(function () {
     }
   });
 
-    $showCountElems.on("input", function () {
+  $showCountElems.on("input", function() {
     //上記で作成したカウントを出力する span 要素を取得
     var $countSpan = $(this).parent().find(".countSpan");
     //カウントを出力する span 要素が存在すれば
@@ -301,7 +300,6 @@ $(document).ready(function () {
       }
     }
   });
-
 </script>
 
 <?php
