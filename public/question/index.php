@@ -160,7 +160,7 @@ if (isset($_GET['search'])) {
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
 							<div class="block">
 								<!--カテゴリ-->
-								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<div style="background: <?php echo $value['color']; ?>; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
 								<!--投稿日時-->
 								<div style="display: inline-block;" class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
@@ -232,7 +232,9 @@ if (isset($_GET['search'])) {
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
 							<div class="block">
 								<!--カテゴリ-->
-								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3"><?php echo htmlspecialchars($value['category_name']); ?></div>
+								<div style="background: <?php echo $value['color']; ?>; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3">
+									<?php echo htmlspecialchars($value['category_name']); ?>
+								</div>
 								<!--投稿日時-->
 								<div style="display: inline-block;" class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
