@@ -42,6 +42,7 @@ $retInfo = $act->articleList($currentPage, $searchText, $searchCategory);
 $currentPage = $retInfo['page'];
 
 $category = $act->categoryMap();
+$categoryColor = $act->categoryColorMap();
 
 // ログインユーザーのアイコンと名前
 if (isset($_SESSION['login_user'])) {
@@ -127,7 +128,9 @@ foreach ($retInfo['articleList'] as $art) {
     // 投稿日時
     $postdt = Utils::compatiDate($art['upd_date'], 'Y/m/d H:i');
     // カテゴリ名
-    $catename = $retInfo["category"][$art["cate_id"]];
+    $catename = Utils::h($retInfo["category"][$art["cate_id"]]);
+    // カテゴリの背景色 
+    $catcolor = Utils::h($categoryColor[$art["cate_id"]]); 
     // いいね数
     $postLikeCnt = $retInfo['postLikeMap'][$art['article_id']] ??  0; //合体演算子
 
@@ -138,7 +141,7 @@ foreach ($retInfo['articleList'] as $art) {
     echo '</div>';
     echo '<div class="arttitle">' . Utils::h($title) . '</div>';
     echo '<div class="artFootLeft">' . $postdt . '</div>';
-    echo '<div class="artFootLeft badge rounded-pill border border-secondary ml-3 ">' . $catename . '</div>';
+    echo '<div class="artFootLeft badge rounded-pill  ml-3 p-1 pl-2 pr-2 " style="background:' . $catcolor . '; color:#fff;">' . $catename . '</div>';
     echo '<div class="artfoot">' . "&hearts; " . $postLikeCnt . '</div>';
     echo '</div>';
 }
