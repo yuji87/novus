@@ -22,13 +22,13 @@ class ArticleLogic
             WHERE users.user_id = ?
             ORDER BY article_posts.article_id DESC';
 
-    try{
+    try {
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
-    }catch(\Exception $e){
+    } catch(\Exception $e) {
         // エラーの出力
         echo $e;
         // ログの出力

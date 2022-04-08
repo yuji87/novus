@@ -7,7 +7,7 @@ require_once '../../app/UserLogic.php';
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;
@@ -22,12 +22,12 @@ if (isset($_SESSION['a_data']['answer_id']) &&
     ) {        
     // 返答を編集する処理
     $hasEditted = QuestionLogic::editAnswer();
-    if(!$hasEditted) {
+    if (!$hasEditted) {
         $err[] = '更新に失敗しました';
     }      
     // 返答を取得する処理
     $hasTaken = QuestionLogic::displayOneAnswer($_SESSION['a_data']['answer_id']);
-    if(!$hasTaken) {
+    if (!$hasTaken) {
         $err[] = '返答の取り込みに失敗しました';
     }
 }
@@ -49,7 +49,7 @@ if (isset($_SESSION['a_data']['answer_id']) &&
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>

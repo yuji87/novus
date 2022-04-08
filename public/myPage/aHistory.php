@@ -11,7 +11,7 @@ $err = [];
 
 // ログインしているか判定して、していなかったらログイン画面へ移す
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: userLogin/form.php');
     return;
@@ -21,7 +21,7 @@ $question_id = filter_input(INPUT_GET, 'question_id');
 
 // 自身が投稿した記事を表示
 $article = ArticleLogic::userArticle();
-if(!$article) {
+if (!$article) {
     $err[] = 'まだ投稿した記事はありません';
 }
 ?>

@@ -15,10 +15,10 @@ $err = [];
 
 // 詳細表示する質問の選択処理
 $question_id = filter_input(INPUT_GET, 'question_id', FILTER_SANITIZE_NUMBER_INT);
-if(!$question_id) {
+if (!$question_id) {
     $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
 }
-if(!$question_id) {
+if (!$question_id) {
     $err['q_id'] = '質問を選択し直してください';
 }
 
@@ -26,43 +26,43 @@ if(!$question_id) {
 if (count($err) === 0) {
     // 質問の取得
     $question = QuestionLogic::displayQuestion($_GET);
-    if(!$question) {
+    if (!$question) {
         $err['q_id'] = '質問を選択し直してください';
     }
-  // 質問返答の取得
+    // 質問返答の取得
     $answer = QuestionLogic::displayAnswer($_GET['question_id']);
-        if(!$answer) {
+        if (!$answer) {
             $err['answer'] = '返信の読み込みに失敗しました';
         }
 }
 
 // いいね処理
-if(isset($_POST['like_id'])) {
-    if(isset($_POST['like_delete'])) {
+if (isset($_POST['like_id'])) {
+    if (isset($_POST['like_delete'])) {
         $like_btn = QuestionLogic::switchLike(0, $_POST['like_id']);
-        if(!$like_btn) {
+        if (!$like_btn) {
             $err['like'] = 'いいねの切り替えに失敗しました';
         }
     }
-    if(isset($_POST['like_reregist'])) {
+    if (isset($_POST['like_reregist'])) {
         $like_btn = QuestionLogic::switchLike(1, $_POST['like_id']);
-        if(!$like_btn) {
+        if (!$like_btn) {
             $err['like'] = 'いいねの切り替えに失敗しました';
         }
     }
 }
 
 // いいね登録処理
-if(isset($_POST['like_regist'])) {
+if (isset($_POST['like_regist'])) {
     $a_user_id = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
     // 登録処理
     $like_btn = QuestionLogic::createLike($_POST);
-    if(!$like_btn) {
+    if (!$like_btn) {
         $err['like'] = 'いいねの登録に失敗しました';
     }
     // 経験値を加算する処理
     $plusEXP = UserLogic::plusEXP($a_user_id, 5);
-    if(!$plusEXP) {
+    if (!$plusEXP) {
         $err['plusEXP'] = '経験値加算処理に失敗しました';
     }
     header("Location: qDisp.php?question_id=$question_id");
@@ -89,7 +89,7 @@ if(isset($_POST['like_regist'])) {
     <header>
 	    <?php if($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -105,7 +105,7 @@ if(isset($_POST['like_regist'])) {
 		</div>
 		<?php else: // 未ログインであれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
-            <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+            <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
 			    <li id="li"><a class="nav-link active small text-white" href="../top/index.php">TOPページ</a></li>
 			    <li id="li"><a class="nav-link active small text-white" href="../question/index.php">質問ページ</a></li>
@@ -119,20 +119,20 @@ if(isset($_POST['like_regist'])) {
     <div class="wrapper">
         <div class="container">
             <div class="content">
-                <?php if(!$question_id || !$question): ?>
+                <?php if (!$question_id || !$question): ?>
                     <div class="alert alert-danger"><?php echo $err['q_id']; ?></div>
                 <?php else: ?>
                 <!--質問の詳細表示-->
-                <?php if(isset($err['question'])):  ?>
+                <?php if (isset($err['question'])):  ?>
                     <?php echo $err['question']; ?>
                 <?php endif; ?>
                 <p class="h4 pb-3 pt-4">詳細表示</p>
-                <?php if($question['best_select_flg'] == 1): ?>
+                <?php if ($question['best_select_flg'] == 1): ?>
                     <div class="text-danger">解決済み</div>
                 <?php endif; ?>
                 <div class="pb-1 small">
                     <!--アイコン-->
-                    <?php if($question['icon'] !== null && !empty($question['icon'])): ?>
+                    <?php if ($question['icon'] !== null && !empty($question['icon'])): ?>
                         <img src="../top/img/<?php echo $question['icon']; ?>">
                     <?php else: ?>
                         <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
@@ -164,8 +164,8 @@ if(isset($_POST['like_regist'])) {
                     </div>
 
                     <!-- 質問者本人の時、編集・削除ボタン表示 -->
-                    <?php if($result): ?>
-                        <?php if($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
+                    <?php if ($result): ?>
+                        <?php if ($_SESSION['login_user']['user_id'] == $question['user_id']): ?>
                             <form method="POST" name="question" action="qEdit.php" id="qedit">
                                 <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                 <i class="fa-solid fa-pen"><input type="submit" id="edit" value="編集"></i>
@@ -180,16 +180,16 @@ if(isset($_POST['like_regist'])) {
                     <hr size="4">
                     <br>
                     <!-- 返答表示部分 -->
-                    <?php if(!empty($answer)): ?>
+                    <?php if (!empty($answer)): ?>
                         <h4>返信一覧</h4>
-                        <?php if(isset($err['answer'])):  ?>
+                        <?php if (isset($err['answer'])):  ?>
                             <?php echo $err['answer']; ?>
                         <?php endif; ?>
-                        <?php foreach($answer as $value): ?>
+                        <?php foreach ($answer as $value): ?>
                             <hr id="dot">
                             <!--アイコン-->
                             <div class="pb-1 small">
-                                <?php if($value['icon'] !== null && !empty($value['icon'])): ?>
+                                <?php if ($value['icon'] !== null && !empty($value['icon'])): ?>
                                     <img src="../top/img/<?php echo $value['icon']; ?>">
                                 <?php else: ?>
                                     <?php echo "<img src="."../top/img/sample_icon.png".">"; ?>
@@ -216,24 +216,24 @@ if(isset($_POST['like_regist'])) {
                                 </div>
                             </div>
                             <!-- ベストアンサー選択された返答の目印 -->
-                            <?php if($value['best_flg']): ?>
+                            <?php if ($value['best_flg']): ?>
                                 <div class="alert alert-danger">ベストアンサー</div>
                             <?php endif; ?>
 
                             <!-- いいねボタンの表示部分 -->
-                            <?php if($result): ?>
+                            <?php if ($result): ?>
                                 <!-- 返信投稿ユーザーと違うユーザーなら、いいねボタン表示 -->
-                                <?php if($value['user_id'] != $_SESSION['login_user']['user_id']): ?>
+                                <?php if ($value['user_id'] != $_SESSION['login_user']['user_id']): ?>
                                     <form class="favorite_count" action="#" method="post">
                                         <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
                                         <input type="hidden" id="answer_id" name="answer_id" value="<?php echo $value['answer_id']; ?>">
                                         <!-- いいねの有無チェック -->
                                         <?php $checkLike = QuestionLogic::checkLike($_SESSION['login_user']['user_id'], $value['answer_id']); ?>
                                         <!-- いいねがある場合 -->
-                                        <?php if(!empty($checkLike)): ?>
+                                        <?php if (!empty($checkLike)): ?>
                                             <input type="hidden" name="like_id" value="<?php echo $checkLike['q_like_id']; ?>">
                                             <!-- いいねフラグが1の場合、いいね解除のボタンに -->
-                                            <?php if($checkLike['like_flg'] == 1): ?>
+                                            <?php if ($checkLike['like_flg'] == 1): ?>
                                                 <input type="submit" name="like_delete" value="いいね解除">
                                             <!-- いいねフラグが0の場合、いいね再登録のボタンに -->
                                             <?php else: ?>
@@ -248,7 +248,7 @@ if(isset($_POST['like_regist'])) {
                                     </form>
                                     <!-- 返信投稿ユーザー＝ログインユーザーなら、返答の編集・削除ボタン表示 -->
                                 <?php else: ?>
-                                    <?php if($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
+                                    <?php if ($_SESSION['login_user']['user_id'] == $value['user_id']): ?>
                                         <form method="POST" action="../questionAnswer/aEdit.php" name="question" id="qedit">
                                             <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
                                             <input type="hidden" name="answer_id" value="<?php echo $value['answer_id']; ?>">
@@ -261,8 +261,8 @@ if(isset($_POST['like_regist'])) {
                                         </form>
                                     <?php endif; ?>
                                 <?php endif; ?>
-
-                                <?php if($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
+                                
+                                <?php if ($_SESSION['login_user']['user_id'] == $question['user_id'] && $question['best_select_flg'] == 0 && $_SESSION['login_user']['user_id'] != $value['user_id']): ?>
                                     <!-- 質問者本人 ＆ 返答が質問者以外の場合、ベストアンサーボタンの表示 -->
                                     <form method="POST" action="bestAnswer.php">
                                         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
@@ -279,8 +279,8 @@ if(isset($_POST['like_regist'])) {
                     <?php endif; ?>
 
                     <!-- ベストアンサーが選択されていると新規投稿できなくなる処理 -->
-                    <?php if($result): ?>
-                        <?php if($question['best_select_flg'] == 0): ?>
+                    <?php if ($result): ?>
+                        <?php if ($question['best_select_flg'] == 0): ?>
                             <form method="POST" action="../questionAnswer/aCreateConf.php">
                                 <input type="hidden" name="a_user_id" value="<?php echo $_SESSION['login_user']['user_id']; ?>">
                                 <input type="hidden" name="q_user_id" value="<?php echo $question['user_id']; ?>">
@@ -295,6 +295,7 @@ if(isset($_POST['like_regist'])) {
             </div>
         </div>
     <?php endif; ?>
+    
     <!-- フッタ -->
     <footer class="h-10"><hr>
         <div class="footer-item text-center">

@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/UserLogic.php';
 require_once '../../app/Functions.php';
 
-//ログインしているか判定して、していなかったら新規登録画面へ移す
+// ログインしているか判定して、していなかったら新規登録画面へ移す
 $result = UserLogic::checkLogin();
 if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
@@ -32,7 +32,7 @@ $_SESSION['edit'] = $_POST;
 	<!--メニュー-->
     <header>
         <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
                     <form type="hidden" action="mypage.php" method="POST" name="mypage">
@@ -71,7 +71,7 @@ $_SESSION['edit'] = $_POST;
                         <div class="text">
                             <label id="editdisp"  for="email" style="padding-bottom:10px;">Email:&ensp;</label>
                             <input id="email" type="email" name="email" value="<?php 
-                                if(isset($login_user['email'])) { 
+                                if (isset($login_user['email'])) { 
                                     echo htmlspecialchars($login_user['email'], ENT_QUOTES,'UTF-8'); }?>" disabled>
                             <a class="edit" href="email.php" role="button" id="edit">&ensp;編集</a>
                         </div>   
@@ -86,14 +86,14 @@ $_SESSION['edit'] = $_POST;
                         <div class="text">
                             <label id="editdisp"  for="password" style="padding-bottom:10px;">Icon:&ensp;</label>
                             <input id="icon" type="text" name="icon" value="<?php 
-                                if(isset($login_user['icon'])) { echo $login_user['icon']; }?>" disabled>
+                                if (isset($login_user['icon'])) { echo $login_user['icon']; }?>" disabled>
                             <a class="edit" href="icon.php" role="button" id="edit">&ensp;編集</a>
                         </div>
                         <!--コメント入力--> 
                         <div class="text">
                             <label id="editdisp"  for="comment" style="padding-bottom:10px;">comment:&ensp;</label>
                             <input id="comment" type="text" name="comment" value="<?php 
-                                if(isset($login_user['comment'])) {
+                                if (isset($login_user['comment'])) {
                                     echo htmlspecialchars($login_user['comment'], ENT_QUOTES,'UTF-8'); }?>" disabled>
                                 <a class="edit" href="comment.php" role="button" id="edit">&ensp;編集</a>
                         </div>

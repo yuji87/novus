@@ -14,7 +14,7 @@ class LevelLogic
     $result = false;
     $user = self::getLevel();
 
-    if(isset($user)) {
+    if (isset($user)) {
         try {
             // postsテーブルから10件のデータを取得する
             $sql = 'SELECT COUNT(*) user_id FROM users';
@@ -44,13 +44,13 @@ class LevelLogic
     {
     $result = false;
     // GETで現在のページ数を取得する（未入力の場合は1を挿入）
-    if(isset($_GET['page'])) {
+    if (isset($_GET['page'])) {
     	  $page = (int)$_GET['page'];
     } else {
     	  $page = 1;
     }
     // スタートのポジションを計算する
-    if($page > 1) {
+    if ($page > 1) {
     	  // ２ページ目の場合
       	$start = ($page * 10) - 10;
     } else {
@@ -122,8 +122,7 @@ class LevelLogic
         $result = $stmt-> execute($arr);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
-        // return $result;
-    }catch(\Exception $e){
+    } catch(\Exception $e) {
         // エラーの出力
         echo $e;
         // ログの出力

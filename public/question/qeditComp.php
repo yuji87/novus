@@ -10,7 +10,7 @@ $err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
-if(!$result) {
+if (!$result) {
     $_SESSION['login_err'] = '再度ログインして下さい';
     header('Location: ../userLogin/home.php');
     return;
@@ -24,14 +24,14 @@ if (isset($_SESSION['q_data']['title']) &&
 ) {
     //質問を登録する処理
     $question = QuestionLogic::editQuestion();
-    if(!$question){
+    if (!$question) {
         $err[] = '変更の保存に失敗しました';
     }
 }
 
 // 質問IDから質問内容を取り込む処理
 $data = QuestionLogic::displayQuestion($_SESSION['q_data']);
-if(!$data) {
+if (!$data) {
     $err[] = '質問の取り込みに失敗しました';
 }
 $title = $data['title'];
@@ -43,7 +43,7 @@ $question_id = $_SESSION['q_data']['question_id'];
 <!DOCTYPE HTML>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>novus</title>
 <link rel="stylesheet" href="style.css">
@@ -57,7 +57,7 @@ $question_id = $_SESSION['q_data']['question_id'];
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>

@@ -5,6 +5,8 @@ session_start();
 require_once '../../app/QuestionLogic.php';
 require_once '../../app/UserLogic.php';
 
+//エラーメッセージ
+$err = [];
 
 // ログインチェック
 $result = UserLogic::checkLogin();
@@ -14,55 +16,51 @@ if(!$result) {
     return;
 }
 
-//エラーメッセージ
-$err = [];
-
 $a_message = filter_input(INPUT_POST, 'a_message');
 $a_user_id = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
 $q_user_id = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
 $question_id = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
 
 //バリデーション
-if(!$a_message) {
+if (!$a_message) {
     $err[] = '本文を入力してください';
 }
-if(!$a_user_id) {
+if (!$a_user_id) {
     $err[] = 'ユーザーを選択し直してください';
 }
-if(!$q_user_id) {
+if (!$q_user_id) {
     $err[] = '質問を選択し直してください';
 }
-if(!$question_id) {
+if (!$question_id) {
     $err['question_id'] = '質問を選択し直してください';
 }
-if(!empty($a_message)) {
+if (!empty($a_message)) {
     $limitMessage = 1500;
     // 文字数チェック
-    if(mb_strlen($a_message) > $limitMessage) {
+    if (mb_strlen($a_message) > $limitMessage) {
     $err['message'] = '1500文字以内で入力してください';
     }
 }
 
 // 投稿ボタン押下時の内部処理（成功でページ移動）
-if(isset($_POST['a_comp'])) {
+if (isset($_POST['a_comp'])) {
     $_SESSION['a_data']['message'] = filter_input(INPUT_POST, 'a_message');
     $_SESSION['a_data']['a_user_id'] = filter_input(INPUT_POST, 'a_user_id', FILTER_SANITIZE_NUMBER_INT);
     $_SESSION['a_data']['q_user_id'] = filter_input(INPUT_POST, 'q_user_id', FILTER_SANITIZE_NUMBER_INT);
     $_SESSION['a_data']['question_id'] = filter_input(INPUT_POST, 'question_id', FILTER_SANITIZE_NUMBER_INT);
-    if(empty($_SESSION['a_data']['message'])) {
+    if (empty($_SESSION['a_data']['message'])) {
         $err['message'] = '本文が入力されていません';
     }
-    if(empty($_SESSION['a_data']['a_user_id'])) {
+    if (empty($_SESSION['a_data']['a_user_id'])) {
         $err['q_id'] = 'ユーザーが選択されていません';
     }
-    if(empty($_SESSION['a_data']['question_id'])) {
+    if (empty($_SESSION['a_data']['question_id'])) {
         $err['q_id'] = '質問IDが選択されていません';
     }
     if (count($err) === 0) {
         header('Location: aCreateComp.php');
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +80,7 @@ if(isset($_POST['a_comp'])) {
     <!--メニュー-->
     <header>
     <div class="navbar bg-dark text-white">
-        <div class="navtext h2" id="headerlogo"><a href="<?php echo(($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
+        <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">
                 <li class="nav-item"><form type="hidden" action="mypage.php" method="POST" name="mypage">
 			    	    <a class="nav-link small text-white" href="../myPage/index.php">マイページ</a>
@@ -101,10 +99,10 @@ if(isset($_POST['a_comp'])) {
         <div class="container">
             <div class="content">
                 <p class="h4">返信の内容確認</p>
-                <?php if(empty($err)): ?>
+                <?php if (empty($err)): ?>
                     <p>以下の内容でよろしいですか？</p>
                 <?php else: ?>
-                    <?php foreach($err as $value): ?>
+                    <?php foreach ($err as $value): ?>
                         <p class="text-danger"><?php  echo $value; ?></p>
                     <?php endforeach; ?>
                 <?php endif; ?>

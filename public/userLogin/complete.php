@@ -10,25 +10,25 @@ $err = [];
 $tel = filter_input(INPUT_POST, 'tel');
 $password = filter_input(INPUT_POST, 'password');
 
-//未入力チェック
-if(!$tel = filter_input(INPUT_POST, 'tel')) {
+// 未入力チェック
+if (!$tel = filter_input(INPUT_POST, 'tel')) {
     $err['tel'] = '電話番号を入力してください';
 }
 // 文字数チェック
 $limitTel = 12;
-if(strlen($tel) > $limitTel) {
+if (strlen($tel) > $limitTel) {
     $err['tel'] = '12文字以内で入力してください';
 }
-if(!$password = filter_input(INPUT_POST, 'password')) {
+if (!$password = filter_input(INPUT_POST, 'password')) {
     $err['password'] = 'パスワードを入力してください';
 }
-//正規表現
-if(!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)) {
+// 正規表現
+if (!preg_match("/\A[a-z\d]{4,20}+\z/i", $password)) {
     $err['password'] = 'パスワードは英数字4文字以上20文字以下にしてください';
 }
 
 // エラーがあったらフォーム画面に戻す
-if(count($err)>0) {
+if (count($err)>0) {
     $_SESSION = $err;
     header('Location: form.php');
     return;
@@ -37,7 +37,7 @@ if(count($err)>0) {
 // ログインに成功した時の処理
 $result = UserLogic::login($tel, $password);
 // ログインに失敗した時の処理
-if(!$result) {
+if (!$result) {
     header('Location: form.php');
     return;
 }
