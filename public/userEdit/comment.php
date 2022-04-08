@@ -37,7 +37,7 @@ if (isset($_SESSION['commentEdit'])) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -52,7 +52,7 @@ if (isset($_SESSION['commentEdit'])) {
         </div>
     </header>
 
-    <!--中央コンテンツ-->
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -60,7 +60,7 @@ if (isset($_SESSION['commentEdit'])) {
                 <form action="../userEdit/commentC.php" method="POST">
                     <input type="hidden" name="formcheck" value="checked">
                     <div class="list">
-                        <!--ユーザーが登録したコメントを表示-->
+                        <!-- ユーザーが登録したコメントを表示 -->
                         <div class="text">
                             <label for="comment" style="text-align:center">[comment]</label>
                             <p><input id="editdetail" type="text" name="comment" class="w-100" 

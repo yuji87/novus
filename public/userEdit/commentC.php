@@ -54,7 +54,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
 </head>
 
 <body>
-    <!--メニュー-->
+    <!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -69,7 +69,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
         </div>
     </header>
 
-    <!--中央コンテンツ-->
+    <!-- 中央コンテンツ -->
     <div class="wrapper">
         <div class="container">
             <div class="content">
@@ -82,11 +82,11 @@ if (count($err) === 0 && (isset($_POST['check']))) {
                     <p class="err">＊会員情報更新に失敗しました。</p>
                 <?php endif ?>
                     <div class="list">
-                        <!--ユーザーが登録したコメントを表示-->
+                        <!-- ユーザーが登録したコメントを表示 -->
                         <div class="text">
                             <label for="comment">[Comment]</label>
                             <p><span name="comment" class="check-info"><?php echo htmlspecialchars($_SESSION['commentEdit'], ENT_QUOTES, 'UTF-8'); ?></span></p>
-                            <!--エラーメッセージ表示-->
+                            <!-- エラーメッセージ表示 -->
                             <?php if (!$_SESSION['commentEdit']): ?>
                             <?php echo "記入をしなくてよろしいですか？"; ?>
                             <?php endif; ?>
@@ -94,7 +94,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
                                 <p class="text-danger"><?php echo $err['comment']; ?></p>
                             <?php endif; ?>
                         </div>
-                        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+                        <!-- エラーが発生した場合、メッセージと戻る画面を作成 -->
                         <?php if (count($err) > 0): ?>
                         <div class="text-center">
                             <a href="../userEdit/comment.php" class="p-2 text-white bg-secondary">再入力する</a>

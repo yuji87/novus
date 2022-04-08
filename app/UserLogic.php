@@ -1,8 +1,8 @@
 <?php
-//ファイル読み込み
+// ファイル読み込み
 require_once '../../app/Dbconnect.php';
 
-//タイムゾーン設定
+// タイムゾーン設定
 date_default_timezone_set('Asia/Tokyo');
 
 class UserLogic
@@ -74,7 +74,6 @@ class UserLogic
     */
     public static function login($tel, $password)
     {
-    // 結果
     $result = false;
     // ユーザをtelから検索して取得
     $user = self::getUserByTel($tel);
@@ -83,7 +82,7 @@ class UserLogic
         $_SESSION['msg'] = '電話番号が一致しません。';
         return $result;
     }
-    //　パスワードの照会
+    // パスワードの照会
     if (password_verify($password, $user['password'])) {
         // ログイン成功
         // ハイジャック対策
@@ -271,7 +270,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['password'] = $_SESSION['passwordEdit'];
         $user = $stmt->fetch();
         // セッション情報を消去し、セキュリティ対策
@@ -306,7 +305,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['icon'] = $_SESSION['iconEdit']['name'];
         $user = $stmt->fetch();
         return $result;
@@ -340,7 +339,7 @@ class UserLogic
         $stmt = connect()->prepare($sql);
         // SQL実行
         $result = $stmt-> execute($arr);
-        //セッション値を最新に更新
+        // セッション値を最新に更新
         $_SESSION['login_user']['comment'] = $_SESSION['commentEdit']; 
         $user = $stmt->fetch();
         return $result;
@@ -365,7 +364,7 @@ class UserLogic
     // SQLの実行
     // SQLの結果を返す
     $sql = 'SELECT icon FROM users WHERE user_id=?';
-    //配列に入れる
+    // 配列に入れる
     $arr = [];
     $arr[] = $_SESSION['login_user']['user_id']; 
 
@@ -450,7 +449,6 @@ class UserLogic
     }
     }
 
-
     /**
      * 経験値取得処理
      * @param int $user_id
@@ -488,14 +486,17 @@ class UserLogic
     $new_level = floor($new_exp / 100) + 1;
 
     // 取得したレベルと新しいレベルの比較
-    if ($level < $new_level) { // 新しいレベルが取得レベルより高い場合
+    // 新しいレベルが取得レベルより高い場合
+    if ($level < $new_level) { 
         // 経験値とレベルを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=?, level=? WHERE user_id=?';   
         $arr = [];
         $arr[] = $new_exp;
         $arr[] = $new_level;
         $arr[] = $user_id;
-    } else {// 新しいレベルが取得レベルと同じ場合
+        
+    // 新しいレベルが取得レベルと同じ場合
+    } else {
     // 経験値だけを更新するSQLの定義
         $sql_upd = 'UPDATE users SET exp=? WHERE user_id=?';   
         $arr = [];

@@ -40,7 +40,7 @@ if (count($err) === 0 && (isset($_POST['check']))) {
     <title>novus</title>
 </head>
 
-<!--中央コンテンツ-->
+<!-- 中央コンテンツ -->
 <body class="h-100 bg-secondary p-4 p-md-5">
     <form action="" method="POST" class="row g-3 bg-white p-2 p-md-5 shadow-sm">
         <input type="hidden" name="check" value="checked">

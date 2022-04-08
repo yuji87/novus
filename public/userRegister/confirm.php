@@ -104,48 +104,48 @@ if (count($err) === 0 && (isset($_POST['check']))) {
         <hr>
     
         <div class="align-items-center">
-            <!--名前の確認表示-->
+            <!-- 名前の確認表示 -->
             <div class="control">
                 <p style="font-weight:bold;">[Name]</p>
                 <p><span name="name" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['0'], ENT_QUOTES); ?></span></p>
-                <!--エラーメッセージ表示-->
+                <!-- エラーメッセージ表示 -->
                 <?php if (isset($err['name'])): ?>
                     <p class="text-danger"><?php echo $err['name']; ?></p>
                 <?php endif; ?>
             </div>
-            <!--電話の確認表示-->
+            <!-- 電話の確認表示 -->
             <div class="control">
                 <p style="font-weight:bold;">[Phone]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="tel" class="check-info">
                         <?php echo htmlspecialchars($_SESSION['signUp']['1'], ENT_QUOTES); ?>
                     </span>
                 </p>
-                <!--エラーメッセージ表示-->
+                <!-- エラーメッセージ表示 -->
                 <?php if (isset($err['tel'])): ?>
                     <p class="text-danger"><?php echo $err['tel']; ?></p>
                 <?php endif; ?>
             </div>
-            <!--メールの確認表示-->
+            <!-- メールの確認表示  -->
             <div class="control">
                 <p style="font-weight:bold;">[Email]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="email" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['2'], ENT_QUOTES); ?></span></p>
-                <!--エラーメッセージ表示-->
+                <!-- エラーメッセージ表示 -->
                 <?php if (isset($err['email'])): ?>
                     <p class="text-danger"><?php echo $err['email']; ?></p>
                 <?php endif; ?>
             </div>
-            <!--パスワードの確認表示-->
+            <!-- パスワードの確認表示 -->
             <div class="control">
                 <p style="font-weight:bold;">[Password]</p>
                 <p><span class="fas fa-angle-double-right"></span><span name="password" class="check-info"><?php echo htmlspecialchars($_SESSION['signUp']['3'], ENT_QUOTES); ?></span></p>
-                <!--エラーメッセージ表示-->
+                <!-- エラーメッセージ表示 -->
                 <?php if (isset($err['password'])): ?>
                     <p class="text-danger"><?php echo $err['password']; ?></p>
                 <?php endif; ?>
             </div>
             <br>
 
-            <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+            <!-- エラーが発生した場合、メッセージと戻る画面を作成 -->
             <?php if (count($err) > 0) :?>
             <div class="text-center mb-5">
                 <a href="form.php" class="btn btn-secondary" role="button">再入力する</a>

@@ -1,5 +1,5 @@
 <?php
-//エラーメッセージ
+// エラーメッセージ
 $err = [];
 ?>
 
@@ -15,7 +15,7 @@ $err = [];
 
 <body class="h-100 bg-secondary p-4 p-md-5">
     <div class = "container bg-white p-5 text-center small">
-        <!--エラーが発生した場合、メッセージと戻る画面を作成-->
+        <!-- エラーが発生した場合、メッセージと戻る画面を作成 -->
         <?php if (count($err) > 0): ?>
             <?php foreach ($err as $e): ?>
                 <p><?php echo $e; ?></p>
@@ -26,7 +26,7 @@ $err = [];
         <?php else: ?>
         <div class="row align-items-start">
             <h1 class="my-3 h1">会員登録が<br>完了しました</h1>
-            <!--TOPページへ-->
+            <!-- TOPページへ -->
             <div class="text-center">
                 <br><br><a class="btn btn-secondary" href="../top/index.php" role="button">ログインする</a>
             </div>

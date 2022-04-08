@@ -20,7 +20,8 @@ $login_user = $_SESSION['login_user'];
 if (!empty($_POST['formcheck'])) {
     $_SESSION['emailEdit'] = $_POST['email'];
     $email = filter_input(INPUT_POST, 'email');
-    $limitEmail = 35; // 文字制限
+    // 文字制限
+    $limitEmail = 35; 
     // 記入があった際のバリデーション
     if (isset($_SESSION['emailEdit'])) {
         if (strlen($email) > $limitEmail) {

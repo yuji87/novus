@@ -27,7 +27,8 @@ if (isset($_GET['search'])) {
     if (!$searchQuestion) {
         $err['question'] = '質問の読み込みに失敗しました';
 	}
-} else {  // 通常時は、新着の質問を表示する
+} else {  
+	// 通常時は、新着の質問を表示する
 	$newQuestion = QuestionLogic::newQuestion();
 }
 
@@ -52,7 +53,7 @@ if (!$newQuestion) {
 </head>
 
 <body>
-	<!--メニュー-->
+	<!-- メニュー -->
     <header>
         <div class="navbar bg-dark text-white">
 			<div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
@@ -66,7 +67,7 @@ if (!$newQuestion) {
         </div>
     </header>
 
-	<!--中央コンテンツ-->
+	<!-- 中央コンテンツ -->
 	<div class="wrapper">
 	    <div class="container">
 	        <div class="text-center">
@@ -100,15 +101,15 @@ if (!$newQuestion) {
 	                <?php if (isset($searchQuestion) && count($searchQuestion)): ?>
 		                <p class="alert alert-success"><?php echo count($searchQuestion) ?>件見つかりました。</p>
 		        		<div class="fw-bold mt-2 mb-2 h5">検索結果</div>
-	                    <!--質問表示-->
+	                    <!-- 質問表示 -->
 		                <?php foreach ($searchQuestion as $value): ?>
 		        	        <!--題名-->
 		        	        <div style="overflow: hidden; overflow-wrap: break-word;">
 							    <a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a>
 							</div>
-		        	        <!--アイコン-->
+		        	        <!-- アイコン -->
 		        	        <div class="level-icon">
-		        				<!--アイコンをクリックするとユーザーページへ-->
+		        				<!-- アイコンをクリックするとユーザーページへ -->
                                 <?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
 		        					<a name="icon" href="<?php 
 		        			    	// user_idをユーザーページに引き継ぐ
@@ -121,9 +122,9 @@ if (!$newQuestion) {
 		        			    	<?php echo "<img src="."img/sample_icon.png".">"; ?></a>
                                 <?php endif; ?>
                             </div>
-		        		    <!--ユーザー名-->
+		        		    <!-- ユーザー名 -->
 		        		    <div class="pb-3 small">
-								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+								<!-- 名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移 -->
 						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
                                 <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 							</div>
@@ -138,11 +139,11 @@ if (!$newQuestion) {
 		        			</div>
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
 							<div class="block">
-								<!--カテゴリ-->
+								<!-- カテゴリ -->
 								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3">
 								    <?php echo htmlspecialchars($value['category_name']); ?>
 								</div>
-								<!--投稿日時-->
+								<!-- 投稿日時 -->
 								<div style="display: inline-block;" class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
 									<?php if (!isset($value['upd_date'])): ?>
@@ -162,28 +163,28 @@ if (!$newQuestion) {
 		            <?php if (!isset($searchQuestion) && isset($newQuestion)): ?>
 		        		<hr size="4"><div class="fw-bold mb-4 h5 pt-3">新着の質問</div>
 		        	    <?php foreach ($newQuestion as $value): ?>
-		        		    <!--題名-->
+		        		    <!-- 題名 -->
 		        		    <div style="overflow: hidden; overflow-wrap: break-word;">
 							    <a href="../question/qDisp.php? question_id=<?php echo $value['question_id']; ?>">「<?php echo htmlspecialchars($value['title']); ?>」</a>
 							</div>
-		        	        <!--アイコン-->
+		        	        <!-- アイコン -->
 		        	        <div class="level-icon">
-		        				<!--アイコンをクリックするとユーザーページへ-->
+		        				<!-- アイコンをクリックするとユーザーページへ -->
 		        			    <?php if ($value['icon'] !== null && !empty($value['icon'])): ?> 
 		        					<a name="icon" href="<?php 
-		        			    	//user_idをユーザーページに引き継ぐ
+		        			    	// user_idをユーザーページに引き継ぐ
 		        			    	echo "userPage.php?user_id=".$value['user_id']; ?>">
                                     <img src="img/<?php echo $value['icon']; ?>"></a>
                                 <?php else: ?>
 		        		    		<a name="icon" href="<?php 
-		        		    			//user_idをユーザーページに引き継ぐ
+		        		    			// user_idをユーザーページに引き継ぐ
 		        		    			echo "userPage.php?user_id=".$value['user_id']; ?>">
 		        		    			<?php echo "<img src="."img/sample_icon.png".">"; ?></a>
                                 <?php endif; ?>
                             </div>
-		        		    <!--ユーザー名-->
+		        		    <!-- ユーザー名 -->
 		        		    <div class="pb-3 small">
-								<!--名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移-->
+								<!-- 名前をクリックすると、自分の名前ならmypage,他人ならuserpageに遷移 -->
 						        <a name="name" class="text-dark" href="<?php echo "userPage.php?user_id=".$value['user_id']; ?>">
                                 <p><?php echo htmlspecialchars($value['name']) ?>さん</p></a>
 							</div>
@@ -198,11 +199,11 @@ if (!$newQuestion) {
 		        			</div>
 							<!-- カテゴリと投稿日時を横並びにする処理 -->
 							<div class="block">
-								<!--カテゴリ-->
+								<!-- カテゴリ -->
 								<div style="color: black; display: inline-block;" class="artFootLeft badge rounded-pill border border-secondary ml-3">
 								    <?php echo htmlspecialchars($value['category_name']); ?>
 								</div>
-								<!--投稿日時-->
+								<!-- 投稿日時 -->
 								<div style="display: inline-block;" class="small pb-4">
 									<!-- 更新されていた場合、その日付を優先表示 -->
 									<?php if (!isset($value['upd_date'])): ?>
