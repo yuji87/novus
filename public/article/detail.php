@@ -34,7 +34,8 @@ $catename = Utils::h($retInfo["category"][$retInfo["article"]["cate_id"]]);
 $catcolor = Utils::h($categoryColor[$retInfo["article"]["cate_id"]]);
 
 // 投稿日時
-$postdt = Utils::compatiDate($retInfo["article"]["upd_date"], "Y/m/d H:i");
+$postdt = Utils::compatiDate($retInfo["article"]["post_date"], 'Y/m/d H:i');
+$upddt = Utils::compatiDate($retInfo["article"]["upd_date"], "Y/m/d H:i");
 
 // 投稿内容
 $message = $retInfo['article']['message'];
@@ -104,7 +105,7 @@ $icon = $retInfo["user"]["icon"];
         </div>
         <!-- 日付 -->
         <div class="row m-2 form-group">
-            <div class="artFootLeft col-sm-3"><?php echo $postdt; ?></div>
+            <div class="artFootLeft col-sm-3"><?php echo (isset($upddt) && $upddt === "" ? $postdt : $upddt); ?></div>
             <div class="artFootLeft col-sm-9"></div>
         </div>
     </div>

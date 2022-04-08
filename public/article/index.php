@@ -125,7 +125,8 @@ foreach ($retInfo['articleList'] as $art) {
     // 投稿タイトル
     $title = $art['title'];
     // 投稿日時
-    $postdt = Utils::compatiDate($art['upd_date'], 'Y/m/d H:i');
+    $postdt = Utils::compatiDate($art['post_date'], 'Y/m/d H:i');
+    $upddt = Utils::compatiDate($art['upd_date'], 'Y/m/d H:i');
     // カテゴリ名
     $catename = Utils::h($retInfo["category"][$art["cate_id"]]);
     // カテゴリの背景色 
@@ -139,7 +140,7 @@ foreach ($retInfo['articleList'] as $art) {
     echo '<span class="arthead ml-1">' . $username . 'さんの投稿</span>';
     echo '</div>';
     echo '<div class="arttitle">' . Utils::h($title) . '</div>';
-    echo '<div class="artFootLeft">' . $postdt . '</div>';
+    echo '<div class="artFootLeft">' . (isset($upddt) && $upddt === "" ? $postdt : $upddt) . '</div>';
     echo '<div class="artFootLeft badge rounded-pill  ml-3 p-1 pl-2 pr-2 " style="background:' . $catcolor . '; color:#fff;">' . $catename . '</div>';
     echo '<div class="artfoot">' . "&hearts; " . $postLikeCnt . '</div>';
     echo '</div>';
