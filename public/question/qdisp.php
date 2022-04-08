@@ -87,7 +87,7 @@ if (isset($_POST['like_regist'])) {
 <body>
 	<!--メニュー-->
     <header>
-	    <?php if($result): // ログインしていれば下記の表示 ?>
+	    <?php if ($result): // ログインしていれば下記の表示 ?>
         <div class="navbar bg-dark text-white">
             <div class="navtext h2" id="headerlogo"><a href="<?php echo (($result) ? '../userLogin/home.php' : '../top/index.php'); ?>" style="color: white;">novus</a></div>
 			<ul class="nav justify-content-center">

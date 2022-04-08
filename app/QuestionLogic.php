@@ -634,11 +634,11 @@ class QuestionLogic
             // SQL実行
             $result_a = $stmt_a-> execute($arr_a);
             
-            if(($result_q == true) && ($result_a == true)){
+            if (($result_q == true) && ($result_a == true)) {
               $result = true;
             }
             return $result;
-        }catch(\Exception $e){
+        } catch(\Exception $e) {
             // エラーの出力
             echo $e;
             // ログの出力
