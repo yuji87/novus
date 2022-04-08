@@ -62,7 +62,7 @@ if(isset($_SESSION['emailEdit'])) {
                         <!--ユーザーが登録したメールアドレスを表示-->
                         <div class="text">
                             <label for="email" style="text-align:center">[Email]</label>
-                            <p><input id="editdetail" type="text" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>"></p>
+                            <p><input id="editdetail" type="email" name="email" value="<?php echo htmlspecialchars($login_user['email'], ENT_QUOTES, 'UTF-8'); ?>"></p>
                             <p class="small text-muted">（35文字以下）</p>
                         </div>
                         <br><br>
