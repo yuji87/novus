@@ -159,9 +159,9 @@ if(!$newQuestion) {
 						<div style="overflow: hidden; overflow-wrap: break-word;">
 							<?php if(mb_strlen($value['message']) > 50): ?>
 								<?php $limit_content = mb_substr($value['message'],0,50); ?>
-								<?php echo $limit_content; ?>…
+								<?php echo htmlspecialchars($limit_content); ?>…
 							<?php else: ?>
-								<?php echo $value['message']; ?>
+								<?php echo htmlspecialchars($value['message']); ?>
 							<?php endif; ?>
 						</div>
 						<!-- カテゴリと投稿日時を横並びにする処理 -->
