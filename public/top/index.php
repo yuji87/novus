@@ -75,8 +75,7 @@ if(!$newQuestion) {
                     <div class="form-row text-center">
                         <div id="keyword" class="form-group col-row">
                             <input name="keyword" type="text" class="form-control" id="question" placeholder="キーワード" value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']): '' ?>">
-                        </div>
-                        <br>
+                        </div><br>
                         <div class="form-group col-row">
                             <label class="small">カテゴリー</label>
                             <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="category">
@@ -91,8 +90,7 @@ if(!$newQuestion) {
 			    			    <?php endforeach; ?>
                             </select>
                         </div>
-                    </div>
-                    <br>
+                    </div><br>
                     <button type="submit" class="btn btn-primary mt-3 mb-3" name="search">検索</button>
 			    </form>
 
@@ -149,6 +147,7 @@ if(!$newQuestion) {
 									<?php endif; ?>
 								</div>
 							</div>
+							<hr id="dot">
 		            	<?php endforeach; ?>
 		            <?php elseif (isset($searchQuestion) && count($searchQuestion) == 0): ?>
 		            	<p class="alert alert-danger">検索対象は見つかりませんでした。</p>
@@ -204,6 +203,7 @@ if(!$newQuestion) {
 									<?php endif; ?>
 								</div>
 							</div>
+							<hr id="dot">
 		        	    <?php endforeach; ?>
 		            <?php endif; ?>
 		        </div>
