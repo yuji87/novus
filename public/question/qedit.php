@@ -20,7 +20,6 @@ if (!$result) {
 // カテゴリ処理
 $categories = CategoryLogic::getCategory();
 
-$cate_id = $question['cate_id'];
 
 // 質問選択処理
 $question_id = filter_input(INPUT_POST, 'question_id');
@@ -34,6 +33,7 @@ if (count($err) === 0) {
         $err[] = '質問の読み込みに失敗しました';
     }
 }
+$cate_id = $question['cate_id'];
 
 // ボタン押下時の処理（成功でページ移動）
 if (isset($_POST['q_edit_conf'])) {
