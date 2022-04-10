@@ -8,13 +8,10 @@ require_once "Utils.php";
 // 記事/いいね関連クラス
 class BookApiAct extends Action
 {
-    // $mode>=0の場合、明示的にbeginを呼び出す
-    public function __construct($mode = -1)
+    public function __construct($mode = 1)
     {
         try {
-            if ($mode >= 0) {
-                $this->begin($mode);
-            }
+            $this->begin($mode);
         } catch (\Exception $e) {
             Log::error($e);
             echo $e;

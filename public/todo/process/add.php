@@ -39,8 +39,5 @@ if (!Utils::checkDatetimeFormat($newTodoDt)) {
 // ToDo追加
 $act->add($newTodoTitle, $newTodoDt);
 
-// 二重送信防止
-Token::regenerate();
-
 // ToDo一覧へリダイレクト
 header('Location: ' . DOMAIN . '/public/todo/index.php');

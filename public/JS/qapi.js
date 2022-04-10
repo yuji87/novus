@@ -1,12 +1,12 @@
 const $domainurl = '/novus/public/';
 
 // $urlへリダイレクト
-function jumpApi($url) {
+function jumpapi($url) {
 	location.href = $domainurl + $url;
 }
 
 // ajaxで post送信
-function formApiCallback($url, $data, $callback) {
+function formapiCallback($url, $data, $callback) {
 console.log('url=' + $url);
 console.log($data);
 	console.log($callback);

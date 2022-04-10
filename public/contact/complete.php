@@ -4,10 +4,7 @@ require_once __DIR__ . "/../../app/ContactAct.php";
 use Novus\ContactAct;
 
 $act = new ContactAct(1);
-
-// 送信処理を実行し、結果を受け取る
 $result = $act->complete();
-
 $act->printHeader();
 ?>
 
